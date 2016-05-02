@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+	    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+	
+    <!-- MVC를 사용시 필요한 몇가지 빈들을 자동으로 등록 -->
+	<mvc:annotation-driven/>
+
+	<!-- 어노테이션 사용 설정, scoped-proxy="no" 프록시를 생성하지 않을 경우 설정(기본:no) -->
+	<!-- <context:component-scan> 태그를 이용하여 @Controller 등의 어노테이션을 적용한 클래스를 자동으로 로딩. -->
+	<!--  <context:component-scan base-package="com.sp" scoped-proxy="no"/>  -->
+	<context:component-scan base-package="com.bong" />
+	
+	<mvc:resources mapping="/res/**" location="/res/" />
+	<mvc:resources mapping="/uploads/image/**" location="/uploads/image/" />
+	<mvc:resources mapping="/uploads/photo/**" location="/uploads/photo/" />
+	
+	<!-- 어노테이션을 이용한  컨트롤러 등록 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"
+	           p:alwaysUseFullPath="true">
+		<property name="order" value="1"></property>
+	</bean>
+	 
+	<!-- Commander의 처리 결과를 보여줄 View를 결정. -->
+	<!-- 
+	<bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" >
+		<property name="order" value="0" />
+ 	</bean> 
+     -->
+
+   <!-- 트랜잭션 처리을 위한 aop 등록  -->
+   <aop:config proxy-target-class="true">
+	  <aop:pointcut id="controllerOperation" expression="execution(public * com.bong..*Controller.*(..))" />
+  </aop:config>
+
+	<!-- 타일즈 환경 설정 -->
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+       <property name="definitions">
+           <list>
+               <value>/WEB-INF/tiles-defs.xml</value>
+           </list>
+       </property>
+    </bean>
+     
+	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="order" value="1" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+		<property name="viewNames" value=".*" />
+	</bean>	
+	<bean id="viewResolver2" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="2" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 파일 업로드 -->
+    <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+         <property name="maxUploadSize" value="10485760" />
+    </bean>
+
+    <!-- 예외처리 -->
+<!--     
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver">
+        <property name="order" value="1" />
+     </bean>
+ -->
+    <bean id="exceptionResolver"
+               class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="order" value="1" />
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">.error.fileuploadFailure</prop>
+                <prop key="org.springframework.dao.DataAccessException">.error.dataAccessFailure</prop>
+				<prop key="java.lang.Exception">.error.error</prop>
+            </props>
+        </property>
+        <!-- 기타 예외가 발생한 경우  -->
+        <property name="defaultErrorView" value=".error.error"/>
+        <!-- 로그기록 -->
+        <property name="warnLogCategory" value="ERROR"/>   
+    </bean>
+ </beans>  
