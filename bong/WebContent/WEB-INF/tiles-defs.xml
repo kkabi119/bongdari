@@ -9,15 +9,16 @@
 	<definition name=".fourLayout" template="/WEB-INF/views/layout/layout2.jsp">
 	    <put-attribute name="title" value="BongDaRi" />
 	  	<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
-	  	<put-attribute name="left" value="/WEB-INF/views/menu1/left.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
-	<definition name=".four.*.*.*" extends=".fourLayout">
+	<definition name=".four.*.*.*.*" extends=".fourLayout">
+		<put-attribute name="title" value="{4}" />
 	  	<put-attribute name="left" value="/WEB-INF/views/{1}/left.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
 	</definition>
-	<definition name=".four.*.*" extends=".fourLayout">
+	<definition name=".four.*.*.*" extends=".fourLayout">
+		<put-attribute name="title" value="{3}" />
 	  	<put-attribute name="left" value="/WEB-INF/views/{1}/left.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
 	</definition>
@@ -65,22 +66,32 @@
 	</definition>
 
   <!-- 순서가 바뀌면 안됨(* 많은것이 위에) -->
-   <!-- 3단 일반 -->
-	<definition name=".mainLayout" template="/WEB-INF/views/layout/layout.jsp">
-	    <put-attribute name="title" value="spring" />
+   <!-- 3단 일반 및 메인화면-->
+	<definition name=".mainLayout" template="/WEB-INF/views/layout/main.jsp">
 	  	<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
+	
+	
 	<!-- 순서가 바뀌면 안됨(* 많은것이 위에) -->
-	<definition name=".*.*.*" extends=".mainLayout">
-		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
+	<definition name=".layout" template="/WEB-INF/views/layout/layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
-	<definition name=".*.*" extends=".mainLayout">
+	<definition name=".layout.*.*.*.*" extends=".layout">
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="title" value="{4}" />
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
+	<definition name=".layout.*.*.*" extends=".layout">
+		<put-attribute name="title" value="{3}" />
 		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
 	</definition>
-	<definition name=".*" extends=".mainLayout">
-    	  <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+	<definition name=".layout.*.*" extends=".layout">
+		<put-attribute name="title" value="{2}" />
+		<put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
 	</definition>
 
 </tiles-definitions>
