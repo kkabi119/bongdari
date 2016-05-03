@@ -7,7 +7,7 @@
 <tiles-definitions>
     <!-- 4 단 일반 -->
 	<definition name=".fourLayout" template="/WEB-INF/views/layout/layout2.jsp">
-	    <put-attribute name="title" value="spring" />
+	    <put-attribute name="title" value="BongDaRi" />
 	  	<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
 	  	<put-attribute name="left" value="/WEB-INF/views/menu1/left.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp" />
