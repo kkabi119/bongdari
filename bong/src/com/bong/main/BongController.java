@@ -4,13 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@Controller("bong.mainController")
 public class BongController {
 	
-	@RequestMapping(value="/bong/main")
+	@RequestMapping(value="/main")
 	public ModelAndView maintest() throws Exception {
 		
-		ModelAndView mav = new ModelAndView("bong/index");
+		ModelAndView mav = new ModelAndView(".mainLayout");
 		return mav;
 	}
 }

@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Home | Trianglegugug</title>
+    <title>Home | Triangle</title>
     <link href="<%=cp%>/res/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=cp%>/res/css/font-awesome.min.css" rel="stylesheet">
     <link href="<%=cp%>/res/css/animate.min.css" rel="stylesheet"> 
@@ -40,7 +40,7 @@
                 <div class="col-sm-12 overflow">
                    <div class="social-icons pull-right">
                         <ul class="nav nav-pills">
-                            <li><a href=""><i class="fa sign-in"></i></a></li>
+                            <li><a href=""><i class="fa fa-sign-in"> Login</i></a></li>
                             <li><a href=""><i class="fa fa-twitter"></i></a></li>
                             <li><a href=""><i class="fa fa-google-plus"></i></a></li>
                             <li><a href=""><i class="fa fa-dribbble"></i></a></li>
