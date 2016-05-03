@@ -3,6 +3,33 @@ package com.bong.member;
 public class Member {
 	private String userPwd, userId, userName, userBirth, userAddr, userJob, userGender, userEmail;
 	private String created_date, modify_date, last_login;
+	private String userTel, tel1, tel2, tel3;
+	
+	
+	public String getUserTel() {
+		return userTel;
+	}
+	public void setUserTel(String userTel) {
+		this.userTel = userTel;
+	}
+	public String getTel1() {
+		return tel1;
+	}
+	public void setTel1(String tel1) {
+		this.tel1 = tel1;
+	}
+	public String getTel2() {
+		return tel2;
+	}
+	public void setTel2(String tel2) {
+		this.tel2 = tel2;
+	}
+	public String getTel3() {
+		return tel3;
+	}
+	public void setTel3(String tel3) {
+		this.tel3 = tel3;
+	}
 	private int userIdx, isMember, userLevel, userVolNum, userNoShow, userScore, enabled;
 	
 	public String getUserPwd() {

@@ -16,7 +16,7 @@
 function register(){
 	var f = document.registerForm;
 	
-	f.action = "<%=cp%>/member/join";
+	f.action = "<%=cp%>/member/register";
 }
 </script>
 <!--webfonts-->
@@ -38,14 +38,17 @@ function register(){
 						  	<form name="registerForm" method="POST" onsubmit="return register()">
 						  		<input type="text" name="userId" value="아이디" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '아이디';}" >
 						  		<input type="text" name="userName" value="이름" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '이름';}" >
-						  		<input type="password" name="pwd" value="비밀번호" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '비밀번호';}" >
+						  		<input type="password" name="userPwd" value="비밀번호" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '비밀번호';}" >
 								<input type="password" name="pwdConfirm" value="비밀번호확인" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '비밀번호확인';}" >
-								<input type="text" name="email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" >
-						  		<input type="text" name="tel" value="전화번호" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '전화번호';}" >
+								<input type="text" name="userBirth" value="생년월일 YYYY-MM-DD" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '생년월일 YYYY-MM-DD';}" >
+								<input type="text" name="userEmail" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" >
+						  		<input type="text" name="userTel" value="전화번호" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '전화번호';}" >
 						  		<input type="text" name="userAddr" value="주소" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '주소';}" >
-						  		<input type="text" name="job" value="직업" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '직업';}" ><br>
-								<input type="radio" name="gender" id="male" checked>남자
-								<input type="radio" name="gender" id="female" >여자 
+						  		<input type="text" name="userJob" value="직업" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '직업';}" ><br>
+								
+								<input type="radio" name="userGender" id="male" checked>남자
+								<input type="radio" name="userGender" id="female" >여자 
+								
 								<div class="Remember-me">
 																				 
 								<div class="submit">

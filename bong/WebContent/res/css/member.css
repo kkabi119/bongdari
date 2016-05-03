@@ -435,7 +435,7 @@ form span{
 	background: linear-gradient(to bottom,  rgba(113,209,26,1) 0%,rgba(96,193,8,1) 3%,rgba(101,199,7,1) 8%,rgba(87,177,0,1) 62%,rgba(75,136,0,1) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#71d11a', endColorstr='#4b8800',GradientType=0 ); /* IE6-9 */
 }
-.submit-button input[type="submit"]{
+.submit-button input[type="submit"],.submit-button input[type="button"]{
 	color: #203500;
 	cursor: pointer;
 	border: none;
@@ -463,7 +463,7 @@ form span{
 	background: linear-gradient(to bottom,  rgba(113,209,26,1) 0%,rgba(96,193,8,1) 3%,rgba(101,199,7,1) 8%,rgba(87,177,0,1) 62%,rgba(75,136,0,1) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#71d11a', endColorstr='#4b8800',GradientType=0 ); /* IE6-9 */
 }
-.submit input[type="submit"]:hover,.submit-button input[type="submit"]:hover{
+.submit input[type="submit"]:hover,.submit-button input[type="submit"]:hover,.submit-button input[type="button"]:hover{
 	background: rgb(75,136,0); /* Old browsers */
 	background: -moz-linear-gradient(top,  rgba(75,136,0,1) 0%, rgba(87,177,0,1) 38%, rgba(101,199,7,1) 92%, rgba(96,193,8,1) 97%, rgba(113,209,26,1) 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(75,136,0,1)), color-stop(38%,rgba(87,177,0,1)), color-stop(92%,rgba(101,199,7,1)), color-stop(97%,rgba(96,193,8,1)), color-stop(100%,rgba(113,209,26,1))); /* Chrome,Safari4+ */

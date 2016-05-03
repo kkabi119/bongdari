@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	
+	<!-- 회원정보 추가  -->    
+	<select id="memberSeq" resultType="Integer">
+		SELECT member_seq.NEXTVAL FROM DUAL
+	</select>
+	<insert id="insertMember" parameterType="Integer">
+		INSERT INTO member(userIdx) values(#{userIdx})
+	</insert>
+	<insert id="insertMemberInfo" parameterType="com.bong.member.Member">
+		INSERT INTO memberInfo
+		(userIdx, userId, userName, userPwd, userBirth
+			,userAddr, userGender, userTel, userEmail
+			,userJob)
+		VALUES(#{userIdx},#{userId},#{userName},#{userPwd}
+		,#{userBirth},#{userAddr},#{userGender},#{userTel}
+		,#{userEmail},#{userJob})
+	</insert>
+</mapper>
