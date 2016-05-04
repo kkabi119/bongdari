@@ -13,6 +13,23 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <script type="text/javascript">
+function login() {
+	var f = document.loginForm;
+	
+	var str = f.userId.value;
+	if(!str){
+		f.userId.focus();
+		return false;
+	}
+	str = f.userPwd.value;
+	if(!str){
+		f.userPwd.focus();
+		return false;
+	}
+	
+	f.action = "<%=cp%>/member/login";
+	f.submit();
+}
 function join(){
 	var url="<%=cp%>/member/register";
 	location.href=url;
@@ -36,15 +53,15 @@ function join(){
 						    	<h3>LOGIN</h3>
 						 	</div>
 
-						<form>
+						<form name="loginForm" method="POST">
 								<div class="ticker">
 									<h4>아이디</h4>
-						  			<input type="text" value="봉다리" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '봉다리';}" ><span> </span>
+						  			<input type="text" placeholder="아이디" name="userId" id="userId" ><span> </span>
 						  			<div class="clear"> </div>
 						  		</div>
 						  		<div>
 						  		<h4>비밀번호</h4>
-								<input type="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}" >
+								<input type="password" placeholder="비밀번호" name="userPwd" id="userPwd" >
 								  			<div class="clear"> </div>
 								</div>
 								<div class="checkbox-grid">
@@ -56,7 +73,7 @@ function join(){
 								</div>
 												 
 								<div class="submit-button">
-									<input type="submit" onclick="login()" value="LOGIN  >" >
+									<input type="button" onclick="login()" value="LOGIN  >" >
 									<input type="button" onclick="join()" value="JOIN  >" >
 								</div>
 									<div class="clear"> </div>
