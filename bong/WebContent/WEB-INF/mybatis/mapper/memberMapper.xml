@@ -19,4 +19,14 @@
 		,#{userBirth},#{userAddr},#{userGender},#{userTel}
 		,#{userEmail},#{userJob})
 	</insert>
+	<select id="readMemberLogin" resultType="com.bong.member.Member" parameterType="String">
+	   SELECT userIdx, userId, userName, userPwd
+	          FROM memberInfo
+	          WHERE userId=#{userId} 
+	
+	</select>
+	<update id="updateLastLogin" parameterType="String">
+	  UPDATE memberInfo SET last_login=SYSDATE
+	    WHERE userId=#{userId}
+	</update>
 </mapper>

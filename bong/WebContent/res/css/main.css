@@ -234,7 +234,11 @@
 }
 
 /* glyphicon 전체에 디자인을 주었습니다. 세세한 수정이 필요하다면 아래 코드를 지워주세요 */
-.social-icons ul li a:hover .glyphicon {
+.social-icons ul li a:hover .glyphicon-user {
+  color:#0884d5;
+}
+
+.social-icons ul li a:hover .glyphicon-cog {
   color:#0884d5;
 }
 

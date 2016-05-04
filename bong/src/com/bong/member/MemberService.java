@@ -5,8 +5,8 @@ import java.util.Map;
 
 public interface MemberService {
 	
-	public Member readMember1(int memberIdx);
-	public Member readMember2(String userId);
+	public Member readMember1(int userIdx);
+	public Member readMemberLogin(String userId);
 	
 	public int insertMember(Member dto);
 	

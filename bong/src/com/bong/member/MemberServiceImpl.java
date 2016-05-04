@@ -13,19 +13,30 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Autowired
 	private bongDAO dao;
-	
+
 	@Override
-	public Member readMember1(int memberIdx) {
-		// TODO Auto-generated method stub
-		return null;
+	public Member readMember1(int userIdx) {
+		Member dto=null;
+		try {
+			dto=dao.getReadInformation("member.readMember1", userIdx);
+		
+		} catch (Exception e) {
+		  System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override
-	public Member readMember2(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Member readMemberLogin(String userId) {
+		Member dto=null;
+		try {
+			dto=dao.getReadInformation("member.readMemberLogin", userId);
+		
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
-
 	@Override
 	public int insertMember(Member dto) {
 		int result = 0;
@@ -52,8 +63,13 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int updateLastLogin(String userId) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.updateInformation("member.updateLastLogin", userId);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
@@ -103,6 +119,7 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 	
 	
 }

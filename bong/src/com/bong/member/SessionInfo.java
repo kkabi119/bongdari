@@ -1,16 +1,16 @@
 package com.bong.member;
 
 public class SessionInfo {
-	private int memberIdx;
+	private int userIdx;
 	private String userId;
 	private String userName;
 	private int memberLevel;
 	
-	public int getMemberIdx() {
-		return memberIdx;
+	public int getUserIdx() {
+		return userIdx;
 	}
-	public void setMemberIdx(int memberIdx) {
-		this.memberIdx = memberIdx;
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
 	}
 	public String getUserId() {
 		return userId;

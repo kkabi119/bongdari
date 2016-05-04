@@ -39,14 +39,10 @@
     <!--/#header-->
 	
    
-    <section id="blog" class="padding-top">
-        <div class="container">
-            <div class="row">
+    
 				<tiles:insertAttribute name="body"/>
 				<!-- /#body -->
-    		</div>
-        </div>
-    </section>
+    		
 
     <footer id="footer">
 		<tiles:insertAttribute name="footer"/>

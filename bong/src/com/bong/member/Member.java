@@ -4,6 +4,7 @@ public class Member {
 	private String userPwd, userId, userName, userBirth, userAddr, userJob, userGender, userEmail;
 	private String created_date, modify_date, last_login;
 	private String userTel, tel1, tel2, tel3;
+	private int userIdx, isMember, userLevel, userVolNum, userNoShow, userScore, enabled;
 	
 	
 	public String getUserTel() {
@@ -30,7 +31,6 @@ public class Member {
 	public void setTel3(String tel3) {
 		this.tel3 = tel3;
 	}
-	private int userIdx, isMember, userLevel, userVolNum, userNoShow, userScore, enabled;
 	
 	public String getUserPwd() {
 		return userPwd;
