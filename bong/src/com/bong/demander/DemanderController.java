@@ -10,7 +10,7 @@ public class DemanderController {
 	@RequestMapping(value="/main/demander")
 	public ModelAndView demanderMain() throws Exception {
 		
-		ModelAndView mav = new ModelAndView(".four.demander.demanderMain.수요처 전체 메인페이지");
+		ModelAndView mav = new ModelAndView(".four.demander.main.수요처 전체 메인페이지");
 		return mav;
 	}
 	
@@ -24,7 +24,7 @@ public class DemanderController {
 	@RequestMapping(value="/demander/index/main")
 	public ModelAndView demanderIndexMain() throws Exception {
 		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.indexMain.각 수요처 메인");
+		ModelAndView mav = new ModelAndView(".four.demander.dari.main.각 수요처 메인");
 		return mav;
 	}
 	
@@ -73,7 +73,7 @@ public class DemanderController {
 	@RequestMapping(value="/demander/index/eval")
 	public ModelAndView demanderEval() throws Exception {
 		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.eval.달력");
+		ModelAndView mav = new ModelAndView(".four.demander.dari.eval.평가");
 		return mav;
 	}
 	

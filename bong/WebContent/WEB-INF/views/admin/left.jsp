@@ -45,17 +45,11 @@
                         <div class="sidebar-item categories">
                             <h3>Categories</h3>
                             <ul class="nav navbar-stacked">
-                                <li><a href="<%=cp%>/main/demander">수요처 전체메인<span class="pull-right">(1)</span></a></li>
-                                <li class="active"><a href="<%=cp%>/demander/index/main">수요처메인<span class="pull-right">(8)</span></a></li>
-                                <li><a href="<%=cp%>/demander/index/calendar">수요처달력<span class="pull-right">(4)</span></a></li>
-                                <li><a href="<%=cp%>/demander/index/qna">수요처QnA<span class="pull-right">(9)</span></a></li>
-                                <li><a href="<%=cp%>/demander/index/photo">포토게시판<span class="pull-right">(3)</span></a></li>
-                                <li><a href="<%=cp%>/demander/index/review">후기게시판<span class="pull-right">(4)</span></a></li>
-                                <li><a href="<%=cp%>/demander/index/schedule">일정등록페이지<span class="pull-right">(2)</span></a></li>
-                                <li><a href="<%=cp%>/demander/index/approval">요청승인페이지<span class="pull-right">(8)</span></a></li>
-                                <li><a href="<%=cp%>/demander/index/eval">평가페이지<span class="pull-right">(8)</span></a></li>
-                                <li><a href="<%=cp%>/demander/index/guest">방명록<span class="pull-right">(8)</span></a></li>
-                                <li><a href="<%=cp%>/demander/index/admin">관리자페이지<span class="pull-right">(8)</span></a></li>
+                                <li><a href="<%=cp%>/admin">관리자 메인페이지<span class="pull-right">(1)</span></a></li>
+                                <li><a href="<%=cp%>/admin/member">회원관리<span class="pull-right">(4)</span></a></li>
+                                <li><a href="<%=cp%>/admin/club">동아리 관리<span class="pull-right">(9)</span></a></li>
+                                <li><a href="<%=cp%>/admin/demander">수요처 관리<span class="pull-right">(3)</span></a></li>
+                                <li><a href="<%=cp%>/admin/approval">동아리/수요처 승인<span class="pull-right">(4)</span></a></li>
                             </ul>
                         </div>
                         <div class="sidebar-item tag-cloud">

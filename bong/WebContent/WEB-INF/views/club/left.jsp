@@ -11,7 +11,8 @@
 
                 <div class="col-md-3 col-sm-5">
                     <div class="sidebar blog-sidebar">
-                        <div class="sidebar-item  recent">
+                    	<!-- 코멘트 쓰려면 쓰기 없어도 됨 -->
+                        <%-- <div class="sidebar-item  recent">
                             <h3>Comments</h3>
                             <div class="media">
                                 <div class="pull-left">
@@ -40,7 +41,7 @@
                                     <p>posted on  07 March 2014</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> --%>
                         <div class="sidebar-item categories">
                             <h3>Categories</h3>
                             <ul class="nav navbar-stacked">

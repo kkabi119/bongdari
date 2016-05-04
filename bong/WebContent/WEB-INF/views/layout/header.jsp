@@ -12,10 +12,10 @@
                    <div class="social-icons pull-right">
                         <ul class="nav nav-pills">
                             <li><a href="<%=cp%>/member/login"><i class="fa fa-sign-in"> Login</i></a></li>
-                            <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="<%=cp%>/member/myPage"><i class="glyphicon glyphicon-user">MyPage</i></a></li>
                             <li><a href=""><i class="fa fa-google-plus"></i></a></li>
                             <li><a href=""><i class="fa fa-dribbble"></i></a></li>
-                            <li><a href=""><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="<%=cp%>/admin"><i class="glyphicon glyphicon-cog">Admin</i></a></li>
                         </ul>
                     </div> 
                 </div>
