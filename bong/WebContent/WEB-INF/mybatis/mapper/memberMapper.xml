@@ -19,9 +19,4 @@
 		,#{userBirth},#{userAddr},#{userGender},#{userTel}
 		,#{userEmail},#{userJob})
 	</insert>
-	
-	<update id="updateLastLogin" parameterType="String">
-	  UPDATE memberInfo SET last_login=SYSDATE
-	    WHERE userId=#{userId}
-	</update>
 </mapper>

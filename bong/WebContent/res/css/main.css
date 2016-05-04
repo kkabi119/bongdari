@@ -233,6 +233,11 @@
   color:#0884d5;
 }
 
+/* glyphicon 전체에 디자인을 주었습니다. 세세한 수정이 필요하다면 아래 코드를 지워주세요 */
+.social-icons ul li a:hover .glyphicon {
+  color:#0884d5;
+}
+
 .social-icons ul li a:hover .fa-twitter {
   color:#2AA7DC;
 }

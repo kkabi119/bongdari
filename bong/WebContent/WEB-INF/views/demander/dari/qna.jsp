@@ -8,7 +8,6 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 
-    
                 <div class="col-md-9 col-sm-7">
                     <div class="row">
                          <div class="col-md-12 col-sm-12">
@@ -20,7 +19,7 @@
                                     </div>
                                 </div>
                                 <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="blogdetails.html">수요처 검색하기!!!</a></h2>
+                                    <h2 class="post-title bold"><a href="blogdetails.html">수요처QNA</a></h2>
                                     <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
                                     <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
                                     <a href="#" class="read-more">View More</a>

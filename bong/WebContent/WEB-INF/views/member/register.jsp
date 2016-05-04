@@ -36,7 +36,7 @@ function register(){
 						    	<h2><span></span>Register</h2>
 						 	 </div>
 						  	<form name="registerForm" method="POST" onsubmit="return register()">
-						  		<input type="text" name="userId" placeholder="아이디" >
+						  		<input type="text" name="userId" value="아이디" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '아이디';}" >
 						  		<input type="text" name="userName" value="이름" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '이름';}" >
 						  		<input type="password" name="userPwd" value="비밀번호" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '비밀번호';}" >
 								<input type="password" name="pwdConfirm" value="비밀번호확인" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '비밀번호확인';}" >
