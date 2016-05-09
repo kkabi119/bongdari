@@ -18,8 +18,11 @@
                             <c:if test="${empty sessionScope.member}">
                             <li><a href="<%=cp%>/member/login"><i class="fa fa-sign-in"> Login</i></a></li>
                             </c:if><li><a href="<%=cp%>/member/myPage"><i class="glyphicon glyphicon-user">MyPage</i></a></li>
+                            
                             <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+                            
                             <li><a href=""><i class="fa fa-dribbble">My Club</i></a></li>
+                            
                             <c:if test="${sessionScope.member.userId=='admin'}">
                             <li><a href="<%=cp%>/admin"><i class="glyphicon glyphicon-cog">Admin</i></a></li>
                             </c:if>
@@ -60,6 +63,14 @@
                                 <li><a href="<%=cp%>/main/searchDemander">수요처 검색</a></li>
                             </ul>
                         </li>
+                        
+                        <li class="dropdown"><a href="blog.html">나의동아리 <i class="fa fa-angle-down"></i></a>
+                            <ul role="menu" class="sub-menu">
+                                <li><a href="<%=cp%>/main/myClub">클럽1</a></li>
+                                <li><a href="<%=cp%>/main/club2">클럽2</a></li>
+                            </ul>
+                        </li>
+                        
                         <li class="dropdown"><a href="portfolio.html">Portfolio <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li><a href="portfolio.html">Portfolio Default</a></li>
