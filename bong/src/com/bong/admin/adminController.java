@@ -9,7 +9,7 @@ public class adminController {
 	@RequestMapping(value="/admin")
 	public ModelAndView adminMain() throws Exception {
 		
-		ModelAndView mav = new ModelAndView(".four.admin.main.관리자메인페이지");
+		ModelAndView mav = new ModelAndView(".admin4Layout");
 		return mav;
 	}
 	
