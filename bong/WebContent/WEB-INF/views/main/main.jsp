@@ -5,8 +5,6 @@
 <%
 	String cp=request.getContextPath();
 %>
-
-
     <section id="home-slider">
         <div class="container">
             <div class="row">

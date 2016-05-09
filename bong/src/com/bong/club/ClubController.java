@@ -21,6 +21,14 @@ public class ClubController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/main/myClub")
+	public ModelAndView Myclub() throws Exception {
+		
+		ModelAndView mav = new ModelAndView(".four.club.dari.main.동아리 개인페이지");
+		return mav;
+	}
+	
+	
 	@RequestMapping(value="/main/searchClub")
 	public ModelAndView clubSearch() throws Exception {
 		
