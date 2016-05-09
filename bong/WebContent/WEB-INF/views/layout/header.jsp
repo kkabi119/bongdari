@@ -55,10 +55,10 @@
                                 
                             </ul>
                         </li>                    
-                        <li class="dropdown"><a href="blog.html">수요처 <i class="fa fa-angle-down"></i></a>
+                        <li class="dropdown"><a href="#">수요처 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
-                                <li><a href="<%=cp%>/main/demander">수요처 전체 메인</a></li>
-                                <li><a href="<%=cp%>/main/searchDemander">수요처 검색</a></li>
+                                <li><a href="<%=cp%>/main/demander">수요처 전체</a></li>
+                                <%-- <li><a href="<%=cp%>/main/searchDemander">수요처 </a></li> --%>
                             </ul>
                         </li>
                         <li class="dropdown"><a href="portfolio.html">Portfolio <i class="fa fa-angle-down"></i></a>
