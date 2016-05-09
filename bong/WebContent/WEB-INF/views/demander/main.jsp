@@ -8,128 +8,98 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 
-<link rel="stylesheet" href="<%=cp%>/res/css/style.css" type="text/css">
-
-<script type="text/javascript" src="<%=cp%>/res/jquery/js/jquery-1.12.3.min.js"></script>
-<script type="text/javascript">
-function cityList() {
-	var snum=$("#sido").val();
-	if(snum=="") {
-		$("#city option").each(function() {
-			$("#city option:eq(0)").remove();
-		});
-
-		$("#city").append("<option value=''>::도시선택::</option>");
-		return false;
-	}
-	var url="<%=cp%>/main/demander";
-	var params="snum="+snum;
-	
-	$.ajax({
-		type:"post"
-		,url:url
-		,data:params
-		,dataType:"json"
-		,success:function(data){
-			$("#city option").each(function() {
-				$("#city option:eq(0)").remove();
-			});
-
-			 $("#city").append("<option value=''>::도시선택::</option>");
-			 
-			 for(var idx=0; idx<data.list.length; idx++) {
-				 $("#city").append("<option value='"+data.list[idx].cnum+"'>"+data.list[idx].city+"</option>");
-			 }
-		}
-	    ,error:function(e) {
-	    	alert(e.responseText);
-	    }
-	});
-}
-
-function result() {
-	var snum=$("#sido").val();
-	var cnum=$("#city").val();
-	var sido=$("#sido :selected").text();
-	var city=$("#city :selected").text();
-
-	if(! snum || !cnum)
-		return false;
-	
-	var s=sido+":"+snum+", "+city+":"+cnum;
-	alert(s);
-}
-</script>
-
-<!-- 도시별/분야별 검색 -->
-<div style="margin: 50px auto 10px;" align="center">
-	<div style="color: blue">지역별 검색</div>
-	시도선택<select id="sido" onchange="cityList();" class="selectField" name="sido">
-		<option value="">::시도선택::</option>
-		<c:forEach var="dto" items="${list}">
-			<option value="${dto.snum}">${dto.sido}</option>
-		</c:forEach>
-	</select> 도시선택<select id="city" class="selectField" name="city">
-		<option value="">::도시선택::</option>
-	</select> <br> 수요처 명<input type="text" name="demandName" class="textField">
-	<input type="button" value=" 확인 " onclick="result();" class="btn">
-	<br>
-	<hr>
-	<br>
-	<div style="color: blue">분야별 검색</div>
-	시설유형<select id="demandType" class="selectField">
-		<option value="">::시설유형::</option>
-	</select> 수요처 명<input type="text" name="demandName" class="textField"> <input
-		type="button" value=" 확인 " onclick="result();" class="btn">
-
-</div>
-<br>
-<hr>
-<br>
-
-
-<!-- 리스트 -->
-<div style="margin: 50px auto 10px; width: 1000px" align="center" >
-
-        <div style="clear: both; height: 30px; line-height: 30px;">
-            <div style="float: left;">${dataCount}개(${page}/${total_page} 페이지)</div>
-            <div style="float: right;">&nbsp;</div>
+    
+    
+    
+                <div class="col-md-9 col-sm-7">
+                    <div class="row">
+                         <div class="col-md-12 col-sm-12">
+                            <div class="single-blog two-column">
+                                <div class="post-thumb">
+                                    <a href="blogdetails.html"><img src="<%=cp%>/res/images/blog/7.jpg" class="img-responsive" alt=""></a>
+                                    <div class="post-overlay">
+                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
+                                    </div>
+                                </div>
+                                <div class="post-content overflow">
+                                    <h2 class="post-title bold"><a href="blogdetails.html">수요처 전체 메인!!!</a></h2>
+                                    <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
+                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
+                                    <a href="#" class="read-more">View More</a>
+                                    <div class="post-bottom overflow">
+                                        <ul class="nav navbar-nav post-nav">
+                                            <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
+                                            <li><a href="#"><i class="fa fa-heart"></i>32 Love</a></li>
+                                            <li><a href="#"><i class="fa fa-comments"></i>3 Comments</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="single-blog two-column">
+                                <div class="post-thumb">
+                                    <a href="blogdetails.html"><img src="<%=cp%>/res/images/blog/8.jpg" class="img-responsive" alt=""></a>
+                                    <div class="post-overlay">
+                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
+                                    </div>
+                                </div>
+                                <div class="post-content overflow">
+                                    <h2 class="post-title bold"><a href="blogdetails.html">Advanced business cards design</a></h2>
+                                    <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
+                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
+                                    <a href="#" class="read-more">View More</a>
+                                    <div class="post-bottom overflow">
+                                        <ul class="nav navbar-nav post-nav">
+                                            <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
+                                            <li><a href="#"><i class="fa fa-heart"></i>32 Love</a></li>
+                                            <li><a href="#"><i class="fa fa-comments"></i>3 Comments</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="single-blog two-column">
+                                <div class="post-thumb">
+                                    <a href="blogdetails.html"><img src="<%=cp%>/res/images/blog/9.jpg" class="img-responsive" alt=""></a>
+                                    <div class="post-overlay">
+                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
+                                    </div>
+                                </div>
+                                <div class="post-content overflow">
+                                    <h2 class="post-title bold"><a href="blogdetails.html">Advanced business cards design</a></h2>
+                                    <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
+                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
+                                    <a href="#" class="read-more">View More</a>
+                                    <div class="post-bottom overflow">
+                                        <ul class="nav navbar-nav post-nav">
+                                            <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
+                                            <li><a href="#"><i class="fa fa-heart"></i>32 Love</a></li>
+                                            <li><a href="#"><i class="fa fa-comments"></i>3 Comments</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="blog-pagination">
+                        <ul class="pagination">
+                          <li><a href="#">left</a></li>
+                          <li><a href="#">1</a></li>
+                          <li><a href="#">2</a></li>
+                          <li class="active"><a href="#">3</a></li>
+                          <li><a href="#">4</a></li>
+                          <li><a href="#">5</a></li>
+                          <li><a href="#">6</a></li>
+                          <li><a href="#">7</a></li>
+                          <li><a href="#">8</a></li>
+                          <li><a href="#">9</a></li>
+                          <li><a href="#">right</a></li>
+                        </ul>
+                    </div>
+                 </div>
+            </div>
         </div>
-        
-        <div class="table-responsive" style="clear: both;"> <!-- 테이블 반응형 -->
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th class="text-center" style="width: 100px;">번호</th>
-                        <th class="text-center" style="width: 150px;">수요처명</th>
-                        <th class="text-center" >주소</th>
-                        <th class="text-center" style="width: 200px;">전화번호</th>
-                        <th class="text-center" style="width: 100px;">시설유형</th>
-                    </tr>
-                </thead>
-                <tbody>
-              <%--   <c:forEach var="dto" items="${list}"> --%>
-                    <tr> 
-                        <td class="text-center">1</td>
-                        <td class="text-center"><a href="<%=cp%>/main/articleDemander">[수요처명]</a></td>
-  					    <td class="text-center">경기도 고양시 덕양구</td>
-                        <td class="text-center">010-2222-2222</td>
-                        <td class="text-center">보육</td>
-                    </tr>
-                <%-- </c:forEach> --%>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
-          <c:if test="${dataCount==0}">
-          	등록된 게시물이 없습니다
-          </c:if>
-          <c:if test="${dataCount!=0}">
-          	${paging}
-          </c:if>
-
-    </div>    
-</div>
-
-
+    </section>
+    <!--/#blog-->

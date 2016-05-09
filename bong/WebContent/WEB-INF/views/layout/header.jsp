@@ -13,17 +13,19 @@
                         <ul class="nav nav-pills">
                             <c:if test="${not empty sessionScope.member}">
                         	<span style="color:blue;">${sessionScope.member.userName}</span>님 <i></i>
-                        	<c:if test="${sessionScope.member.userId=='admin'}">
-                    			<a href="<%=cp%>/admin">관리자</a> <i></i>
-                			</c:if>
                         	<li><a href="<%=cp%>/member/logout"><i class="fa fa-sign-out"> Logout</i></a></li>
                             </c:if>
                             <c:if test="${empty sessionScope.member}">
                             <li><a href="<%=cp%>/member/login"><i class="fa fa-sign-in"> Login</i></a></li>
                             </c:if><li><a href="<%=cp%>/member/myPage"><i class="glyphicon glyphicon-user">MyPage</i></a></li>
+                            
                             <li><a href=""><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href=""><i class="fa fa-dribbble"></i></a></li>
+                            
+                            <li><a href=""><i class="fa fa-dribbble">My Club</i></a></li>
+                            
+                            <c:if test="${sessionScope.member.userId=='admin'}">
                             <li><a href="<%=cp%>/admin"><i class="glyphicon glyphicon-cog">Admin</i></a></li>
+                            </c:if>
                         </ul>
                     </div> 
                 </div>
@@ -55,12 +57,20 @@
                                 
                             </ul>
                         </li>                    
-                        <li class="dropdown"><a href="#">수요처 <i class="fa fa-angle-down"></i></a>
+                        <li class="dropdown"><a href="blog.html">수요처 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
-                                <li><a href="<%=cp%>/main/demander">수요처 전체</a></li>
-                                <%-- <li><a href="<%=cp%>/main/searchDemander">수요처 </a></li> --%>
+                                <li><a href="<%=cp%>/main/demander">수요처 전체 메인</a></li>
+                                <li><a href="<%=cp%>/main/searchDemander">수요처 검색</a></li>
                             </ul>
                         </li>
+                        
+                        <li class="dropdown"><a href="blog.html">나의동아리 <i class="fa fa-angle-down"></i></a>
+                            <ul role="menu" class="sub-menu">
+                                <li><a href="<%=cp%>/main/myClub">클럽1</a></li>
+                                <li><a href="<%=cp%>/main/club2">클럽2</a></li>
+                            </ul>
+                        </li>
+                        
                         <li class="dropdown"><a href="portfolio.html">Portfolio <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li><a href="portfolio.html">Portfolio Default</a></li>
