@@ -10,7 +10,7 @@ public class ClubController {
 	@RequestMapping(value="/main/club")
 	public ModelAndView clubMain() throws Exception {
 		
-		ModelAndView mav = new ModelAndView(".four.club.clubMain.동아리 전체 메인페이지");
+		ModelAndView mav = new ModelAndView(".layout.club.clubMain.봉다리 메인");
 		return mav;
 	}
 	
