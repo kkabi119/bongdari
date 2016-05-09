@@ -13,17 +13,16 @@
                         <ul class="nav nav-pills">
                             <c:if test="${not empty sessionScope.member}">
                         	<span style="color:blue;">${sessionScope.member.userName}</span>님 <i></i>
-                        	<c:if test="${sessionScope.member.userId=='admin'}">
-                    			<a href="<%=cp%>/admin">관리자</a> <i></i>
-                			</c:if>
                         	<li><a href="<%=cp%>/member/logout"><i class="fa fa-sign-out"> Logout</i></a></li>
                             </c:if>
                             <c:if test="${empty sessionScope.member}">
                             <li><a href="<%=cp%>/member/login"><i class="fa fa-sign-in"> Login</i></a></li>
                             </c:if><li><a href="<%=cp%>/member/myPage"><i class="glyphicon glyphicon-user">MyPage</i></a></li>
                             <li><a href=""><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href=""><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href=""><i class="fa fa-dribbble">My Club</i></a></li>
+                            <c:if test="${sessionScope.member.userId=='admin'}">
                             <li><a href="<%=cp%>/admin"><i class="glyphicon glyphicon-cog">Admin</i></a></li>
+                            </c:if>
                         </ul>
                     </div> 
                 </div>
