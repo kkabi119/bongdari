@@ -16,7 +16,6 @@
     <title>Home | Triangle</title>
     <!-- Custom CSS -->
     <link href="<%=cp %>/res/css/modern-business.css" rel="stylesheet">
-    
     <link href="<%=cp%>/res/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=cp%>/res/css/font-awesome.min.css" rel="stylesheet">
     <link href="<%=cp%>/res/css/animate.min.css" rel="stylesheet"> 
