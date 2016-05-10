@@ -26,15 +26,13 @@
 
 
   a{
-  	color: #555;
-  /*   color:#C03035; */
+    color:##555;
   }
 
   a:hover {
     outline: none;
     text-decoration:none;
-    
-    color:#1178AB; /* #4fcccd */
+    color:#4fcccd;
   }
 
   a:focus {

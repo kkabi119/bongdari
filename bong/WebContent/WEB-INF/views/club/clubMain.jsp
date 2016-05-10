@@ -8,79 +8,307 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 
-    
-                <div class="col-md-9 col-sm-7">
-                    <div class="row">
-                         <div class="col-md-12 col-sm-12">
-                            <div class="single-blog two-column">
-                                <div class="post-thumb">
-                                    <a href="blogdetails.html"><img src="<%=cp%>/res/images/blog/7.jpg" class="img-responsive" alt=""></a>
-                                    <div class="post-overlay">
-                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
+    <!-- Header Carousel -->
+    <header id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+            
+            	<div class="fill" style="background-image:url('<%=cp%>/res/images/mainslide/fill11.jpg');"></div>
+                <div class="carousel-caption">
+                    <h2></h2>
+                </div>
+            </div>
+            <div class="item">	
+                <div class="fill" style="background-image:url('<%=cp%>/res/images/mainslide/fill22.jpg');"></div>
+                <div class="carousel-caption">
+                    <h2></h2>
+                </div>
+            </div>
+            <div class="item">
+                <div class="fill" style="background-image:url('<%=cp%>/res/images/mainslide/mountain.jpg');"></div>
+                <div class="carousel-caption">
+                    <h2></h2>
+                </div>
+            </div>
+          
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+        
+        <br><br>
+		<br><br>
+     
+    </header>
+	<hr>
+	<!-- <div style="text-align:center; font-weight:bold; ">
+		<h2>이달의 우수단원</h2>
+	</div> -->
+	<!--  우수단원 소개란 시작 -->
+	 <h1 style="font-weight:bold;" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">이달의 우수단원</h1>
+                <p class="text-center wow fadeInDown" data-wow-duration="400ms" data-wow-delay="400ms"> 5월을 빛낸 이달의 우수단원을 소개해봅니다! <br>
+                댓글과 하트로 칭찬해주세용</p>
+              <br><br>
+              
+               <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <div class="col-sm-3 col-xs-6">
+                                <div class="team-single-wrapper">
+                                    <div class="team-single">
+                                        <div class="person-thumb">
+                                            <img src="<%=cp%>/res/images/aboutus/1.jpg" class="img-responsive" alt="">
+                                        </div>
+                                        <div class="social-profile">
+                                            <ul class="nav nav-pills">
+                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center;"class="person-info">
+                                        <h2>이 제훈</h2>
+                                        <p>서울북부 &amp; 으쌰아</p>
                                     </div>
                                 </div>
-                                <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="blogdetails.html">동아리 전체 메인!!!</a></h2>
-                                    <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
-                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
-                                    <a href="#" class="read-more">View More</a>
-                                    <div class="post-bottom overflow">
-                                        <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
-                                            <li><a href="#"><i class="fa fa-heart"></i>32 Love</a></li>
-                                            <li><a href="#"><i class="fa fa-comments"></i>3 Comments</a></li>
-                                        </ul>
+                            </div>
+                            <div class="col-sm-3 col-xs-6">
+                                <div class="team-single-wrapper">
+                                    <div class="team-single">
+                                        <div class="person-thumb">
+                                            <img src="<%=cp%>/res/images/aboutus/2.jpg" class="img-responsive" alt="">
+                                        </div>
+                                        <div class="social-profile">
+                                            <ul class="nav nav-pills">
+                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                   <div style="text-align:center;"class="person-info">
+                                        <h2>최 양희</h2>
+                                        <p>부산북부 &amp; 따뜻따뜻</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-xs-6">
+                                <div class="team-single-wrapper">
+                                    <div class="team-single">
+                                        <div class="person-thumb">
+                                            <img src="<%=cp%>/res/images/aboutus/3.jpg" class="img-responsive" alt="">
+                                        </div>
+                                        <div class="social-profile">
+                                            <ul class="nav nav-pills">
+                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                   <div style="text-align:center;"class="person-info">
+                                        <h2>안 선경</h2>
+                                        <p>강원북부 &amp; 위너맘</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-xs-6">
+                                <div class="team-single-wrapper">
+                                    <div class="team-single">
+                                        <div class="person-thumb">
+                                            <img src="<%=cp%>/res/images/aboutus/1.jpg" class="img-responsive" alt="">
+                                        </div>
+                                        <div class="social-profile">
+                                            <ul class="nav nav-pills">
+                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center;"class="person-info">
+                                        <h2>조 일환</h2>
+                                        <p>서울남부 &amp; 호주형</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="single-blog two-column">
-                                <div class="post-thumb">
-                                    <a href="blogdetails.html"><img src="<%=cp%>/res/images/blog/8.jpg" class="img-responsive" alt=""></a>
-                                    <div class="post-overlay">
-                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
+                        <div class="item">
+                            <div class="col-sm-3 col-xs-6">
+                                <div class="team-single-wrapper">
+                                    <div class="team-single">
+                                        <div class="person-thumb">
+                                            <img src="<%=cp%>/res/images/aboutus/4.jpg" class="img-responsive" alt="">
+                                        </div>
+                                        <div class="social-profile">
+                                            <ul class="nav nav-pills">
+                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="blogdetails.html">Advanced business cards design</a></h2>
-                                    <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
-                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
-                                    <a href="#" class="read-more">View More</a>
-                                    <div class="post-bottom overflow">
-                                        <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
-                                            <li><a href="#"><i class="fa fa-heart"></i>32 Love</a></li>
-                                            <li><a href="#"><i class="fa fa-comments"></i>3 Comments</a></li>
-                                        </ul>
+                                    <div class="person-info">
+                                        <h2>John Doe</h2>
+                                        <p>CEO &amp; Developer</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="single-blog two-column">
-                                <div class="post-thumb">
-                                    <a href="blogdetails.html"><img src="<%=cp%>/res/images/blog/9.jpg" class="img-responsive" alt=""></a>
-                                    <div class="post-overlay">
-                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
+                            <div class="col-sm-3 col-xs-6">
+                                <div class="team-single-wrapper">
+                                    <div class="team-single">
+                                        <div class="person-thumb">
+                                            <img src="<%=cp%>/res/images/aboutus/3.jpg" class="img-responsive" alt="">
+                                        </div>
+                                        <div class="social-profile">
+                                            <ul class="nav nav-pills">
+                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="person-info">
+                                        <h2>John Doe</h2>
+                                        <p>CEO &amp; Developer</p>
                                     </div>
                                 </div>
-                                <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="blogdetails.html">Advanced business cards design</a></h2>
-                                    <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
-                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
-                                    <a href="#" class="read-more">View More</a>
-                                    <div class="post-bottom overflow">
-                                        <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
-                                            <li><a href="#"><i class="fa fa-heart"></i>32 Love</a></li>
-                                            <li><a href="#"><i class="fa fa-comments"></i>3 Comments</a></li>
-                                        </ul>
+                            </div>
+                            <div class="col-sm-3 col-xs-6">
+                                <div class="team-single-wrapper">
+                                    <div class="team-single">
+                                        <div class="person-thumb">
+                                            <img src="<%=cp%>/res/images/aboutus/2.jpg" class="img-responsive" alt="">
+                                        </div>
+                                        <div class="social-profile">
+                                            <ul class="nav nav-pills">
+                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="person-info">
+                                        <h2>John Doe</h2>
+                                        <p>CEO &amp; Developer</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-xs-6">
+                                <div class="team-single-wrapper">
+                                    <div class="team-single">
+                                        <div class="person-thumb">
+                                            <img src="<%=cp%>/res/images/aboutus/1.jpg" class="img-responsive" alt="">
+                                        </div>
+                                        <div class="social-profile">
+                                            <ul class="nav nav-pills">
+                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="person-info">
+                                        <h2>John Doe</h2>
+                                        <p>CEO &amp; Developer</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
+                   <div>
+                     <!-- Controls -->
+                    <a class="left team-carousel-control hidden-xs" href="#team-carousel" data-slide="prev">left</a>
+                    <a class="right team-carousel-control hidden-xs" href="#team-carousel" data-slide="next">right</a>
+                </div>
+       <!--  우수단원 소개란 끝 -->    
+     
+       <!--  이달의 우수 후기 -->
+       <div class="row" style="margin-top:50px;">
+       <div class="col-md-4" >
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 style="color:#687ead; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 후기</h5>
+                    </div>
+                    <div class="panel-body">
+                        <ul type="disc">
+                        <%--   <c:forEach var="dtoDocu" items="${listDocu}">
+                        	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
+                          </c:forEach> --%>
+                        
+                       		 <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
+                     	  	 <li><a href="#" >[서울] 벌써 보고싶은 아이들과 함께</a></li>
+                       		 <li><a href="#" >[부산] 집에 가고 싶은 사람 손~</a></li>
+                       		 <li><a href="#" >[강원] 저녁 뭐 먹지?</a></li>
+                       		  <li><a href="#" >[전주] 힘들었던만큼 보람찼던 그 날</a></li>
+                        	<li>	<a href="#" class="btn btn-default" style="text-align: right">더보기</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4" >
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 style="color:#687ead; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 봉다리</h5>
+                    </div>
+                    <div class="panel-body">
+                        <ul type="disc">
+                        <%--   <c:forEach var="dtoDocu" items="${listDocu}">
+                        	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
+                          </c:forEach> --%>
+                        
+                       		 <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
+                     	  	 <li><a href="#" >[서울] 벌써 보고싶은 아이들과 함께</a></li>
+                       		 <li><a href="#" >[부산] 집에 가고 싶은 사람 손~</a></li>
+                       		 <li><a href="#" >[강원] 저녁 뭐 먹지?</a></li>
+                       		  <li><a href="#" >[전주] 힘들었던만큼 보람찼던 그 날</a></li>
+                        	<li>	<a href="#" class="btn btn-default" style="text-align: right">더보기</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4" >
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 style="color:#687ead; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 수요처</h5>
+                    </div>
+                    <div class="panel-body">
+                        <ul type="disc">
+                        <%--   <c:forEach var="dtoDocu" items="${listDocu}">
+                        	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
+                          </c:forEach> --%>
+                        
+                       		 <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
+                     	  	 <li><a href="#" >[서울] 벌써 보고싶은 아이들과 함께</a></li>
+                       		 <li><a href="#" >[부산] 집에 가고 싶은 사람 손~</a></li>
+                       		 <li><a href="#" >[강원] 저녁 뭐 먹지?</a></li>
+                       		  <li><a href="#" >[전주] 힘들었던만큼 보람찼던 그 날</a></li>
+                        	<li>	<a href="#" class="btn btn-default" style="text-align: right">더보기</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            </div>
+       <!--  이달의 우수 후기 끝-->
+          <br><br>
+          <hr>
                     <div class="blog-pagination">
                         <ul class="pagination">
                           <li><a href="#">left</a></li>
