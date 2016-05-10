@@ -26,14 +26,14 @@
 						<div class="item active">
 
 							<div class="fill"
-								style="background-image:url('<%=cp%>/res/images/myclub/111.jpg');"></div>
+								style="background-image:url('<%=cp%>/res/images/demander/demander1.jpg');"></div>
 							<div class="carousel-caption">
 								<h2></h2>
 							</div>
 						</div>
 						<div class="item">
 							<div class="fill"
-								style="background-image:url('<%=cp%>/res/images/myclub/222.jpg');"></div>
+								style="background-image:url('<%=cp%>/res/images/demander/demander2.jpg');"></div>
 							<div class="carousel-caption">
 								<h2></h2>
 							</div>
@@ -60,7 +60,7 @@
 				</header>
 				<div class="post-content overflow">
 					<h2 class="post-title bold">
-						<a href="blogdetails.html">내 수요처 메인!</a>
+						<a href="blogdetails.html">내 수요처 메인</a>
 					</h2>
 
 				</div>
