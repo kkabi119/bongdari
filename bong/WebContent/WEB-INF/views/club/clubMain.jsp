@@ -9,6 +9,12 @@
 %>
 
     <!-- Header Carousel -->
+    <!--  우수단원 소개란 시작 -->
+	 <h1 style="margin-top:30px" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">오월의 베스트 포토 </h1>
+      <h1 style="font-weight:bold; margin-top:-6px;" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">따뜻한 마음을 그리다</h1>
+      <p style="color:gray; font-size:16px; margin-bottom:25px;" class="text-center wow fadeInDown" data-wow-duration="400ms" data-wow-delay="400ms"> 
+      			이번 달을 빛낸 이달의 우수포토를 소개합니다! 댓글과 하트로 칭찬해주세용</p>
+              
     <header id="myCarousel" class="carousel slide">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -58,8 +64,8 @@
 		<h2>이달의 우수단원</h2>
 	</div> -->
 	<!--  우수단원 소개란 시작 -->
-	 <h1 style="font-weight:bold;" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">이달의 우수단원</h1>
-                <p class="text-center wow fadeInDown" data-wow-duration="400ms" data-wow-delay="400ms"> 5월을 빛낸 이달의 우수단원을 소개해봅니다! <br>
+	 <h1 style="margin-top:30px; font-weight:bold;" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">이달의 우수단원</h1>
+                <p style="color:gray; font-size:16px; margin-bottom:25px;"class="text-center wow fadeInDown" data-wow-duration="400ms" data-wow-delay="400ms"> 5월을 빛낸 이달의 우수단원을 소개해봅니다! <br>
                 댓글과 하트로 칭찬해주세용</p>
               <br><br>
               
@@ -232,7 +238,7 @@
                     </div>
                     
                    <div>
-                     <!-- Controls -->
+                     <!-- Controls : 왼쪽 오른쪽 화살표  -->
                     <a class="left team-carousel-control hidden-xs" href="#team-carousel" data-slide="prev">left</a>
                     <a class="right team-carousel-control hidden-xs" href="#team-carousel" data-slide="next">right</a>
                 </div>
@@ -329,8 +335,7 @@
         </div>
     </section>
     <!--/#blog-->
-
-      <!-- Script to Activate the Carousel -->
+ <!-- Script to Activate the Carousel -->
     <script>
     $('.carousel').carousel({
         interval: 5000 //changes the speed
