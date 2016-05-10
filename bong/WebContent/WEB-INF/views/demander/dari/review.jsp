@@ -17,25 +17,36 @@
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
 	type="text/css">
 
+<style type="text/css">
+.row2{
+margin-top:30px;
+margin-bottom:30px;
+height: 250px;}
+.row3{
+margin-top:30px;
+margin-bottom:30px;
+height: 200px;}
 
-<div class="container">
+</style>
+
+<div class="container" style="width: 63%;">
 
 	<!-- Page Heading/Breadcrumbs -->
-	<div class="row">
-		<div class="col-lg-12">
+	<div class="row3"> 
+		<div class="col-lg-12" >
 			<h1 class="page-header">
-				One Column Portfolio <small>Subheading</small>
+				후기 게시판 <small>봉사활동 후기를 남겨주세요.</small>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="index.html">Home</a></li>
-				<li class="active">One Column Portfolio</li>
+				<li><a href="<%=cp%>/demander/index/main">수요처 메인</a></li>
+				<li class="active">후기 게시판</li>
 			</ol>
 		</div>
-	</div>
+	 </div> 
 	<!-- /.row -->
 
 	<!-- Project One -->
-	<div class="row">
+	<div class="row2">
 		<div class="col-md-7">
 			<a href="portfolio-item.html"> <img
 				class="img-responsive img-hover" src="http://placehold.it/700x300"
@@ -53,13 +64,13 @@
 				Project</i>
 			</a>
 		</div>
-	</div>
+	 </div> 
 	<!-- /.row -->
 
 	<hr>
-
+	
 	<!-- Project Two -->
-	<div class="row">
+	<div class="row2">
 		<div class="col-md-7">
 			<a href="portfolio-item.html"> <img
 				class="img-responsive img-hover" src="http://placehold.it/700x300"
@@ -77,13 +88,13 @@
 				Project</i>
 			</a>
 		</div>
-	</div>
+	</div> 
 	<!-- /.row -->
 
 	<hr>
 
 	<!-- Project Three -->
-	<div class="row">
+	 <div class="row2"> 
 		<div class="col-md-7">
 			<a href="portfolio-item.html"> <img
 				class="img-responsive img-hover" src="http://placehold.it/700x300"
@@ -101,13 +112,13 @@
 				Project</i>
 			</a>
 		</div>
-	</div>
+	</div> 
 	<!-- /.row -->
 
 	<hr>
 
 	<!-- Project Four -->
-	<div class="row">
+	 <div class="row2"> 
 
 		<div class="col-md-7">
 			<a href="portfolio-item.html"> <img
@@ -126,28 +137,11 @@
 				Project</i>
 			</a>
 		</div>
-	</div>
+	 </div> 
 	<!-- /.row -->
 
 	<hr>
 
-	<!-- Project Five -->
-	<div class="row">
-		<div class="col-md-7">
-			<a href="#"> <img class="img-responsive img-hover"
-				src="http://placehold.it/700x300" alt="">
-			</a>
-		</div>
-		<div class="col-md-5">
-			<h3>Project Five</h3>
-			<h4>Subheading</h4>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-				Aliquid, quo, minima, inventore voluptatum saepe quos nostrum
-				provident ex quisquam hic odio repellendus atque porro distinctio
-				quae id laboriosam facilis dolorum.</p>
-			<a class="btn btn-primary" href="#">View Project</i></a>
-		</div>
-	</div>
-	<!-- /.row -->
+
 </div>
 <!--/#blog-->

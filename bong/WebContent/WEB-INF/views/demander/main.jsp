@@ -113,7 +113,7 @@ function result() {
                         <td class="text-center">1</td>
                         <td class="text-center"><a href="<%=cp%>/main/articleDemander">[수요처명]</a></td>
   					    <td class="text-center">경기도 고양시 덕양구</td>
-                        <td class="text-center">010-2222-2222</td>
+                        <td class="text-center">010-1111-2222</td>
                         <td class="text-center">보육</td>
                     </tr>
                 <%-- </c:forEach> --%>

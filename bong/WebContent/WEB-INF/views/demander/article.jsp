@@ -10,10 +10,13 @@
 
 <link rel="stylesheet" href="<%=cp%>/res/css/style.css" type="text/css">
 
-
+<script type="text/javascript"
+	src="<%=cp%>/res/jquery/js/jquery-1.12.3.min.js"></script>
+	
 <style type="text/css">
 .bbs-article .table {
     margin-top: 15px;
+  
 }
 .bbs-article .table thead tr,  .bbs-article .table tbody tr {
     height: 30px;
@@ -52,9 +55,6 @@
 
 </style>
 
-<script type="text/javascript"
-	src="<%=cp%>/res/jquery/js/jquery-1.12.3.min.js"></script>
-
 
 <div class="table-responsive" style="width: 1200px;">
 	<div class="bbs-article">
@@ -67,7 +67,7 @@
 			<thead>
 			<tbody>
 				<tr>
-					<td style="text-align: left;">전화번호 : 010-2222-2222</td>
+					<td style="text-align: left;">전화번호 : 010-1111-2222</td>
 					<td style="text-align: right;">주소 : 경기도 고양시 덕양구</td>
 				</tr>
 
