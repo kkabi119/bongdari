@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
@@ -8,27 +8,69 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 
-                <div class="col-md-9 col-sm-7">
-                    <div class="row">
-                         <div class="col-md-12 col-sm-12">
-                            <div class="single-blog two-column">
-                                <div class="post-thumb">
-                                    <a href="blogdetails.html"><img src="<%=cp%>/res/images/blog/7.jpg" class="img-responsive" alt=""></a>
-                                    <div class="post-overlay">
-                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
-                                    </div>
-                                </div>
-                                <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="blogdetails.html">내 수요처 메인!</a></h2>
-                                   
-                                </div>
-                            </div>
-                        </div>
-                      
-                 </div>
-            </div>
-            
-              <!--  이달의 우수 후기 -->
+<div class="col-md-9 col-sm-7">
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<div class="single-blog two-column">
+				<!-- Header Carousel -->
+				<header id="myCarousel" class="carousel slide">
+					<!-- Indicators -->
+					<ol class="carousel-indicators">
+						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						<li data-target="#myCarousel" data-slide-to="1"></li>
+						<li data-target="#myCarousel" data-slide-to="2"></li>
+					</ol>
+
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner">
+						<div class="item active">
+
+							<div class="fill"
+								style="background-image:url('<%=cp%>/res/images/myclub/111.jpg');"></div>
+							<div class="carousel-caption">
+								<h2></h2>
+							</div>
+						</div>
+						<div class="item">
+							<div class="fill"
+								style="background-image:url('<%=cp%>/res/images/myclub/222.jpg');"></div>
+							<div class="carousel-caption">
+								<h2></h2>
+							</div>
+						</div>
+						<div class="item">
+							<div class="fill"
+								style="background-image:url('<%=cp%>/res/images/myclub/333.jpg');"></div>
+							<div class="carousel-caption">
+								<h2></h2>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- Controls -->
+					<a class="left carousel-control" href="#myCarousel"
+						data-slide="prev"> <span class="icon-prev"></span>
+					</a> <a class="right carousel-control" href="#myCarousel"
+						data-slide="next"> <span class="icon-next"></span>
+					</a> <br>
+					<br> <br>
+					<br>
+
+				</header>
+				<div class="post-content overflow">
+					<h2 class="post-title bold">
+						<a href="blogdetails.html">내 수요처 메인!</a>
+					</h2>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<!--  이달의 봉사활동 -->
 <div class="row" style="margin-top: 50px;">
 
 	<div class="col-md-4">
@@ -54,8 +96,30 @@
 				</ul>
 			</div>
 		</div>
+<!-- 최근사진 -->
+		<div class="sidebar-item popular">
+			<h5 style="color: #687ead; font-weight: bold;">
+				<i class="fa fa-fw fa-paperclip"></i> Latest Photos
+			</h5>
+			<div class="panel-body">
+				<ul class="gallery">
+					<li><a href="#"><img
+							src="<%=cp%>/res/images/portfolio/popular1.jpg" alt=""></a></li>
+					<li><a href="#"><img
+							src="<%=cp%>/res/images/portfolio/popular2.jpg" alt=""></a></li>
+					<li><a href="#"><img
+							src="<%=cp%>/res/images/portfolio/popular3.jpg" alt=""></a></li>
+					<li><a href="#"><img
+							src="<%=cp%>/res/images/portfolio/popular4.jpg" alt=""></a></li>
+					<li><a href="#"><img
+							src="<%=cp%>/res/images/portfolio/popular5.jpg" alt=""></a></li>
+					<li><a href="#"><img
+							src="<%=cp%>/res/images/portfolio/popular1.jpg" alt=""></a></li>
+				</ul>
+			</div>
+		</div>
 	</div>
-
+<!-- 이달의후기 -->
 	<div class="col-md-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -79,22 +143,7 @@
 				</ul>
 			</div>
 		</div>
-		
-		<div class="sidebar-item popular" >
-                <h5 style="color: #687ead; font-weight: bold;">
-					<i class="fa fa-fw fa-paperclip"></i> Latest Photos
-				</h5>
-				<div class="panel-body">
-                            <ul class="gallery">
-                                <li><a href="#"><img src="<%=cp%>/res/images/portfolio/popular1.jpg" alt=""></a></li>
-                                <li><a href="#"><img src="<%=cp%>/res/images/portfolio/popular2.jpg" alt=""></a></li>
-                                <li><a href="#"><img src="<%=cp%>/res/images/portfolio/popular3.jpg" alt=""></a></li>
-                                <li><a href="#"><img src="<%=cp%>/res/images/portfolio/popular4.jpg" alt=""></a></li>
-                                <li><a href="#"><img src="<%=cp%>/res/images/portfolio/popular5.jpg" alt=""></a></li>
-                                <li><a href="#"><img src="<%=cp%>/res/images/portfolio/popular1.jpg" alt=""></a></li>
-                            </ul>
-                   </div>
-          </div>
+
 	</div>
 
 
@@ -103,5 +152,5 @@
 
 </div>
 <!--  이달의 우수 후기 끝-->
-      
-    <!--/#blog-->
+
+<!--/#blog-->
