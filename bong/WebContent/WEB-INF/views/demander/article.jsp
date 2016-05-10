@@ -56,7 +56,7 @@
 	src="<%=cp%>/res/jquery/js/jquery-1.12.3.min.js"></script>
 
 
-<div class="table-responsive" style="width: 1200px">
+<div class="table-responsive" style="width: 1200px;">
 	<div class="bbs-article">
 		<table class="table">
 			<thead>
@@ -86,7 +86,7 @@
 			</tbody>
 			<tfoot >
 				<tr>
-					<td align="center" >
+					<td align="center" colspan="2">
 						<button type="button" class="btn btn-default btn-sm wbtn"
 							onclick="javascript:location.href='<%=cp%>/main/demander';">
 							목록으로</button>
