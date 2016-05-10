@@ -26,9 +26,10 @@ body {
 /* Home Page Carousel */
 
 header.carousel {
-	margin: 0px auto;
-	width: 1300px;
-    height: 450px;
+	  margin: 0px auto;
+    width: 1300px; /* clubmain을 위해 오후 3:58 2016-05-10가로크기 변경 */
+     margin-top:10px;
+     height: 450px;
 }
 
 header.carousel .item,
