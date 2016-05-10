@@ -17,6 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Blog + Left Sidebar | Triangle</title>
+    <link href="<%=cp %>/res/css/modern-business2.css" rel="stylesheet">
     <link href="<%=cp%>/res/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=cp%>/res/css/font-awesome.min.css" rel="stylesheet">
     <link href="<%=cp%>/res/css/lightbox.css" rel="stylesheet"> 
