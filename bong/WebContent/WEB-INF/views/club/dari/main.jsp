@@ -110,28 +110,7 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="col-md-4" >
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 style="color:#687ead; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 수요처</h5>
-                    </div>
-                    <div class="panel-body">
-                        <ul type="disc">
-                        <%--   <c:forEach var="dtoDocu" items="${listDocu}">
-                        	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
-                          </c:forEach> --%>
-                        
-                       		 <li><a href="#" >[충주] 따뜻했던 연탄봉사의~</a></li>
-                     	  	 <li><a href="#" >[서울] 벌써 보고싶은 아께</a></li>
-                       		 <li><a href="#" >[부산] 집에 가고 싶은손~</a></li>
-                       		 <li><a href="#" >[강원] 저녁 뭐 지?</a></li>
-                       		  <li><a href="#" >[전주] 힘들었던만큼 날</a></li>
-                        	<li>	<a href="#" class="btn btn-default" style="text-align: right">더보기</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
             </div>
        <!--  이달의 우수 후기 끝-->
                     <div class="blog-pagination">

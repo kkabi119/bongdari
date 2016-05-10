@@ -29,7 +29,7 @@
             </div>
             
               <!--  이달의 우수 후기 -->
-<div class="row" style="margin-top: 50px;">
+
 
 	<div class="col-md-4">
 		<div class="panel panel-default">
@@ -101,7 +101,7 @@
 
 
 
-</div>
+
 <!--  이달의 우수 후기 끝-->
       
     <!--/#blog-->
