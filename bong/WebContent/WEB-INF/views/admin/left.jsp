@@ -1,78 +1,112 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-   String cp = request.getContextPath();
-// String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
+	String cp=request.getContextPath();
 %>
-
-
-                <div class="col-md-3 col-sm-5">
-                    <div class="sidebar blog-sidebar">
-                    	<!-- 코멘트 쓰려면 쓰기 없어도 됨 -->
-                        <%-- <div class="sidebar-item  recent">
-                            <h3>Comments</h3>
-                            <div class="media">
-                                <div class="pull-left">
-                                    <a href="#"><img src="<%=cp%>/res/images/portfolio/project1.jpg" alt=""></a>
-                                </div>
-                                <div class="media-body">
-                                    <h4><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit,</a></h4>
-                                    <p>posted on  07 March 2014</p>
-                                </div>
+<div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search<%=cp%>/res/admin.">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
                             </div>
-                            <div class="media">
-                                <div class="pull-left">
-                                    <a href="#"><img src="<%=cp%>/res/images/portfolio/project2.jpg" alt=""></a>
-                                </div>
-                                <div class="media-body">
-                                    <h4><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit,</a></h4>
-                                    <p>posted on  07 March 2014</p>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="pull-left">
-                                    <a href="#"><img src="<%=cp%>/res/images/portfolio/project3.jpg" alt=""></a>
-                                </div>
-                                <div class="media-body">
-                                    <h4><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit,</a></h4>
-                                    <p>posted on  07 March 2014</p>
-                                </div>
-                            </div>
-                        </div> --%>
-                        <div class="sidebar-item categories">
-                            <h3>Categories</h3>
-                            <ul class="nav navbar-stacked">
-                                <li><a href="<%=cp%>/admin">관리자 메인페이지<span class="pull-right">(1)</span></a></li>
-                                <li><a href="<%=cp%>/admin/member">회원관리<span class="pull-right">(4)</span></a></li>
-                                <li><a href="<%=cp%>/admin/club">동아리 관리<span class="pull-right">(9)</span></a></li>
-                                <li><a href="<%=cp%>/admin/demander">수요처 관리<span class="pull-right">(3)</span></a></li>
-                                <li><a href="<%=cp%>/admin/approval">동아리/수요처 승인<span class="pull-right">(4)</span></a></li>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="flot.html">Flot Charts</a>
+                                </li>
+                                <li>
+                                    <a href="morris.html">Morris.js Charts</a>
+                                </li>
                             </ul>
-                        </div>
-                        <div class="sidebar-item tag-cloud">
-                            <h3>Tag Cloud</h3>
-                            <ul class="nav nav-pills">
-                                <li><a href="#">Corporate</a></li>
-                                <li><a href="#">Joomla</a></li>
-                                <li><a href="#">Abstract</a></li>
-                                <li><a href="#">Creative</a></li>
-                                <li><a href="#">Business</a></li>
-                                <li><a href="#">Product</a></li>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                        </li>
+                        <li>
+                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="panels-wells.html">Panels and Wells</a>
+                                </li>
+                                <li>
+                                    <a href="buttons.html">Buttons</a>
+                                </li>
+                                <li>
+                                    <a href="notifications.html">Notifications</a>
+                                </li>
+                                <li>
+                                    <a href="typography.html">Typography</a>
+                                </li>
+                                <li>
+                                    <a href="icons.html"> Icons</a>
+                                </li>
+                                <li>
+                                    <a href="grid.html">Grid</a>
+                                </li>
                             </ul>
-                        </div>
-                        <div class="sidebar-item popular">
-                            <h3>Latest Photos</h3>
-                            <ul class="gallery">
-                                <li><a href="#"><img src="<%=cp%>/res/images/portfolio/popular1.jpg" alt=""></a></li>
-                                <li><a href="#"><img src="<%=cp%>/res/images/portfolio/popular2.jpg" alt=""></a></li>
-                                <li><a href="#"><img src="<%=cp%>/res/images/portfolio/popular3.jpg" alt=""></a></li>
-                                <li><a href="#"><img src="<%=cp%>/res/images/portfolio/popular4.jpg" alt=""></a></li>
-                                <li><a href="#"><img src="<%=cp%>/res/images/portfolio/popular5.jpg" alt=""></a></li>
-                                <li><a href="#"><img src="<%=cp%>/res/images/portfolio/popular1.jpg" alt=""></a></li>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="#">Second Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Second Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Third Level <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
                             </ul>
-                        </div>
-                    </div>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="blank.html">Blank Page</a>
+                                </li>
+                                <li>
+                                    <a href="login.html">Login Page</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                    </ul>
                 </div>
+                <!-- /.sidebar-collapse -->
+            </div>

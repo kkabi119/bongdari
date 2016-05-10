@@ -1,0 +1,531 @@
+/*!
+ * Start Bootstrap - SB Admin 2 Bootstrap Admin Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+body {
+    background-color: #fff;
+}
+
+#wrapper {
+    width: 100%;
+}
+
+#page-wrapper {
+    padding: 0 15px;
+    min-height: 568px;
+    background-color: #fff;
+}
+
+@media(min-width:768px) {
+    #page-wrapper {
+        position: inherit;
+        margin: 0 0 0 250px;
+        padding: 0 30px;
+        border-left: 1px solid #e7e7e7;
+    }
+}
+
+.sidebar .sidebar-nav.navbar-collapse {
+    padding-right: 0;
+    padding-left: 0;
+    background-color: #fff;
+}
+
+.sidebar .sidebar-search {
+    padding: 15px;
+}
+
+.sidebar ul li {
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.sidebar ul li a.active {
+    background-color: #eee;
+}
+
+.sidebar .arrow {
+    float: right;
+}
+
+.sidebar .fa.arrow:before {
+    content: "\f104";
+}
+
+.sidebar .active>a>.fa.arrow:before {
+    content: "\f107";
+}
+
+.sidebar .nav-second-level li,
+.sidebar .nav-third-level li {
+    border-bottom: 0!important;
+}
+
+.sidebar .nav-second-level li a {
+    padding-left: 37px;
+}
+
+.sidebar .nav-third-level li a {
+    padding-left: 52px;
+}
+
+@media(min-width:768px) {
+    .sidebar {
+        z-index: 1;
+        position: absolute;
+        width: 250px;
+        margin-top: 51px;
+    }
+
+    .navbar-top-links .dropdown-messages,
+    .navbar-top-links .dropdown-tasks,
+    .navbar-top-links .dropdown-alerts {
+        margin-left: auto;
+    }
+}
+
+.btn-outline {
+    color: inherit;
+    background-color: transparent;
+    transition: all .5s;
+}
+
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+
+.btn-success.btn-outline {
+    color: #5cb85c;
+}
+
+.btn-info.btn-outline {
+    color: #5bc0de;
+}
+
+.btn-warning.btn-outline {
+    color: #f0ad4e;
+}
+
+.btn-danger.btn-outline {
+    color: #d9534f;
+}
+
+.btn-primary.btn-outline:hover,
+.btn-success.btn-outline:hover,
+.btn-info.btn-outline:hover,
+.btn-warning.btn-outline:hover,
+.btn-danger.btn-outline:hover {
+    color: #fff;
+}
+
+.chat {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.chat li {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #999;
+}
+
+.chat li.left .chat-body {
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body {
+    margin-right: 60px;
+}
+
+.chat li .chat-body p {
+    margin: 0;
+}
+
+.panel .slidedown .glyphicon,
+.chat .glyphicon {
+    margin-right: 5px;
+}
+
+.chat-panel .panel-body {
+    height: 350px;
+    overflow-y: scroll;
+}
+
+.login-panel {
+    margin-top: 25%;
+}
+
+.flot-chart {
+    display: block;
+    height: 400px;
+}
+
+.flot-chart-content {
+    width: 100%;
+    height: 100%;
+}
+
+.dataTables_wrapper {
+    position: relative;
+    clear: both;
+}
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+    background: 0 0;
+}
+
+table.dataTable thead .sorting_asc:after {
+    content: "\f0de";
+    float: right;
+    font-family: fontawesome;
+}
+
+table.dataTable thead .sorting_desc:after {
+    content: "\f0dd";
+    float: right;
+    font-family: fontawesome;
+}
+
+table.dataTable thead .sorting:after {
+    content: "\f0dc";
+    float: right;
+    font-family: fontawesome;
+    color: rgba(50,50,50,.5);
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.428571429;
+}
+
+.btn-circle.btn-lg {
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    border-radius: 25px;
+    font-size: 18px;
+    line-height: 1.33;
+}
+
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+}
+
+.show-grid [class^=col-] {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #ddd;
+    background-color: #eee!important;
+}
+
+.show-grid {
+    margin: 15px 0;
+}
+
+.huge {
+    font-size: 40px;
+}
+
+.panel-green {
+    border-color: #5cb85c;
+}
+
+.panel-green .panel-heading {
+    border-color: #5cb85c;
+    color: #fff;
+    background-color: #5cb85c;
+}
+
+.panel-green a {
+    color: #5cb85c;
+}
+
+.panel-green a:hover {
+    color: #3d8b3d;
+}
+
+.panel-red {
+    border-color: #d9534f;
+}
+
+.panel-red .panel-heading {
+    border-color: #d9534f;
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.panel-red a {
+    color: #d9534f;
+}
+
+.panel-red a:hover {
+    color: #b52b27;
+}
+
+.panel-yellow {
+    border-color: #f0ad4e;
+}
+
+.panel-yellow .panel-heading {
+    border-color: #f0ad4e;
+    color: #fff;
+    background-color: #f0ad4e;
+}
+
+.panel-yellow a {
+    color: #f0ad4e;
+}
+
+.panel-yellow a:hover {
+    color: #df8a13;
+}
+
+/*************************
+*******Header******
+**************************/
+
+
+#header{
+  margin-bottom: 0;
+  padding: 30px 0 60px 0;
+  background-color: #fff;
+}
+
+#header .navbar-inverse .container{
+  position: relative;
+}
+
+.search{
+  position: absolute;
+  top: 20px;
+  right: 0;
+  z-index: 1;
+}
+
+.search i{
+  color: #00aeef;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 2px;
+}
+
+.field-toggle{
+  position: relative;
+  top: 30px;
+  right: 15px;
+  display: none;
+  height: 50px;
+}
+
+.search-form{
+  padding-left: 10px;
+  height: 40px;
+  font-size: 18px;
+  color: #818285;
+  font-weight: 300;
+  outline: none;
+  border: 1px solid #00aeef;
+  margin-top: 20px;
+  border-radius: 4px;
+}
+
+.social-icons ul li{
+  padding: 0 10px;
+
+}
+
+.social-icons ul li:last-child{
+  padding-right: 0;
+
+}
+
+.social-icons ul li a{
+  font-size: 18px;
+  color: #d3d3d3;
+  padding: 0;
+}
+
+.social-icons ul li a:hover .fa-facebook {
+  color:#0884d5;
+}
+
+.social-icons ul li a:hover .fa-sign-in {
+  color:#0884d5;
+}
+
+/* glyphicon 전체에 디자인을 주었습니다. 세세한 수정이 필요하다면 아래 코드를 지워주세요 */
+.social-icons ul li a:hover .glyphicon-user {
+  color:#0884d5;
+}
+
+.social-icons ul li a:hover .glyphicon-cog {
+  color:#0884d5;
+}
+
+.social-icons ul li a:hover .fa-twitter {
+  color:#2AA7DC;
+}
+
+.social-icons ul li a:hover .fa-google-plus {
+  color:#A22523;
+}
+
+.social-icons ul li a:hover .fa-dribbble {
+  color:#E94989;
+}
+
+.social-icons ul li a:hover .fa-linkedin {
+  color:#006DC0;
+}
+
+.social-icons ul li a:hover,
+.social-icons ul li a:focus{  
+  background: none;
+}
+
+#header .navbar {
+  background: #fff;
+  border: 0;
+  margin-bottom: 0;
+}
+
+#header .navbar-toggle{
+  margin-top: 20px;
+}
+
+#header .navbar-brand{
+  padding: 0;
+  margin-left: 0;
+}
+
+#header .navbar-brand h1{
+  padding: 0;
+  margin: 0;
+}
+
+#header .navbar-nav.navbar-right >li:last-child{
+  margin-right: 20px;
+}
+
+#header .navbar-nav.navbar-right >li a {
+  color: #000;
+  font-size: 12px;
+  padding: 20px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+
+#header .navbar-inverse .navbar-nav  li.active > a,  
+#header .navbar-inverse .navbar-nav  li.active > a:focus, 
+#header .navbar-nav.navbar-right li > a:hover,
+.navbar-inverse .navbar-nav > .open > a {
+  background-color: inherit;
+  border: 0;
+  color: #00aeef;
+}
+
+#header .navbar-inverse .navbar-nav  li a:hover{
+  color: #00aeef;
+}
+
+
+/*  Dropdown menu*/
+
+ul.sub-menu {
+  display: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#header .navbar-nav li ul.sub-menu li a{
+  color: #818285;
+  padding: 5px 0;
+  font-size: 13px;
+  display: block;
+  text-transform: capitalize;
+}
+
+#header .navbar-nav li ul.sub-menu li .active{
+  background: #00aeef;
+  color: #fff;
+  position: relative;
+}
+
+#header .navbar-nav li ul.sub-menu li .active i{
+  position: absolute;
+  font-size: 56px;
+  top: -13px;
+  color: #0884d5;
+}
+
+#header .navbar-nav li ul.sub-menu li .active .fa-angle-right{
+  left: -3px;
+}
+
+#header .navbar-nav li ul.sub-menu li .active .fa-angle-left{
+  right: -3px;
+}
+
+#header .navbar-nav li ul.sub-menu li a:hover,
+#header .navbar-nav li ul.sub-menu li a:focus{
+  background: #00aeef;
+  color: #fff;
+}
+
+.fa-angle-down{
+  padding-left: 5px; 
+}
+
+.scaleIn {
+  -webkit-animation-name: scaleIn;
+  animation-name: scaleIn;
+}
+
+@-webkit-keyframes scaleIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+}
