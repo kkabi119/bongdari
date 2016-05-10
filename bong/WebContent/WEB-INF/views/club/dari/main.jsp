@@ -8,7 +8,6 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 
-
 <div class="col-md-9 col-sm-7">
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
@@ -67,7 +66,7 @@
     </div>
     <!--  이달의 우수 후기 -->
 <div class="row" style="margin-top:50px;">
-<div class="col-md-4" >
+<div class="col-md-6" >
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h5 style="color:#687ead; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 후기</h5>
@@ -89,7 +88,7 @@
                 </div>
             </div>
             
-            <div class="col-md-4" >
+            <div class="col-md-6" >
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h5 style="color:#687ead; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 봉다리</h5>
@@ -128,7 +127,8 @@
                           <li><a href="#">right</a></li>
                         </ul>
                     </div>
-                 </div>
+                 </div>  
+ <!-- Script to Activate the Carousel -->
     <script>
     $('.carousel').carousel({
         interval: 5000 //changes the speed

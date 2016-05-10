@@ -24,7 +24,9 @@
     <link href="<%=cp%>/res/css/animate.min.css" rel="stylesheet"> 
 	<link href="<%=cp%>/res/css/main.css" rel="stylesheet">
 	<link href="<%=cp%>/res/css/responsive.css" rel="stylesheet">
-
+	
+	<script type="text/javascript" src="<%=cp%>/res/js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" src="<%=cp%>/res/js/bootstrap.min.js"></script>
     <!--[if lt IE 9]>
 	    <script src="<%=cp%>/res/js/html5shiv.js"></script>
 	    <script src="<%=cp%>/res/js/respond.min.js"></script>
@@ -76,12 +78,11 @@
         <tiles:insertAttribute name="footer"/>
     </footer>
     <!--/#footer-->
-
-
-    <script type="text/javascript" src="<%=cp%>/res/js/jquery.js"></script>
-    <script type="text/javascript" src="<%=cp%>/res/js/bootstrap.min.js"></script>
+	
     <script type="text/javascript" src="<%=cp%>/res/js/lightbox.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/wow.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/main.js"></script> 
 </body>
+<!-- Script to Activate the Carousel -->
+    
 </html>
