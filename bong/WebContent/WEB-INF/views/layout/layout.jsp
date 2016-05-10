@@ -14,6 +14,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Home | Triangle</title>
+    <!-- Custom CSS -->
+    <link href="<%=cp %>/res/css/modern-business.css" rel="stylesheet">
+    
     <link href="<%=cp%>/res/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=cp%>/res/css/font-awesome.min.css" rel="stylesheet">
     <link href="<%=cp%>/res/css/animate.min.css" rel="stylesheet"> 
@@ -75,5 +78,12 @@
     <script type="text/javascript" src="<%=cp%>/res/js/lightbox.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/wow.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/main.js"></script>   
+    
+     <!-- Script to Activate the Carousel -->
+    <script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
 </body>
 </html>
