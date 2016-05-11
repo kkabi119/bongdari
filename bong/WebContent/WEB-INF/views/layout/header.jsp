@@ -3,19 +3,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-	String cp=request.getContextPath();
+   String cp=request.getContextPath();
 %>
-	<header id="header">      
+   <header id="header">      
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 overflow">
                    <div class="social-icons pull-right">
                         <ul class="nav nav-pills">
                             <c:if test="${not empty sessionScope.member}">
-                        	<span style="color:blue;">${sessionScope.member.userName}</span>님 <i></i>
-                        	<li><a href="<%=cp%>/member/logout"><i class="fa fa-sign-out"> Logout</i></a></li>
+                           <span style="color:blue;">${sessionScope.member.userName}</span>회원님 <i></i>
+                           <li><a href="<%=cp%>/member/logout"><i class="fa fa-sign-out"> Logout</i></a></li>
                             </c:if>
-                            <c:if test="${empty sessionScope.member}">
+                            <c:if test="${not empty sessionScope.demanderjoin}">
+                           <span style="color:blue;">${sessionScope.demanderjoin.serviceName}</span>수요처님 <i></i>
+                           <li><a href="<%=cp%>/demanderjoin/logout"><i class="fa fa-sign-out"> Logout</i></a></li>
+                            </c:if>
+                            <c:if test="${empty sessionScope.member && empty sessionScope.demanderjoin}">
                             <li><a href="<%=cp%>/member/login"><i class="fa fa-sign-in"> Login</i></a></li>
                             </c:if><li><a href="<%=cp%>/member/myPage"><i class="glyphicon glyphicon-user">MyPage</i></a></li>
                             
@@ -42,7 +46,7 @@
                     </button>
 
                     <a class="navbar-brand" href="<%=cp%>/main">
-                    	<h1><img src="<%=cp%>/res/images/logo.png" alt="logo"></h1>
+                       <h1><img src="<%=cp%>/res/images/logo.png" alt="logo"></h1>
                     </a>
                     
                 </div>
