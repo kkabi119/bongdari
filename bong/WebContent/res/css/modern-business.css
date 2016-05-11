@@ -46,6 +46,8 @@ header.carousel .fill {
     background-size: cover;
 }
 
+
+
 /* 404 Page Styles */
 
 .error-404 {
@@ -94,4 +96,13 @@ footer {
     header.carousel .carousel {
         height: 70%;
     }
+    
+}
+
+@media(max-width:510px) {
+    
+    .img-responsive2{
+        height: 70%;
+    }
+    
 }
