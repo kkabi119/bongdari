@@ -85,11 +85,11 @@
 	<!-- Page Heading/Breadcrumbs -->
 	<div class="row3">
 		<div class="col-lg-12">
-			<h1 class="page-header">
+			<h1 class="page-header" style="color:#F0AD4E;">
 				후기 게시판 <small>봉사활동 후기를 남겨주세요.</small>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="<%=cp%>/demander/index/main">수요처 메인</a></li>
+				<li><a href="<%=cp%>/demander/index/main" style="color:#F0AD4E;">수요처 메인</a></li>
 				<li class="active">후기 게시판</li>
 			</ol>
 		</div>
@@ -116,9 +116,12 @@
 				Laudantium veniam exercitationem expedita laborum at voluptate.
 				Labore, voluptates totam at aut nemo deserunt rem magni pariatur
 				quos perspiciatis atque eveniet unde.</p>
-			<a class="btn btn-primary" href="portfolio-item.html">View
-				Project</i>
+			<a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
+			href="portfolio-item.html">View Project
 			</a>
+			
+		
+			
 		</div>
 	</div>
 	<!-- /.row -->
@@ -146,9 +149,10 @@
 				odit velit cumque vero doloremque repellendus distinctio maiores rem
 				expedita a nam vitae modi quidem similique ducimus! Velit, esse
 				totam tempore.</p>
-			<a class="btn btn-primary" href="portfolio-item.html">View
-				Project</i>
+			<a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
+			href="portfolio-item.html">View Project
 			</a>
+			
 		</div>
 	</div>
 	<!-- /.row -->
@@ -176,9 +180,10 @@
 				Omnis, temporibus, dolores, at, praesentium ut unde repudiandae
 				voluptatum sit ab debitis suscipit fugiat natus velit excepturi amet
 				commodi deleniti alias possimus!</p>
-			<a class="btn btn-primary" href="portfolio-item.html">View
-				Project</i>
+			<a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
+			href="portfolio-item.html">View Project
 			</a>
+			
 		</div>
 	</div>
 	<!-- /.row -->
@@ -206,9 +211,10 @@
 				Explicabo, quidem, consectetur, officia rem officiis illum aliquam
 				perspiciatis aspernatur quod modi hic nemo qui soluta aut eius fugit
 				quam in suscipit?</p>
-			<a class="btn btn-primary" href="portfolio-item.html">View
-				Project</i>
+			<a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
+			href="portfolio-item.html">View Project
 			</a>
+			
 		</div>
 	</div>
 	<!-- /.row -->
@@ -234,7 +240,7 @@
 	<!-- 검색 -->
 	<div style="clear: both;">
 		<div style="float: left; width: 20%; min-width: 85px;">
-			<button type="button" class="btn btn-default btn-sm wbtn"
+			<button type="button" class="btn btn-warning"  
 				onclick="javascript:location.href='<%=cp%>/bbs/list';">새로고침</button>
 		</div>
 		<div style="float: left; width: 60%; text-align: center;">
@@ -246,7 +252,7 @@
 					<option value="created">등록일</option>
 				</select> <input type="text" class="form-control input-sm input-search"
 					name="searchValue">
-				<button type="button" class="btn btn-info btn-sm btn-search"
+				<button type="button" class="btn btn-default btn-sm wbtn" style="color:#F0AD4E;" 
 					onclick="searchList();">
 					<span class="glyphicon glyphicon-search"></span> 검색
 				</button>
@@ -254,7 +260,7 @@
 		</div>
 		<div
 			style="float: left; width: 20%; min-width: 85px; text-align: right;">
-			<button type="button" class="btn btn-primary btn-sm bbtn"
+			<button type="button" class="btn btn-warning" 
 				onclick="javascript:location.href='<%=cp%>/demander/index/createReview';">
 				<span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기
 			</button>

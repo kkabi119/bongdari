@@ -82,7 +82,7 @@
 <div class="container" style="width: 66%;">
 <div class="bodyFrame2" >
     <div class="body-title">
-          <h3 style="color:#F0AD4E;"><span class="glyphicon glyphicon-book" style="color: #F0AD4E;"></span> 게시판 </h3>
+          <h2 style="color:#F0AD4E;"><span class="glyphicon glyphicon-book" style="color: #F0AD4E;"></span> 게시판 </h2>
     </div>
     
     
@@ -140,7 +140,7 @@
                         <tr>
                             <td colspan="4" style="text-align: center; padding-top: 15px;">
                                   <button type="submit" class="btn btn-warning">확인 <span class="glyphicon glyphicon-ok"></span></button>
-                                  <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%=cp%>/demander/index/review';"> 취소 </button>
+                                  <button type="button" class="btn btn-default" style="color:#F0AD4E;" onclick="javascript:location.href='<%=cp%>/demander/index/review';"> 취소 </button>
                                   
                                   <c:if test="${mode=='update'}">
                                       <input type="hidden" name="num" value="${dto.num}">
