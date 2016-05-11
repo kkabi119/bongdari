@@ -13,7 +13,7 @@
 			<div class="single-blog two-column">
 				<div class="post-content overflow">
  					<div class="bodyFrame2">
-          				<h1><i class="fa fa-bell"></i> 공지사항 </h1>
+          				<h1 style="color:red"><i class="fa fa-bell"></i>공지사항 </h1>
     					<div style="clear: both; height: 30px; line-height: 30px;">
             				<div style="float: left;">1개(1/10 페이지)</div>
             				<div style="float: right;">&nbsp;</div>
