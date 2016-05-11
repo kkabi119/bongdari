@@ -19,8 +19,7 @@ li,ul,body,input{margin:0; padding:0; list-style:none}
 .form-header{display:table; clear:both}
 .form-header label{display:block; cursor:pointer; z-index:999}
 .form-header li{margin:0; line-height:60px; width:175px; text-align:center; background:#eee; font-size:18px; float:left; transition:all 600ms ease}
-
-/*sectiop*/
+/*section*/
 .section-out{width:700px; float:left; transition:all 600ms ease}
 .section-out:after{content:''; clear:both; display:table}
 .section-out section{width:350px; float:left}
@@ -50,9 +49,9 @@ li,ul,body,input{margin:0; padding:0; list-style:none}
 .hide{display:none}
 
 /*swich form*/
-#signup:checked~.section-out{margin-left:-350px}
+#demander:checked~.section-out{margin-left:-350px}
 #login:checked~.section-out{margin-left:0px}
-#login:checked~div .form-header li:nth-child(1),#signup:checked~div .form-header li:nth-child(2){background:#e8e8e8}
+#login:checked~div .form-header li:nth-child(1),#demander:checked~div .form-header li:nth-child(2){background:#e8e8e8}
 </style>
 <script type="text/javascript">
 function memberLogin() {
@@ -104,12 +103,12 @@ function demanderJoin(){
 <div id="login-form">
 
 <input type="radio" checked id="login" name="switch" class="hide">
-<input type="radio" id="signup" name="switch" class="hide">
+<input type="radio" id="demander" name="switch" class="hide">
 
 <div>
 <ul class="form-header">
 <li><label for="login"><i class="fa fa-lock"></i> 일반회원</label></li>
-<li><label for="signup"><i class="fa fa-credit-card"></i> 수요처</label></li>
+<li><label for="demander"><i class="fa fa-credit-card"></i> 수요처</label></li>
 </ul>
 </div>
 
@@ -129,7 +128,7 @@ function demanderJoin(){
 
 </section>
 
-<section class="signup-section">
+<section class="demander-section">
 <div class="login">
 <form name="demanderLoginForm" method="post">
 <ul class="ul-list">
