@@ -5,8 +5,7 @@
 <%
    String cp=request.getContextPath();
 %>
-   <header id="header">      
-        <div class="container">
+	<div class="container">
             <div class="row">
                 <div class="col-sm-12 overflow">
                    <div class="social-icons pull-right">
@@ -98,5 +97,3 @@
                 </div>
             </div>
         </div>
-    </header>
-    <!--/#header-->

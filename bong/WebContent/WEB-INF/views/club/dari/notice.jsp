@@ -34,7 +34,7 @@
                 				<tbody>
 									<tr>
                         				<td class="text-center">6</td>
-                        				<td><a href="<%=cp%>/club/myclub/article">제목(댓글수)</a></td>
+                        				<td><a href="<%=cp%>/club/index/notice/article">제목(댓글수)</a></td>
                         				<td class="text-center">홍길동</td>
                        				 	<td class="text-center">2000-10-10</td>
                        				 	<td class="text-center">5</td>

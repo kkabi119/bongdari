@@ -6,7 +6,7 @@
 	String cp=request.getContextPath();
 %>
 
-    <footer id="footer">
+
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 text-center bottom-separator">
@@ -80,5 +80,3 @@
                 </div>
             </div>
         </div>
-    </footer>
-    <!--/#footer-->
