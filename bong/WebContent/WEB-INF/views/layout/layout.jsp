@@ -63,7 +63,7 @@
 	<!-- title -->
    
     <section id="blog" class="padding-top">
-        <div class="container" align="center">
+        <div class="container">
             <div class="row">
 				<tiles:insertAttribute name="body"/>
     		</div>
