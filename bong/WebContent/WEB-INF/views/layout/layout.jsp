@@ -63,10 +63,9 @@
 	<!-- title -->
    
     <section id="blog" class="padding-top">
-        <div class="container">
+        <div class="container" align="center">
             <div class="row">
 				<tiles:insertAttribute name="body"/>
-				<!-- /#body -->
     		</div>
         </div>
     </section>
