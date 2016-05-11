@@ -167,7 +167,8 @@
 
 #header{
   margin-bottom: 0;
-  padding: 10px 0 10px 0;
+ /* padding: 10px 0 10px 0; 에서 밑으로 변경 - 양히 - */
+   padding: 30px 0 30px 0;
 }
 
 #header .navbar-inverse .container{
@@ -778,7 +779,8 @@ ul.sub-menu {
 }
 
 #team-carousel {
-  margin-top: 80px;
+	/* 80에서 10으로 변경함 - 양히 - */
+  margin-top: 10px;
 }
 
 #company-information .padding-top{
@@ -2701,8 +2703,10 @@ span.stButton_gradient,
 }
 
 .panel-default>.panel-heading{
-  background-color: transparent;
-  border-top: 1px solid #eee;
+	/* 색깔 변경 - 양히- */
+	color:white;
+	background-color:#1B8BFF;
+	border-color:#ddd;
 }
 
 .panel-group .panel-default:first-child>.panel-heading{

@@ -7,6 +7,11 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
+<style>
+	li{
+		margin-top:3px;
+	}
+</style>
 
     <!-- Header Carousel -->
     <!--  우수단원 소개란 시작 -->
@@ -64,11 +69,23 @@
 		<h2>이달의 우수단원</h2>
 	</div> -->
 	<!--  우수단원 소개란 시작 -->
-	 <h1 style="margin-top:30px; font-weight:bold;" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">이달의 우수단원</h1>
-                <p style="color:gray; font-size:16px; margin-bottom:25px;"class="text-center wow fadeInDown" data-wow-duration="400ms" data-wow-delay="400ms"> 5월을 빛낸 이달의 우수단원을 소개해봅니다! <br>
-                댓글과 하트로 칭찬해주세용</p>
-              <br><br>
-              
+	 <h1 style="margin-top:60px; font-weight:bold;" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">
+	 이달의 우수단원
+	 </h1>
+                <p style="color:gray; font-size:16px; "class="text-center wow fadeInDown" data-wow-duration="400ms" data-wow-delay="400ms">
+                	 5월을 빛낸 이달의 따뜻한 우수단원을 소개합니다!  <br> 봉다리분들은 댓글과 하트로 칭찬해주세용
+                </p>
+              <br>     
+     <section id="team">
+        <div class="container">
+            <div class="row">
+               
+                <div id="team-carousel" class="carousel slide wow fadeIn" data-ride="carousel" data-wow-duration="400ms" data-wow-delay="400ms">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators visible-xs">
+                        <li data-target="#team-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#team-carousel" data-slide-to="1"></li>
+                    </ol>        
                <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active">
@@ -237,22 +254,34 @@
                         </div>
                     </div>
                     
-                   <div>
-                     <!-- Controls : 왼쪽 오른쪽 화살표  -->
+                             <!-- Controls -->
                     <a class="left team-carousel-control hidden-xs" href="#team-carousel" data-slide="prev">left</a>
                     <a class="right team-carousel-control hidden-xs" href="#team-carousel" data-slide="next">right</a>
                 </div>
-       <!--  우수단원 소개란 끝 -->    
-     
-       <!--  이달의 우수 후기 -->
-       <div class="row" style="margin-top:50px;">
-       <div class="col-md-4" >
+            </div>
+        </div>
+    </section>
+     																					  <!--  우수단원 소개란 끝 -->    
+     <hr><br>
+      																					 <!--  이달의 우수 후기 시작 -->
+      																					 
+      	 <h1 style=" font-weight:bold;" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">
+      	 	이 달의 봉다리 News
+      	 </h1>
+          <p style="color:gray; font-size:16px; "class="text-center wow fadeInDown" data-wow-duration="400ms" data-wow-delay="400ms">
+                5월을 빛낸 이달의 따뜻한 우수단원을 소개합니다!  <br> 봉다리분들은 댓글과 하트로 칭찬해주세용
+          </p>
+          <br>     																				 
+       <div class="row" style="width:80%; margin:0 auto; margin-top:20px; ">
+       
+       <div class="col-md-4" style="width:30%; margin-left:3%;" >
+                               
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 style="color:#687ead; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 후기</h5>
+                    <div class="panel-heading" style="padding:18px;font-size:18px;">
+                       <i class="fa fa-fw fa-paperclip"></i> 이달의 후기
                     </div>
-                    <div class="panel-body">
-                        <ul type="disc">
+                    <div class="panel-body" style="border-bottom:2px solid #999; ">
+                        <ul type="disc" style="margin-bottom:6px; ">
                         <%--   <c:forEach var="dtoDocu" items="${listDocu}">
                         	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
                           </c:forEach> --%>
@@ -262,19 +291,19 @@
                        		 <li><a href="#" >[부산] 집에 가고 싶은 사람 손~</a></li>
                        		 <li><a href="#" >[강원] 저녁 뭐 먹지?</a></li>
                        		  <li><a href="#" >[전주] 힘들었던만큼 보람찼던 그 날</a></li>
-                        	<li>	<a href="#" class="btn btn-default" style="text-align: right">더보기</a></li>
+                        	<li >	<a style="margin-top:8px;" href="#" class="btn btn-default" style="text-align: right">더보기</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             
-            <div class="col-md-4" >
+            <div class="col-md-4" style="width:30%; margin-left:3%;" >
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 style="color:#687ead; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 봉다리</h5>
+                    <div class="panel-heading" style="padding:18px;font-size:18px;">
+                       <i class="fa fa-fw fa-paperclip"></i> 이달의 봉다리
                     </div>
-                    <div class="panel-body">
-                        <ul type="disc">
+                 <div class="panel-body" style="border-bottom:2px solid #999; ">
+                        <ul type="disc" style="margin-bottom:6px; ">
                         <%--   <c:forEach var="dtoDocu" items="${listDocu}">
                         	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
                           </c:forEach> --%>
@@ -284,29 +313,28 @@
                        		 <li><a href="#" >[부산] 집에 가고 싶은 사람 손~</a></li>
                        		 <li><a href="#" >[강원] 저녁 뭐 먹지?</a></li>
                        		  <li><a href="#" >[전주] 힘들었던만큼 보람찼던 그 날</a></li>
-                        	<li>	<a href="#" class="btn btn-default" style="text-align: right">더보기</a></li>
+                        	<li >	<a style="margin-top:8px;" href="#" class="btn btn-default" style="text-align: right">더보기</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             
-            <div class="col-md-4" >
+            <div class="col-md-4" style="width:30%; margin-left:3%;">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 style="color:#687ead; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 수요처</h5>
+                    <div class="panel-heading" style="padding:18px;font-size:18px;">
+                        <i class="fa fa-fw fa-paperclip"></i> 이달의 수요처
                     </div>
-                    <div class="panel-body">
-                        <ul type="disc">
+                    <div class="panel-body" style="border-bottom:2px solid #999; ">
+                        <ul type="disc" style="margin-bottom:6px; ">
                         <%--   <c:forEach var="dtoDocu" items="${listDocu}">
                         	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
-                          </c:forEach> --%>
-                        
+                          </c:forEach> --%>                        
                        		 <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
                      	  	 <li><a href="#" >[서울] 벌써 보고싶은 아이들과 함께</a></li>
                        		 <li><a href="#" >[부산] 집에 가고 싶은 사람 손~</a></li>
                        		 <li><a href="#" >[강원] 저녁 뭐 먹지?</a></li>
                        		  <li><a href="#" >[전주] 힘들었던만큼 보람찼던 그 날</a></li>
-                        	<li>	<a href="#" class="btn btn-default" style="text-align: right">더보기</a></li>
+                        	<li >	<a style="margin-top:8px;" href="#" class="btn btn-default" style="text-align: right;">더보기</a></li>
                         </ul>
                     </div>
                 </div>
@@ -315,29 +343,8 @@
        <!--  이달의 우수 후기 끝-->
           <br><br>
           <hr>
-                    <div class="blog-pagination">
-                        <ul class="pagination">
-                          <li><a href="#">left</a></li>
-                          <li><a href="#">1</a></li>
-                          <li><a href="#">2</a></li>
-                          <li class="active"><a href="#">3</a></li>
-                          <li><a href="#">4</a></li>
-                          <li><a href="#">5</a></li>
-                          <li><a href="#">6</a></li>
-                          <li><a href="#">7</a></li>
-                          <li><a href="#">8</a></li>
-                          <li><a href="#">9</a></li>
-                          <li><a href="#">right</a></li>
-                        </ul>
-                    </div>
-                 </div>
-            </div>
-        </div>
-    </section>
-    <!--/#blog-->
- <!-- Script to Activate the Carousel -->
     <script>
-    $('.carousel').carousel({
-        interval: 5000 //changes the speed
-    })
-    </script>
+$('.carousel').carousel({
+    interval: 5000 //changes the speed
+})
+</script>

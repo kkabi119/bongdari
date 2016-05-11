@@ -5522,7 +5522,8 @@ button.list-group-item-danger.active:focus {
           box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
 .panel-body {
-  padding: 15px;
+	/* 15에서 10으로 변경 - 양희*/
+  padding:10px;
   height: 182px;
 }
 .panel-heading {

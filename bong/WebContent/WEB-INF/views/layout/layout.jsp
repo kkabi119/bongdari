@@ -32,6 +32,10 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<%=cp%>/res/images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<%=cp%>/res/images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="<%=cp%>/res/images/ico/apple-touch-icon-57-precomposed.png">
+    
+     <!-- 제이쿼리 -->
+    <script type="text/javascript" src="<%=cp%>/res/js/jquery.js"></script>
+    <script type="text/javascript" src="<%=cp%>/res/js/bootstrap.min.js"></script>
 </head><!--/head-->
 
 <body>
@@ -72,8 +76,6 @@
     </footer>
     <!--/#footer-->
 
-    <script type="text/javascript" src="<%=cp%>/res/js/jquery.js"></script>
-    <script type="text/javascript" src="<%=cp%>/res/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/lightbox.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/wow.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/main.js"></script>   
