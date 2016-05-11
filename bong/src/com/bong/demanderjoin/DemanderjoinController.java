@@ -45,6 +45,14 @@ public class DemanderjoinController {
 		
 		return new ModelAndView("redirect:/main");
 	}
+	@RequestMapping(value="/demanderjoin/logout")
+	public String logout(HttpSession session) throws Exception{
+		//로그인 정보 삭제
+		session.removeAttribute("demanderjoin");
+		session.invalidate();
+		
+		return "redirect:/main";
+	}
 	
 	@RequestMapping(value="/demanderjoin/demanderRegister", method=RequestMethod.GET)
     public ModelAndView demanderjoinForm(){
