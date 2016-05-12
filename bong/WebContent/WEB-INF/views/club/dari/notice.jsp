@@ -13,7 +13,7 @@
 			<div class="single-blog two-column">
 				<div class="post-content overflow">
  					<div class="bodyFrame2">
-          				<h1 style="color:red"><i class="fa fa-bell"></i>공지사항 </h1>
+          				<h1 style="color:#04B907"><i class="fa fa-bell"></i>공지사항 </h1>
     					<div style="clear: both; height: 30px; line-height: 30px;">
             				<div style="float: left;">1개(1/10 페이지)</div>
             				<div style="float: right;">&nbsp;</div>
@@ -70,7 +70,7 @@
 						      			<option value="created">등록일</option>
 						  			</select>
 						  			<input type="text" class="form-control input-sm input-search" name="searchValue" placeholder="검색" style="width:50%; height:32px;">
-						  			<button type="button" class="btn btn-warning" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
+						  			<button type="button" class="btn btn-success" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
         		     			</form>
         					</div>
         					<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
