@@ -75,8 +75,8 @@
 
 	<div class="col-md-4">
 		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h5 style="color: #687ead; font-weight: bold;">
+			<div class="panel-heading" style="background:#F0AD4E;">
+				<h5 style="color: white; font-weight: bold;">
 					<i class="fa fa-fw fa-paperclip"></i> 이달의 봉사활동
 				</h5>
 			</div>
@@ -96,9 +96,11 @@
 				</ul>
 			</div>
 		</div>
+		
 <!-- 최근사진 -->
-		<div class="sidebar-item popular">
-			<h5 style="color: #687ead; font-weight: bold;">
+
+ <div class="sidebar-item popular">
+			<h5 style="color:#F0AD4E; font-weight:normal; font-size: 17pt;">
 				<i class="fa fa-fw fa-paperclip"></i> Latest Photos
 			</h5>
 			<div class="panel-body">
@@ -118,12 +120,12 @@
 				</ul>
 			</div>
 		</div>
-	</div>
+	</div> 
 <!-- 이달의후기 -->
-	<div class="col-md-4">
+	<div class="col-md-4" style="float: left;">
 		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h5 style="color: #687ead; font-weight: bold;">
+			<div class="panel-heading" style="background:#F0AD4E;">
+				<h5 style="color: white; font-weight: bold;">
 					<i class="fa fa-fw fa-paperclip"></i> 이달의 후기
 				</h5>
 			</div>
