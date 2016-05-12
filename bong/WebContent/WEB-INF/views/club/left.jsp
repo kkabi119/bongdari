@@ -47,7 +47,7 @@
                             <ul class="nav navbar-stacked">
                                 <li><a href="<%=cp%>/main/club/">동아리 메인페이지<span class="pull-right">(1)</span></a></li>
                                 <li class="active"><a href="<%=cp%>/club/index/main">내 동아리 메인<span class="pull-right">(8)</span></a></li>
-                                <li><a href="<%=cp%>/club/index/notice">공지사항<span class="pull-right">(4)</span></a></li>
+                                <li><a href="<%=cp%>/club/index/notice/list">공지사항<span class="pull-right">(4)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/japply">가입신청하기<span class="pull-right">(9)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/free">자유게시판<span class="pull-right">(3)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/review">후기/포토게시판<span class="pull-right">(4)</span></a></li>
