@@ -17,7 +17,7 @@
                                     <p>글 내용 들어와 여기(사진 있으면 함께)</p>
                                     <div class="post-bottom overflow">
                                         <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-heart"></i>32 좋아요</a></li>
+                                            <li><a href="#"><i class="fa fa-thumbs-o-up"></i>32 좋아요</a></li>
                                             <li><a href="#"><i class="fa fa-comments"></i>3 댓글수</a></li>
                                         </ul>
                                     </div>
@@ -27,18 +27,6 @@
                                         <span class='st_linkedin_hcount'></span>
                                         <span class='st_pinterest_hcount'></span>
                                         <span class='st_email_hcount'></span>
-                                    </div>
-                                    <div class="author-profile padding">
-                                        <div class="row">
-                                            <div class="col-sm-2">
-                                                <img src="images/blogdetails/1.png" alt="">
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <h3>Rodrix Hasel</h3>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliq Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi</p>
-                                                <span>Website:<a href="www.jooomshaper.com"> www.jooomshaper.com</a></span>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="response-area">
                                     <h2 class="bold">Comments</h2>
