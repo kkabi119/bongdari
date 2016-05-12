@@ -114,7 +114,7 @@
 
             </div>
             
-            <section id="team">
+	<section id="team">
         <div class="container">
             <div class="row">
                
