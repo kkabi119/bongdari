@@ -86,7 +86,7 @@
 	<div class="row3">
 		<div class="col-lg-12">
 			<h1 class="page-header" style="color:#F0AD4E;">
-				후기 게시판 <small>봉사활동 후기를 남겨주세요.</small>
+				후기 게시판 <small style="color:#A6A6A6;">봉사활동 후기를 남겨주세요.</small>
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href="<%=cp%>/demander/index/main" style="color:#F0AD4E;">수요처 메인</a></li>
