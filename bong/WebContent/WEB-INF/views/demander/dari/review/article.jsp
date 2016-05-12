@@ -11,16 +11,10 @@
                     <div class="row">
                          <div class="col-md-12 col-sm-12">
                             <div class="single-blog blog-details two-column">
-                                <div class="post-thumb" style="width:100%">
-                                    <a href="#"><img src="<%=cp%>/res/images/myclub/333.jpg" class="img-responsive" alt=""></a>
-                                    <div class="post-overlay">
-                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
-                                    </div>
-                                </div>
                                 <div class="post-content overflow">
                                     <h2 class="post-title bold"><a href="#">여긴 제목이야</a></h2>
                                     <h3 class="post-author"><a href="#">글쓴사람이름</a></h3>
-                                    <p>글 내용 들어와 여기</p>
+                                    <p>글 내용 들어와 여기(사진 있으면 함께)</p>
                                     <div class="post-bottom overflow">
                                         <ul class="nav navbar-nav post-nav">
                                             <li><a href="#"><i class="fa fa-tag"></i>creative</a></li>
