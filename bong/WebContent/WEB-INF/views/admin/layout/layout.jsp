@@ -57,7 +57,9 @@
     <div id="wrapper">
     
     	<!-- 네비 탑 -->
-    	<tiles:insertAttribute name="header"/>
+    	<header id="header">      
+        <tiles:insertAttribute name="header"/>
+    	</header>
     	<!-- /네비 탑 -->
 		
 		<!-- 왼쪽 네비 -->

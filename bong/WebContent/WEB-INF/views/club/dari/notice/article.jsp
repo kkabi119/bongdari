@@ -17,7 +17,6 @@
                                     <p>글 내용 들어와 여기(사진 있으면 함께)</p>
                                     <div class="post-bottom overflow">
                                         <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-tag"></i>creative</a></li>
                                             <li><a href="#"><i class="fa fa-heart"></i>32 좋아요</a></li>
                                             <li><a href="#"><i class="fa fa-comments"></i>3 댓글수</a></li>
                                         </ul>
