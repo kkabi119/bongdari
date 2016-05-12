@@ -12,20 +12,20 @@
                 <div class="col-lg-12">
                     <h1 class="page-header">Dashboard</h1>
                 </div>
-                /.col-lg-12
+                <!-- /.col-lg-12 -->
             </div>
-            /.row
+            <!-- /.row -->
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-comments fa-5x"></i>
+                                    <i class="fa fa-user fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">26</div>
-                                    <div>New Comments!</div>
+                                    <div>New User!</div>
                                 </div>
                             </div>
                         </div>
@@ -43,11 +43,11 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-tasks fa-5x"></i>
+                                    <i class="fa fa-flag fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">12</div>
-                                    <div>New Tasks!</div>
+                                    <div>New Demander!</div>
                                 </div>
                             </div>
                         </div>
@@ -65,11 +65,11 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                    <i class="fa fa-users fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">124</div>
-                                    <div>New Orders!</div>
+                                    <div>New Club!</div>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                     </div>
                 </div>
             </div>
-            /.row
+            <!-- /.row -->
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default">
@@ -131,13 +131,13 @@
                                 </div>
                             </div>
                         </div>
-                        /.panel-heading
+                        <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div id="morris-area-chart"></div>
                         </div>
-                        /.panel-body
+                        <!-- /.panel-body -->
                     </div>
-                    /.panel
+                    <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bar-chart-o fa-fw"></i> Bar Chart Example
@@ -161,7 +161,7 @@
                                 </div>
                             </div>
                         </div>
-                        /.panel-heading
+                        <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-4">
@@ -227,21 +227,33 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    /.table-responsive
+                                    <!-- /.table-responsive -->
                                 </div>
-                                /.col-lg-4 (nested)
+                                <!-- /.col-lg-4 (nested) -->
                                 <div class="col-lg-8">
                                     <div id="morris-bar-chart"></div>
                                 </div>
-                                /.col-lg-8 (nested)
+                                <!-- /.col-lg-8 (nested) -->
                             </div>
-                            /.row
+                            <!-- /.row -->
                         </div>
-                        /.panel-body
+                        <!-- /.panel-body -->
                     </div>
-                   
+                    <!-- /.panel -->
                 </div>
-                
+                <!-- /.col-lg-8 -->
+                <div class="col-lg-4">
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Donut Chart Example
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-donut-chart"></div>
+                            <a href="#" class="btn btn-default btn-block">View Details</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            /.row
         </div>
+        <!-- /#page-wrapper -->
