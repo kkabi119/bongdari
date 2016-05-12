@@ -51,7 +51,7 @@
                <table class="table">
                     <thead >
                         <tr height="50">
-                            <th colspan="7" class="bbs-subject" >
+                            <th style="color:#555;"colspan="7" class="bbs-subject" >
                                  노원 동네주민 축제의 안전요원을 모집합니다 <span style="color:#E0844F;">[ 모집중 ]</span>
                             </th>
                         </tr>
@@ -137,7 +137,7 @@
                             </td>
                         </tr>
                         <tr>
-                      	  <td colspan="7" style="border-top:none;">
+                      	  <td colspan="7" style="border-top:none; padding-bottom:30px;">
                        			 <span style="margin-left:400px; align:center" class="icon-wrapper">
                                 	<i class="fa fa-2x fa-heart-o"></i>
                           		</span>

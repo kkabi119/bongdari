@@ -14,12 +14,7 @@ public class ClubController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/main/club/article")
-	public ModelAndView clubArticle() throws Exception {
-		
-		ModelAndView mav = new ModelAndView(".four.club.dari.apply.article.봉다리 개인페이지");
-		return mav;
-	}
+	
 	
 	
 	@RequestMapping(value="/main/createClub")
@@ -54,7 +49,7 @@ public class ClubController {
 	@RequestMapping(value="/club/index/vapply")
 	public ModelAndView clubVapply() throws Exception {
 		
-		ModelAndView mav = new ModelAndView(".four.club.dari.vapply.봉사신청 게시판");
+		ModelAndView mav = new ModelAndView(".four.club.dari.apply.article.봉다리 개인페이지");
 		return mav;
 	}
 	
