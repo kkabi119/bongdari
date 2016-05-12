@@ -104,7 +104,6 @@
 					<div class="item active">
 						<div class="fill"
 							style="background-image:url('<%=cp%>/res/images/demander/demander3.jpg');"></div>
-
 					</div>
 				</div>
 			</div>
@@ -117,7 +116,7 @@
 				Labore, voluptates totam at aut nemo deserunt rem magni pariatur
 				quos perspiciatis atque eveniet unde.</p>
 			<a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
-			href="portfolio-item.html">View Project
+			href="<%=cp%>/demander/index/review/article">View Project
 			</a>
 			
 		
@@ -150,7 +149,7 @@
 				expedita a nam vitae modi quidem similique ducimus! Velit, esse
 				totam tempore.</p>
 			<a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
-			href="portfolio-item.html">View Project
+			href="<%=cp%>/demander/index/review/article">View Project
 			</a>
 			
 		</div>
@@ -181,7 +180,7 @@
 				voluptatum sit ab debitis suscipit fugiat natus velit excepturi amet
 				commodi deleniti alias possimus!</p>
 			<a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
-			href="portfolio-item.html">View Project
+			href="<%=cp%>/demander/index/review/article">View Project
 			</a>
 			
 		</div>
@@ -212,7 +211,7 @@
 				perspiciatis aspernatur quod modi hic nemo qui soluta aut eius fugit
 				quam in suscipit?</p>
 			<a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
-			href="portfolio-item.html">View Project
+			href="<%=cp%>/demander/index/review/article">View Project
 			</a>
 			
 		</div>
@@ -261,7 +260,7 @@
 		<div
 			style="float: left; width: 20%; min-width: 85px; text-align: right;">
 			<button type="button" class="btn btn-warning" 
-				onclick="javascript:location.href='<%=cp%>/demander/index/createReview';">
+				onclick="javascript:location.href='<%=cp%>/demander/index/review/create';">
 				<span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기
 			</button>
 		</div>

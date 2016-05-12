@@ -63,13 +63,19 @@ public class DemanderController {
 		ModelAndView mav = new ModelAndView(".four.demander.dari.review.후기게시판");
 		return mav;
 	}
-	@RequestMapping(value="/demander/index/createReview")
+	
+	@RequestMapping(value="/demander/index/review/create")
 	public ModelAndView demanderCreateReview() throws Exception {
 		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.reviewCreate.후기게시판");
+		ModelAndView mav = new ModelAndView(".four.demander.dari.review.create.후기게시판");
 		return mav;
 	}
-	
+	@RequestMapping(value="/demander/index/review/article")
+	public ModelAndView demanderArticleReview() throws Exception {
+		
+		ModelAndView mav = new ModelAndView(".four.demander.dari.review.article.후기게시판");
+		return mav;
+	}
 	
 	@RequestMapping(value="/demander/index/schedule")
 	public ModelAndView demanderSchedule() throws Exception {
