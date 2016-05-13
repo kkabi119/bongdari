@@ -71,8 +71,7 @@
 </div>
 
 <!--  이달의 봉사활동 -->
-<div class="row" style="margin-top: 50px;">
-
+<div class="row" style="margin-top: 50px;" >
 	<div class="col-md-4">
 		<div class="panel panel-default">
 			<div class="panel-heading" style="background:#F0AD4E;">

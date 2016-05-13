@@ -91,7 +91,20 @@ function result() {
 						<option value="">::도시선택::</option>
 					</select> <br> 수요처 명<input type="text" name="demandName"
 						class="textField"> <input type="button" value=" 확인 "
-						onclick="result();" class="btn">
+						onclick="result();" class="btn"> 
+					<table>
+						<tr>
+							<td></td>
+						</tr>
+					</table>	
+				</div>
+				<div class="tab-pane fade" id="tab2-item2">
+					<div style="color: blue">분야별 검색</div>
+					시설유형<select id="demandType" class="selectField">
+						<option value="">::시설유형::</option>
+					</select> 수요처 명<input type="text" name="demandName" class="textField">
+					<input type="button" value=" 확인 " onclick="result();" class="btn">
+
 				</div>
 				<div class="tab-pane fade" id="tab2-item2">
 					<div style="color: blue">분야별 검색</div>
