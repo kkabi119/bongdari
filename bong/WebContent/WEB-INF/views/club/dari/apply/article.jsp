@@ -42,8 +42,7 @@ padding-top: 13px;
 </style>
 
 
-<div class="col-md-9 col-sm-7">
-	<div class="row">
+	<div class="row" style="margin-left:15px;">
 		<div class="col-md-12 col-sm-12">
 		
    
@@ -219,7 +218,7 @@ padding-top: 13px;
                       <textarea id="shareR_content" class="form-control" rows="3" required="required"></textarea>
                   </div>
                   <div style="text-align: right; padding-top: 10px;">
-                      <button type="button" class="btn btn-default" style="background-color:#3897f0; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="glyphicon glyphicon-ok"></span></button>
+                      <button type="button" class="btn btn-default" style="padding:10px 15px ;background-color:#3897f0; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="glyphicon glyphicon-ok"></span></button>
                   </div>           
               </div>
           
@@ -229,6 +228,4 @@ padding-top: 13px;
       </div>
  	</div>
 </div>
-    </div>
-    </div>
 

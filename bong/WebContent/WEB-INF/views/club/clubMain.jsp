@@ -304,7 +304,7 @@
                         <%--   <c:forEach var="dtoDocu" items="${listDocu}">
                         	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
                           </c:forEach> --%>
-                        
+                         <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
                        		 <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
                      	  	 <li><a href="#" >[서울] 벌써 보고싶은 아이들과 함께</a></li>
                        		 <li><a href="#" >[부산] 집에 가고 싶은 사람 손~</a></li>
@@ -326,7 +326,7 @@
                         <%--   <c:forEach var="dtoDocu" items="${listDocu}">
                         	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
                           </c:forEach> --%>
-                        
+                         <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
                        		 <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
                      	  	 <li><a href="#" >[서울] 벌써 보고싶은 아이들과 함께</a></li>
                        		 <li><a href="#" >[부산] 집에 가고 싶은 사람 손~</a></li>
@@ -347,7 +347,8 @@
                         <ul type="disc" style="margin-bottom:6px; ">
                         <%--   <c:forEach var="dtoDocu" items="${listDocu}">
                         	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
-                          </c:forEach> --%>                        
+                          </c:forEach> --%>         
+                           <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>               
                        		 <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
                      	  	 <li><a href="#" >[서울] 벌써 보고싶은 아이들과 함께</a></li>
                        		 <li><a href="#" >[부산] 집에 가고 싶은 사람 손~</a></li>

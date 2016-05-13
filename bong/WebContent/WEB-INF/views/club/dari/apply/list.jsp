@@ -35,8 +35,7 @@ padding-top: 13px;
 }
 
 </style>
-<div class="col-md-9 col-sm-7">
-	<div class="row">
+	<div class="row" style="margin-left:15px;">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">
 				<div class="post-content overflow" style="padding:0px;">
@@ -212,4 +211,3 @@ padding-top: 13px;
 			<li><a href="#">right</a></li>
 		</ul>
 	</div>
-</div>
