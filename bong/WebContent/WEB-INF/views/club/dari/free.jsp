@@ -7,11 +7,10 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
-
+<div class="col-md-9 col-sm-7">
   <section id="blog" class="padding-bottom">
-  	<div class="col-md-9 col-sm-7">
-        <div class="container">
-            <div class="row">
+  	
+        
                 <div class="timeline-blog overflow padding-top">
                     <div class="timeline-date text-center">
                         <a href="#" class="btn btn-common uppercase">November 2013</a>
@@ -136,7 +135,6 @@
                         <a href="#" class="btn btn-common">See More</a>
                     </div>
                 </div>
-            </div>
-        </div>
-     </div>
+          
     </section>
+ </div>

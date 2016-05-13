@@ -6,9 +6,9 @@
 	String cp=request.getContextPath();
 %>
     <section id="blog-details" class="padding-top">
-            <div class="row">
+            
                 <div class="col-md-9 col-sm-7">
-                    <div class="row">
+                    
                          <div class="col-md-12 col-sm-12">
                             <div class="single-blog blog-details two-column">
                                 <div class="post-content overflow">
@@ -83,7 +83,5 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                 </div>
-            </div>
+                    </div>          
     </section>
