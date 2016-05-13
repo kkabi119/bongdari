@@ -20,7 +20,7 @@
       <p style="color:gray; font-size:16px; margin-bottom:25px;" class="text-center wow fadeInDown" data-wow-duration="400ms" data-wow-delay="400ms"> 
       			이번 달을 빛낸 이달의 우수포토를 소개합니다! 댓글과 하트로 칭찬해주세용</p>
               
-    <header id="myCarousel" class="carousel slide">
+    <header id="myCarousel" class="carousel slide" style="width:100%;">
         <!-- Indicators -->
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>

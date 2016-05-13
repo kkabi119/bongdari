@@ -53,6 +53,13 @@ public class ClubController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/club/index/vapplyList")
+	public ModelAndView clubVapplyList() throws Exception {
+		
+		ModelAndView mav = new ModelAndView(".four.club.dari.apply.list.봉다리 개인페이지");
+		return mav;
+	}
+	
 	@RequestMapping(value="/club/index/japply")
 	public ModelAndView clubJapply() throws Exception {
 		

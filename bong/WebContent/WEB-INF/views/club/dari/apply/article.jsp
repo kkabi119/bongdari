@@ -7,9 +7,12 @@
 %>
 
 <style type="text/css">
+
+/* 수정삭제는 관리자만 보이도록한다 
+ */
 .bbs-reply {
-    border-top: #1B8BFF solid 2px; 
-    border-bottom: gray solid 2px; padding:15px;
+    border-top: #3897f0 solid 2px; 
+    border-bottom: #3897f0 solid 2px; padding:15px;
     margin-bottom:70px;
 }
 
@@ -18,15 +21,24 @@
     padding: 10px;
     min-height: 50px;
 }
-.bbs-subject{
+
+.table>thead>tr>th{
+
 	font-size:20px; text-align: center;
-	/* padding:0px; 
-	 */border-bottom: 2px solid gray;
-	margin-bottom: 10px;
+	 padding:14px; 
+	 border-bottom: 2px solid gray;
+
 }
-.ddd{
-	border-top:0px;
+
+.icon-wrapper:hover{
+	background-color:#4FCCCD;
 }
+
+.table>tbody>tr>td{
+
+padding-top: 13px;
+}
+
 </style>
 
 
@@ -52,21 +64,21 @@
                     <thead >
                         <tr height="50">
                             <th style="color:#555;"colspan="7" class="bbs-subject" >
-                                 노원 동네주민 축제의 안전요원을 모집합니다 <span style="color:#E0844F;">[ 모집중 ]</span>
+                                 노원 동네주민 축제의 안전요원을 모집합니다 <span style="color:#E0844F;"><span class="label label-warning">모집중</span></span>
                             </th>
                         </tr>
                    <thead>
                     <tbody>
                         <tr >
-                        	<td bgcolor="#DFE6E8" style="color:black;;border-top:none;text-align: left; width:12%; height:45px; ">
+                        	<td bgcolor="#DFE6E8" style="color:black;;border-top:none;text-align: left; width:14%; height:45px; ">
                         	 	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;   	봉사일정
                         	</td>
-                            <td style="text-align: left; width:22%; height:45px; ">2016-03-22 ~ 2016-03-25</td>
+                            <td style="text-align: left; width:25%; height:45px; ">2016-03-22 ~ 2016-03-25</td>
                             
-                            <td  bgcolor="#DFE6E8" style="color:black;; border-top:none; text-align: left; width:12%; height:45px; ">
+                            <td  bgcolor="#DFE6E8" style="color:black;; border-top:none; text-align: left; width:14%; height:45px; ">
                             	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉사시간
                             </td>
-                            <td style="text-align: left; width:200px; height:45px; ">3시~5시</td>
+                            <td style="text-align: left; width:20%; height:45px; ">3시~5시</td>
                          
                         	<td  bgcolor="#DFE6E8" style="color:black;;border-top:none; border-top:none; text-align: left;  height:45px; ">
                          		  	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉사요일
@@ -140,17 +152,24 @@
                         </tr>
                         <tr>
                       	  <td colspan="7" style="border-top:none; padding-bottom:30px;">
-                       			 <span style="margin-left:400px; align:center" class="icon-wrapper">
-                                	<i class="fa fa-2x fa-heart-o"></i>
-                          		</span>
+                       			 <a href="#" style="color:white; ">
+	                       			 <span style="margin-left:41%;align:center; background-color: #3897f0; border: 1px solid g" class="icon-wrapper">
+	                                	<i class="fa fa-2x fa-heart-o" ></i>
+	                          		</span>
+                          		</a>
                           		
-                          		<span style="margin-left:50px;  align:center; "class="icon-wrapper">
+                          		<a href="#" style="color:white; ">
+                          			<span style="background-color: #3897f0; align:center; margin-left:50px;"class="icon-wrapper">
                                 	<i class="fa fa-2x fa-comments-o"></i>
-                          		</span>
+                          		</span></a>
                           		<br>
                           		<div style="">
-	                          		<span style="font-size:18px; margin-left:420px; margin-top:-2px; text-align: center; color:#00AFF0; "><a style="font-weight:bold;" href="#"> 신청 </a></span>
-	                          		<span style="font-size:18px;  margin-left:85px; text-align: center; color:#00AFF0; "><a style="font-weight:bold;" href="#"> 리스트 </a></span>
+	                          		<span style="font-size:18px; margin-left:43.5%; margin-top:-2px; text-align: center; color:#00AFF0; ">
+	                          				<a style="font-weight:bold;" href="#"> 신청 </a>
+	                          		</span>
+	                          		<span style="font-size:18px;text-align: center; color:#00AFF0; ">
+	                          				<a style="font-weight:bold; margin-left:83px; "  href="#">  리스트 </a>
+	                          		</span>
                           		</div><br>
                           		</td>
                         </tr>        
@@ -159,7 +178,7 @@
 					    <td colspan="1"bgcolor="#EEEEEE" align="center">이전글</td>
 					    <td colspan="6" align="left" style="padding-left:10px;" colspan="3">
 							
-								<a href=#>희망복지관- 아이들과 키즈랜드 가기 [2016-02-03일]  <span style="color:orange;">[ 모집중 ]</span></a>
+								<a href=#>희망복지관- 아이들과 키즈랜드 가기 [2016-02-03일]  <span class="label label-warning">모집중</span></a>
 							
 						</td>
 					</tr>
@@ -167,7 +186,7 @@
 					    <td colspan="1"bgcolor="#EEEEEE" align="center">다음글</td>
 					    <td colspan="6" align="left" style="padding-left:10px;" colspan="3">
 							
-								<a href=#>나눔복지관- 독거노인과 함께하는 주말 [2016-02-03일] <span style="color:orange;">[ 모집중 ]</span></a>
+								<a href=#>나눔복지관- 독거노인과 함께하는 주말 [2016-02-03일] <span class="label label-warning">모집중</span></a>
 							
 					    </td>
 					</tr>
@@ -200,7 +219,7 @@
                       <textarea id="shareR_content" class="form-control" rows="3" required="required"></textarea>
                   </div>
                   <div style="text-align: right; padding-top: 10px;">
-                      <button type="button" class="btn btn-default" style="background-color:#1B8BFF; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="glyphicon glyphicon-ok"></span></button>
+                      <button type="button" class="btn btn-default" style="background-color:#3897f0; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="glyphicon glyphicon-ok"></span></button>
                   </div>           
               </div>
           
