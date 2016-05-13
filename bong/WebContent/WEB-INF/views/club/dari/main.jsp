@@ -254,8 +254,8 @@
 <div class="row" style="margin-top:50px;">
 <div class="col-md-6" >
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 style="color:#687ead; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 후기</h5>
+                    <div class="panel-heading" >
+                        <h5 style="font-size:18px;"><i class="fa fa-fw fa-paperclip"></i> 이달의 후기<a href="#"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
                     </div>
                     <div class="panel-body">
                         <ul type="disc">
@@ -277,7 +277,7 @@
             <div class="col-md-6" >
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5 style="color:#687ead; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 봉다리</h5>
+                        <h5 style="font-size:18px;"><i class="fa fa-fw fa-paperclip"></i> 이달의 봉다리 <a href="#"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
                     </div>
                     <div class="panel-body">
                         <ul type="disc">
