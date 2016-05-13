@@ -69,7 +69,7 @@
 
 <div class="bodyFrame2" >
     <div class="body-title">
-          <h2 style="color:#5bc0de;"><span class="glyphicon glyphicon-book" style="color: #5bc0de;"></span> 공지글쓰기 </h2>
+          <h2 style="color:#5bc0de;"><span class="glyphicon glyphicon-book" style="color: #5bc0de;"></span> 자유글쓰기 </h2>
     </div>
     
     

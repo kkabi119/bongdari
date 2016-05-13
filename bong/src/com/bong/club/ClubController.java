@@ -67,6 +67,7 @@ public class ClubController {
 		return mav;
 	}
 	
+	/*개인동아리 공지게시판*/
 	@RequestMapping(value="/club/index/notice/list")
 	public ModelAndView clubNotice() throws Exception {
 		
@@ -87,14 +88,30 @@ public class ClubController {
 		ModelAndView mav = new ModelAndView(".four.club.dari.notice.create.공지글쓰기");
 		return mav;
 	}
+	/*개인동아리 공지게시판 끝*/
 	
-	
-	@RequestMapping(value="/club/index/free")
-	public ModelAndView clubFreeBBS() throws Exception {
+	/*개인동아리 자유게시판*/
+	@RequestMapping(value="/club/index/free/list")
+	public ModelAndView ListClubFree() throws Exception {
 		
-		ModelAndView mav = new ModelAndView(".four.club.dari.free.자유게시판");
+		ModelAndView mav = new ModelAndView(".four.club.dari.free.list.자유게시판");
 		return mav;
 	}
+	
+	@RequestMapping(value="/club/index/free/create")
+	public ModelAndView insertClubFree() throws Exception {
+		
+		ModelAndView mav = new ModelAndView(".four.club.dari.free.create.자유글쓰기");
+		return mav;
+	}
+	
+	@RequestMapping(value="/club/index/free/article")
+	public ModelAndView readClubFree() throws Exception {
+		
+		ModelAndView mav = new ModelAndView(".four.club.dari.free.article.자유글보기");
+		return mav;
+	}
+	/*개인동아리 자유게시판 끝*/
 	
 	@RequestMapping(value="/club/index/review")
 	public ModelAndView clubReview() throws Exception {
