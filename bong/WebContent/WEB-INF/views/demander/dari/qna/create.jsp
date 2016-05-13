@@ -91,7 +91,7 @@
 <div class="body-title">
 	<h2 style="color: #F0AD4E;">
 		<span class="glyphicon glyphicon-book" style="color: #F0AD4E;"></span>
-		게시판
+		QnA
 	</h2>
 </div>
 
@@ -153,7 +153,7 @@
 							</button>
 							<button type="button" class="btn btn-default"
 								style="color: #F0AD4E;"
-								onclick="javascript:location.href='<%=cp%>/demander/index/review/list';">
+								onclick="javascript:location.href='<%=cp%>/demander/index/qna/list';">
 								취소</button> <c:if test="${mode=='update'}">
 								<input type="hidden" name="num" value="${dto.num}">
 								<input type="hidden" name="saveFilename"
