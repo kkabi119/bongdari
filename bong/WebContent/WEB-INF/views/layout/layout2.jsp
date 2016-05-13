@@ -68,7 +68,9 @@
 				<tiles:insertAttribute name="left"/>
 				<!-- /#left -->
 				
+				<div class="col-md-9 col-sm-7">
 				<tiles:insertAttribute name="body"/>
+				</div>
 				<!-- /#body -->
     		</div>
         </div>

@@ -9,7 +9,7 @@
 %>
 <div class="col-md-9 col-sm-7">
   <section id="blog" class="padding-bottom">
-  	
+
         
                 <div class="timeline-blog overflow padding-top">
                     <div class="timeline-date text-center">
