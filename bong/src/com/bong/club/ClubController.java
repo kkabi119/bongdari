@@ -68,9 +68,16 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="/club/index/notice/article")
-	public ModelAndView clubNoticeArticle() throws Exception {
+	public ModelAndView ReadClubNotice() throws Exception {
 		
 		ModelAndView mav = new ModelAndView(".four.club.dari.notice.article.공지글보기");
+		return mav;
+	}
+	
+	@RequestMapping(value="/club/index/notice/write")
+	public ModelAndView insertClubNotice() throws Exception {
+		
+		ModelAndView mav = new ModelAndView(".four.club.dari.notice.create.공지글쓰기");
 		return mav;
 	}
 	
