@@ -115,7 +115,9 @@
                         	<td  bgcolor="#DFE6E8" style="color:black;;border-top:none; text-align: left; width:12%; height:45px; ">
                             		<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉사장소
                             </td>
-                            <td colspan="6" style="text-align: left; width:200px; height:45px; ">서울특별시 노원구 삼양동 종합복지센터 ( 장암역 1번출구 )</td>
+                            <td colspan="6" style="text-align: left; width:200px; height:45px; ">
+                            	서울특별시 노원구 삼양동 종합복지센터 장암역 1번출구 <a href="#" > [지도]</a>
+                            </td>
                         </tr>
                       <tr>
                             <td colspan="7" style="border-top:2px solid gray;  padding:50px 20px 50px 20px; line-height:20pt;">
