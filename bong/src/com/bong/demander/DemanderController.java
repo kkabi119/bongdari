@@ -57,10 +57,10 @@ public class DemanderController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/demander/index/review")
+	@RequestMapping(value="/demander/index/review/list")
 	public ModelAndView demanderReview() throws Exception {
 		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.review.후기게시판");
+		ModelAndView mav = new ModelAndView(".four.demander.dari.review.list.후기게시판");
 		return mav;
 	}
 	
@@ -77,6 +77,8 @@ public class DemanderController {
 		return mav;
 	}
 	
+	
+	
 	@RequestMapping(value="/demander/index/schedule")
 	public ModelAndView demanderSchedule() throws Exception {
 		
@@ -90,14 +92,6 @@ public class DemanderController {
 		ModelAndView mav = new ModelAndView(".four.demander.dari.approval.요청승인페이지");
 		return mav;
 	}
-	
-	@RequestMapping(value="/demander/index/eval")
-	public ModelAndView demanderEval() throws Exception {
-		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.eval.평가");
-		return mav;
-	}
-	
 	@RequestMapping(value="/demander/index/guest")
 	public ModelAndView demanderGuest() throws Exception {
 		
@@ -105,10 +99,19 @@ public class DemanderController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/demander/index/admin")
+	@RequestMapping(value="/demander/index/admin/admin")
 	public ModelAndView demanderadmin() throws Exception {
 		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.admin.관리자페이지");
+		ModelAndView mav = new ModelAndView(".four.demander.dari.admin.admin.관리자페이지");
+		
 		return mav;
 	}
+	
+	@RequestMapping(value="/demander/index/bookmark")
+	public ModelAndView deadminbmark() throws Exception {
+		ModelAndView mav = new ModelAndView(".four.demander.dari.bookmark.관심등록");
+		return mav;
+	}
+	
+	
 }
