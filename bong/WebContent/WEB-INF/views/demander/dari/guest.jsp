@@ -143,7 +143,7 @@ function deleteGuest(num, page) {
 
 </head>
 <body>
-<div class="container" style="width: 63%;">
+
 <div class="row3">
 		<div class="col-lg-12">
 			<h1 class="page-header" style="color:#F0AD4E;">
@@ -184,7 +184,7 @@ function deleteGuest(num, page) {
    </div>
         
         <div id="listGuest"></div>
-</div>
+
 	
 
 </body>
