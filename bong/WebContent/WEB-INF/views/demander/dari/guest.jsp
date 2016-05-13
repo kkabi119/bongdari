@@ -7,96 +7,186 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
+<!-- sp3의 guest -->
+<link rel="stylesheet" href="<%=cp%>/res/css/style.css" type="text/css">
+<style type="text/css">
+.title {
+	font-weight: bold;
+	font-size:13pt;
+	margin-bottom:10px;
+	font-family: 나눔고딕, "맑은 고딕", 돋움, sans-serif;
+}
 
-                <div class="col-md-9 col-sm-7">
-                    <div class="row">
-                         <div class="col-md-12 col-sm-12">
-                            <div class="single-blog two-column">
-                                <div class="post-thumb">
-                                    <a href="blogdetails.html"><img src="<%=cp%>/res/images/blog/7.jpg" class="img-responsive" alt=""></a>
-                                    <div class="post-overlay">
-                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
-                                    </div>
-                                </div>
-                                <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="blogdetails.html">수요처방명록!!!</a></h2>
-                                    <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
-                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
-                                    <a href="#" class="read-more">View More</a>
-                                    <div class="post-bottom overflow">
-                                        <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
-                                            <li><a href="#"><i class="fa fa-heart"></i>32 Love</a></li>
-                                            <li><a href="#"><i class="fa fa-comments"></i>3 Comments</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="single-blog two-column">
-                                <div class="post-thumb">
-                                    <a href="blogdetails.html"><img src="<%=cp%>/res/images/blog/8.jpg" class="img-responsive" alt=""></a>
-                                    <div class="post-overlay">
-                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
-                                    </div>
-                                </div>
-                                <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="blogdetails.html">Advanced business cards design</a></h2>
-                                    <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
-                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
-                                    <a href="#" class="read-more">View More</a>
-                                    <div class="post-bottom overflow">
-                                        <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
-                                            <li><a href="#"><i class="fa fa-heart"></i>32 Love</a></li>
-                                            <li><a href="#"><i class="fa fa-comments"></i>3 Comments</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="single-blog two-column">
-                                <div class="post-thumb">
-                                    <a href="blogdetails.html"><img src="<%=cp%>/res/images/blog/9.jpg" class="img-responsive" alt=""></a>
-                                    <div class="post-overlay">
-                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
-                                    </div>
-                                </div>
-                                <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="blogdetails.html">Advanced business cards design</a></h2>
-                                    <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
-                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
-                                    <a href="#" class="read-more">View More</a>
-                                    <div class="post-bottom overflow">
-                                        <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
-                                            <li><a href="#"><i class="fa fa-heart"></i>32 Love</a></li>
-                                            <li><a href="#"><i class="fa fa-comments"></i>3 Comments</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="blog-pagination">
-                        <ul class="pagination">
-                          <li><a href="#">left</a></li>
-                          <li><a href="#">1</a></li>
-                          <li><a href="#">2</a></li>
-                          <li class="active"><a href="#">3</a></li>
-                          <li><a href="#">4</a></li>
-                          <li><a href="#">5</a></li>
-                          <li><a href="#">6</a></li>
-                          <li><a href="#">7</a></li>
-                          <li><a href="#">8</a></li>
-                          <li><a href="#">9</a></li>
-                          <li><a href="#">right</a></li>
-                        </ul>
-                    </div>
-                 </div>
-            </div>
+</style>
+
+
+<script type="text/javascript">
+<%-- $(function(){
+	listPage(1);
+});
+
+function listPage(page) {
+	var url="<%=cp%>/guest/list.do";
+	var params="pageNo="+page;
+	
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:params
+		,dataType:"xml"
+		,success:function(data) {
+			printGuest(data);
+		}
+	    ,error:function(e) {
+	    	alert(e.responseText);
+	    }
+	});
+}
+
+function printGuest(data) {
+	$("#listGuest").show();
+
+	var dataCount=$(data).find("dataCount").text();
+	var pageNo=$(data).find("pageNo").text();
+	var paging=$(data).find("paging").text();
+	
+	var out="";
+	if(dataCount!=0) {
+		out="<table style='width: 600px; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;'>";
+		$(data).find("record").each(function(){
+			var record=$(this);
+			var num=record.attr("num");
+			var name=record.find("name").text();
+			var content=record.find("content").text();
+			var created=record.find("created").text();
+			
+			out+="<tr height='30' bgcolor='#EEEEEE' style='border: 1px solid #DBDBDB;'>";
+			out+="  <td width='50%' style='padding-left: 5px;'>"+ name+"</td>";
+			out+="  <td width='50%' align='right' style='padding-right: 5px;'>" + created;
+			out+=" | <a onclick='deleteGuest(\""+num+"\", \""+pageNo+"\");'>삭제</a></td>" ;
+			out+="</tr>";
+			out+="<tr height='50'>";
+			out+="   <td colspan='2' style='padding: 5px;' valign='top'>"+content+"</td>";
+			out+="</tr>";
+		});
+		out+="<tr height='30'>";
+		out+="  <td colspan='2' align='center'>";
+		out+=paging;
+		out+="  </td>";
+		out+="</tr>";
+		out+="</table>";
+	}
+	
+	$("#listGuest").html(out);
+}
+
+$(function(){
+	$("#btnSend").click(function(){
+		var name=$("#name").val().trim();
+		var content=$("#content").val().trim();
+		
+		var url="<%=cp%>/guest/insert.do";
+		var params="name="+name;
+		params+="&content="+content;
+		
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:params
+			,dataType:"xml"
+			,success:function(data) {
+				// var state=$(data).find("state").text();
+				listPage(1);
+				
+				$("#name").val("");
+				$("#content").val("");
+			}
+		    ,error:function(e) {
+		    	alert(e.responseText);
+		    }
+		    ,beforeSend:check
+		});
+		
+	});
+});
+
+function check() {
+	var name=$("#name").val().trim();
+	var content=$("#content").val().trim();
+	
+	if(! name) {
+		alert("이름을 입력하세요 !!!");
+		$("#name").focus();
+		return false;
+	}
+	
+	if(! content) {
+		alert("내용을 입력하세요 !!!");
+		$("#content").focus();
+		return false;
+	}
+	
+	return true;
+}
+
+function deleteGuest(num, page) {
+	if(! confirm("게시물을 삭제 하시 겠습니까 ?"))
+		return false;
+	
+	var url="<%=cp%>/guest/delete.do";
+
+	$.post(url, {num:num}, function(data) {
+		   listPage(page);
+	}, "xml");	
+} --%>
+</script>
+
+</head>
+<body>
+<div class="container" style="width: 63%;">
+<div class="row3">
+		<div class="col-lg-12">
+			<h1 class="page-header" style="color:#F0AD4E;">
+			<i class="fa fa-comments-o" aria-hidden="true"></i>
+				방명록 
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="<%=cp%>/demander/index/main" style="color:#F0AD4E;">수요처 메인</a></li>
+				<li class="active">방명록</li>
+			</ol>
+		</div>
+	</div>
+	
+	
+<div class="row2">
+<div class="col-md-7">
+    <table style="width: 600px; margin: 0px auto; margin-top: 5px;" >
+         <tr height="60">
+         		<td width="520">
+         		   <i class="fa fa-user" aria-hidden="true" style="size: 60px;">  작성자 :</i> 
+         		   <input type="text" id="name" class="boxTF" size="30">
+         		</td>
+         		<td width="80">&nbsp;</td>
+         </tr>
+             
+		<tr height="80">
+			<td width="520" align="left">
+			    <textarea rows="5" cols="85" class="boxTF" id="content" style="width:515px; height: 75px;"></textarea>
+			</td>
+			<td width="80" align="right" >
+			<br>
+			   <button type="button"  class="btn btn-warning"  id="btnSend" class="btn"
+			           style="width: 70px; height: 42px;">등록</button> 
+			</td>
+		</tr>           
+        </table>
         </div>
-    </section>
+   </div>
+        
+        <div id="listGuest"></div>
+</div>
+	
+
+</body>
+              
     <!--/#blog-->

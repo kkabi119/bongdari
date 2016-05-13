@@ -19,20 +19,20 @@
 
 <style type="text/css">
 /* 후기게시판 리스트row */
-.row2 {
+ .row2 {
 	margin-top: 20px;
 	margin-bottom: 60px;
 	margin-left: 20px;
 	height: 280px;
 	width: 1100px;
-}
+} 
 /* 후기게시판 타이틀 */
-.row3 {
+ .row3 {
 	margin-top: 20px;
 	margin-bottom: 20px;
 	height: 180px;
 	width: 1100px;
-}
+}  
 /* 후기게시판 리스트 이미지 */
 .img-responsive2 {
 	display: block;
