@@ -7,8 +7,6 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
-
-<div class="col-md-9 col-sm-7">
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">

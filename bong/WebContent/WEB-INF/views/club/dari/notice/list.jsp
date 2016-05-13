@@ -7,7 +7,7 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
-<div class="col-md-9 col-sm-7">
+
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">
@@ -59,7 +59,7 @@
         
         				<div style="clear: both;">
         					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/bbs/list';">새로고침</button>
+        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/club/index/notice/list';">새로고침</button>
         					</div>
         					<div style="float: left; width: 60%; text-align: center;">
         		     			<form name="searchForm" method="post" class="form-inline">
@@ -74,7 +74,7 @@
         		     			</form>
         					</div>
         					<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    			<button type="button" class="btn btn-success" onclick="javascript:location.href='<%=cp%>/bbs/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+        		    			<button type="button" class="btn btn-success" onclick="javascript:location.href='<%=cp%>/club/index/notice/write';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
         					</div>
         				</div>
         			</div>
@@ -97,4 +97,3 @@
 			<li><a href="#">right</a></li>
 		</ul>
 	</div>
-</div>

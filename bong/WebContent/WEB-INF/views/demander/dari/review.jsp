@@ -7,16 +7,6 @@
 	String cp = request.getContextPath();
 	// String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
-<!-- Bootstrap Core CSS -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Custom CSS -->
-<link href="css/modern-business.css" rel="stylesheet">
-
-<!-- Custom Fonts -->
-<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
-	type="text/css">
-
 <style type="text/css">
 /* 후기게시판 리스트row */
  .row2 {
@@ -24,14 +14,14 @@
 	margin-bottom: 60px;
 	margin-left: 20px;
 	height: 280px;
-	width: 1100px;
+	width: 100%;
 } 
 /* 후기게시판 타이틀 */
  .row3 {
 	margin-top: 20px;
 	margin-bottom: 20px;
 	height: 180px;
-	width: 1100px;
+	width: 100%;
 }  
 /* 후기게시판 리스트 이미지 */
 .img-responsive2 {
@@ -79,9 +69,6 @@
 	padding-left: 0px;
 }
 </style>
-
-<div class="container" style="width: 63%;">
-
 	<!-- Page Heading/Breadcrumbs -->
 	<div class="row3">
 		<div class="col-lg-12">
@@ -265,8 +252,3 @@
 			</button>
 		</div>
 	</div>
-
-
-
-</div>
-<!--/#blog-->
