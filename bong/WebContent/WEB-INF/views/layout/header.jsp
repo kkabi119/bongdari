@@ -69,7 +69,7 @@
                         
                         <li class="dropdown"><a href="blog.html">나의동아리 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
-                                <li><a href="<%=cp%>/main/myClub">클럽1</a></li>
+                                <li><a href="<%=cp%>/club/index/main">클럽1</a></li>
                                 <li><a href="<%=cp%>/main/club2">클럽2</a></li>
                             </ul>
                         </li>
