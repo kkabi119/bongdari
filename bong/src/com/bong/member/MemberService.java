@@ -8,7 +8,7 @@ public interface MemberService {
 	public Member readMember1(int userIdx);
 	public Member readMemberLogin(String userId);
 	
-	public int insertMember(Member dto);
+	public int insertMember(Member dto) throws Exception;
 	
 	public int updateMember2(Member dto);
 	public int updateLastLogin(String userId);

@@ -5,32 +5,46 @@
 <%
    String cp = request.getContextPath();
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<script type="text/javascript" src="<%=cp%>/res/js/jquery-1.12.0.min.js"></script>
-<script type="text/javascript" src="<%=cp%>/res/js/util.js"></script>
-
-<link rel="stylesheet" href="<%=cp%>/res/css/jquery-ui.min.css" type="text/css"/>
-
-
-<link rel="stylesheet" href="<%=cp%>/res/css/style.css" type="text/css"/>
-<link rel="stylesheet" href="<%=cp%>/res/css/layout/layout.css" type="text/css"/>
-
-
-<link href="<%=cp %>/res/css/bootstrap.css" rel="stylesheet">
 
 <script type="text/javascript">
 
+//아이디 중복 검사
+function userIdCheck() {
+	var userId=$("#userId").val();
+	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(userId)) { 
+		var str="아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.";
+		$("#userId").focus();
+		$("#userId + .help-block").html(str);
+		return false;
+	}
+	
+	var url="<%=cp%>/member/userIdCheck";
+	var params="userId="+userId;
+	$.ajax({
+		type:"POST"
+		,url:url
+		,data:params
+		,dataType:"JSON"
+		,success:function(data) {
+			var passed=data.passed;
+			if(passed=="true") {
+				var str="<span style='color:blue;font-weight: bold;'>"+userId+"</span> 아이디는 사용가능 합니다.";
+				$("#userId + .help-block").html(str);
+			} else {
+				var str="<span style='color:red;font-weight: bold;'>"+userId+"</span> 이미 존재하는 아이디입니다.";
+				$("#userId + .help-block").html(str);
+				$("#userId").val("");
+				$("#userId").focus();
+			}
+		}
+	});
+}
+
 function register() {
-   var f = document.registerForm;;
+   var f = document.memberForm;
    var str;
 
-   str=f.userId.value;
+    str=f.userId.value;
    if(!/^[a-z][a-z0-9_]{4,9}$/i.test(str)) { 
       $("#userId + .help-block").html("<span style='color:red;'>아이디를 확인해주세요! <span>");
       f.userId.focus();
@@ -57,7 +71,7 @@ function register() {
    }
    
     str = f.userName.value;
-   str = $.trim(str);
+    str = $.trim(str);
 
     if(!/^[\uac00-\ud7a3]{2,4}$/g.test(str)) {
        $("#userName + .help-block").html("<span style='color:red;'>이름을 확인해주세요! <span>");
@@ -68,16 +82,16 @@ function register() {
       $("#userName + .help-block").html("이름은 한글로 2자이상 4자 이하입니다.");
    }   
     str = f.userBirth.value;
-    if(!isValidDateFormat(str)) {
+    if(!str) {
        $("#userBirth + .help-block").html("<span style='color:red;'>생일 형식을 확인해주세요!<span>");
         f.userBirth.focus();
         return false;
     } else {
       $("#userBirth + .help-block").html("  생년월일은 2000-01-01 형식으로 입력 합니다.");
    }
-/*   
+   
     str = f.email2.value;
-    if(!/@[0-9a-zA-Z]([0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(str)) {
+    if(!/[0-9a-zA-Z]([0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(str)) {
        $("#userEmail + .help-block").html("<span style='color:red;'> 이메일 형식을 확인해주세요!<span>");
         f.email2.focus();
         return false;
@@ -87,35 +101,33 @@ function register() {
     
     str = f.tel1.value;
     if(!str) {
-       $("#tel3 + .help-block").html("<span style='color:red;'>전화번호를 확인해주세요!<span>");
         f.tel1.focus();
         return false;
-    }else {
-      $("#tel3 + .help-block").html("");
-   }
+    }
 
     str = f.tel2.value;
-    if(!/^[0-9]{4}$/g.test(str)) {
-       $("#tel3 + .help-block").html("<span style='color:red;'>전화번호를 확인해주세요!<span>");
+    if(!/^(\d+)$/.test(str)) {
         f.tel2.focus();
         return false;
-    }else {
-      $("#tel3 + .help-block").html("");
-   }
-    
+    }
+
     str = f.tel3.value;
-    if(!/^[0-9]{4}$/g.test(str)) {
-       $("#tel3 + .help-block").html("<span style='color:red;'>전화번호를 확인해주세요!<span>");
+    if(!/^(\d+)$/.test(str)) {
         f.tel3.focus();
         return false;
-    }else {
-      $("#tel3 + .help-block").html("");
-   }
-     */
+    } 
+    if(!str) {
+        $("#userTel + .help-block").html("<span style='color:red;'>번호만 입력해주세요<span>");
+         f.tel1.focus();
+         return false;
+     } else {
+       $("#userTel + .help-block").html("  전화번호는 번호만 입력해주세요");
+    }
+    
     var failed="${failed}";
    if(failed=="true"){
       alert("회원가입에 실패했습니다!");
-   }
+   } 
    
     var mode="${mode}"
     if(mode=="created") {
@@ -126,9 +138,6 @@ function register() {
 
     return true;
 }
-</script>
-<script>
-
 function changeEmail() {
     var f = document.memberForm;
     
@@ -139,15 +148,13 @@ function changeEmail() {
          f.email1.focus(); 
     }
     else {
-        f.email2.value="@";
+        f.email2.value="";
         f.email2.readOnly = false;
         f.email1.focus();
     }
 }
 </script>
 
-</head>
-<body>
 <div class="container" role="main" style="margin-top:50px;">
 
   <div class="bodyFrame">
@@ -156,7 +163,7 @@ function changeEmail() {
         <label class="col-sm-2 control-label" for="userId">아이디</label>
         <div class="col-sm-7">
             <input style="width:200px;"class="form-control" id="userId" name="userId" type="text" 
-                  placeholder="아이디"  value="${dto.userId}"
+                  placeholder="아이디" onchange="userIdCheck();" value="${dto.userId}" 
               ${mode=="update" ? "readonly='readonly' style='border:none;'":""}>
             <p class="help-block"> 아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.</p>
         </div>
@@ -194,46 +201,33 @@ function changeEmail() {
             <p class="help-block">생년월일은 2000-01-01 형식으로 입력 합니다.</p>
         </div>
     </div>
-   <div style=""class="form-group">
-        <label class="col-sm-2 control-label" for="userTel">전화번호</label>
-        <div class="col-sm-7">
-            <input style="width:200px; " class="form-control" id="userTel" name="userTel" type="text" placeholder="전화번호" value="${dto.userTel}">
-         
-        </div>
-    </div>
-     <div style=""class="form-group">
-        <label class="col-sm-2 control-label" for="userEmail">이메일</label>
-        <div class="col-sm-7">
-            <input style="width:200px; " class="form-control" id="userEmail" name="userEmail" type="text" placeholder="이메일" value="${dto.userEmail}">
-         
-        </div>
-    </div>
-   <%--  <div class="form-group">
+
+<div class="form-group">
         <label class="col-sm-2 control-label" for="userEmail">이메일</label>
         <div class="col-sm-10" style="margin-top:0px;">
            <select name="selectEmail" onchange="changeEmail();" class="form-control" style="width:130px; float: left; margin-right:10px; margin:0px; padding:0px;" >
                                  <option value="">선 택</option>
-                                 <option value="@naver.com" ${dto.email2=="naver.com" ? "selected='selected'" : ""}>네이버 메일</option>
-                                 <option value="@hanmail.net" ${dto.email2=="hanmail.net" ? "selected='selected'" : ""}>한 메일</option>
-                                 <option value="@hotmail.com" ${dto.email2=="hotmail.com" ? "selected='selected'" : ""}>핫 메일</option>
-                                 <option value="@gmail.com" ${dto.email2=="gmail.com" ? "selected='selected'" : ""}>지 메일</option>
+                                 <option value="naver.com" ${dto.email2=="naver.com" ? "selected='selected'" : ""}>네이버 메일</option>
+                                 <option value="hanmail.net" ${dto.email2=="hanmail.net" ? "selected='selected'" : ""}>한 메일</option>
+                                 <option value="hotmail.com" ${dto.email2=="hotmail.com" ? "selected='selected'" : ""}>핫 메일</option>
+                                 <option value="gmail.com" ${dto.email2=="gmail.com" ? "selected='selected'" : ""}>지 메일</option>
                                  <option value="direct">직접입력</option>
-      </select>
+      </select>@
        <input style="width:150px; float:left; margin-right:10px;" type="text" name="email1" size="13" 
-             maxlength="30" id="email"  class="form-control" value="${dto.email1}">
+             maxlength="30" id="email1"  class="form-control" value="${dto.email1}">
+             
+       <input style="width:150px;  float:left; margin-right:10px; " type="text" name="email2" size="13"
+             maxlength="30" id="email2"  class="form-control" value="${dto.email2}" readonly="readonly">
          
-      <input style="width:150px;  float:left; margin-right:10px; " type="text" name="email2" size="13"
-             maxlength="30" id="email"  class="form-control" value="@${dto.email2}" readonly="readonly">
-         <p class="help-block"> </p>
          </div>
-    </div>
+    </div> 
     
     <div class="form-group" >
         <label class="col-sm-2 control-label" for="tel1">전화번호</label>
         <div class="col-sm-7">
              <div class="row" >
-                  <div class="col-sm-3" style="padding-right: 5px;">
-                    <select class="form-control" style="width:130px; float: left; margin:0px; padding:0px;"id="tel1" name="tel1" >
+                  <div class="col-sm-2" style="padding-left: 13px;">
+                    <select class="form-control" id="tel1" name="tel1" style="width:100px;">
                         <option value="">선 택</option>
                         <option value="010" ${dto.tel1=="010" ? "selected='selected'" : ""}>010</option>
                         <option value="011" ${dto.tel1=="011" ? "selected='selected'" : ""}>011</option>
@@ -261,7 +255,7 @@ function changeEmail() {
                   </div>
              </div>
         </div>
-    </div>   --%>  
+    </div>   
     <div class="form-group">
         <label class="col-sm-2 control-label" for="userAddr">주소</label>
         <div class="col-sm-7">
@@ -298,7 +292,7 @@ function changeEmail() {
       <c:if test="${mode=='created'}">
             <button type="submit" name="sendButton" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;">
                   회원가입<span class="glyphicon glyphicon-ok"></span></button>
-            <button type="submit" class="btn btn-default btn-sm wbtn" style="margin-right:20px; height:40px; width:130px;">
+            <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/member/login';" style="margin-right:20px; height:40px; width:130px;">
                   가입취소 <span class="glyphicon glyphicon-remove"></span></button>
        </c:if>
    <c:if test="${mode=='update'}">
@@ -333,8 +327,3 @@ function changeEmail() {
     </div>
     <!-- /.container -->
 
-<script type="text/javascript" src="<%=cp%>/res/js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="<%=cp%>/res/js/jquery.ui.datepicker-ko.js"></script>
-<script type="text/javascript" src="<%=cp%>/res/js/bootstrap.min.js"></script>
-</body>
-</html>

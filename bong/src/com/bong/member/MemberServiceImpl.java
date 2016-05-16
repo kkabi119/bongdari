@@ -19,7 +19,22 @@ public class MemberServiceImpl implements MemberService{
 		Member dto=null;
 		try {
 			dto=dao.getReadInformation("member.readMember1", userIdx);
-		
+		    
+			if(dto!=null){
+				if(dto.getUserTel()!=null){
+					String [] s=dto.getUserTel().split("-");
+					dto.setTel1(s[0]);
+					dto.setTel2(s[1]);
+					dto.setTel3(s[2]);
+				}
+			}
+			if(dto!=null){
+				if(dto.getUserEmail()!=null){
+					String [] s=dto.getUserEmail().split("@");
+					dto.setEmail1(s[0]);
+					dto.setEmail2(s[1]);
+				}
+			}
 		} catch (Exception e) {
 		  System.out.println(e.toString());
 		}
@@ -31,18 +46,42 @@ public class MemberServiceImpl implements MemberService{
 		Member dto=null;
 		try {
 			dto=dao.getReadInformation("member.readMemberLogin", userId);
-		
+		    
+			if(dto!=null){
+				if(dto.getUserTel()!=null){
+					String [] s=dto.getUserTel().split("-");
+					dto.setTel1(s[0]);
+					dto.setTel2(s[1]);
+					dto.setTel3(s[2]);
+				}
+			}
+			if(dto!=null){
+				if(dto.getUserEmail()!=null){
+					String [] s=dto.getUserEmail().split("@");
+					dto.setEmail1(s[0]);
+					dto.setEmail2(s[1]);
+				}
+			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		return dto;
 	}
 	@Override
-	public int insertMember(Member dto) {
+	public int insertMember(Member dto) throws Exception {
 		int result = 0;
 		try {
+			if(dto.getTel1() != null && dto.getTel1().length()!=0 &&
+					dto.getTel2() != null && dto.getTel2().length()!=0 &&
+					dto.getTel3() != null && dto.getTel3().length()!=0)
+				dto.setUserTel(dto.getTel1() + "-" + dto.getTel2() + "-" + dto.getTel3());
+			System.out.println(dto.getUserTel());
+			if(dto.getEmail1() != null && dto.getEmail1().length()!=0 &&
+					dto.getEmail2() != null && dto.getEmail2().length()!=0 )
+				dto.setUserEmail(dto.getEmail1() + "@" + dto.getEmail2());
 			int seq=dao.getIntValue("member.memberSeq");
 			dto.setUserIdx(seq);
+			
 			
 			//회원정보 저장
 			dao.insertInformation("member.insertMember", seq);
@@ -51,6 +90,7 @@ public class MemberServiceImpl implements MemberService{
 			result = 1;
 		} catch (Exception e) {
 			System.out.println(e.toString());
+			throw e;
 		}
 		return result;
 	}
@@ -64,6 +104,7 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int updateLastLogin(String userId) {
 		int result=0;
+		
 		try {
 			result=dao.updateInformation("member.updateLastLogin", userId);
 		} catch (Exception e) {

@@ -2,6 +2,7 @@ package com.bong.member;
 
 public class Member {
 	private String userPwd, userId, userName, userBirth, userAddr, userJob, userGender, userEmail;
+	private String email1, email2;
 	private String created_date, modify_date, last_login;
 	private String userTel, tel1, tel2, tel3;
 	private int userIdx, isMember, userLevel, userVolNum, userNoShow, userScore, enabled;
@@ -79,6 +80,19 @@ public class Member {
 	}
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
+	}
+	
+	public String getEmail1() {
+		return email1;
+	}
+	public void setEmail1(String email1) {
+		this.email1 = email1;
+	}
+	public String getEmail2() {
+		return email2;
+	}
+	public void setEmail2(String email2) {
+		this.email2 = email2;
 	}
 	public String getCreated_date() {
 		return created_date;

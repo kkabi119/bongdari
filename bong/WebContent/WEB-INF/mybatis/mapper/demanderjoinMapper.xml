@@ -11,7 +11,7 @@
     INSERT INTO service(serviceIdx) values(#{serviceIdx})
   </insert>
   	<select id="readDemanderjoinLogin" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="String">
-	   SELECT serviceIdx, serviceId, serviceName, servicePwd
+	   SELECT serviceIdx, serviceId, serviceName, servicePwd, serviceImgname
 	          FROM serviceInfo
 	          WHERE serviceId=#{serviceId} 
 	
@@ -19,8 +19,8 @@
   <insert id="insertDemanderjoinInfo" parameterType="com.bong.demanderjoin.Demanderjoin">
     INSERT INTO serviceInfo
     (serviceIdx, serviceId, servicePwd, serviceName, serviceBirth, serviceTel,
-     serviceAddr, serviceEmail)
+     serviceAddr, serviceEmail, serviceImgname)
      VALUES(#{serviceIdx},#{serviceId},#{servicePwd}, #{serviceName},#{serviceBirth}
-     ,#{serviceTel},#{serviceAddr},#{serviceEmail})
+     ,#{serviceTel},#{serviceAddr},#{serviceEmail},#{serviceImgname, jdbcType=VARCHAR})
   </insert>
 </mapper>

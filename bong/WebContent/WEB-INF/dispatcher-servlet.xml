@@ -27,6 +27,11 @@
 	<mvc:resources mapping="/uploads/image/**" location="/uploads/image/" />
 	<mvc:resources mapping="/uploads/photo/**" location="/uploads/photo/" />
 	
+	<!-- 트랜잭션 처리를 위한 aop 등록 -->
+	<aop:config proxy-target-class="true">
+	  <aop:pointcut expression="execution(public * com.bong..*Controller.*(..))" id="controllerOperation"/>
+	</aop:config>
+	
 	<!-- 어노테이션을 이용한  컨트롤러 등록 -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"
 	           p:alwaysUseFullPath="true">

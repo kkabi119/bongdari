@@ -1,5 +1,8 @@
 package com.bong.member;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller("member.memberController")
@@ -29,8 +33,9 @@ public class MemberController {
 		
 		Member dto = service.readMemberLogin(userId);
 		
-		if(dto==null || (! dto.getUserPwd().equals(userPwd))){
+		if(dto==null || (!dto.getUserPwd().equals(userPwd))){
 			ModelAndView mav= new ModelAndView("member/login");
+			
 			mav.addObject("message", "아이디 또는 비밀번호가 일치 하지 않습니다");
 			return mav;		
 		}
@@ -64,8 +69,8 @@ public class MemberController {
 	}
 		
 	@RequestMapping(value="/member/register", method=RequestMethod.POST)
-	public ModelAndView memberSubmit(Member dto) {
-			
+	public ModelAndView memberSubmit(Member dto) throws Exception {
+		
 		int result=service.insertMember(dto);
 		
 		ModelAndView mav=new ModelAndView(".layout.member.login.로그인");
@@ -85,5 +90,19 @@ public class MemberController {
 		}*/
 		return mav;
 	}	
-
+     //아이디 중복 검사
+	@RequestMapping(value="/member/userIdCheck")
+	@ResponseBody
+	public Map<String, Object> userIdCheck(
+			@RequestParam String userId
+			) throws Exception{
+		String passed="false";
+		Member dto=service.readMemberLogin(userId);
+		if(dto==null)
+			passed="true";
+		
+		Map<String, Object> model=new HashMap<String, Object>();
+		model.put("passed", passed);
+		return model;
+	}
 }
