@@ -82,7 +82,7 @@ function demanderRegister() {
     str = f.serviceName.value;
    str = $.trim(str);
 
-    if(!/^[\uac00-\ud7a3a-zA-Z]{2,4}$/g.test(str)) {
+    if(!/^[\uac00-\ud7a3a-zA-Z]{2,10}$/g.test(str)) {
        $("#serviceName + .help-block").html("<span style='color:red;'>이름을 확인해주세요! <span>");
         f.serviceName.focus();
         return false;
@@ -108,7 +108,7 @@ function demanderRegister() {
    }
  
     str = f.email2.value;
-    if(!/@[0-9a-zA-Z]([0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(str)) {
+    if(!/[0-9a-zA-Z]([0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(str)) {
        $("#serviceEmail + .help-block").html("<span style='color:red;'> 이메일 형식을 확인해주세요!<span>");
         f.email2.focus();
         return false;
@@ -158,7 +158,7 @@ function changeEmail() {
          f.email1.focus(); 
     }
     else {
-        f.email2.value="@";
+        f.email2.value="";
         f.email2.readOnly = false;
         f.email1.focus();
     }
@@ -184,8 +184,7 @@ function imageDelete() {
 }
 </script>
 
-</head>
-<body>
+
 <div class="container" role="main" style="margin-top:50px;">
 
   <div class="bodyFrame">
@@ -262,13 +261,7 @@ function imageDelete() {
             <p class="help-block">설립일은 2000-01-01 형식으로 입력 합니다.</p>
         </div>
     </div>
-     <div style=""class="form-group">
-        <label class="col-sm-2 control-label" for="serviceEmail">이메일</label>
-        <div class="col-sm-7">
-            <input style="width:200px; " class="form-control" id="serviceEmail" name="serviceEmail" type="text" placeholder="이메일" value="${dto.serviceEmail}">
-         
-        </div>
-    </div>
+
 <div class="form-group">
         <label class="col-sm-2 control-label" for="userEmail">이메일</label>
         <div class="col-sm-10" style="margin-top:0px;">

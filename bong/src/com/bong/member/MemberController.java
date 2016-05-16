@@ -1,5 +1,6 @@
 package com.bong.member;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,9 +70,13 @@ public class MemberController {
 	}
 		
 	@RequestMapping(value="/member/register", method=RequestMethod.POST)
-	public ModelAndView memberSubmit(Member dto) throws Exception {
+	public ModelAndView memberSubmit(
+			HttpSession session,
+			Member dto) throws Exception {
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"saveFilename";
 		
-		int result=service.insertMember(dto);
+		int result=service.insertMember(dto,pathname);
 		
 		ModelAndView mav=new ModelAndView(".layout.member.login.·Î±×ÀÎ");
 			

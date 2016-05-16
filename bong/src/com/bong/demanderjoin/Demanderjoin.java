@@ -6,6 +6,7 @@ public class Demanderjoin {
   private String serviceId, serviceName, serviceBirth, servicePwd;
   private String serviceTel, tel1, tel2, tel3;
   private String serviceAddr, serviceEmail;
+  private String email1, email2;
   private String serviceIntro,serviceImgname;
   private MultipartFile serviceImg;
   private int serviceIdx, isService;
@@ -68,6 +69,18 @@ public String getServiceEmail() {
 }
 public void setServiceEmail(String serviceEmail) {
 	this.serviceEmail = serviceEmail;
+}
+public String getEmail1() {
+	return email1;
+}
+public void setEmail1(String email1) {
+	this.email1 = email1;
+}
+public String getEmail2() {
+	return email2;
+}
+public void setEmail2(String email2) {
+	this.email2 = email2;
 }
 public String getServiceIntro() {
 	return serviceIntro;
