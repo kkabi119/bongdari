@@ -269,23 +269,31 @@ function imageDelete() {
          
         </div>
     </div>
-  <div class="form-group">
-        <label class="col-sm-2 control-label" for="serviceEmail">이메일</label>
+<div class="form-group">
+        <label class="col-sm-2 control-label" for="userEmail">이메일</label>
         <div class="col-sm-10" style="margin-top:0px;">
+        <table>
+        <tr>
+        <td>
            <select name="selectEmail" onchange="changeEmail();" class="form-control" style="width:130px; float: left; margin-right:10px; margin:0px; padding:0px;" >
                                  <option value="">선 택</option>
-                                 <option value="@naver.com" ${dto.email2=="naver.com" ? "selected='selected'" : ""}>네이버 메일</option>
-                                 <option value="@hanmail.net" ${dto.email2=="hanmail.net" ? "selected='selected'" : ""}>한 메일</option>
-                                 <option value="@hotmail.com" ${dto.email2=="hotmail.com" ? "selected='selected'" : ""}>핫 메일</option>
-                                 <option value="@gmail.com" ${dto.email2=="gmail.com" ? "selected='selected'" : ""}>지 메일</option>
+                                 <option value="naver.com" ${dto.email2=="naver.com" ? "selected='selected'" : ""}>네이버 메일</option>
+                                 <option value="hanmail.net" ${dto.email2=="hanmail.net" ? "selected='selected'" : ""}>한 메일</option>
+                                 <option value="hotmail.com" ${dto.email2=="hotmail.com" ? "selected='selected'" : ""}>핫 메일</option>
+                                 <option value="gmail.com" ${dto.email2=="gmail.com" ? "selected='selected'" : ""}>지 메일</option>
                                  <option value="direct">직접입력</option>
       </select>
+      </td>
+      <td>
        <input style="width:150px; float:left; margin-right:10px;" type="text" name="email1" size="13" 
-             maxlength="30" id="email"  class="form-control" value="${dto.email1}">
-         
-      <input style="width:150px;  float:left; margin-right:10px; " type="text" name="email2" size="13"
-             maxlength="30" id="email"  class="form-control" value="@${dto.email2}" readonly="readonly">
-         <p class="help-block"> </p>
+             maxlength="30" id="email1"  class="form-control" value="${dto.email1}">@&nbsp;&nbsp;
+       </td>
+       <td>      
+       <input style="width:150px;  float:left; margin-right:10px; " type="text" name="email2" size="13"
+             maxlength="30" id="email2"  class="form-control" value="${dto.email2}" readonly="readonly">
+         </td>
+         </tr>
+         </table>
          </div>
     </div>
     
