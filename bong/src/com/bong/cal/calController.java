@@ -17,13 +17,13 @@ public class calController {
 	// 대화상자에 출력 할 일정 추가 폼
 	@RequestMapping(value="/cal/inputForm")
 	public String inputForm() throws Exception {
-		return "admin/calendar/inputForm.jsp";
+		return "admin/calendar/inputForm";
 	}
 
 	// 대화상자에 출력 할 상세 일정 폼
 	@RequestMapping(value="/cal/articleForm")
 	public String articleForm() throws Exception {
-		return "admin/calendar/articleForm.jsp";
+		return "admin/calendar/articleForm";
 	}
 	
 	

@@ -2,18 +2,11 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%
 	String cp=request.getContextPath();
 %>
 
-<div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Dashboard</h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
+            
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-3 col-md-6">
@@ -255,5 +248,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+            
+            
         <!-- /#page-wrapper -->
