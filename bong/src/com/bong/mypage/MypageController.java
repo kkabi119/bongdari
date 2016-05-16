@@ -10,7 +10,7 @@ public class MypageController {
 	@RequestMapping(value="/member/index/myPage")
 	public ModelAndView mypageMain() throws Exception {
 		
-		ModelAndView mav = new ModelAndView(".four.mypage.main.마이페이지 메인");
+		ModelAndView mav = new ModelAndView(".layout.mypage.list.마이페이지 메인");
 		return mav;
 	}
 	

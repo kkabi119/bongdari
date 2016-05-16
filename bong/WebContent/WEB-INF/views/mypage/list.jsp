@@ -8,16 +8,13 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 <script type="text/javascript">
-
-
 </script>
-
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">
 				<div class="post-content overflow">
  					<div class="bodyFrame2">
-          				<h1 style="color:#5bc0de"><i class="fa fa-bell"></i>공지사항 </h1>
+          				<h1 style="color:#5bc0de"><i class="fa fa-bell"></i>나의 봉사신청 현황</h1>
     					<div style="clear: both; height: 30px; line-height: 30px;">
             				<div style="float: left;">1개(1/10 페이지)</div>
             				<div style="float: right;">&nbsp;</div>
@@ -28,25 +25,25 @@
                 				<thead>
                     				<tr>
                         				<th class="text-center" style="width: 70px;">번호</th>
-                        				<th >제목</th>
-                        				<th class="text-center" style="width: 100px;">글쓴이</th>
-                        				<th class="text-center" style="width: 100px;">날짜</th>
-                       				 	<th class="text-center" style="width: 70px;">조회수</th>
-                        				<th class="text-center" style="width: 50px;">첨부</th>
+                        				<th class="text-left" style="width: 50px;">봉사명</th>
+                        				<th class="text-center" style="width: 50px;">봉사주기</th>
+                        				<th class="text-center" style="width: 50px;">봉사지역</th>
+                       				 	<th class="text-center" style="width: 70px;">봉사기간</th>
+                        				<th class="text-center" style="width: 50px;">봉사분야</th>
+                        				<th class="text-center" style="width: 50px;">봉사자유형</th>
+                        				<th class="text-center" style="width: 50px;">신청현황</th>
                     				</tr>
                 				</thead>
                 				<tbody>
 									<tr>
                         				<td class="text-center">6</td>
-                        				<td><a href="<%=cp%>/club/index/notice/article">제목(댓글수)</a></td>
-                        				<td class="text-center">홍길동</td>
-                       				 	<td class="text-center">2000-10-10</td>
-                       				 	<td class="text-center">5</td>
-                       				 	<td class="text-center">
-<c:if test="${not empty dto.saveFilename}">
-                                <a href="<%=cp%>/bbs/download?num=${dto.num}"><img src="<%=cp%>/res/images/disk.gif" border="0" style="margin-top: 1px;"></a>
-</c:if>
-                        				</td>
+                        				<td><a href="<%=cp%>/club/index/notice/article">노인봉사</a></td>
+                        				<td class="text-center">정기</td>
+                       				 	<td class="text-center">서울시종로구</td>
+                       				 	<td class="text-center">2016-06-01</td>
+                       				 	<td class="text-center">노인 복지</td>
+                       				 	<td class="text-center">승인</td>
+                       				 	<td class="text-center">노인 복지 동아리</td>
                     				</tr>
                 				</tbody>
             				</table>
@@ -63,13 +60,13 @@
         
         				<div style="clear: both;">
         					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/club/index/notice/list';">새로고침</button>
+        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/bong/index/member/myPage;">새로고침</button>
         					</div>
         					<div style="float: left; width: 60%; text-align: center;">
         		     			<form name="searchForm" method="post" class="form-inline">
 						  			<select class="form-control input-sm" name="searchKey" style="height:32px">
-						      			<option value="subject">제목</option>
-						      			<option value="userName">작성자</option>
+						      			<option value="subject">검색어</option>
+						      			<option value="userName">지역</option>
 						      			<option value="content">내용</option>
 						      			<option value="created">등록일</option>
 						  			</select>
@@ -77,9 +74,7 @@
 						  			<button type="button" class="btn btn-info" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
         		     			</form>
         					</div>
-        					<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    			<button type="button" class="btn btn-info" onclick="javascript:location.href='<%=cp%>/club/index/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
-        					</div>
+
         				</div>
         			</div>
         		</div>
