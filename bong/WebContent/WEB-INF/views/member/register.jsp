@@ -5,8 +5,15 @@
 <%
    String cp = request.getContextPath();
 %>
+<link rel="stylesheet" href="<%=cp%>/res/css/fileinput.css" type="text/css">
+
+<script type="text/javascript" src="<%=cp%>/res/js/util.js"></script>
+<script type="text/javascript" src="<%=cp%>/res/js/fileinput.js"></script>
 
 <script type="text/javascript">
+$(function(){
+	$('.fileinput').fileinput();
+});
 
 //아이디 중복 검사
 function userIdCheck() {
@@ -81,6 +88,14 @@ function register() {
     else {
       $("#userName + .help-block").html("이름은 한글로 2자이상 4자 이하입니다.");
    }   
+    str=f.saveFilename.value;
+    if(str){
+    	if(! isImageFile(f.saveFilename.value)){
+    		alert("이미지파일만 가능합니다.")
+    		f.saveFilename.focus();
+    		return false;
+    	}
+    }
     str = f.userBirth.value;
     if(!str) {
        $("#userBirth + .help-block").html("<span style='color:red;'>생일 형식을 확인해주세요!<span>");
@@ -153,12 +168,29 @@ function changeEmail() {
         f.email1.focus();
     }
 }
+
+function imageDelete(){
+	if(confirm("등록된 사진을 삭제 하시겠습니까?")){
+		var url="<%=cp%>/member/imageDelete";
+		var filename="${dto.originalFilename}";
+		$.post(url, {filename:filename}, function(data){
+			var isLogin=data.isLogin;
+			if(isLogin==false){
+				location.href="<%=cp%>/member/login";
+				return;
+			}
+			
+			$("#imgPhoto").attr("src", "<%=cp%>/res/images/noimage.png");
+			$("#btnDeletePhoto").hide();
+		},"json");
+	}
+}
 </script>
 
 <div class="container" role="main" style="margin-top:50px;">
 
   <div class="bodyFrame">
-  <form class="form-horizontal" name="memberForm" method="post" onsubmit="return register();">
+  <form class="form-horizontal" name="memberForm" method="post" onsubmit="return register();" enctype="multipart/form-data">
     <div class="form-group" style="margin-bottom:0px;">
         <label class="col-sm-2 control-label" for="userId">아이디</label>
         <div class="col-sm-7">
@@ -193,6 +225,35 @@ function changeEmail() {
                   style='border:none;' ":""}>
         <p class="help-block">이름은 한글로 2자이상 4자 이하입니다.</p>
      </div>
+    </div>
+  <div class="form-group">
+        <label class="col-sm-2 control-label" for="originalFilename">사진</label>
+        <div class="col-sm-7">
+            <div class="fileinput fileinput-new" data-provides="fileinput" style="float: left;">
+                <div class="fileinput-preview thumbnail" style="width: 130px; height: 150px;"></div>
+                <div>
+                     <span class="btn btn-default wbtn btn-file"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="saveFilename" id="originalFilename" accept="image/png, image/jpeg, image/gif"></span>
+                     <a href="#" class="btn btn-default wbtn fileinput-exists" data-dismiss="fileinput">삭제</a>
+                </div>
+            </div>
+<c:if test="${mode=='update'}">
+            <div style="float: left; margin-left: 10px;">
+               <c:if test="${not empty dto.originalFilename}">
+                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img id="imgPhoto" src="<%=cp%>/uploads/saveFilename/${dto.originalFilename}" style="width: 100%; height: 100%;"></div>
+                    <div style="padding-left: 15px;">
+                         <span>등록 이미지</span>
+                         <a id="btnDeletePhoto" href="javascript:imageDelete();" class="close" style="float: none">&times;</a>
+                    </div>
+                </c:if>
+               <c:if test="${empty dto.originalFilename}">
+                   <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img src="<%=cp%>/res/images/noimage.png" style="width: 100%; height: 100%;"></div>
+                   <div style="padding-left: 15px;">
+                         <span>등록 이미지</span>
+                   </div>
+                </c:if>
+            </div>
+</c:if>
+        </div>
     </div>
     <div style=""class="form-group">
         <label class="col-sm-2 control-label" for="userBirth">생년월일</label>
