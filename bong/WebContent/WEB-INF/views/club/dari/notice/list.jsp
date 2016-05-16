@@ -74,7 +74,7 @@
         		     			</form>
         					</div>
         					<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    			<button type="button" class="btn btn-info" onclick="javascript:location.href='<%=cp%>/club/index/notice/write';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+        		    			<button type="button" class="btn btn-info" onclick="javascript:location.href='<%=cp%>/club/index/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
         					</div>
         				</div>
         			</div>

@@ -58,7 +58,7 @@
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/bbs/created";
+    		f.action="<%=cp%>/club/index/notice/created";
     	else if(mode=="update")
     		f.action="<%=cp%>/bbs/update";
 
@@ -74,7 +74,7 @@
     
     
     <div>
-        <form name="boardForm" method="post" onsubmit="return submitContents(this);" enctype="multipart/form-data">
+        <form name="noticeForm" method="post" onsubmit="return submitContents(this);" enctype="multipart/form-data">
             <div class="bs-write">
                 <table class="table">
                     <tbody>
@@ -127,7 +127,7 @@
                         <tr>
                             <td colspan="4" style="text-align: center; padding-top: 15px;">
                                   <button type="submit" class="btn btn-info">확인 <span class="glyphicon glyphicon-ok"></span></button>
-                                  <button type="button" class="btn btn-default" style="color:#5bc0de;" onclick="javascript:location.href='<%=cp%>/demander/index/review';"> 취소 </button>
+                                  <button type="button" class="btn btn-default" style="color:#5bc0de;" onclick="javascript:location.href='<%=cp%>/club/index/notice/list';"> 취소 </button>
                                   
                                   <c:if test="${mode=='update'}">
                                       <input type="hidden" name="num" value="${dto.num}">
