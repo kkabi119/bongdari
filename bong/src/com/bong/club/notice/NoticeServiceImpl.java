@@ -1,5 +1,8 @@
 package com.bong.club.notice;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +28,34 @@ public class NoticeServiceImpl implements NoticeService {
 				dto.setSaveFilename(saveFilename);
 				dto.setOriginalFilename(dto.getUpload().getOriginalFilename());
 			}
-			System.out.println(dto.getSubject()+"asdasd");
 			result=dao.insertInformation("clubnotice.insertNotice", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		
+		return result;
+	}
+
+	@Override
+	public List<Notice> listNotice(Map<String, Object> map) {
+		List<Notice> list=null;
+		try {
+			list=dao.getListInformation("clubnotice.listNotice", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+
+	@Override
+	public int dataCount(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result=dao.getIntValue("clubnotice.dataCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
 		return result;
 	}
 	

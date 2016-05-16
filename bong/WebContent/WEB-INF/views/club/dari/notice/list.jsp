@@ -8,7 +8,11 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 <script type="text/javascript">
-
+function searchList() {
+	var f=document.searchForm;
+	f.action="<%=cp%>/club/index/notice/list";
+	f.submit();
+}
 
 </script>
 
@@ -18,8 +22,9 @@
 				<div class="post-content overflow">
  					<div class="bodyFrame2">
           				<h1 style="color:#5bc0de"><i class="fa fa-bell"></i>공지사항 </h1>
+    		<c:if test="${dataCount!=0 }">
     					<div style="clear: both; height: 30px; line-height: 30px;">
-            				<div style="float: left;">1개(1/10 페이지)</div>
+            				<div style="float: left;">${dataCount}개(${page}/${total_page} 페이지)</div>
             				<div style="float: right;">&nbsp;</div>
         				</div>
         
@@ -36,22 +41,24 @@
                     				</tr>
                 				</thead>
                 				<tbody>
+                		<c:forEach var="dto" items="${list}">
 									<tr>
-                        				<td class="text-center">6</td>
-                        				<td><a href="<%=cp%>/club/index/notice/article">제목(댓글수)</a></td>
-                        				<td class="text-center">홍길동</td>
-                       				 	<td class="text-center">2000-10-10</td>
-                       				 	<td class="text-center">5</td>
+                        				<td class="text-center">${dto.listNum}</td>
+                        				<td><a href="<%=cp%>/club/index/notice/article">${dto.subject}</a></td>
+                        				<td class="text-center">${dto.userName }</td>
+                       				 	<td class="text-center">${dto.created }</td>
+                       				 	<td class="text-center">${dto.hitCount }</td>
                        				 	<td class="text-center">
 <c:if test="${not empty dto.saveFilename}">
-                                <a href="<%=cp%>/bbs/download?num=${dto.num}"><img src="<%=cp%>/res/images/disk.gif" border="0" style="margin-top: 1px;"></a>
+                                <a href="#" class="fa fa-download"></a>
 </c:if>
                         				</td>
                     				</tr>
+                    </c:forEach>
                 				</tbody>
             				</table>
         				</div>
-
+				</c:if>
         				<div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
 <c:if test="${dataCount==0 }">
                   등록된 게시물이 없습니다.
@@ -85,19 +92,4 @@
         		</div>
         	</div>
         </div>
-	</div>
-    <div class="blog-pagination">
-		<ul class="pagination">
-			<li><a href="#">left</a></li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li class="active"><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#">6</a></li>
-			<li><a href="#">7</a></li>
-			<li><a href="#">8</a></li>
-			<li><a href="#">9</a></li>
-			<li><a href="#">right</a></li>
-		</ul>
 	</div>
