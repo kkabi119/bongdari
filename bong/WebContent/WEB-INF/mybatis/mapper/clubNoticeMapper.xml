@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="clubnotice">
+	
+	<insert id="insertNotice" parameterType="com.bong.club.notice.Notice">
+		INSERT INTO club_notice(clubnoticeIdx, userIdx, clubIdx,subject, content, saveFilename, originalFilename)
+			VALUES(club_seq.NEXTVAL, #{userIdx}, '4', #{subject}
+						,#{content}, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename,jdbcType=VARCHAR})
+	</insert>
+</mapper>
