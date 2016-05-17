@@ -99,10 +99,10 @@ public class MemberController {
 	@RequestMapping(value="/member/userIdCheck")
 	@ResponseBody
 	public Map<String, Object> userIdCheck(
-			@RequestParam String userId
+			@RequestParam String userIdx
 			) throws Exception{
 		String passed="false";
-		Member dto=service.readMemberLogin(userId);
+		Member dto=service.readMemberLogin(userIdx);
 		if(dto==null)
 			passed="true";
 		

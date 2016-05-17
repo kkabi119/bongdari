@@ -29,4 +29,12 @@
 	  UPDATE memberInfo SET last_login=SYSDATE
 	    WHERE userIdx=#{userIdx}
 	</update>
+	
+	<update id="updateMember2" parameterType="com.bong.member.Member">
+        UPDATE memberInfo SET userPwd=#{userPwd}, enabled=#{enabled}, 
+               email=#{email}, tel=#{tel}, birth=#{birth},
+               modify_date=SYSDATE 
+               WHERE userId=#{userId}
+    </update>
+    
 </mapper>

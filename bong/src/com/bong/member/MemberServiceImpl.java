@@ -45,10 +45,10 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public Member readMemberLogin(String userId) {
+	public Member readMemberLogin(String userIdx) {
 		Member dto=null;
 		try {
-			dto=dao.getReadInformation("member.readMemberLogin", userId);
+			dto=dao.getReadInformation("member.readMemberLogin", userIdx);
 			//전화번호 나누기
 			if(dto!=null){
 				if(dto.getUserTel()!=null){

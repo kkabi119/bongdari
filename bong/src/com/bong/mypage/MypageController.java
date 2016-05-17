@@ -27,13 +27,12 @@ public class MypageController {
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+File.separator+"uploads"+File.separator+"memImg";
 		
-		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		if(info==null) {
 			return new ModelAndView("redirect:/member/login");
 		}
 		
-		Member dto=service.readMemberLogin(info.getUserId());
+		Member dto=service.readMemberLogin(Integer.toString(info.getUserIdx()));
 		if(dto==null) {
 			session.invalidate();
 			return new ModelAndView("redirect:/");
@@ -41,11 +40,11 @@ public class MypageController {
 		int result=service.updateMember2(dto,pathname);
 		
 		// 회원정보수정폼
-				ModelAndView mav=new ModelAndView(".layout.mypage.updateInfo.마이페이지 메인");
-				mav.addObject("dto", dto);
-				return mav;
+	    ModelAndView mav=new ModelAndView(".layout.mypage.updateInfo.마이페이지 메인");
+	    mav.addObject("dto", dto);
+	    return mav;
 	}
-	@RequestMapping(value="/member/update", method=RequestMethod.POST)
+	@RequestMapping(value="/member/index/myPage", method=RequestMethod.POST)
 	public ModelAndView updateSubmit(
 			HttpSession session
            ,Member dto){
@@ -53,13 +52,10 @@ public class MypageController {
 		String pathname=root+File.separator+"uploads"+File.separator+"memImg";
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		if(info==null){
-			return new ModelAndView("redirect:/member/main");
-		}
 		
 		service.updateMember2(dto, pathname);
 		
-		ModelAndView mav=new ModelAndView(".member.complete");
+		ModelAndView mav=new ModelAndView(".member.main");
 		
 		StringBuffer sb=new StringBuffer();
 		sb.append(dto.getUserName()+"님의 회원정보가 변경되었습니다.<br>");
