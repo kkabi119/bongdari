@@ -113,5 +113,10 @@ public class DemanderController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/demander/index/admin/volList")
+	public ModelAndView volList() throws Exception {
+		ModelAndView mav = new ModelAndView(".four.demander.dari.admin.volList.³ª´®º¹Áö°ü");
+		return mav;
+	}
 	
 }
