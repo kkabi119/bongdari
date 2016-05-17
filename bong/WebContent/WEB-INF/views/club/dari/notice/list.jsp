@@ -44,7 +44,7 @@ function searchList() {
                 		<c:forEach var="dto" items="${list}">
 									<tr>
                         				<td class="text-center">${dto.listNum}</td>
-                        				<td><a href="<%=cp%>/club/index/notice/article">${dto.subject}</a></td>
+                        				<td><a href="${urlArticle}&num=${dto.clubNoticeIdx}">${dto.subject}</a></td>
                         				<td class="text-center">${dto.userName }</td>
                        				 	<td class="text-center">${dto.created }</td>
                        				 	<td class="text-center">${dto.hitCount }</td>

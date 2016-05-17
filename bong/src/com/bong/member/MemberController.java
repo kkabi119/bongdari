@@ -20,7 +20,7 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
-	//로그인 및 로그아웃
+	/*//로그인 및 로그아웃
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
 	public ModelAndView loginForm() throws Exception {
 		return new ModelAndView(".layout.member.login.로그인");
@@ -60,7 +60,7 @@ public class MemberController {
 		session.invalidate();
 		
 		return "redirect:/main";
-	}
+	}*/
 	// 회원가입 및 회원정보 수정 -----------------------
 	@RequestMapping(value="/member/register", method=RequestMethod.GET)
 	public ModelAndView memberForm() {

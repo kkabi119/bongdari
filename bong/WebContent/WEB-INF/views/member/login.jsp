@@ -68,7 +68,7 @@ function memberLogin() {
 		return false;
 	}
 	
-	f.action = "<%=cp%>/member/login";
+	f.action = "<%=cp%>/member/login_check";
 	f.submit();
 }
 
