@@ -40,4 +40,12 @@ public class adminController {
 		ModelAndView mav = new ModelAndView(".four.admin.approval.수요처_동아리 가입승인페이지");
 		return mav;
 	}
+	
+	@RequestMapping(value="/admin/tab")
+	public ModelAndView tab(
+			) throws Exception {
+		
+		ModelAndView mav = new ModelAndView("/demander/dari/admin/volList");
+		return mav;
+	}
 }

@@ -7,6 +7,11 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
+<style type="text/css">
+	.col-md-3 {
+		width:22%;
+	}
+</style>
 
 
                 <div class="col-md-3 col-sm-5">

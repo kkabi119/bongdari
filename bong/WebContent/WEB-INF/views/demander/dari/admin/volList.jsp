@@ -7,6 +7,9 @@
 %>
 <style type="text/css">
 
+.col-md-9{
+			margin-top:-15px;
+		}
 /* 후기게시판 타이틀 */
  .row3 {
 	margin-top: 0px;
@@ -56,7 +59,7 @@
 	height:97%;
 	float: left;
 	position: relative;
-	padding:15px;
+	padding:20px;
 	padding-bottom:0px;
 }
 
@@ -68,7 +71,9 @@
 	padding-right: 15px;
 	padding-left: 0px;
 }
-
+.btnList{
+	clear:both; margin-right:15px; margin-top:15px;float:right;
+}
 .h1, .h2, .h3, h1, h2, h3{
 	margin-top:10px; 
 }
@@ -86,7 +91,7 @@
 	<!-- Page Heading/Breadcrumbs -->
 	<div class="row3">
 		<div class="col-lg-12">
-			<h3  style="font-size:30px; margin-bottom:6px;"> 활동 내역<span style="margin-left:10px;color:gray; font-size:15px;"> 나눔복지관의 활동내역을 볼 수 있습니다</span> </h3>
+			<h3  style="color:#777; font-size:30px; margin-bottom:6px;"> 활동 내역<span style="margin-left:10px;color:gray; font-size:15px;"> 나눔복지관의 활동내역을 볼 수 있습니다</span> </h3>
 		
 		<hr style="margin-bottom:0px; margin-top:0px; border:1px solid #ec971f;">	
 		
@@ -125,7 +130,7 @@
 	                        	</span>
 	                            <span  style="border: none; text-align: left; width:40%;">2016-03-22 ~ 2016-03-25</span>
 	                            
-	                         	<span style="border: none; text-align: left;  padding-left:26px;">
+	                         	<span style="border: none; text-align: left;  padding-left:16px;">
 	                        	 	<span style="font-size:13px; font-weight:normal; background:none; color:gray;"class="label label-default">
 	                        	 			분야 |
 	                        	 	</span>
@@ -141,34 +146,34 @@
 	                        	</span>
 	                            <span style=" border: none; text-align: left; width:35%; height:45px; ">2016-03-22 ~ 2016-03-25</span>
 	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:26px; ">
+	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
 	                        	 	<span style="font-size:13px; font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
-											신청자 |          	 			
+											봉사자 |          	 			
 	                        	 	</span>
 	                        	</span>
-	                            <span style="border: none;  text-align: left; ">16 / 10명</span>
+	                            <span style="border: none;  text-align: left; ">7명</span>
 	                        </div>
 	                        
 						<div >
 	                             <span style="border: none; text-align: left; width:6%;  ">
 	                        	 	<span style="font-size:13px; font-weight:normal; margin-bottom:5px; background:none; color:gray;"class="label label-default">
-	                        	 			모집일 |
+	                        	 			장소 |
 	                        	 	</span>
 	                        	</span>
-	                            <span style=" border: none; text-align: left; width:35%; ; ">2016-03-22 ~ 2016-03-25</span>
+	                            <span style=" border: none; text-align: left; width:35%; ; ">서울특별시 노원구 삼양동 종합복지센터 장암역 1번출구 <a href="#" > [지도]</a> </span>
 	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:26px; ">
+	                    <!--       <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
 	                        	 	<span style="font-size:13px;  font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
 											신청자 |          	 			
 	                        	 	</span>
 	                        	</span>
-	                            <span style="border: none;  text-align: left; ">16 / 10명</span>
+	                            <span style="border: none;  text-align: left; ">3봉 10명</span> -->
 	                        </div>
 						</div>
 				</div>
 		
 			</div>
-			<div class="btnList" style="clear:both; margin-left:8px; margin-top:15px;float:left;">
+			<div class="btnList" >
 				
 				<a class="btn btn btn-info" style="color:white;" 
 					href="<%=cp%>/demander/index/review/article">공고보기
@@ -218,7 +223,7 @@
 	                        	</span>
 	                            <span  style="border: none; text-align: left; width:40%;">2016-03-22 ~ 2016-03-25</span>
 	                            
-	                         	<span style="border: none; text-align: left;  padding-left:26px;">
+	                         	<span style="border: none; text-align: left;  padding-left:16px;">
 	                        	 	<span style=" font-weight:normal; background:none; color:gray;"class="label label-default">
 	                        	 			분야 |
 	                        	 	</span>
@@ -234,7 +239,7 @@
 	                        	</span>
 	                            <span style=" border: none; text-align: left; width:35%; height:45px; ">2016-03-22 ~ 2016-03-25</span>
 	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:26px; ">
+	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
 	                        	 	<span style="font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
 											신청자 |          	 			
 	                        	 	</span>
@@ -250,7 +255,7 @@
 	                        	</span>
 	                            <span style=" border: none; text-align: left; width:35%; ; ">2016-03-22 ~ 2016-03-25</span>
 	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:26px; ">
+	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
 	                        	 	<span style=" font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
 											신청자 |          	 			
 	                        	 	</span>
@@ -311,7 +316,7 @@
 	                        	</span>
 	                            <span  style="border: none; text-align: left; width:40%;">2016-03-22 ~ 2016-03-25</span>
 	                            
-	                         	<span style="border: none; text-align: left;  padding-left:26px;">
+	                         	<span style="border: none; text-align: left;  padding-left:16px;">
 	                        	 	<span style=" font-weight:normal; background:none; color:gray;"class="label label-default">
 	                        	 			분야 |
 	                        	 	</span>
@@ -327,7 +332,7 @@
 	                        	</span>
 	                            <span style=" border: none; text-align: left; width:35%; height:45px; ">2016-03-22 ~ 2016-03-25</span>
 	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:26px; ">
+	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
 	                        	 	<span style="font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
 											신청자 |          	 			
 	                        	 	</span>
@@ -343,7 +348,7 @@
 	                        	</span>
 	                            <span style=" border: none; text-align: left; width:35%; ; ">2016-03-22 ~ 2016-03-25</span>
 	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:26px; ">
+	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
 	                        	 	<span style=" font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
 											신청자 |          	 			
 	                        	 	</span>
@@ -404,7 +409,7 @@
 	                        	</span>
 	                            <span  style="border: none; text-align: left; width:40%;">2016-03-22 ~ 2016-03-25</span>
 	                            
-	                         	<span style="border: none; text-align: left;  padding-left:26px;">
+	                         	<span style="border: none; text-align: left;  padding-left:16px;">
 	                        	 	<span style=" font-weight:normal; background:none; color:gray;"class="label label-default">
 	                        	 			분야 |
 	                        	 	</span>
@@ -420,7 +425,7 @@
 	                        	</span>
 	                            <span style=" border: none; text-align: left; width:35%; height:45px; ">2016-03-22 ~ 2016-03-25</span>
 	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:26px; ">
+	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
 	                        	 	<span style="font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
 											신청자 |          	 			
 	                        	 	</span>
@@ -436,7 +441,7 @@
 	                        	</span>
 	                            <span style=" border: none; text-align: left; width:35%; ; ">2016-03-22 ~ 2016-03-25</span>
 	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:26px; ">
+	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
 	                        	 	<span style=" font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
 											신청자 |          	 			
 	                        	 	</span>
@@ -497,7 +502,7 @@
 	                        	</span>
 	                            <span  style="border: none; text-align: left; width:40%;">2016-03-22 ~ 2016-03-25</span>
 	                            
-	                         	<span style="border: none; text-align: left;  padding-left:26px;">
+	                         	<span style="border: none; text-align: left;  padding-left:16px;">
 	                        	 	<span style=" font-weight:normal; background:none; color:gray;"class="label label-default">
 	                        	 			분야 |
 	                        	 	</span>
@@ -513,9 +518,9 @@
 	                        	</span>
 	                            <span style=" border: none; text-align: left; width:35%; height:45px; ">2016-03-22 ~ 2016-03-25</span>
 	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:26px; ">
+	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
 	                        	 	<span style="font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
-											신청자 |          	 			
+											봉사자 |          	 			
 	                        	 	</span>
 	                        	</span>
 	                            <span style="border: none;  text-align: left; ">16 / 10명</span>
@@ -524,12 +529,12 @@
 						<div >
 	                             <span style="border: none; text-align: left; width:6%;  ">
 	                        	 	<span style="font-weight:normal; margin-bottom:5px; background:none; color:gray;"class="label label-default">
-	                        	 			모집일 |
+	                        	 			봉사자유형 |
 	                        	 	</span>
 	                        	</span>
-	                            <span style=" border: none; text-align: left; width:35%; ; ">2016-03-22 ~ 2016-03-25</span>
+	                            <span style=" border: none; text-align: left; width:35%; ; ">성인</span>
 	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:26px; ">
+	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
 	                        	 	<span style=" font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
 											신청자 |          	 			
 	                        	 	</span>
