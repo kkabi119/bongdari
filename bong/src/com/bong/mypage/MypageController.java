@@ -37,7 +37,7 @@ public class MypageController {
 			session.invalidate();
 			return new ModelAndView("redirect:/");
 		}
-		int result=service.updateMember2(dto,pathname);
+		service.updateMember2(dto,pathname);
 		
 		// 회원정보수정폼
 	    ModelAndView mav=new ModelAndView(".layout.mypage.updateInfo.마이페이지 메인");
@@ -52,10 +52,10 @@ public class MypageController {
 		String pathname=root+File.separator+"uploads"+File.separator+"memImg";
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		
+		dto.setUserIdx(info.getUserIdx());
 		service.updateMember2(dto, pathname);
 		
-		ModelAndView mav=new ModelAndView(".member.main");
+		ModelAndView mav=new ModelAndView("redirect:/");
 		
 		StringBuffer sb=new StringBuffer();
 		sb.append(dto.getUserName()+"님의 회원정보가 변경되었습니다.<br>");
