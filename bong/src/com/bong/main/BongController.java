@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller("bong.mainController")
 public class BongController {
 	
-	@RequestMapping(value="/main")
+	@RequestMapping(value="/")
 	public ModelAndView maintest() throws Exception {
 		
 		ModelAndView mav = new ModelAndView(".mainLayout");

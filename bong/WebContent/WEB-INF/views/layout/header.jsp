@@ -44,14 +44,14 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    <a class="navbar-brand" href="<%=cp%>/main">
+                    <a class="navbar-brand" href="<%=cp%>/">
                        <h1><img src="<%=cp%>/res/images/logo.png" alt="logo"></h1>
                     </a>
                     
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="<%=cp%>/main">Home</a></li>
+                        <li class="active"><a href="<%=cp%>/">Home</a></li>
                         <li class="dropdown"><a href="#">동아리 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li><a href="<%=cp%>/main/createClub">동아리 개설</a></li>
