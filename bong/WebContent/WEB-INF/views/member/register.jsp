@@ -88,11 +88,11 @@ function register() {
     else {
       $("#userName + .help-block").html("이름은 한글로 2자이상 4자 이하입니다.");
    }   
-    str=f.saveFilename.value;
+    str=f.memImg.value;
     if(str){
-    	if(! isImageFile(f.saveFilename.value)){
+    	if(! isImageFile(f.memImg.value)){
     		alert("이미지파일만 가능합니다.")
-    		f.saveFilename.focus();
+    		f.memImg.focus();
     		return false;
     	}
     }
@@ -172,7 +172,7 @@ function changeEmail() {
 function imageDelete(){
 	if(confirm("등록된 사진을 삭제 하시겠습니까?")){
 		var url="<%=cp%>/member/imageDelete";
-		var filename="${dto.originalFilename}";
+		var filename="${dto.memImgname}";
 		$.post(url, {filename:filename}, function(data){
 			var isLogin=data.isLogin;
 			if(isLogin==false){
@@ -227,25 +227,25 @@ function imageDelete(){
      </div>
     </div>
   <div class="form-group">
-        <label class="col-sm-2 control-label" for="originalFilename">사진</label>
+        <label class="col-sm-2 control-label" for="memImgname">사진</label>
         <div class="col-sm-7">
             <div class="fileinput fileinput-new" data-provides="fileinput" style="float: left;">
                 <div class="fileinput-preview thumbnail" style="width: 130px; height: 150px;"></div>
                 <div>
-                     <span class="btn btn-default wbtn btn-file"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="saveFilename" id="originalFilename" accept="image/png, image/jpeg, image/gif"></span>
+                     <span class="btn btn-default wbtn btn-file"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="uploads" id="memImgname" accept="image/png, image/jpeg, image/gif"></span>
                      <a href="#" class="btn btn-default wbtn fileinput-exists" data-dismiss="fileinput">삭제</a>
                 </div>
             </div>
 <c:if test="${mode=='update'}">
             <div style="float: left; margin-left: 10px;">
-               <c:if test="${not empty dto.originalFilename}">
-                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img id="imgPhoto" src="<%=cp%>/uploads/saveFilename/${dto.originalFilename}" style="width: 100%; height: 100%;"></div>
+               <c:if test="${not empty dto.memImgname}">
+                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img id="imgPhoto" src="<%=cp%>/uploads/memImg/${dto.memImgname}" style="width: 100%; height: 100%;"></div>
                     <div style="padding-left: 15px;">
                          <span>등록 이미지</span>
                          <a id="btnDeletePhoto" href="javascript:imageDelete();" class="close" style="float: none">&times;</a>
                     </div>
                 </c:if>
-               <c:if test="${empty dto.originalFilename}">
+               <c:if test="${empty dto.memImgname}">
                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img src="<%=cp%>/res/images/noimage.png" style="width: 100%; height: 100%;"></div>
                    <div style="padding-left: 15px;">
                          <span>등록 이미지</span>

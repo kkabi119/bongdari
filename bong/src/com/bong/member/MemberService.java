@@ -10,7 +10,7 @@ public interface MemberService {
 	
 	public int insertMember(Member dto, String pathname) throws Exception;
 	
-	public int updateMember2(Member dto);
+	public int updateMember2(Member dto, String pathname);
 	public int updateLastLogin(String userId);
 	
 	public int deleteMember2(Map<String, Object> map);

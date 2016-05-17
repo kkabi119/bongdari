@@ -14,13 +14,13 @@
 		INSERT INTO memberInfo
 		(userIdx, userId, userName, userPwd, userBirth
 			,userAddr, userGender, userTel, userEmail
-			,userJob, originalFilename)
+			,userJob, memImgname, memImg)
 		VALUES(#{userIdx},#{userId},#{userName},#{userPwd}
 		,#{userBirth},#{userAddr},#{userGender},#{userTel}
-		,#{userEmail},#{userJob},#{originalFilename, jdbcType=VARCHAR})
+		,#{userEmail},#{userJob},#{memImgname, jdbcType=VARCHAR},#{memImg, jdbcType=VARCHAR})
 	</insert>
 	<select id="readMemberLogin" resultType="com.bong.member.Member" parameterType="String">
-	   SELECT userIdx, userId, userName, userPwd,originalFilename
+	   SELECT userIdx, userId, userName, userPwd,memImgname,memImg
 	          FROM memberInfo
 	          WHERE userId=#{userId} 
 	

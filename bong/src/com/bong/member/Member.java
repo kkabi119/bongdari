@@ -8,8 +8,8 @@ public class Member {
 	private String created_date, modify_date, last_login;
 	private String userTel, tel1, tel2, tel3;
 	private int userIdx, isMember, userLevel, userVolNum, userNoShow, userScore, enabled;
-	private MultipartFile saveFilename;
-	private String originalFilename;
+	private MultipartFile uploads;
+	private String memImgname, memImg;
 	
 	public String getUserTel() {
 		return userTel;
@@ -35,18 +35,24 @@ public class Member {
 	public void setTel3(String tel3) {
 		this.tel3 = tel3;
 	}
-	
-	public MultipartFile getSaveFilename() {
-		return saveFilename;
+
+	public MultipartFile getUploads() {
+		return uploads;
 	}
-	public void setSaveFilename(MultipartFile saveFilename) {
-		this.saveFilename = saveFilename;
+	public void setUploads(MultipartFile uploads) {
+		this.uploads = uploads;
 	}
-	public String getOriginalFilename() {
-		return originalFilename;
+	public String getMemImg() {
+		return memImg;
 	}
-	public void setOriginalFilename(String originalFilename) {
-		this.originalFilename = originalFilename;
+	public void setMemImg(String memImg) {
+		this.memImg = memImg;
+	}
+	public String getMemImgname() {
+		return memImgname;
+	}
+	public void setMemImgname(String memImgname) {
+		this.memImgname = memImgname;
 	}
 	public String getUserPwd() {
 		return userPwd;

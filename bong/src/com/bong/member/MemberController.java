@@ -74,7 +74,7 @@ public class MemberController {
 			HttpSession session,
 			Member dto) throws Exception {
 		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+File.separator+"uploads"+File.separator+"saveFilename";
+		String pathname=root+File.separator+"uploads"+File.separator+"memImg";
 		
 		int result=service.insertMember(dto,pathname);
 		

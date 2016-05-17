@@ -88,9 +88,11 @@ public class MemberServiceImpl implements MemberService{
 			int seq=dao.getIntValue("member.memberSeq");
 			dto.setUserIdx(seq);
 			
-			if(dto.getSaveFilename()!=null && dto.getSaveFilename().isEmpty()){
-				String filename=fileManager.doFileUpload(dto.getSaveFilename(), pathname);
-			    dto.setOriginalFilename(filename);
+			if(dto.getUploads()!=null && !dto.getUploads().isEmpty()){
+				String memImg=fileManager.doFileUpload(dto.getUploads(), pathname);
+			    dto.setMemImg(memImg);
+			    dto.setMemImgname(dto.getUploads().getOriginalFilename());
+			    
 			}
 			//회원정보 저장
 			dao.insertInformation("member.insertMember", seq);
@@ -105,9 +107,33 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int updateMember2(Member dto) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateMember2(Member dto, String pathname) {
+		int result=0; 
+		try {
+			//전화 번호 합쳐서 데이터 넣기
+			if(dto.getTel1() != null && dto.getTel1().length()!=0 &&
+					dto.getTel2() != null && dto.getTel2().length()!=0 &&
+					dto.getTel3() != null && dto.getTel3().length()!=0)
+				dto.setUserTel(dto.getTel1() + "-" + dto.getTel2() + "-" + dto.getTel3());
+			System.out.println(dto.getUserTel());
+			//이메일 합쳐서 데이터 넣기
+			if(dto.getEmail1() != null && dto.getEmail1().length()!=0 &&
+					dto.getEmail2() != null && dto.getEmail2().length()!=0 )
+				dto.setUserEmail(dto.getEmail1() + "@" + dto.getEmail2());
+			int seq=dao.getIntValue("member.memberSeq");
+			dto.setUserIdx(seq);
+			
+			if(dto.getUploads()!=null && !dto.getUploads().isEmpty()){
+				String memImg=fileManager.doFileUpload(dto.getUploads(), pathname);
+			    dto.setMemImg(memImg);
+			    dto.setMemImgname(dto.getUploads().getOriginalFilename());
+			    
+			    result=dao.updateInformation("member.updateMember2", dto);
+			}
+		} catch (Exception e) {
+			
+		}
+		return result;
 	}
 
 	@Override
