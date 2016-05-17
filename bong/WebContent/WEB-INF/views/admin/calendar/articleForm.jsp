@@ -5,60 +5,119 @@
 <%
 	String cp=request.getContextPath();
 %>
+<div class="container-fluid">
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label class="col-md-3 control-label">제목</label>
+			<div class="col-md-7 control-label" id="schTitle">
+				노원 동네주민 축제의 안전요원을 모집합니다
+			</div>
+		</div>
 
-            <div id="schArticle" class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">제목</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-static" id="schTitle"></p>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">작성자</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-static" id="schUserName"></p>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">일정분류</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-static" id="schClassify"></p>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">종일일정</label>
-                    <div class="col-sm-10">
-                         <p class="form-control-static" id="schAllDay"></p>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">시작일자</label>
-                    <div class="col-sm-10">
-                         <p class="form-control-static" id="schStartDay"></p>
-                     </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">종료일자</label>
-                    <div class="col-sm-10">
-                         <p class="form-control-static" id="schEndDay"></p>
-                     </div>
-                </div>
-                
-                <div class="form-group" style="min-height: 75px; border-bottom: 1px solid #ccc;">
-                    <label class="col-sm-2 control-label">내용</label>
-                    <div class="col-sm-10">
-                         <p class="form-control-static" id="schContent" style="white-space: pre;"></p>
-                    </div>
-                </div>
-            </div>
-      
-            <div style="text-align: right;" id="schFooter">
-                <button type="button" class="btn btn-primary" id="btnModalUpdate"> 수정 <span class="glyphicon glyphicon-ok"></span></button>
-                <button type="button" class="btn btn-danger" id="btnModalDelete"> 삭제 <span class="glyphicon glyphicon-remove"></span></button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 0px;"> 닫기 </button>
-            </div>
+
+		<div class="form-group">
+			<label class="col-md-3 control-label">봉사일정</label>
+			<div class="col-md-7 control-label" id="schEndDay">
+					2016-03-22 ~ 2016-03-25
+			</div>
+
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-3 control-label">봉사시간</label>
+			<div class="col-md-7 control-label" id="schStartDay">
+					3:00~5:00
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-3 control-label">봉사요일</label>
+			<div class="col-md-7 control-label">
+				금,토,일
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-3 control-label">모집인원 /일</label>
+			<div class="col-md-4 control-label" id="maxMember">
+				5명 / 일
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">신청인원</label>
+			<div class="col-md-4 control-label" id="maxMember">
+				3봉 15명
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-3 control-label">봉사분야</label>
+			<div class="col-md-4 control-label" id="schClassify">
+				문화체육
+			</div>
+			<div class="col-md-1 control-label">></div>
+			<div class="col-md-3 control-label" id="schClassify">
+				행사보조
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-3 control-label">봉사자 유형</label>
+			<div class="col-md-4 control-label">
+				성인
+			</div>
+			<div class="col-md-5">
+					<div class="col-md-4  control-label">성별 :</div>
+					<div class="col-md-4 control-label">
+						남자
+					</div>					
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-3 control-label">작성자/수요처이름</label>
+			<div class="col-md-7" id="schUserName">
+				<p class="form-control-static">희망복지관</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-3 control-label">수요처 장소</label>
+			<div class="col-md-7" id="schUserName">
+				<p class="form-control-static">서울특별시 노원구 삼양동 종합복지센터 장암역 1번출구</p>
+			</div>
+		</div>
+
+
+		<div class="form-group" id="schContent" style="min-height: 75px;">
+			<label class="col-md-2 control-label">내용</label>
+			<div class="col-md-10">
+				<p class="control-lebel">
+					삼양동종합복지센터에서는 따뜻한 봄을 맞이하여 '봄맞이 어르신 봄나들이' 프로그램을 진행 할 예정입니다. 
+					인솔을 함께할 자원봉사자를 모집합니다. 
+					어르신을 공경하고, 서비스 마인드를 가지신 분들의 신청을 기다립니다^^ 
+					
+					일시: 2016년 5월 12일 목요일 08:30 ~ 16:30 (8시간) 
+					장소: 롯데마트 삼양점 앞 집결 / 일산 아쿠아플라넷, 고양 꽃박람회장 이동 / 센터 도착 후 해산. 
+					모집인원: 2명 
+					신청자격: 남녀무관 20세 이상, 사회복지학과 재학중인 학생 우대 
+					내용: 어르신 봄나들이 인솔 및 진행 보조, 중식 제공 
+					담당자: 어르신복지팀 하나래 팀장 
+					문의: 02) 945-1305~6 
+					
+					많은 지원 부탁드립니다^^ 
+				</p>
+			</div>
+		</div>
+	</form>
+
+	<div style="text-align: right;" id="schFooter">
+		<button type="button" class="btn btn-primary" id="btnModalOk"
+			onclick="insertOk();">
+			확인 <span class="glyphicon glyphicon-ok"></span>
+		</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal"
+			style="margin-left: 0px;">닫기</button>
+	</div>
+</div>

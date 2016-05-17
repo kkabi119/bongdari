@@ -49,20 +49,21 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="<%=cp%>/res/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <!-- Metis Menu Plugin JavaScript -->
+	<!-- Metis Menu Plugin JavaScript -->
     <script src="<%=cp%>/res/admin/bower_components/metisMenu/dist/metisMenu.min.js"></script>
-
+    
     <!-- Morris Charts JavaScript -->
     <script src="<%=cp%>/res/admin/bower_components/raphael/raphael-min.js"></script>
     <script src="<%=cp%>/res/admin/bower_components/morrisjs/morris.min.js"></script>
     <script src="<%=cp%>/res/admin/js/morris-data.js"></script>
-
+    
     <!-- Custom Theme JavaScript -->
     <script src="<%=cp%>/res/admin/dist/js/sb-admin-2.js"></script>
     
     <script type="text/javascript" src="<%=cp%>/res/js/lightbox.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/wow.min.js"></script>
-    <script type="text/javascript" src="<%=cp%>/res/js/main.js"></script> 
+    <script type="text/javascript" src="<%=cp%>/res/js/main.js"></script>
+    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -83,14 +84,18 @@
 		</header>
 		<!-- /네비 탑 -->
 
+		<div class="container">
 		<!-- 왼쪽 네비 -->
 		<tiles:insertAttribute name="left" />
 		<!-- /왼쪽 네비 -->
 
 		<!-- 메인화면 -->
-		<tiles:insertAttribute name="body" />
+		<div id="page-wrapper">
+				<tiles:insertAttribute name="body"/>
+		</div>
 		<!-- /메인화면 -->
-
+		</div>
+		
 	</div>
 
 

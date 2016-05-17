@@ -20,7 +20,7 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.html"><i class="fa fa-gear fa-fw"></i> 관리자 메인페이지</a>
+                            <a href="<%=cp%>/admin"><i class="fa fa-gear fa-fw"></i> 관리자 메인페이지</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i> 회원 목록 보기<span class="fa arrow"></span></a>
@@ -33,6 +33,9 @@
                         </li>
                         <li>
                             <a href="tables.html"><i class="fa fa-check fa-fw"></i> 수요처/동아리 승인</a>
+                        </li>
+                        <li>
+                            <a href="<%=cp%>/cal"><i class="fa fa-calendar fa-fw"></i> 전체 일정 보기</a>
                         </li>
                     </ul>
                 </div>

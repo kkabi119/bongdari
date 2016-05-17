@@ -43,10 +43,37 @@ public class DemanderController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/demander/index/qna")
-	public ModelAndView demanderQna() throws Exception {
+	@RequestMapping(value="/demander/index/notice/list")
+	public ModelAndView deNoticeList() throws Exception {
 		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.QnA 게시판");
+		ModelAndView mav = new ModelAndView(".four.demander.dari.notice.list.공지사항");
+		return mav;
+	}
+	@RequestMapping(value="/demander/index/notice/create")
+	public ModelAndView deNoticeCreate() throws Exception {
+		
+		ModelAndView mav = new ModelAndView(".four.demander.dari.notice.create.공지사항");
+		return mav;
+	}
+	@RequestMapping(value="/demander/index/notice/article")
+	public ModelAndView deNoticeArticle() throws Exception {
+		ModelAndView mav = new ModelAndView(".four.demander.dari.notice.article.공지사항");
+		return mav;
+	}
+	
+	@RequestMapping(value="/demander/index/qna/list")
+	public ModelAndView deQnaList() throws Exception {
+		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.list.QnA 게시판");
+		return mav;
+	}
+	@RequestMapping(value="/demander/index/qna/create")
+	public ModelAndView deQnaCreate() throws Exception {
+		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.create.QnA 게시판");
+		return mav;
+	}
+	@RequestMapping(value="/demander/index/qna/article")
+	public ModelAndView deQnaArticle() throws Exception {
+		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.create.QnA 게시판");
 		return mav;
 	}
 	
@@ -56,7 +83,7 @@ public class DemanderController {
 		ModelAndView mav = new ModelAndView(".four.demander.dari.photo.포토게시판");
 		return mav;
 	}
-	
+	/*
 	@RequestMapping(value="/demander/index/review/list")
 	public ModelAndView demanderReview() throws Exception {
 		
@@ -76,7 +103,7 @@ public class DemanderController {
 		ModelAndView mav = new ModelAndView(".four.demander.dari.review.article.후기게시판");
 		return mav;
 	}
-	
+	*/
 	
 	
 	@RequestMapping(value="/demander/index/schedule")
@@ -86,12 +113,7 @@ public class DemanderController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/demander/index/approval")
-	public ModelAndView demanderApproval() throws Exception {
-		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.approval.요청승인페이지");
-		return mav;
-	}
+	
 	@RequestMapping(value="/demander/index/guest")
 	public ModelAndView demanderGuest() throws Exception {
 		

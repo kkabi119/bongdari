@@ -69,7 +69,7 @@
 
 <div class="bodyFrame2" >
     <div class="body-title">
-          <h2 style="color:#F0AD4E;"><span class="glyphicon glyphicon-book" style="color: #F0AD4E;"></span> 게시판 </h2>
+          <h2 style="color:#5bc0de;"><span class="glyphicon glyphicon-book" style="color: #5bc0de;"></span> 자유글쓰기 </h2>
     </div>
     
     
@@ -126,8 +126,8 @@
                     <tfoot>
                         <tr>
                             <td colspan="4" style="text-align: center; padding-top: 15px;">
-                                  <button type="submit" class="btn btn-warning">확인 <span class="glyphicon glyphicon-ok"></span></button>
-                                  <button type="button" class="btn btn-default" style="color:#F0AD4E;" onclick="javascript:location.href='<%=cp%>/demander/index/review';"> 취소 </button>
+                                  <button type="submit" class="btn btn-info">확인 <span class="glyphicon glyphicon-ok"></span></button>
+                                  <button type="button" class="btn btn-default" style="color:#5bc0de;" onclick="javascript:location.href='<%=cp%>/demander/index/review';"> 취소 </button>
                                   
                                   <c:if test="${mode=='update'}">
                                       <input type="hidden" name="num" value="${dto.num}">

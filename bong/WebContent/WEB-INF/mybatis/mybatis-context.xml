@@ -47,7 +47,7 @@
 
     <!-- 트랜잭션관리자. -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
 	<!-- 트랜잭션과 관련된 작업(트랜잭션시작, 커및, 롤백등) -->
@@ -65,7 +65,7 @@
 	    </tx:attributes>
 	</tx:advice>
 	
-	<aop:config proxy-target-class="true">
+	<aop:config proxy-target-class="false">
 	    <!-- com.sp 및 하위 패키지의 Service로 끝나는 클래스의 모든 메소드 -->
 	    <aop:pointcut id="serviceOperation" expression="execution(public * com.bong..*Service.*(..))" />
 	    <aop:advisor id="transactionAdvisor" pointcut-ref="serviceOperation" advice-ref="txAdvice"/>

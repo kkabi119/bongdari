@@ -291,7 +291,7 @@
 
 #header .navbar-nav.navbar-right >li a {
   color: #000;
-  font-size: 12px;
+  font-size: 16px;
   padding: 20px;
   text-transform: uppercase;
   font-weight: 300;
@@ -324,7 +324,7 @@ ul.sub-menu {
 #header .navbar-nav li ul.sub-menu li a{
   color: #818285;
   padding: 5px 0;
-  font-size: 13px;
+  font-size: 16px;
   display: block;
   text-transform: capitalize;
 }

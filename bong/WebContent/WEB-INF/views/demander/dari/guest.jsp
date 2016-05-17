@@ -144,7 +144,7 @@ function deleteGuest(num, page) {
 </head>
 <body>
 
-<div class="row3">
+
 		<div class="col-lg-12">
 			<h1 class="page-header" style="color:#F0AD4E;">
 			<i class="fa fa-comments-o" aria-hidden="true"></i>
@@ -155,7 +155,7 @@ function deleteGuest(num, page) {
 				<li class="active">방명록</li>
 			</ol>
 		</div>
-	</div>
+
 	
 	
 <div class="row2">

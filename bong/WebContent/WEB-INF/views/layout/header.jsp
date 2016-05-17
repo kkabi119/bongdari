@@ -20,7 +20,7 @@
                             </c:if>
                             <c:if test="${empty sessionScope.member && empty sessionScope.demanderjoin}">
                             <li><a href="<%=cp%>/member/login"><i class="fa fa-sign-in"> Login</i></a></li>
-                            </c:if><li><a href="<%=cp%>/member/myPage"><i class="glyphicon glyphicon-user">MyPage</i></a></li>
+                            </c:if><li><a href="<%=cp%>/member/index/myPage"><i class="glyphicon glyphicon-user">MyPage</i></a></li>
                             
                             <li><a href=""><i class="fa fa-google-plus"></i></a></li>
                             
@@ -69,7 +69,7 @@
                         
                         <li class="dropdown"><a href="blog.html">나의동아리 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
-                                <li><a href="<%=cp%>/main/myClub">클럽1</a></li>
+                                <li><a href="<%=cp%>/club/index/main">클럽1</a></li>
                                 <li><a href="<%=cp%>/main/club2">클럽2</a></li>
                             </ul>
                         </li>

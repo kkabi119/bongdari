@@ -77,7 +77,7 @@
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/bbs/created";
+    		f.action="<%=cp%>/demander/index/review/create";
     	else if(mode=="update")
     		f.action="<%=cp%>/bbs/update";
 
@@ -153,7 +153,7 @@
 							</button>
 							<button type="button" class="btn btn-default"
 								style="color: #F0AD4E;"
-								onclick="javascript:location.href='<%=cp%>/demander/index/review';">
+								onclick="javascript:location.href='<%=cp%>/demander/index/review/list';">
 								취소</button> <c:if test="${mode=='update'}">
 								<input type="hidden" name="num" value="${dto.num}">
 								<input type="hidden" name="saveFilename"

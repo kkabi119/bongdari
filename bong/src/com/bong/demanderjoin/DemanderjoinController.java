@@ -1,5 +1,9 @@
 package com.bong.demanderjoin;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.bong.member.Member;
 
 @Controller(value="demanderjoin.demanderjoinController")
 public class DemanderjoinController {
@@ -53,7 +60,7 @@ public class DemanderjoinController {
 		
 		return "redirect:/main";
 	}
-	
+	//수요처 회원가입
 	@RequestMapping(value="/demanderjoin/demanderRegister", method=RequestMethod.GET)
     public ModelAndView demanderjoinForm(){
 		ModelAndView mav=new ModelAndView(".layout.demanderjoin.demanderRegister.회원가입");
@@ -61,12 +68,32 @@ public class DemanderjoinController {
 		return mav;
 	}
 	@RequestMapping(value="/demanderjoin/demanderRegister", method=RequestMethod.POST)
-	public ModelAndView demanderjoinSubmit(Demanderjoin dto){
+	public ModelAndView demanderjoinSubmit(
+			HttpSession session,
+			Demanderjoin dto){
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"serviceImg";
 		
-		int result=service.insertDemanderjoin(dto);
+		int result=service.insertDemanderjoin(dto,pathname);
 		
 		ModelAndView mav = new ModelAndView(".layout.member.login.로그인");
 		
 		return mav;
+	}
+	
+    //아이디 중복 검사
+	@RequestMapping(value="/demanderjoin/serviceIdCheck")
+	@ResponseBody
+	public Map<String, Object> serviceIdCheck(
+			@RequestParam String serviceId
+			) throws Exception{
+		String passed="false";
+		Demanderjoin dto=service.readDemanderjoinLogin(serviceId);
+		if(dto==null)
+			passed="true";
+		
+		Map<String, Object> model=new HashMap<String, Object>();
+		model.put("passed", passed);
+		return model;
 	}
 }

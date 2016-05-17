@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
 
 @Service("member.memberService")
@@ -13,13 +14,30 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Autowired
 	private bongDAO dao;
-
+    @Autowired
+    private FileManager fileManager;
 	@Override
 	public Member readMember1(int userIdx) {
 		Member dto=null;
 		try {
 			dto=dao.getReadInformation("member.readMember1", userIdx);
-		
+			//전화번호 나누기
+			if(dto!=null){
+				if(dto.getUserTel()!=null){
+					String [] s=dto.getUserTel().split("-");
+					dto.setTel1(s[0]);
+					dto.setTel2(s[1]);
+					dto.setTel3(s[2]);
+				}
+			}
+			//이메일 나누기
+			if(dto!=null){
+				if(dto.getUserEmail()!=null){
+					String [] s=dto.getUserEmail().split("@");
+					dto.setEmail1(s[0]);
+					dto.setEmail2(s[1]);
+				}
+			}
 		} catch (Exception e) {
 		  System.out.println(e.toString());
 		}
@@ -31,19 +49,49 @@ public class MemberServiceImpl implements MemberService{
 		Member dto=null;
 		try {
 			dto=dao.getReadInformation("member.readMemberLogin", userId);
-		
+			//전화번호 나누기
+			if(dto!=null){
+				if(dto.getUserTel()!=null){
+					String [] s=dto.getUserTel().split("-");
+					dto.setTel1(s[0]);
+					dto.setTel2(s[1]);
+					dto.setTel3(s[2]);
+				}
+			}
+			//이메일 나누기
+			if(dto!=null){
+				if(dto.getUserEmail()!=null){
+					String [] s=dto.getUserEmail().split("@");
+					dto.setEmail1(s[0]);
+					dto.setEmail2(s[1]);
+				}
+			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		return dto;
 	}
 	@Override
-	public int insertMember(Member dto) {
+	public int insertMember(Member dto, String pathname) throws Exception {
 		int result = 0;
 		try {
+			//전화 번호 합쳐서 데이터 넣기
+			if(dto.getTel1() != null && dto.getTel1().length()!=0 &&
+					dto.getTel2() != null && dto.getTel2().length()!=0 &&
+					dto.getTel3() != null && dto.getTel3().length()!=0)
+				dto.setUserTel(dto.getTel1() + "-" + dto.getTel2() + "-" + dto.getTel3());
+			System.out.println(dto.getUserTel());
+			//이메일 합쳐서 데이터 넣기
+			if(dto.getEmail1() != null && dto.getEmail1().length()!=0 &&
+					dto.getEmail2() != null && dto.getEmail2().length()!=0 )
+				dto.setUserEmail(dto.getEmail1() + "@" + dto.getEmail2());
 			int seq=dao.getIntValue("member.memberSeq");
 			dto.setUserIdx(seq);
 			
+			if(dto.getSaveFilename()!=null && dto.getSaveFilename().isEmpty()){
+				String filename=fileManager.doFileUpload(dto.getSaveFilename(), pathname);
+			    dto.setOriginalFilename(filename);
+			}
 			//회원정보 저장
 			dao.insertInformation("member.insertMember", seq);
 			dao.insertInformation("member.insertMemberInfo", dto);
@@ -51,6 +99,7 @@ public class MemberServiceImpl implements MemberService{
 			result = 1;
 		} catch (Exception e) {
 			System.out.println(e.toString());
+			throw e;
 		}
 		return result;
 	}
@@ -64,6 +113,7 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int updateLastLogin(String userId) {
 		int result=0;
+		
 		try {
 			result=dao.updateInformation("member.updateLastLogin", userId);
 		} catch (Exception e) {

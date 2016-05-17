@@ -13,7 +13,11 @@
 			<div class="single-blog two-column">
 				<div class="post-content overflow">
  					<div class="bodyFrame2">
-          				<h1 style="color:#04B907"><i class="fa fa-bell"></i>공지사항 </h1>
+          				<div class="col-lg-12">
+			<h1 class="page-header" style="color:#F0AD4E;">
+				관심등록 동아리 
+			</h1>
+		</div>
     					<div style="clear: both; height: 30px; line-height: 30px;">
             				<div style="float: left;">1개(1/10 페이지)</div>
             				<div style="float: right;">&nbsp;</div>
@@ -24,25 +28,20 @@
                 				<thead>
                     				<tr>
                         				<th class="text-center" style="width: 70px;">번호</th>
-                        				<th >제목</th>
-                        				<th class="text-center" style="width: 100px;">글쓴이</th>
-                        				<th class="text-center" style="width: 100px;">날짜</th>
-                       				 	<th class="text-center" style="width: 70px;">조회수</th>
-                        				<th class="text-center" style="width: 50px;">첨부</th>
+                        				<th class="text-center">동아리 이름</th>
+                        				<th class="text-center" style="width: 100px;">지역</th>
+                        				<th class="text-center" style="width: 80px;">분야</th>
+                       				 	<th class="text-center" style="width: 90px;">참여 횟수</th>
+                        				
                     				</tr>
                 				</thead>
                 				<tbody>
 									<tr>
-                        				<td class="text-center">6</td>
-                        				<td><a href="<%=cp%>/club/index/notice/article">제목(댓글수)</a></td>
-                        				<td class="text-center">홍길동</td>
-                       				 	<td class="text-center">2000-10-10</td>
+                        				<td class="text-center">1</td>
+                        				<td class="text-center"><a href="<%=cp%>/club/index/calendar">봉사 동아리 A</a></td>
+                        				<td class="text-center">서울 북부</td>
+                       				 	<td class="text-center">보육</td>
                        				 	<td class="text-center">5</td>
-                       				 	<td class="text-center">
-<c:if test="${not empty dto.saveFilename}">
-                                <a href="<%=cp%>/bbs/download?num=${dto.num}"><img src="<%=cp%>/res/images/disk.gif" border="0" style="margin-top: 1px;"></a>
-</c:if>
-                        				</td>
                     				</tr>
                 				</tbody>
             				</table>
@@ -56,25 +55,11 @@
                 ${paging}
 </c:if>
         				</div>        
-        
         				<div style="clear: both;">
-        					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/club/index/notice/list';">새로고침</button>
-        					</div>
-        					<div style="float: left; width: 60%; text-align: center;">
-        		     			<form name="searchForm" method="post" class="form-inline">
-						  			<select class="form-control input-sm" name="searchKey" style="height:32px">
-						      			<option value="subject">제목</option>
-						      			<option value="userName">작성자</option>
-						      			<option value="content">내용</option>
-						      			<option value="created">등록일</option>
-						  			</select>
-						  			<input type="text" class="form-control input-sm input-search" name="searchValue" placeholder="검색" style="width:50%; height:32px;">
-						  			<button type="button" class="btn btn-success" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
-        		     			</form>
-        					</div>
-        					<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    			<button type="button" class="btn btn-success" onclick="javascript:location.href='<%=cp%>/club/index/notice/write';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+        					<div style="float: right; ">
+        		    			<button type="button" class="btn btn-default" 
+        		    			onclick="javascript:location.href='<%=cp%>/demander/index/bookmark';">새로고침</button>
+        				
         					</div>
         				</div>
         			</div>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="clubnotice">
+	
+	<insert id="insertNotice" parameterType="com.bong.club.notice.Notice">
+		INSERT INTO club_notice(clubnoticeIdx, userIdx, clubIdx,subject, content, saveFilename, originalFilename)
+			VALUES(club_seq.NEXTVAL, #{userIdx}, '4', #{subject}
+						,#{content}, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename,jdbcType=VARCHAR})
+	</insert>
+	
+	
+	<sql id="where-list">
+	  <if test="searchKey=='userName'">
+	      userName=#{searchValue}
+	  </if>
+	  <if test="searchKey=='subject'">
+	      INSTR(subject, #{searchValue}) &gt; 0
+	  </if>
+	  <if test="searchKey=='content'">
+	      DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0 
+	  </if>
+	  <if test="searchKey=='created'">
+	      TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
+	      OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue}
+	  </if>
+	</sql>
+	
+	<!-- 글개수 -->
+	<select id="dataCount" parameterType="map"
+	            resultType="Integer">
+	  SELECT NVL(COUNT(*), 0) FROM club_notice n
+	        JOIN memberInfo m
+	        ON n.userIdx=m.userIdx
+	     <where>
+	     	<if test="searchValue!=null and searchValue!='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	     </where>   
+	</select>
+	
+	<!-- 글리스트 -->
+	<select id="listNotice" parameterType="map"
+	            resultType="com.bong.club.notice.Notice">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			     SELECT clubnoticeIdx, m.userIdx, userId, m.userName, subject
+			           ,TO_CHAR(n.created, 'YYYY-MM-DD') created
+					   ,hitCount, n.saveFilename
+			        FROM club_notice n JOIN memberInfo m ON n.userIdx=m.userIdx
+                    <where>
+                         <if test="searchValue != null and searchValue != ''">
+			                  <include refid="where-list"/>
+		                 </if>
+	                </where>
+	                ORDER BY clubnoticeIdx DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	</select>
+	
+</mapper>

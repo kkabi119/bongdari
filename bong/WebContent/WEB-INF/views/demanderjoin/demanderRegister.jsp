@@ -5,29 +5,52 @@
 <%
    String cp = request.getContextPath();
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="<%=cp%>/res/css/fileinput.css" type="text/css">
 
-<script type="text/javascript" src="<%=cp%>/res/js/jquery-1.12.0.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/res/js/util.js"></script>
-
-<link rel="stylesheet" href="<%=cp%>/res/css/jquery-ui.min.css" type="text/css"/>
-
-
-<link rel="stylesheet" href="<%=cp%>/res/css/style.css" type="text/css"/>
-<link rel="stylesheet" href="<%=cp%>/res/css/layout/layout.css" type="text/css"/>
-
-
-<link href="<%=cp %>/res/css/bootstrap.css" rel="stylesheet">
+<script type="text/javascript" src="<%=cp%>/res/js/fileinput.js"></script>
 
 <script type="text/javascript">
+$(function(){
+	$('.fileinput').fileinput();
+});
+
+
+//아이디 중복 검사
+function serviceIdCheck() {
+	var serviceId=$("#serviceId").val();
+	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(serviceId)) { 
+		var str="아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.";
+		$("#serviceId").focus();
+		$("#serviceId + .help-block").html(str);
+		return false;
+	}
+	
+	var url="<%=cp%>/demanderjoin/serviceIdCheck";
+	var params="serviceId="+serviceId;
+	$.ajax({
+		type:"POST"
+		,url:url
+		,data:params
+		,dataType:"JSON"
+		,success:function(data) {
+			var passed=data.passed;
+			if(passed=="true") {
+				var str="<span style='color:blue;font-weight: bold;'>"+serviceId+"</span> 아이디는 사용가능 합니다.";
+				$("#serviceId + .help-block").html(str);
+			} else {
+				var str="<span style='color:red;font-weight: bold;'>"+serviceId+"</span> 이미 존재하는 아이디입니다.";
+				$("#serviceId + .help-block").html(str);
+				$("#serviceId").val("");
+				$("#serviceId").focus();
+			}
+		}
+	});
+}
+
 
 function demanderRegister() {
-   var f = document.registerForm;;
+   var f = document.demanderjoinForm;;
    var str;
 
    str=f.serviceId.value;
@@ -59,7 +82,7 @@ function demanderRegister() {
     str = f.serviceName.value;
    str = $.trim(str);
 
-    if(!/^[\uac00-\ud7a3]{2,4}$/g.test(str)) {
+    if(!/^[\uac00-\ud7a3a-zA-Z]{2,10}$/g.test(str)) {
        $("#serviceName + .help-block").html("<span style='color:red;'>이름을 확인해주세요! <span>");
         f.serviceName.focus();
         return false;
@@ -67,17 +90,25 @@ function demanderRegister() {
     else {
       $("#serviceName + .help-block").html("이름은 한글로 2자이상 4자 이하입니다.");
    }   
+    str=f.serviceImg.value;
+    if(str) {
+    	if(! isImageFile(f.serviceImg.value)) {
+    		alert("이미지 파일만 가능합니다.")
+    		f.serviceImg.focus();
+            return false;
+    	}
+    }
     str = f.serviceBirth.value;
-    if(!isValidDateFormat(str)) {
+    if(!str) {
        $("#serviceBirth + .help-block").html("<span style='color:red;'>생일 형식을 확인해주세요!<span>");
         f.serviceBirth.focus();
         return false;
     } else {
       $("#serviceBirth + .help-block").html("  생년월일은 2000-01-01 형식으로 입력 합니다.");
    }
-/*   
+ 
     str = f.email2.value;
-    if(!/@[0-9a-zA-Z]([0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(str)) {
+    if(!/[0-9a-zA-Z]([0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(str)) {
        $("#serviceEmail + .help-block").html("<span style='color:red;'> 이메일 형식을 확인해주세요!<span>");
         f.email2.focus();
         return false;
@@ -87,31 +118,21 @@ function demanderRegister() {
     
     str = f.tel1.value;
     if(!str) {
-       $("#tel3 + .help-block").html("<span style='color:red;'>전화번호를 확인해주세요!<span>");
         f.tel1.focus();
         return false;
-    }else {
-      $("#tel3 + .help-block").html("");
-   }
+    }
 
     str = f.tel2.value;
-    if(!/^[0-9]{4}$/g.test(str)) {
-       $("#tel3 + .help-block").html("<span style='color:red;'>전화번호를 확인해주세요!<span>");
+    if(!/^(\d+)$/.test(str)) {
         f.tel2.focus();
         return false;
-    }else {
-      $("#tel3 + .help-block").html("");
-   }
-    
+    }
+
     str = f.tel3.value;
-    if(!/^[0-9]{4}$/g.test(str)) {
-       $("#tel3 + .help-block").html("<span style='color:red;'>전화번호를 확인해주세요!<span>");
+    if(!/^(\d+)$/.test(str)) {
         f.tel3.focus();
         return false;
-    }else {
-      $("#tel3 + .help-block").html("");
-   }
-     */
+    }
     var failed="${failed}";
    if(failed=="true"){
       alert("회원가입에 실패했습니다!");
@@ -126,11 +147,9 @@ function demanderRegister() {
 
     return true;
 }
-</script>
-<script>
 
 function changeEmail() {
-    var f = document.memberForm;
+    var f = document.demanderjoinForm;
     
     var str = f.selectEmail.value;
     if(str!="direct") {
@@ -139,24 +158,42 @@ function changeEmail() {
          f.email1.focus(); 
     }
     else {
-        f.email2.value="@";
+        f.email2.value="";
         f.email2.readOnly = false;
         f.email1.focus();
     }
 }
+
+
+function imageDelete() {
+	if(confirm("등록된 사진을 삭제 하시겠습니까 ?")) {
+		var url="<%=cp%>/demanderjoin/imageDelete";
+		var filename="${dto.serviceImgname}";
+		$.post(url, {filename:filename}, function(data){
+			var isLogin=data.isLogin;
+			if(isLogin==false) {
+				location.href="<%=cp%>/member/login";
+				return;
+			}
+			
+			$("#imgPhoto").attr("src", "<%=cp%>/res/images/noimage.png");
+			$("#btnDeletePhoto").hide();
+			
+		},"json");
+	}
+}
 </script>
 
-</head>
-<body>
+
 <div class="container" role="main" style="margin-top:50px;">
 
   <div class="bodyFrame">
-  <form class="form-horizontal" name="demanderjoinForm" method="post" onsubmit="return demanderRegister();">
+  <form class="form-horizontal" name="demanderjoinForm" method="post" onsubmit="return demanderRegister();" enctype="multipart/form-data">
     <div class="form-group" style="margin-bottom:0px;">
         <label class="col-sm-2 control-label" for="serviceId">아이디</label>
         <div class="col-sm-7">
             <input style="width:200px;"class="form-control" id="serviceId" name="serviceId" type="text" 
-                  placeholder="아이디"  value="${dto.serviceId}"
+                  placeholder="아이디"  onchange="serviceIdCheck()" value="${dto.serviceId}"
               ${mode=="update" ? "readonly='readonly' style='border:none;'":""}>
             <p class="help-block"> 아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.</p>
         </div>
@@ -184,8 +221,38 @@ function changeEmail() {
             <input style="width:200px; " class="form-control" id="serviceName" name="serviceName" 
                   type="text" placeholder="기관명"   value="${dto.serviceName}" ${mode=="update" ? "readonly='readonly'
                   style='border:none;' ":""}>
-        <p class="help-block">이름은 한글로 2자이상 4자 이하입니다.</p>
+        <p class="help-block">기관명은 한글이나 영어로 2자이상 4자 이하입니다.</p>
      </div>
+    </div>
+    
+        <div class="form-group">
+        <label class="col-sm-2 control-label" for="serviceImgname">사진</label>
+        <div class="col-sm-7">
+            <div class="fileinput fileinput-new" data-provides="fileinput" style="float: left;">
+                <div class="fileinput-preview thumbnail" style="width: 130px; height: 150px;"></div>
+                <div>
+                     <span class="btn btn-default wbtn btn-file"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="serviceImg" id="serviceImgname" accept="image/png, image/jpeg, image/gif"></span>
+                     <a href="#" class="btn btn-default wbtn fileinput-exists" data-dismiss="fileinput">삭제</a>
+                </div>
+            </div>
+<c:if test="${mode=='update'}">
+            <div style="float: left; margin-left: 10px;">
+               <c:if test="${not empty dto.serviceImgname}">
+                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img id="imgPhoto" src="<%=cp%>/uploads/serviceImg/${dto.serviceImgname}" style="width: 100%; height: 100%;"></div>
+                    <div style="padding-left: 15px;">
+                         <span>등록 이미지</span>
+                         <a id="btnDeletePhoto" href="javascript:imageDelete();" class="close" style="float: none">&times;</a>
+                    </div>
+                </c:if>
+               <c:if test="${empty dto.serviceImgname}">
+                   <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img src="<%=cp%>/res/images/noimage.png" style="width: 100%; height: 100%;"></div>
+                   <div style="padding-left: 15px;">
+                         <span>등록 이미지</span>
+                   </div>
+                </c:if>
+            </div>
+</c:if>
+        </div>
     </div>
     <div style=""class="form-group">
         <label class="col-sm-2 control-label" for="serviceBirth">설립일</label>
@@ -194,53 +261,48 @@ function changeEmail() {
             <p class="help-block">설립일은 2000-01-01 형식으로 입력 합니다.</p>
         </div>
     </div>
-   <div style=""class="form-group">
-        <label class="col-sm-2 control-label" for="serviceTel">기관번호</label>
-        <div class="col-sm-7">
-            <input style="width:200px; " class="form-control" id="serviceTel" name="serviceTel" type="text" placeholder="기관번호" value="${dto.serviceTel}">
-         
-        </div>
-    </div>
-     <div style=""class="form-group">
-        <label class="col-sm-2 control-label" for="serviceEmail">이메일</label>
-        <div class="col-sm-7">
-            <input style="width:200px; " class="form-control" id="serviceEmail" name="serviceEmail" type="text" placeholder="이메일" value="${dto.serviceEmail}">
-         
-        </div>
-    </div>
-   <%--  <div class="form-group">
-        <label class="col-sm-2 control-label" for="serviceEmail">이메일</label>
+
+<div class="form-group">
+        <label class="col-sm-2 control-label" for="userEmail">이메일</label>
         <div class="col-sm-10" style="margin-top:0px;">
+        <table>
+        <tr>
+        <td>
            <select name="selectEmail" onchange="changeEmail();" class="form-control" style="width:130px; float: left; margin-right:10px; margin:0px; padding:0px;" >
                                  <option value="">선 택</option>
-                                 <option value="@naver.com" ${dto.email2=="naver.com" ? "selected='selected'" : ""}>네이버 메일</option>
-                                 <option value="@hanmail.net" ${dto.email2=="hanmail.net" ? "selected='selected'" : ""}>한 메일</option>
-                                 <option value="@hotmail.com" ${dto.email2=="hotmail.com" ? "selected='selected'" : ""}>핫 메일</option>
-                                 <option value="@gmail.com" ${dto.email2=="gmail.com" ? "selected='selected'" : ""}>지 메일</option>
+                                 <option value="naver.com" ${dto.email2=="naver.com" ? "selected='selected'" : ""}>네이버 메일</option>
+                                 <option value="hanmail.net" ${dto.email2=="hanmail.net" ? "selected='selected'" : ""}>한 메일</option>
+                                 <option value="hotmail.com" ${dto.email2=="hotmail.com" ? "selected='selected'" : ""}>핫 메일</option>
+                                 <option value="gmail.com" ${dto.email2=="gmail.com" ? "selected='selected'" : ""}>지 메일</option>
                                  <option value="direct">직접입력</option>
       </select>
+      </td>
+      <td>
        <input style="width:150px; float:left; margin-right:10px;" type="text" name="email1" size="13" 
-             maxlength="30" id="email"  class="form-control" value="${dto.email1}">
-         
-      <input style="width:150px;  float:left; margin-right:10px; " type="text" name="email2" size="13"
-             maxlength="30" id="email"  class="form-control" value="@${dto.email2}" readonly="readonly">
-         <p class="help-block"> </p>
+             maxlength="30" id="email1"  class="form-control" value="${dto.email1}">@&nbsp;&nbsp;
+       </td>
+       <td>      
+       <input style="width:150px;  float:left; margin-right:10px; " type="text" name="email2" size="13"
+             maxlength="30" id="email2"  class="form-control" value="${dto.email2}" readonly="readonly">
+         </td>
+         </tr>
+         </table>
          </div>
     </div>
     
     <div class="form-group" >
-        <label class="col-sm-2 control-label" for="tel1">전화번호</label>
+        <label class="col-sm-2 control-label" for="tel1">기관번호</label>
         <div class="col-sm-7">
              <div class="row" >
                   <div class="col-sm-3" style="padding-right: 5px;">
                     <select class="form-control" style="width:130px; float: left; margin:0px; padding:0px;"id="tel1" name="tel1" >
                         <option value="">선 택</option>
-                        <option value="010" ${dto.tel1=="010" ? "selected='selected'" : ""}>010</option>
-                        <option value="011" ${dto.tel1=="011" ? "selected='selected'" : ""}>011</option>
-                        <option value="016" ${dto.tel1=="016" ? "selected='selected'" : ""}>016</option>
-                        <option value="017" ${dto.tel1=="017" ? "selected='selected'" : ""}>017</option>
-                        <option value="018" ${dto.tel1=="018" ? "selected='selected'" : ""}>018</option>
-                        <option value="019" ${dto.tel1=="019" ? "selected='selected'" : ""}>019</option>
+                        <option value="010" ${dto.tel1=="02" ? "selected='selected'" : ""}>02</option>
+                        <option value="011" ${dto.tel1=="031" ? "selected='selected'" : ""}>031</option>
+                        <option value="016" ${dto.tel1=="032" ? "selected='selected'" : ""}>032</option>
+                        <option value="017" ${dto.tel1=="033" ? "selected='selected'" : ""}>033</option>
+                        <option value="018" ${dto.tel1=="041" ? "selected='selected'" : ""}>041</option>
+                        <option value="019" ${dto.tel1=="051" ? "selected='selected'" : ""}>051</option>
                     </select>
                   </div>
 
@@ -261,7 +323,7 @@ function changeEmail() {
                   </div>
              </div>
         </div>
-    </div>   --%>  
+    </div>  
     <div class="form-group">
         <label class="col-sm-2 control-label" for="serviceAddr">주소</label>
         <div class="col-sm-7">
@@ -286,7 +348,7 @@ function changeEmail() {
       <c:if test="${mode=='created'}">
             <button type="submit" name="sendButton" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;">
                   회원가입<span class="glyphicon glyphicon-ok"></span></button>
-            <button type="submit" class="btn btn-default btn-sm wbtn" style="margin-right:20px; height:40px; width:130px;">
+            <button type="button" class="btn btn-default btn-sm wbtn"  onclick="javascript:location.href='<%=cp%>/member/login';" style="margin-right:20px; height:40px; width:130px;">
                   가입취소 <span class="glyphicon glyphicon-remove"></span></button>
        </c:if>
    <c:if test="${mode=='update'}">
@@ -320,9 +382,3 @@ function changeEmail() {
 
     </div>
     <!-- /.container -->
-
-<script type="text/javascript" src="<%=cp%>/res/js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="<%=cp%>/res/js/jquery.ui.datepicker-ko.js"></script>
-<script type="text/javascript" src="<%=cp%>/res/js/bootstrap.min.js"></script>
-</body>
-</html>

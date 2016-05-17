@@ -2,108 +2,151 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%
-	String cp = request.getContextPath();
-	// String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
+	String cp=request.getContextPath();
 %>
 
-<link rel="stylesheet" href="<%=cp%>/res/css/style.css" type="text/css">
-
-<script type="text/javascript"
-	src="<%=cp%>/res/jquery/js/jquery-1.12.3.min.js"></script>
-	
 <style type="text/css">
-.bbs-article .table {
-    margin-top: 15px;
-  
-}
-.bbs-article .table thead tr,  .bbs-article .table tbody tr {
-    height: 30px;
-}
-.bbs-article .table thead tr th, .bbs-article .table tbody tr td {
-    font-weight: normal;
-    border-top: none;
-    border-bottom: none;
-}
-.bbs-article .table thead tr {
-    border-top: #d5d5d5 solid 1px;
-    border-bottom: #dfdfdf solid 1px;
-} 
-.bbs-article .table tbody tr {
-    border-bottom: #dfdfdf solid 1px;
-}
-.bbs-article .table i {
-    background: #424951;
-    display: inline-block;
-    margin: 0 7px 0 7px;
-    position: relative;
-    top: 2px;
-    width: 1px;
-    height: 13px;    
-}
 
+/* 수정삭제는 관리자만 보이도록한다 
+ */
 .bbs-reply {
-    font-family: NanumGothic, 나눔고딕, "Malgun Gothic", "맑은 고딕", 돋움, sans-serif;
+	border-top: #3897f0 solid 2px;
+	border-bottom: #3897f0 solid 2px;
+	padding: 15px;
+	margin-bottom: 70px;
 }
 
 .bbs-reply-write {
-    border: #d5d5d5 solid 1px;
-    padding: 10px;
-    min-height: 50px;
+	border-bottom: #ddd solid 2px;
+	padding: 10px;
+	min-height: 50px;
 }
 
+.table>thead>tr>th {
+	font-size: 20px;
+	text-align: center;
+	padding: 14px;
+	border-bottom: 2px solid gray;
+}
+
+.icon-wrapper:hover {
+	background-color: #4FCCCD;
+}
+
+.table>tbody>tr>td {
+	padding-top: 13px;
+}
 </style>
 
 
-<div class="table-responsive" style="width: 1200px;">
-	<div class="bbs-article">
-		<table class="table">
-			<thead>
-				<tr>
-					<th colspan="2" style="text-align: center;"><a
-						href="<%=cp%>/demander/index/main">수요처이름</a></th>
-				</tr>
-			<thead>
-			<tbody>
-				<tr>
-					<td style="text-align: left;">전화번호 : 010-1111-2222</td>
-					<td style="text-align: right;">주소 : 경기도 고양시 덕양구</td>
-				</tr>
+<div class="row" style="margin-left: 15px;">
+	<div class="col-md-12 col-sm-12">
 
-				<tr>
-					<td style="text-align: left;">메일주소 : demander21@naver.com</td>
-					<td style="text-align: right;">시설유형 : 보육</td>
-				</tr>
-				<tr>
-					<td style="text-align: left;"></td>
-					<td style="text-align: right;">담당자 : 홍길동</td>
-				</tr>
-				<tr>
-					<td colspan="2" style="height: 230px;">${dto.content}</td>
-				</tr>
 
-			</tbody>
-			<tfoot >
-				<tr>
-					<td align="center" colspan="2">
-						<button type="button" class="btn btn-default btn-sm wbtn"
-							onclick="javascript:location.href='<%=cp%>/main/demander';">
-							목록으로</button>
-					</td>
-					<c:if test="${mode=='update'}">
-						<input type="hidden" name="num" value="${dto.num}">
-						<input type="hidden" name="saveFilename"
-							value="${dto.saveFilename}">
-						<input type="hidden" name="originalFilename"
-							value="${dto.originalFilename}">
-						<input type="hidden" name="page" value="${page}">
-					</c:if>
-				</tr>
-			</tfoot>
-		</table>
+		<div class="col-sm-10_2"
+			style="float: none; margin-left: auto; margin-right: auto;">
+
+			<div class="body-title">
+				<h3 style="font-size: 30px;">수요처 간단 프로필</h3>
+
+			</div>
+
+		</div>
+		<hr
+			style="margin-bottom: 10px; margin-top: 0px; border: 1px solid gray;">
+
+
+		<div class="table-responsive" style="clear: both;">
+			<div>
+				<table class="table">
+					<thead>
+						<tr height="50">
+							<th style="color: #555;" colspan="7" class="bbs-subject">
+								희망 복지관
+							</th>
+						</tr>
+					<thead>
+					<tbody>
+						<tr>
+							<td bgcolor="#DFE6E8"
+								style="color: black;; border-top: none; text-align: left; width: 14%; height: 45px;">
+								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
+								수요처
+							</td>
+							<td style="text-align: left; width: 35%; height: 45px;">희망 복지관</td>
+
+							<td bgcolor="#DFE6E8"
+								style="color: black;; border-top: none; text-align: left; width: 14%; height: 45px;">
+								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;주소
+							</td>
+							<td style="text-align: left; width: 45%; height: 45px;" colspan="4" >
+								서울특별시 노원구 삼양동 종합복지센터 장암역 1번출구  <a href="#"> [지도]</a>
+							</td>
+						</tr>
+						<tr>
+							<td bgcolor="#DFE6E8"
+								style="color: black;; border-top: none; border-top: none; text-align: left; height: 45px;">
+								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;이메일
+							</td>
+							<td style="text-align: left; height: 45px;">heemang@naver.com</td>
+
+							<td bgcolor="#DFE6E8"
+								style="color: black; border-top: none; text-align: left; width: 12%; height: 45px;">
+								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;핸드폰
+							</td>
+							<td style="text-align: left; width: 200px; height: 45px;" colspan="4">
+								010-1111-2222</td>
+						</tr>
+
+						<tr>
+							<td bgcolor="#DFE6E8"
+								style="color: black;; border-top: none; border-top: none; text-align: left; height: 45px;">
+								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉사분야
+							</td>
+							<td style="text-align: left; height: 45px;">문화체육 > 행사보조</td>
+
+							<td bgcolor="#DFE6E8"
+								style="color: black;; border-top: none; text-align: left; width: 12%; height: 45px;">
+								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉사자
+								유형
+							</td>
+							<td style="text-align: left; width: 200px; height: 45px;" colspan="4">
+								청소년/성인</td>
+
+
+
+						</tr>
+					
+
+						<tr>
+							<td colspan="7"
+								style="border-top: 2px solid gray; padding: 50px 20px 50px 20px; line-height: 20pt;">
+								희망복지관에서는 따뜻한 봄을 맞이하여 '봄맞이 어르신 봄나들이' 프로그램을 진행 할 예정입니다. <br>
+								인솔을 함께할 자원봉사자를 모집합니다. <br> 어르신을 공경하고, 서비스 마인드를 가지신 분들의 신청을
+								기다립니다^^ <br>
+							
+							</td>
+						</tr>
+
+
+
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="6" align="left"></td>
+							<td align="right" colspan="2">
+								<button type="button" class="btn btn-default"
+								onclick="javascript:location.href='<%=cp%>/main/demander';">목록으로</button>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+
+
+
+		</div>
 	</div>
 </div>
-
-
 
