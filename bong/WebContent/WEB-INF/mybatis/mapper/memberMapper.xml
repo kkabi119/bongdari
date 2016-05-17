@@ -22,11 +22,11 @@
 	<select id="readMemberLogin" resultType="com.bong.member.Member" parameterType="String">
 	   SELECT userIdx, userId, userName, userPwd,memImgname,memImg
 	          FROM memberInfo
-	          WHERE userId=#{userId} 
+	          WHERE userIdx=#{userIdx} 
 	
 	</select>
 	<update id="updateLastLogin" parameterType="String">
 	  UPDATE memberInfo SET last_login=SYSDATE
-	    WHERE userId=#{userId}
+	    WHERE userIdx=#{userIdx}
 	</update>
 </mapper>
