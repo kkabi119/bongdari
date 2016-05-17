@@ -13,7 +13,7 @@
 <script src='<%=cp%>/res/calendar/lib/moment.min.js'></script>
 <script src='<%=cp%>/res/calendar/lib/jquery.min.js'></script>
 <script src='<%=cp%>/res/calendar/fullcalendar.min.js'></script>
-<script src='<%=cp%>/res/calendar/lib/ko.js'></script>
+<script src='<%=cp%>/res/calendar/lib/lang-all.js'></script>
 
 <script>
 
@@ -25,8 +25,8 @@
 			defaultDate: '2016-05-12',
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
-			select: function(){
-				insertForm();
+			select: function(start, end){
+				insertForm(start, end);
 				},
 			eventClick : function(){
 				articleForm();
@@ -93,13 +93,32 @@
 	
 	
 	// 일정 등록 폼
-	function insertForm() {
+	function insertForm(start, end) {
 		/* load로 해야 넘어간다. 왜그런지 모르겠네 */
 		var uri="<%=cp%>/cal/inputForm";
 		$('#scheduleModal .modal-body').load(uri, function() {
+			var startDay="", startTime="";
+			var endDay="", endTime="";
+			
+			startDay=start.format("YYYY-MM-DD");
+			endDay=end.format("YYYY-MM-DD");
+			startTime=start.format("09:00");
+			endTime=end.format("17:00");
+
+			$("input[name='startDay']").val(startDay);
+			$("input[name='startTime']").val(startTime);
+			$("input[name='endTime']").val(endTime);
+
+				$("#startTime").show();
+				$("#endTime").show();
+				if(startDay!=(end.add("-30", "minutes").format())) { // 2일 이상 선택했을 때
+					endDay=end.format("YYYY-MM-DD");
+					$("input[name='endDay']").val(endDay);
+				} else {
+				$("input[name='endDay']").val(startDay); // 하루 선택했을 때
+				}
 		    $('#scheduleModal .modal-title').html('일정 추가');
 			$('#scheduleModal').modal();
-			calendar.fullCalendar('unselect');
 		});
 	}
 
@@ -110,9 +129,10 @@
 			$('#scheduleModal').modal('show');
 		});	
 	}
+	
+	
 </script>
 
-<script src="<%=cp%>/res/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <style>
 	#calendar {

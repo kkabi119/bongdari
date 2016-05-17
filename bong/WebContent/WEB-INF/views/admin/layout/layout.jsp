@@ -21,7 +21,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="<%=cp%>/res/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    
     <!-- MetisMenu CSS -->
     <link href="<%=cp%>/res/admin/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
@@ -37,6 +37,8 @@
     <!-- Custom Fonts -->
     <link href="<%=cp%>/res/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     
+    <link rel="stylesheet" href="<%=cp%>/res/calendar/jquery-ui.min.css" type="text/css"/>
+    
     
     <link href="<%=cp%>/res/css/lightbox.css" rel="stylesheet"> 
     <link href="<%=cp%>/res/css/animate.min.css" rel="stylesheet"> 
@@ -45,9 +47,6 @@
     
     <!-- jQuery -->
     <script src="<%=cp%>/res/admin/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="<%=cp%>/res/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<!-- Metis Menu Plugin JavaScript -->
     <script src="<%=cp%>/res/admin/bower_components/metisMenu/dist/metisMenu.min.js"></script>
@@ -63,6 +62,7 @@
     <script type="text/javascript" src="<%=cp%>/res/js/lightbox.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/wow.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/main.js"></script>
+    <script type="text/javascript" src="<%=cp%>/res/calendar/jquery-1.12.3.min.js"></script>
     
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -98,8 +98,13 @@
 		
 	</div>
 
-
-
 </body>
+
+
+<script type="text/javascript" src="<%=cp%>/res/calendar/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/res/calendar/jquery.ui.datepicker-ko.js"></script>
+	
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<%=cp%>/res/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </html>

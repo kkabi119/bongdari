@@ -6,12 +6,12 @@
 	String cp = request.getContextPath();
 %>
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 	 $(function() {
 	 $("input[name=startDay]").datepicker();
 	 $("input[name=endDay]").datepicker();
 	 });
-</script> -->
+</script>
 <div class="container-fluid">
 	<form class="form-horizontal">
 		<div class="form-group">
