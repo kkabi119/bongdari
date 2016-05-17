@@ -7,9 +7,13 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
+<style type="text/css">
+	.col-md-3 {
+		width:22%;
+	}
+</style>
 
-
-                <div class="col-md-3 col-sm-5">
+                <div class="col-md-3 col-sm-5" style="width:width:22%;">
                     <div class="sidebar blog-sidebar">
                     	<!-- 코멘트 쓰려면 쓰기 없어도 됨 -->
                         <%-- <div class="sidebar-item  recent">

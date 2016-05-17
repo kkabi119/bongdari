@@ -8,6 +8,9 @@
 
 <style type="text/css">
 
+.col-md-9{
+			margin-top:-25px;
+		}
 /* 수정삭제는 관리자만 보이도록한다 
  */
 .bbs-reply {
