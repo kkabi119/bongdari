@@ -47,7 +47,7 @@
                             <ul class="nav navbar-stacked">
                                 <li><a href="<%=cp%>/main/demander">수요처 전체메인<span class="pull-right">(1)</span></a></li>
                                 <li class="active"><a href="<%=cp%>/demander/index/main">수요처메인<span class="pull-right">(8)</span></a></li>
-                                <li><a href="<%=cp%>/demander/index/notice">공지사항<span class="pull-right">(8)</span></a></li>
+                                <li><a href="<%=cp%>/demander/index/notice/list">공지사항<span class="pull-right">(8)</span></a></li>
                                 <li><a href="<%=cp%>/demander/index/schedule">수요처 일정(달력/신청)<span class="pull-right">(4)</span></a></li>
                                 <li><a href="<%=cp%>/demander/index/qna/list">수요처QnA<span class="pull-right">(9)</span></a></li>
                                <%--  <li><a href="<%=cp%>/demander/index/photo">포토게시판<span class="pull-right">(3)</span></a></li> --%>

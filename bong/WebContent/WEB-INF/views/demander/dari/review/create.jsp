@@ -77,7 +77,7 @@
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/bbs/created";
+    		f.action="<%=cp%>/demander/index/review/create";
     	else if(mode=="update")
     		f.action="<%=cp%>/bbs/update";
 

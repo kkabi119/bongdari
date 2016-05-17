@@ -83,7 +83,7 @@ public class DemanderController {
 		ModelAndView mav = new ModelAndView(".four.demander.dari.photo.포토게시판");
 		return mav;
 	}
-	
+	/*
 	@RequestMapping(value="/demander/index/review/list")
 	public ModelAndView demanderReview() throws Exception {
 		
@@ -103,7 +103,7 @@ public class DemanderController {
 		ModelAndView mav = new ModelAndView(".four.demander.dari.review.article.후기게시판");
 		return mav;
 	}
-	
+	*/
 	
 	
 	@RequestMapping(value="/demander/index/schedule")

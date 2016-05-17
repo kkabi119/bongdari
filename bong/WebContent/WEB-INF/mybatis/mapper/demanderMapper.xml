@@ -3,5 +3,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="demander">
 	
+	<insert id="insertDeReview" parameterType="com.bong.demander.DeReview">
+	INSERT INTO service_review(servicereviewidx,subject,content,serviceIdx,
+	userIdx)VALUES(service_review_seq,#{subject},#{content},#{serviceIdx},#{userIdx})
+	
+	</insert>
+	
+	<!-- if : 첨부파일이있다면 service reviewfile 에 추가 -->
+	<insert id="insertDeReFile" parameterType="com.bong.demander.DeReview">
+	INSERT INTO service_review_file(servicefileidx,savefilename,originalfilename,servicereviewidx
+	)VALUES(service_rf_seq,#{savefilename},#{originalfilename},#{servicereviewidx})
+	</insert>
+	
 
 </mapper>
