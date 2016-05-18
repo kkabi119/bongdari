@@ -7,15 +7,17 @@
 	<select id="DeReviewSeq" resultType="Integer">
 		SELECT service_review_seq.NEXTVAL FROM DUAL
 	</select>
+	
 	<!-- 리뷰 글넣기 -->
 	<insert id="insertDeReview" parameterType="com.bong.demander.DeReview">
 	INSERT INTO service_review(servicereviewidx,subject,CONTENT,serviceidx,useridx)
-	VALUES(#{servicereviewidx},#{subject},#{content},'4',#{userIdx})
+	VALUES(#{serviceReviewIdx},#{subject},#{content},'4',#{userIdx})
 	</insert>
+	
 	<!-- 리뷰 파일넣기 -->
 	<insert id="insertDeReFile" parameterType="com.bong.demander.DeReview">
 	INSERT INTO service_review_file(servicefileidx,savefilename,originalfilename,servicereviewidx
-	)VALUES(service_rf_seq.NEXTVAL,#{saveFilename, jdbcType=VARCHAR},#{originalFilename, jdbcType=VARCHAR},#{servicereviewidx})
+	)VALUES(service_rf_seq.NEXTVAL,#{saveFilename, jdbcType=VARCHAR},#{originalFilename, jdbcType=VARCHAR},#{serviceReviewIdx})
 	</insert>
 	
 <!-- 리뷰 list관련 -->
@@ -53,7 +55,7 @@
 	            resultType="com.bong.demander.DeReview">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-			     SELECT servicereviewidx, m.userIdx,userId, userName, subject
+			     SELECT serviceReviewIdx, m.userIdx,userId, userName, subject
 			           ,TO_CHAR(s.created, 'YYYY-MM-DD') created
 					   ,hitCount
 			        FROM service_review s
@@ -64,11 +66,16 @@
 			                  <include refid="where-list"/>
 		                 </if>
 	                </where>
-	                ORDER BY servicereviewidx DESC
+	                ORDER BY serviceReviewIdx DESC
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start}
 	]]>
+	</select>
+	
+	<!-- 리뷰 글보기 -->
+	<select id="readDeReview" parameterType="Integer" resultType="com.bong.demander.DeReview">
+	
 	</select>
 	
 

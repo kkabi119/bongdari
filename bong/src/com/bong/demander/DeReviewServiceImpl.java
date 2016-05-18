@@ -31,7 +31,7 @@ public class DeReviewServiceImpl implements DeReviewService {
 			}
 
 			int seq = dao.getIntValue("demander.DeReviewSeq");
-			dto.setServicereviewidx(seq);
+			dto.setServiceReviewIdx(seq);
 			result = dao.insertInformation("demander.insertDeReview", dto);
 			dao.insertInformation("demander.insertDeReFile", dto);
 		} catch (Exception e) {
@@ -82,7 +82,12 @@ public class DeReviewServiceImpl implements DeReviewService {
 
 	@Override
 	public DeReview readDeReview(int num) {
-		// TODO Auto-generated method stub
+		DeReview dto=null;
+		try {
+			dto=dao.getReadInformation("demander.readDeReview", num);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
 		return null;
 	}
 
