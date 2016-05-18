@@ -104,40 +104,37 @@
       </div>
       
       <div class="col1">
-         <h3>제목${dto.subject}</h3>
-         <h5>조회수 : ${dto.hitCount}</h5> 
-         <p>내용${dto.content}</p>
+         <h3 style="font-weight:600; color:#908E8A; font-size: 16pt; line-height: 6px;">${dto.subject}</h3>
+         <hr>
+         <h5>글번호: ${dto.serviceReviewIdx}</h5>
+         <h5>작성자 : ${dto.userName} &nbsp;&nbsp;|&nbsp;&nbsp; 조회수 : ${dto.hitCount}</h5> 
+         <br>
          <a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
-         href="<%=cp%>/demander/index/review/article">View Project
+         href="${urlArticle}&num=${dto.serviceReviewIdx}">Review
          </a>
+        
       </div>
       
       
    </div>
+   <hr>
    </c:forEach>
     </c:if> 
    <!-- /.row -->
 
-   <hr>
+	<div class="paging"
+		style="text-align: center; min-height: 50px; line-height: 50px;">
+		<c:if test="${dataCount==0 }">
+	                  등록된 게시물이 없습니다.
+	</c:if>
+		<c:if test="${dataCount!=0 }">
+	                ${paging}
+	</c:if>
+</div>
 
-   <!-- Pagination -->
-   <div class="row text-center">
-      <div class="col-lg-12">
-        <div class="paging"
-        style="text-align: center; min-height: 50px; line-height: 50px;">
-            <c:if test="${dataCount==0 }">
-                  등록된 게시물이 없습니다.
-            </c:if>
-            <c:if test="${dataCount!=0 }">
-                ${paging}
-            </c:if>
-        </div>  
-        
-      </div>
-   </div>
-   <!-- /.row -->
 
-   <!-- 검색 -->
+
+<!-- 검색 -->
    <div style="clear: both;">
       <div style="float: left; width: 20%; min-width: 85px;">
          <button type="button" class="btn btn-warning"  
