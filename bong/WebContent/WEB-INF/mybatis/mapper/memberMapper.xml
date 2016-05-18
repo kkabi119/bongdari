@@ -25,16 +25,25 @@
 	          WHERE userIdx=#{userIdx} 
 	
 	</select>
+    <select id="readMemberInfo" resultType="com.bong.member.Member" parameterType="String">
+	   SELECT userIdx, userId, userName, userPwd,TO_CHAR(userBirth, 'YYYY-MM-DD') userBirth, userAddr, userGender,
+	          userTel, userEmail, userJob, memImgname, memImg, userLevel
+	          FROM memberInfo
+	          WHERE userIdx=#{userIdx} 
+	
+	</select>
 	<update id="updateLastLogin" parameterType="String">
 	  UPDATE memberInfo SET last_login=SYSDATE
 	    WHERE userIdx=#{userIdx}
 	</update>
 	
 	<update id="updateMember2" parameterType="com.bong.member.Member">
-        UPDATE memberInfo SET userPwd=#{userPwd}, enabled=#{enabled}, 
-               email=#{email}, tel=#{tel}, birth=#{birth},
+        UPDATE memberInfo SET userPwd=#{userPwd}, 
+               userEmail=#{userEmail}, userTel=#{userTel}, userBirth=#{userBirth},
+               userAddr=#{userAddr}, userJob=#{userJob}, userGender=#{userGender}
+               ,memImg=#{memImg, jdbcType=VARCHAR},memImgname=#{memImgname, jdbcType=VARCHAR},
                modify_date=SYSDATE 
-               WHERE userId=#{userId}
+               WHERE userIdx=#{userIdx}
     </update>
     
 </mapper>

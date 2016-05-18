@@ -5,6 +5,7 @@ import java.util.Map;
 
 public interface DeReviewService {
 	public int insertDeReview(DeReview dto, String path);
+	public int insertDeReFile(DeReview dto, String path);
 	public List<DeReview> listDeReview(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
 	public DeReview readDeReview(int num);

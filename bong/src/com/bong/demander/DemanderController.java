@@ -141,4 +141,25 @@ public class DemanderController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/demander/index/admin/tab1")
+	public ModelAndView tab1() throws Exception {
+		
+		ModelAndView mav = new ModelAndView("/demander/dari/admin/volList");
+		return mav;
+	}
+	
+	@RequestMapping(value="/demander/index/admin/tab2")
+	public ModelAndView tab2() throws Exception {
+		
+		ModelAndView mav = new ModelAndView("/demander/dari/admin/eval");
+		return mav;
+	}
+	
+	@RequestMapping(value="/demander/index/admin/tab1/showList")
+	public ModelAndView showList() throws Exception {
+		
+		ModelAndView mav = new ModelAndView("/demander/dari/admin/appliedMembers");
+		return mav;
+	}
+	
 }

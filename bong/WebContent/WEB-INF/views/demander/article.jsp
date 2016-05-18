@@ -63,7 +63,7 @@
 					<thead>
 						<tr height="50">
 							<th style="color: #555;" colspan="7" class="bbs-subject">
-								희망 복지관
+								<a href="<%=cp%>/demander/index/main">희망 복지관</a>
 							</th>
 						</tr>
 					<thead>

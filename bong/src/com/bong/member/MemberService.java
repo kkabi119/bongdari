@@ -7,6 +7,7 @@ public interface MemberService {
 	
 	public Member readMember1(int userIdx);
 	public Member readMemberLogin(String userIdx);
+	public Member readMemberInfo(String userIdx);
 	
 	public int insertMember(Member dto, String pathname) throws Exception;
 	

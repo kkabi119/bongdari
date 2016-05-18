@@ -8,8 +8,8 @@
 <style type="text/css">
 
 .col-md-9{
-			margin-top:-15px;
-		}
+	margin-top:-15px;
+}
 /* 후기게시판 타이틀 */
  .row3 {
 	margin-top: 0px;
@@ -88,15 +88,40 @@
 }
 
 </style>
+<script type="text/javascript">
+$(function(){
+	
+	var url="<%=cp%>/demander/index/admin/tab1/showList";
+	
+	$.post(url, {}, function(data){ 	
+		$("#showList").html(data);
+		$("#showList").hide();
+	});		
+	
+});
+
+$(function(){
+	$("#listBtn").click(function(){
+		if($("#showList").is(':visible')) {
+			$("#showList").hide("fast");
+			$("#listClosed").val("1");
+		} else {
+			$("#showList").show("fast");
+			$("#listClosed").val("0");
+		}
+	});
+});
+
+</script>
 	<!-- Page Heading/Breadcrumbs -->
-	<div class="row3">
+	<!-- <div class="row3">
 		<div class="col-lg-12">
 			<h3  style="color:#777; font-size:30px; margin-bottom:6px;"> 활동 내역<span style="margin-left:10px;color:gray; font-size:15px;"> 나눔복지관의 활동내역을 볼 수 있습니다</span> </h3>
 		
 		<hr style="margin-bottom:0px; margin-top:0px; border:1px solid #ec971f;">	
 		
 		</div>
-	</div>
+	</div> -->
 	<!-- /타이틀 -->
 
 	<!-- Project One -->
@@ -175,13 +200,13 @@
 			</div>
 			<div class="btnList" >
 				
-				<a class="btn btn btn-info" style="color:white;" 
-					href="<%=cp%>/demander/index/review/article">공고보기
-				</a>
+				<button class="btn btn btn-info" style="color:white;" >공고보기
+				</button>
 				
-				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/index/review/article">
+				<button id="listBtn" class="btn btn btn-default" style="margin-left:10px; color:gray;" >
 					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 참여자
-				</a>
+				</button>
+				
 			</div>
 			
 		</div>
@@ -192,6 +217,9 @@
 <hr style="margin-left:43px; margin-top:0px; margin-bottom:-1px; width:98%; border-top:1px solid #DADADA;">
 	</div>
 	
+	<div id="showList" style="width:100%; background-color:#EEE; margin-left:45px; padding:25px; padding-left:30px; padding-bottom:65px;">
+			
+	</div>
 <!-- Project two -->
 			<!-- 사진 -->
 	<div class="row2" style="">

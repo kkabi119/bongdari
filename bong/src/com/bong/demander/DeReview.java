@@ -3,7 +3,7 @@ package com.bong.demander;
 import org.springframework.web.multipart.MultipartFile;
 
 public class DeReview {
-	private int servicereviewidx, listNum;
+	private int serviceReviewIdx, listNum;
     private int userIdx,serviceIdx;
     private String demanderName;
     private String userName, userId, subject, content, created;
@@ -91,10 +91,13 @@ public class DeReview {
 	public void setServiceIdx(int serviceIdx) {
 		this.serviceIdx = serviceIdx;
 	}
-	public int getServicereviewidx() {
-		return servicereviewidx;
+	public int getServiceReviewIdx() {
+		return serviceReviewIdx;
 	}
-	public void setServicereviewidx(int servicereviewidx) {
-		this.servicereviewidx = servicereviewidx;
+	public void setServiceReviewIdx(int serviceReviewIdx) {
+		this.serviceReviewIdx = serviceReviewIdx;
 	}
+	
+	
+	
 }

@@ -139,6 +139,8 @@ function register() {
        $("#userTel + .help-block").html("  전화번호는 번호만 입력해주세요");
     }
     
+    f.userGender.value;
+    
     var failed="${failed}";
    if(failed=="true"){
       alert("회원가입에 실패했습니다!");
@@ -341,8 +343,8 @@ function imageDelete(){
     <div class="form-group">
        <label class="col-sm-2 control-label" for="userGender">성별</label>
        <div class="col-sm-2">
-        <input type="radio" name="userGender" id="male" checked>남자
-        <input type="radio" name="userGender" id="female" >여자 			
+        <input type="radio" name="userGender" value="남자" id="male" checked>남자
+        <input type="radio" name="userGender" value="여자" id="female" >여자 			
        </div>		
     </div>
     <div class="form-group">
