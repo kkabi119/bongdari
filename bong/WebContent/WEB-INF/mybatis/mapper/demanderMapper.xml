@@ -2,18 +2,74 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="demander">
-	
+<!-- 리뷰 create(insert) 관련 -->
+	<!-- 리뷰인덱스시퀀스 -->
+	<select id="DeReviewSeq" resultType="Integer">
+		SELECT service_review_seq.NEXTVAL FROM DUAL
+	</select>
+	<!-- 리뷰 글넣기 -->
 	<insert id="insertDeReview" parameterType="com.bong.demander.DeReview">
-	INSERT INTO service_review(servicereviewidx,subject,content,serviceIdx,
-	userIdx)VALUES(service_review_seq,#{subject},#{content},#{serviceIdx},#{userIdx})
-	
+	INSERT INTO service_review(servicereviewidx,subject,CONTENT,serviceidx,useridx)
+	VALUES(#{servicereviewidx},#{subject},#{content},'4',#{userIdx})
 	</insert>
-	
-	<!-- if : 첨부파일이있다면 service reviewfile 에 추가 -->
+	<!-- 리뷰 파일넣기 -->
 	<insert id="insertDeReFile" parameterType="com.bong.demander.DeReview">
 	INSERT INTO service_review_file(servicefileidx,savefilename,originalfilename,servicereviewidx
-	)VALUES(service_rf_seq,#{savefilename},#{originalfilename},#{servicereviewidx})
+	)VALUES(service_rf_seq.NEXTVAL,#{saveFilename, jdbcType=VARCHAR},#{originalFilename, jdbcType=VARCHAR},#{servicereviewidx})
 	</insert>
+	
+<!-- 리뷰 list관련 -->
+	<sql id="where-list">
+	  <if test="searchKey=='userName'">
+	      userName=#{searchValue}
+	  </if>
+	  <if test="searchKey=='subject'">
+	      INSTR(subject, #{searchValue}) &gt; 0
+	  </if>
+	  <if test="searchKey=='content'">
+	      DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0 
+	  </if>
+	  <if test="searchKey=='created'">
+	      TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
+	      OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue}
+	  </if>
+	</sql>
+	
+	<!-- 글개수 -->
+	<select id="dataCount" parameterType="map"
+	            resultType="Integer">
+	  SELECT NVL(COUNT(*), 0) FROM service_review s
+	        JOIN memberInfo m
+	        ON s.userIdx=m.userIdx
+	     <where>
+	     	<if test="searchValue!=null and searchValue!='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	     </where>   
+	</select>
+	
+	<!-- 리뷰 리스트 -->
+	<select id="listDeReview" parameterType="map"
+	            resultType="com.bong.demander.DeReview">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			     SELECT servicereviewidx, m.userIdx,userId, userName, subject
+			           ,TO_CHAR(s.created, 'YYYY-MM-DD') created
+					   ,hitCount
+			        FROM service_review s
+	       			 JOIN memberInfo m
+	       			 ON s.userIdx=m.userIdx
+                    <where>
+                         <if test="searchValue != null and searchValue != ''">
+			                  <include refid="where-list"/>
+		                 </if>
+	                </where>
+	                ORDER BY servicereviewidx DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	</select>
 	
 
 </mapper>

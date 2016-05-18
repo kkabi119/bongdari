@@ -82,8 +82,15 @@
       </div>
    </div>
    <!-- /.row -->
+ <c:if test="${dataCount!=0 }"> 
 
+        <div style="clear: both; height: 30px; line-height: 30px;">
+            <div style="float: left;">${dataCount}개(${page}/${total_page} 페이지)</div>
+            <div style="float: right;">&nbsp;</div>
+        </div>
+  
    <!-- Project One -->
+ <c:forEach var="dto" items="${list}"> 
    <div class="row2">
       <div class="col-md-7">
          <div class="carousel2">
@@ -95,114 +102,20 @@
             </div>
          </div>
       </div>
-      <div class="col1">
-         <h3>Project One</h3>
-         <h4>Subheading</h4>
-         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Laudantium veniam exercitationem expedita laborum at voluptate.
-            Labore, voluptates totam at aut nemo deserunt rem magni pariatur
-            quos perspiciatis atque eveniet unde.</p>
-         <a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
-         href="<%=cp%>/demander/index/review/article">View Project
-         </a>
-         
       
-         
-      </div>
-   </div>
-   <!-- /.row -->
-
-   <hr>
-
-   <!-- Project Two -->
-   <div class="row2">
-      <div class="col-md-7">
-         
-         <div class="carousel2">
-            <div class="carousel-inner">
-               <div class="item active">
-                  <div class="fill"
-                     style="background-image:url('<%=cp%>/res/images/demander/demander4.jpg');"></div>
-
-               </div>
-            </div>
-         </div>
-      </div>
       <div class="col1">
-         <h3>Project Two</h3>
-         <h4>Subheading</h4>
-         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut,
-            odit velit cumque vero doloremque repellendus distinctio maiores rem
-            expedita a nam vitae modi quidem similique ducimus! Velit, esse
-            totam tempore.</p>
+         <h3>제목${dto.subject}</h3>
+         <h5>조회수 : ${dto.hitCount}</h5> 
+         <p>내용${dto.content}</p>
          <a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
          href="<%=cp%>/demander/index/review/article">View Project
          </a>
-         
       </div>
+      
+      
    </div>
-   <!-- /.row -->
-
-   <hr>
-
-   <!-- Project Three -->
-   <div class="row2">
-      <div class="col-md-7">
-         
-         <div class="carousel2">
-            <div class="carousel-inner">
-               <div class="item active">
-                  <div class="fill"
-                     style="background-image:url('<%=cp%>/res/images/demander/demander1.jpg');"></div>
-
-               </div>
-            </div>
-         </div>
-      </div>
-      <div class="col1">
-         <h3>Project Three</h3>
-         <h4>Subheading</h4>
-         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Omnis, temporibus, dolores, at, praesentium ut unde repudiandae
-            voluptatum sit ab debitis suscipit fugiat natus velit excepturi amet
-            commodi deleniti alias possimus!</p>
-         <a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
-         href="<%=cp%>/demander/index/review/article">View Project
-         </a>
-         
-      </div>
-   </div>
-   <!-- /.row -->
-
-   <hr>
-
-   <!-- Project Four -->
-   <div class="row2">
-
-      <div class="col-md-7">
-         <div class="carousel2">
-            <div class="carousel-inner">
-               <div class="item active">
-                  <div class="fill"
-                     style="background-image:url('<%=cp%>/res/images/demander/demander2.jpg');"></div>
-
-               </div>
-            </div>
-         </div>
-      </div>
-      <div class="col1">
-         <h3>Project Four</h3>
-         <h4>Subheading</h4>
-         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Explicabo, quidem, consectetur, officia rem officiis illum aliquam
-            perspiciatis aspernatur quod modi hic nemo qui soluta aut eius fugit
-            quam in suscipit?</p>
-         <a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
-         href="<%=cp%>/demander/index/review/article">View Project
-         </a>
-         
-      </div>
-   </div>
+   </c:forEach>
+    </c:if> 
    <!-- /.row -->
 
    <hr>
@@ -210,15 +123,16 @@
    <!-- Pagination -->
    <div class="row text-center">
       <div class="col-lg-12">
-         <ul class="pagination">
-            <li><a href="#">&laquo;</a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">&raquo;</a></li>
-         </ul>
+        <div class="paging"
+        style="text-align: center; min-height: 50px; line-height: 50px;">
+            <c:if test="${dataCount==0 }">
+                  등록된 게시물이 없습니다.
+            </c:if>
+            <c:if test="${dataCount!=0 }">
+                ${paging}
+            </c:if>
+        </div>  
+        
       </div>
    </div>
    <!-- /.row -->
@@ -227,7 +141,7 @@
    <div style="clear: both;">
       <div style="float: left; width: 20%; min-width: 85px;">
          <button type="button" class="btn btn-warning"  
-            onclick="javascript:location.href='<%=cp%>/bbs/list';">새로고침</button>
+            onclick="javascript:location.href='<%=cp%>/demander/index/review/list';">새로고침</button>
       </div>
       <div style="float: left; width: 60%; text-align: center;">
          <form name="searchForm" method="post" class="form-inline">

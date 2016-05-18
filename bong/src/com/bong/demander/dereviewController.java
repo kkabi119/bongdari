@@ -42,9 +42,9 @@ public class dereviewController {
 			@RequestParam(value="searchValue", defaultValue="") String searchValue
 			
 			) throws Exception {
-		 /*String cp = req.getContextPath();
+		String cp = req.getContextPath();
 	   	    
-			int numPerPage   = 10;  // 한 화면에 보여주는 게시물 수
+			int numPerPage = 5;  // 한 화면에 보여주는 게시물 수
 			int total_page = 0;
 			int dataCount = 0;
 	   	    
@@ -58,6 +58,7 @@ public class dereviewController {
 	        map.put("searchValue", searchValue);
 
 	        dataCount = service.dataCount(map);
+	        
 	        if(dataCount != 0)
 	            total_page = myUtil.pageCount(numPerPage,  dataCount) ;
 
@@ -72,41 +73,41 @@ public class dereviewController {
 	        map.put("end", end);
 
 	        // 글 리스트
-	       // List<DeReview> list = service.insertDeReview(map);
+	        List<DeReview> list = service.listDeReview(map);
 
 	        // 리스트의 번호
 	        int listNum, n = 0;
-	       // Iterator<Board> it=list.iterator();
+	        Iterator<DeReview> it=list.iterator();
 	        while(it.hasNext()) {
-	        //    Board data = it.next();
+	        	DeReview data = it.next();
 	            listNum = dataCount - (start + n - 1);
 	            data.setListNum(listNum);
 	            n++;
 	        }
 	        
 	        String params = "";
-	        String urlList = cp+"/bbs/list";
-	        String urlArticle = cp+"/bbs/article?page=" + current_page;
+	        String urlList = cp+"/demander/dari/review/list";
+	        String urlArticle = cp+"/demander/dari/review/article?page=" + current_page;
 	        if(searchValue.length()!=0) {
 	        	params = "searchKey=" +searchKey + 
 	        	             "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");	
 	        }
 	        
 	        if(params.length()!=0) {
-	            urlList = cp+"/bbs/list?" + params;
-	            urlArticle = cp+"/bbs/article?page=" + current_page + "&"+ params;
+	            urlList = cp+"/demander/dari/review/list?" + params;
+	            urlArticle = cp+"/demander/dari/review/article?page=" + current_page + "&"+ params;
 	        }
 
-	        ModelAndView mav=new ModelAndView(".four.menu2.bbs.list");
-	        mav.addObject("subMenu", "2");
+	        ModelAndView mav=new ModelAndView(".four.demander.dari.review.list.후기게시판");
+	        
 	        mav.addObject("list", list);
 	        mav.addObject("urlArticle", urlArticle);
 	        mav.addObject("page", current_page);
 	        mav.addObject("dataCount", dataCount);
 	        mav.addObject("total_page", total_page);
-	        mav.addObject("paging", myUtil.paging(current_page, total_page, urlList));*/	
+	        mav.addObject("paging", myUtil.paging(current_page, total_page, urlList));	
 	        
-		ModelAndView mav = new ModelAndView(".four.demander.dari.review.list.후기게시판");
+		
 		return mav;
 	}
 	
@@ -114,11 +115,11 @@ public class dereviewController {
 	public ModelAndView deCreateRevForm(
 			HttpSession session
 			) throws Exception {
-	/*	
+		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		if(info==null) {
 			return new ModelAndView("redirect:/main");
-		}*/
+		}
 		
 		ModelAndView mav=new ModelAndView(".four.demander.dari.review.create.후기게시판");
 		mav.addObject("mode", "created");
@@ -130,17 +131,21 @@ public class dereviewController {
 			HttpSession session,
 			DeReview dto
 			) throws Exception {
-	/*	SessionInfo info=(SessionInfo)session.getAttribute("member");
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		if(info==null) {
 			return new ModelAndView("redirect:/member/login");
 		}
-		*/
+		
 		String root=session.getServletContext().getRealPath("/");
 		String path=root+File.separator+"uploads"+File.separator+"bbs";
 		
 		//dto.setUserId(info.getUserId());
-
+		dto.setUserId(info.getUserId());
+		dto.setUserIdx(info.getUserIdx());
+		
 		service.insertDeReview(dto, path);
+		
+		
 		
 		return new ModelAndView("redirect:/demander/index/review/list");
 		

@@ -14,21 +14,45 @@ public class DeReviewServiceImpl implements DeReviewService {
 
 	@Autowired
 	private bongDAO dao;
-	
+
 	@Autowired
 	private FileManager fileManager;
+
 	@Override
 	public int insertDeReview(DeReview dto, String path) {
-		int result=0;
-		try{
-			if(dto.getUpload()!=null && ! dto.getUpload().isEmpty()) {
-				String saveFilename=fileManager.doFileUpload(dto.getUpload(), path);
+		int result = 0;
+
+		try {
+			if (dto.getUpload() != null && !dto.getUpload().isEmpty()) {
+				String saveFilename = fileManager.doFileUpload(dto.getUpload(), path);
 				dto.setSaveFilename(saveFilename);
 				dto.setOriginalFilename(dto.getUpload().getOriginalFilename());
-				//result=dao.insertInformation("demander.insertDeReFile", dto);
+
 			}
-			result=dao.insertInformation("demander.insertDeReview", dto);
-		} catch(Exception e) {
+
+			int seq = dao.getIntValue("demander.DeReviewSeq");
+			dto.setServicereviewidx(seq);
+			result = dao.insertInformation("demander.insertDeReview", dto);
+			dao.insertInformation("demander.insertDeReFile", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public int insertDeReFile(DeReview dto, String path) {
+		int result = 0;
+
+		try {
+			if (dto.getUpload() != null && !dto.getUpload().isEmpty()) {
+				String saveFilename = fileManager.doFileUpload(dto.getUpload(), path);
+				dto.setSaveFilename(saveFilename);
+				dto.setOriginalFilename(dto.getUpload().getOriginalFilename());
+				// result=dao.insertInformation("demander.insertDeReFile", dto);
+			}
+			result = dao.insertInformation("demander.insertDeReFile", dto);
+		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		return result;
@@ -36,14 +60,24 @@ public class DeReviewServiceImpl implements DeReviewService {
 
 	@Override
 	public List<DeReview> listDeReview(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<DeReview> list=null;
+		try {
+			list=dao.getListInformation("demander.listDeReview", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
 	}
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.getIntValue("demander.dataCount",map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
