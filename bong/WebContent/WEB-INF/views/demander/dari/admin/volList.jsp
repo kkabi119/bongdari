@@ -89,6 +89,28 @@
 
 </style>
 <script type="text/javascript">
+$(function(){
+	
+	var url="<%=cp%>/demander/index/admin/tab1/showList";
+	
+	$.post(url, {}, function(data){ 	
+		$("#showList").html(data);
+		$("#showList").hide();
+	});		
+	
+});
+
+$(function(){
+	$("#listBtn").click(function(){
+		if($("#showList").is(':visible')) {
+			$("#showList").hide("fast");
+			$("#listClosed").val("1");
+		} else {
+			$("#showList").show("fast");
+			$("#listClosed").val("0");
+		}
+	});
+});
 
 </script>
 	<!-- Page Heading/Breadcrumbs -->
@@ -181,9 +203,10 @@
 				<button class="btn btn btn-info" style="color:white;" >공고보기
 				</button>
 				
-				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/index/review/article">
+				<button id="listBtn" class="btn btn btn-default" style="margin-left:10px; color:gray;" >
 					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 참여자
-				</a>
+				</button>
+				
 			</div>
 			
 		</div>
@@ -194,8 +217,8 @@
 <hr style="margin-left:43px; margin-top:0px; margin-bottom:-1px; width:98%; border-top:1px solid #DADADA;">
 	</div>
 	
-	<div id="showBox1">
-		들어갈자리 공고 
+	<div id="showList" style="width:100%; background-color:#EEE; margin-left:45px; padding:25px; padding-left:30px; padding-bottom:65px;">
+			
 	</div>
 <!-- Project two -->
 			<!-- 사진 -->

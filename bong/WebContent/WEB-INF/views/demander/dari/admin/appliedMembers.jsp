@@ -28,7 +28,19 @@
     border: 1px solid #ccc;
 }
 </style>
-<div class="bodyFrame2">
+<script type="text/javascript">
+
+$(function(){
+	var listClosed="${listClosed}";
+	/* if(listClosed=="1") {
+		$("#bodyFrame2").hide("slow", function() {
+		    alert( "Animation complete." );
+		  });
+	} */
+});
+
+</script>
+<div class="bodyFrame2" style="">
     <div class="body-title">
           <h3><span class="glyphicon glyphicon-send"></span> 봉사신청자 명단 </h3>
     </div>
@@ -64,5 +76,7 @@
         </td>
       </tr>
   </table>  
+  
     </div>
+      <input type="hidden" name="listClosed" id="listClosed" value="${listClosed}">
 </div>
