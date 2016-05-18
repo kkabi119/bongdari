@@ -62,7 +62,7 @@
 	
 	<!-- 글보기 -->
 	<select id="readNotice" resultType="com.bong.club.notice.Notice" parameterType="Integer">
-		SELECT clubNoticeIdx, m.userIdx, userId, userName, subject, content
+		SELECT n.clubNoticeIdx, m.userIdx, userId, userName, subject, content
 				   ,hitCount, n.created,  n.saveFilename, n.originalFilename
 		FROM club_notice n JOIN memberInfo m ON n.userIdx=m.userIdx
 		WHERE clubNoticeIdx = #{clubNoticeIdx}
@@ -86,7 +86,7 @@
 			                  <include refid="where-list"/>
 		                 </if>
 		               <![CDATA[
-		                 AND (clubNoticeIdx > #{clubNoticeIdx})
+		                 AND (clubNoticeIdx > #{num})
 		                 ]]>
 	                </where>
 				ORDER BY clubNoticeIdx ASC
@@ -105,7 +105,7 @@
 			                  <include refid="where-list"/>
 		                 </if>
 		               <![CDATA[
-		                 AND (clubNoticeIdx < #{clubNoticeIdx})
+		                 AND (clubNoticeIdx < #{num})
 		                 ]]>
 	                </where>
 				ORDER BY clubNoticeIdx DESC
