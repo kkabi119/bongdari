@@ -168,12 +168,13 @@ public class NoticeController {
 		}
 
 		searchValue = URLDecoder.decode(searchValue, "utf-8");
-
+		
 		// 조회수 증가
 		service.updateHitCount(num);
 
 		// 해당 레코드 가져 오기
 		Notice dto = service.readNotice(num);
+
 		if(dto==null)
 			return new ModelAndView("redirect:.club.index.notice.list?page="+page);
 		

@@ -5,12 +5,25 @@
 <%
 	String cp=request.getContextPath();
 %>
+<style type="text/css">
+.bbs-reply {
+    border-top: #3897f0 solid 2px; 
+    border-bottom: #3897f0 solid 2px; padding:15px;
+    margin-bottom:70px;
+}
+
+.bbs-reply-write {   
+   border-bottom: #ddd solid 2px; 
+    padding: 10px;
+    min-height: 50px;
+}
+</style>
 <script type="text/javascript">
 //댓글 리스트
 $(function(){
 	listPage(1);
 });
-
+<%-- 
 function listPage(page) {
 	var url="<%=cp%>/club/index/notice/listReply";
 	var num="${dto.clubNoticeIdx}";
@@ -65,8 +78,8 @@ function sendReply() {
 		}
 	});
 }
-
-//좋아요/싫어요 개수
+ --%>
+<%-- //좋아요/싫어요 개수
 function countLike(replyNum) {
 	var url="<%=cp%>/bbs/countLike";
 	$.post(url, {replyNum:replyNum}, function(data){
@@ -142,7 +155,7 @@ function deleteReply(replyNum, page) {
 }
 
 //-------------------------------------
-function deleteBoard() {
+function deleteNotice() {
 <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
   var num = "${dto.clubNoticeIdx}";
   var page = "${page}";
@@ -169,7 +182,7 @@ function updateBoard() {
 
 <c:if test="${sessionScope.member.userId!=dto.userId}">
  alert("게시물을 수정할 수  없습니다.");
-</c:if>
+</c:if> --%>
 }
 </script>
     <section id="blog-details" class="padding-top">
@@ -212,7 +225,24 @@ function updateBoard() {
                                         <span class='st_email_hcount'></span>
                                     </div>
                                     <div class="response-area">
-                                    <h2 class="bold">Comments</h2>
+                                    
+                                    <div class="bbs-reply">
+              <div class="bbs-reply-write" >
+                  <div style="clear: both; ">
+                        <div style="float: left; "><span style="font-size:23px;">COMMENTS</span><span>  5개 </span></div>
+                        <div style="float: right; text-align: right;"></div>
+                  </div>
+                  
+                  <div style="clear: both; padding-top: 30px; ">
+                      <textarea id="shareR_content" class="form-control" rows="3" required="required"></textarea>
+                  </div>
+                  <div style="text-align: right; padding-top: 10px;">
+                      <button type="button" class="btn btn-default" style="padding:10px 15px ;background-color:#3897f0; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="glyphicon glyphicon-ok"></span></button>
+                  </div>           
+              </div>
+          
+              <div id="listReply"></div>
+          </div>
                                     <ul class="media-list">
                                         <li class="media">
                                             <div class="post-comment">

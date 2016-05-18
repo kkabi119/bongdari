@@ -78,8 +78,11 @@
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
-	
-	
+		
+	<definition name=".tabLayout.*.*.*.*.*" template="/WEB-INF/views/layout/tabLayout1.jsp">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}/{4}.jsp"/>
+	</definition>
+
 	<!-- 순서가 바뀌면 안됨(* 많은것이 위에) -->
 	<definition name=".layout" template="/WEB-INF/views/layout/layout.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
