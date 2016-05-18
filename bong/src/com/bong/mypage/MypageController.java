@@ -19,24 +19,43 @@ public class MypageController {
 	@Autowired
 	private MemberService service;
 	
+	//내정보
 	@RequestMapping(value="/member/index/myPage", method=RequestMethod.GET)
+	public ModelAndView mypageMain(
+			 HttpSession session
+			) throws Exception{
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"memImg";
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+        
+		Member dto=service.readMemberInfo(Integer.toString(info.getUserIdx()));
+		
+		
+		ModelAndView mav= new ModelAndView(".layout.mypage.myInfo.내정보 보기");
+		mav.addObject("dto", dto);
+		return mav;
+	}
+	//정보 수정
+/*@RequestMapping(value="/member/index/myPage", method=RequestMethod.GET)
 	public ModelAndView mypageMain(
 			HttpSession session
 			
 			) throws Exception {
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+File.separator+"uploads"+File.separator+"memImg";
-		
+		//세션에 있는 멤버 정보 가져오기
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		if(info==null) {
 			return new ModelAndView("redirect:/member/login");
 		}
-		
-		Member dto=service.readMemberLogin(Integer.toString(info.getUserIdx()));
+		//db에 있는 데이터 가져오기(userIdx를 통해서) mapper에 있는 쿼리 실행
+		Member dto=service.readMemberInfo(Integer.toString(info.getUserIdx()));
 		if(dto==null) {
 			session.invalidate();
 			return new ModelAndView("redirect:/");
 		}
+
 		service.updateMember2(dto,pathname);
 		
 		// 회원정보수정폼
@@ -63,5 +82,5 @@ public class MypageController {
 		mav.addObject("title", "수정");
 		mav.addObject("message", sb.toString());
 		return mav;
-	}
+	}*/
 }
