@@ -7,25 +7,59 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
+<script type="text/javascript">
 
-	<div id="tab-container">
-                    
-                        <ul id="tab1" class="nav nav-tabs">
-                            <li class="active"><a href="#tab1-item1" data-toggle="tab">나의 봉사 신청현황</a></li>
-                            <li><a href="#tab1-item2" data-toggle="tab">정보 수정</a></li>
-                            <li><a href="#tab1-item3" data-toggle="tab">나의 점수현황</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane fade active in" id="tab1-item1">
-                               <div id="deApproval">신청현황</div>
-                            </div>
-                            <div class="tab-pane fade" id="tab1-item2">
-                                <div id=deEval">수정</div>
-                            </div>
-                            <div class="tab-pane fade" id="tab1-item3">
-                                <div id="deBookmark">나의 점수현황</div>
-                            </div>
-                        </div>
-                </div>
-            
+
+$(function(){
+	tabPageView();
+});
+
+// 탭을 선택 한 경우
+var tabs=0;
+$(function(){
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		tabs=$(this).attr("aria-controls");
+		
+		$("[id^=tabContent]").each(function(){
+			$(this).html(""); // 전체를 출력하는 부분과 카테고리별 출력하는부분의 id가 같으므로 기존 정보 지움
+		});
+		
+		tabPageView();
+	});	
+});
+
+function tabPageView() {
+	var url;
+	if (tabs==0) {
+		url="<%=cp%>/member/index/myInfo"
+	} else if (tabs==1) {
+		url="<%=cp%>/member/index/updateInfo"
+	} else if (tabs==2) {
+		url="<%=cp%>/member/index/myApply"
+	}
 	
+	$.get(url, {}, function(data){
+		var id="#tabContent"+tabs;
+		$(id).html(data);
+	});
+}
+
+
+  
+</script>
+
+	<div>
+	    <div role="tabpanel">
+			  <ul class="nav nav-tabs" role="tablist">
+			      <li role="presentation"  class="active"><a href="#tabContent0" aria-controls="0" role="tab" data-toggle="tab">내정보보기</a></li>
+			      <li role="presentation"><a href="#tabContent1" aria-controls="1" role="tab" data-toggle="tab">정보 수정</a></li>
+			      <li role="presentation"><a href="#tabContent2" aria-controls="2" role="tab" data-toggle="tab">나의 봉사 신청현황</a></li>
+			  </ul>
+			
+			  <div class="tab-content" style="padding: 5px; margin-top: 15px;">
+			      <div role="tabpanel" class="tab-pane active" id="tabContent0"></div>
+			      <div role="tabpanel" class="tab-pane" id="tabContent1"></div>
+			      <div role="tabpanel" class="tab-pane" id="tabContent2"></div>
+			  </div>
+	    </div>
+    </div>

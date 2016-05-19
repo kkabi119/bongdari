@@ -21,24 +21,30 @@ public class MypageController {
 	
 	//내정보
 	@RequestMapping(value="/member/index/myPage", method=RequestMethod.GET)
-	public ModelAndView mypageMain(
+	public ModelAndView myPage(
 			 HttpSession session
 			) throws Exception{
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+File.separator+"uploads"+File.separator+"memImg";
-		
+		ModelAndView mav= new ModelAndView(".layout.mypage.mypageMain.내정보 보기");
+		return mav;
+	}
+	
+	@RequestMapping(value="/member/index/myInfo")
+	public ModelAndView myInfo(
+			 HttpSession session
+			) throws Exception{
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
         
 		Member dto=service.readMemberInfo(Integer.toString(info.getUserIdx()));
 		
-		
-		ModelAndView mav= new ModelAndView(".layout.mypage.myInfo.내정보 보기");
+		ModelAndView mav= new ModelAndView("mypage/myInfo");
 		mav.addObject("dto", dto);
 		return mav;
 	}
+
+	
 	//정보 수정
-/*@RequestMapping(value="/member/index/myPage", method=RequestMethod.GET)
-	public ModelAndView mypageMain(
+@RequestMapping(value="/member/index/updateInfo", method=RequestMethod.GET)
+	public ModelAndView updateInfo(
 			HttpSession session
 			
 			) throws Exception {
@@ -59,11 +65,13 @@ public class MypageController {
 		service.updateMember2(dto,pathname);
 		
 		// 회원정보수정폼
-	    ModelAndView mav=new ModelAndView(".layout.mypage.updateInfo.마이페이지 메인");
+	    ModelAndView mav=new ModelAndView("/mypage/updateInfo");
+	    mav.addObject("mode", "update");
 	    mav.addObject("dto", dto);
 	    return mav;
 	}
-	@RequestMapping(value="/member/index/myPage", method=RequestMethod.POST)
+
+	@RequestMapping(value="/member/index/updateInfo", method=RequestMethod.POST)
 	public ModelAndView updateSubmit(
 			HttpSession session
            ,Member dto){
@@ -74,13 +82,17 @@ public class MypageController {
 		dto.setUserIdx(info.getUserIdx());
 		service.updateMember2(dto, pathname);
 		
-		ModelAndView mav=new ModelAndView("redirect:/");
+		ModelAndView mav=new ModelAndView("redirect:/member/index/myPage");
 		
-		StringBuffer sb=new StringBuffer();
-		sb.append(dto.getUserName()+"님의 회원정보가 변경되었습니다.<br>");
-		
-		mav.addObject("title", "수정");
-		mav.addObject("message", sb.toString());
 		return mav;
-	}*/
+	}
+	
+	@RequestMapping(value="/member/index/myApply", method=RequestMethod.GET)
+	public ModelAndView MyApply(
+			HttpSession session
+			) throws Exception{
+		ModelAndView mav= new ModelAndView("/mypage/myApply");
+		return mav;
+	}
+	
 }

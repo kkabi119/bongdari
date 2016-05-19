@@ -24,8 +24,7 @@
 	<context:component-scan base-package="com.bong" />
 	
 	<mvc:resources mapping="/res/**" location="/res/" />
-	<mvc:resources mapping="/uploads/image/**" location="/uploads/image/" />
-	<mvc:resources mapping="/uploads/photo/**" location="/uploads/photo/" />
+	<mvc:resources mapping="/uploads/**" location="/uploads/" />
 	
 	<!-- 트랜잭션 처리를 위한 aop 등록 -->
 	<aop:config proxy-target-class="true">

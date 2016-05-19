@@ -150,7 +150,7 @@ function register() {
     if(mode=="created") {
           f.action = "<%=cp%>/member/register";
     } else if(mode=="update") {
-       f.action = "<%=cp%>/member/update_ok.sst";
+       f.action = "<%=cp%>/member/index/updateInfo";
     }
 
     return true;
