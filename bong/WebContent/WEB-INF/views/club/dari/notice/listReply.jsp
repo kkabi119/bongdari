@@ -5,7 +5,15 @@
 <%
 	String cp=request.getContextPath();
 %>
-
+<style type="text/css">
+	a{
+		cursor: pointer;
+	}
+	
+	p{
+		color:black;
+	}
+</style>
 <c:if test="${dataCount!=0}">
 <script type="text/javascript">
 // 댓글별 답글 리스트
@@ -132,14 +140,17 @@ function deleteReplyAnswer(replyNum, answer) {
                                                 <a class="pull-left" href="#">
                                                     <img class="media-object" src="images/blogdetails/2.png" alt="">
                                                 </a>
-                                                <div class="media-body">
-                                                    <span><i class="fa fa-user"></i>Posted by <a href="#">${Rdto.userName}${Rdto.num}</a></span>
+                                                <div class="media-body" style="padding-bottom: 10px">
+                                                    <span><i class="fa fa-user"></i>Posted by <a href="#">${Rdto.userName}</a></span>
                                                     <p>${Rdto.content}</p>
-                                                    <ul class="nav navbar-nav post-nav">
-                                                        <li><a href="#"><i class="fa fa-clock-o"></i>${Rdto.created}</a></li>
-                                                        <li><a href="#"><i class="fa fa-reply"></i>Answer</a></li>
-                                                        <li><button type="button" class="btn btn-xs btn-default" onclick="replyAnswerLayout('${Rdto.replyNum}');">답글</button></li>
+                                                    <ul class="nav navbar-nav post-nav" style="float: right;">
+                                                        <li  style="color:#0099AE"><i class="fa fa-clock-o"></i>${Rdto.created}</li>
+                                                        <li><a onclick="replyAnswerLayout('${Rdto.replyNum}');"><i class="fa fa-reply"></i>Answer</a></li>
+                        <c:if test="${sessionScope.member.userId==Adto.userId || sessionScope.member.userId=='admin'}">   
+		     											<li><a onclick='deleteReply("${Rdto.replyNum}", "${pageNo}");' style="color:#C03035">삭제</a></li>
+						</c:if>
                                                     </ul>
+                                                    
                                                 </div>
                                             </div>
                                             <div id="replyAnswerLayout${Rdto.replyNum}" style="display: none;">
@@ -147,7 +158,7 @@ function deleteReplyAnswer(replyNum, answer) {
                 									<textarea id="replyContent${Rdto.replyNum}" class="form-control" rows="3" required="required"></textarea>
            									 </div>
            									 <div style="text-align: right; padding-top: 10px;">
-                      								<button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="sendReplyAnswer('${Rdto.num}','${Rdto.replyNum}')"> 답글등록 <span class="fa fa-pencil"></span></button>
+                      								<button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="sendReplyAnswer('${Rdto.num}','${Rdto.replyNum}')"> Answer <span class="fa fa-pencil"></span></button>
                  							 </div>
                  							 <div id="listReplyAnswer${Rdto.replyNum}" style="padding-top: 5px;"></div>                                       
                                           </div>

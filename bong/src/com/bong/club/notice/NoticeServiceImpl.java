@@ -184,6 +184,7 @@ int result=0;
 	public int insertReply(Reply dto) {
 		int result=0;
 		try {
+			dto.setReplyNum(dao.getIntValue("clubnotice.CNRSeq"));
 			result=dao.insertInformation("clubnotice.insertNoticeReply", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -203,10 +204,10 @@ int result=0;
 	}
 
 	@Override
-	public List<Reply> listReplyAnswer(int answer) {
+	public List<Reply> listReplyAnswer(Map<String, Object> map) {
 		List<Reply> list=null;
 		try {
-			list=dao.getListInformation("clubnotice.listReplyAnswer", answer);
+			list=dao.getListInformation("clubnotice.listReplyAnswer", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

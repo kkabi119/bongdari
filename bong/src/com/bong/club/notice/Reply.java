@@ -1,15 +1,11 @@
 package com.bong.club.notice;
 
 public class Reply {
-	private int replyNum, num, listNum, clubNoticeIdx;
+	private int replyNum, num, listNum;
 	private String userId, userName, content, created;
 	private int answer ,userIdx;
 	private int answerCount;
 	
-	
-	public int getClubNoticeIdx() {
-		return clubNoticeIdx;
-	}
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
@@ -18,9 +14,6 @@ public class Reply {
 	}
 	public String getUserId() {
 		return userId;
-	}
-	public void setClubNoticeIdx(int clubNoticeIdx) {
-		this.clubNoticeIdx = clubNoticeIdx;
 	}
 	public void setReplyNum(int replyNum) {
 		this.replyNum = replyNum;
