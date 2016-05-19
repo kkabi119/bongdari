@@ -19,7 +19,7 @@ public interface NoticeService {
 	
 	public int insertReply(Reply dto);
 	public List<Reply> listReply(Map<String, Object> map);
-	public List<Reply> listReplyAnswer(int answer);
+	public List<Reply> listReplyAnswer(Map<String, Object> map);
 	public int replyDataCount(Map<String, Object> map);
 	public int replyCountAnswer(int answer);
 	public int deleteReply(Map<String, Object> map);

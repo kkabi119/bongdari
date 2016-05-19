@@ -75,8 +75,88 @@
 	
 	<!-- 리뷰 글보기 -->
 	<select id="readDeReview" parameterType="Integer" resultType="com.bong.demander.DeReview">
-	
+		SELECT r.servicereviewidx, m.useridx, userid, username, subject,
+		content,hitcount, r.created, f.savefilename, f.originalfilename
+		FROM service_review r JOIN memberinfo m ON r.useridx=m.useridx
+		JOIN service_review_file f ON r.servicereviewidx = f.servicereviewidx
+		WHERE r.servicereviewidx = #{serviceReviewIdx}
 	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="hitCountDeReview" parameterType="Integer">
+		UPDATE service_review SET hitCount=hitCount+1 WHERE servicereviewidx = #{serviceReviewIdx}
+	</update>
+	
+	
+	<!-- AND 가 필요 없는 경우 자동으로 제거 됨 -->
+	<!-- 이전글 -->
+	<select id="preReadDeReview" resultType="com.bong.demander.DeReview" 
+				parameterType="map">
+		SELECT tb.* FROM (
+			SELECT serviceReviewIdx, subject
+				FROM service_review r
+					JOIN memberInfo m ON r.userIdx=m.userIdx
+					<where>
+						<if test="searchValue != null and searchValue != '' ">
+							<include refid="where-list" />
+						</if>
+						      <![CDATA[
+						           AND (servicereviewidx>#{num})
+						      ]]>
+				</where>
+			ORDER BY serviceReviewIdx ASC
+		)tb WHERE ROWNUM=1
+	</select>
+	
+	<!-- 다음글 -->
+	<select id="nextReadDeReview" resultType="com.bong.demander.DeReview" 
+				parameterType="map">
+	SELECT tb.* FROM (
+			SELECT serviceReviewIdx, subject
+				FROM service_review r
+					JOIN memberInfo m ON r.userIdx=m.userIdx
+				<where>
+						<if test="searchValue != null and searchValue != '' ">
+							<include refid="where-list" />
+						</if>
+						      <![CDATA[
+						           AND (servicereviewidx<#{num})
+						      ]]>
+				</where>
+			ORDER BY serviceReviewIdx DESC
+		)tb WHERE ROWNUM=1
+	</select>
+	
+	<!-- 수정  service_review-->
+     <update id="updateDeReview" parameterType="com.bong.demander.DeReview">
+         UPDATE service_review SET subject=#{subject}, content=#{content}
+                    WHERE serviceReviewIdx = #{serviceReviewIdx}
+      </update>
+      
+   <!-- 수정  service_review_file-->
+     <update id="updateDeReviewFile" parameterType="com.bong.demander.DeReview">
+         UPDATE service_review_file SET originalFilename=#{originalFilename, jdbcType=VARCHAR}, 
+         saveFilename=#{saveFilename, jdbcType=VARCHAR}
+                    WHERE serviceReviewIdx = #{serviceReviewIdx}
+    </update>
+	
+	<!-- 삭제  -->
+      <delete id="deleteDeReview" parameterType="Integer">
+           DELETE FROM service_review WHERE serviceReviewIdx = #{serviceReviewIdx}
+      </delete>
+      
+<!-- 	
+	회원 탈퇴시 게시물 삭제 .................
+	<select id="listNoticeId" parameterType="String" resultType="com.bong.club.notice.Notice">
+	   SELECT clubNoticeIdx, m.userIdx, n.userIdx, userName, subject, content
+				   ,hitCount, n.created,  n.saveFilename, n.originalFilename
+		FROM club_notice n JOIN memberinfo m ON n.userIdx=m.userIdx
+		WHERE m.userIdx = #{userIdx}
+	</select>
+    <delete id="deleteNoticeId" parameterType="String">
+         DELETE FROM club_notice WHERE userIdx = #{userIdx}
+    </delete>
+	 -->
 	
 
 </mapper>

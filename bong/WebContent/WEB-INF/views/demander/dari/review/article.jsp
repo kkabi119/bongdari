@@ -5,23 +5,221 @@
 <%
 	String cp=request.getContextPath();
 %>
+<style type="text/css">
+.bbs-reply {
+    border-top: #3897f0 solid 2px; 
+    border-bottom: #3897f0 solid 2px; padding:15px;
+    margin-bottom:70px;
+}
+
+.bbs-reply-write {   
+   border-bottom: #ddd solid 2px; 
+    padding: 10px;
+    min-height: 50px;
+}
+</style>
+<script type="text/javascript">
+//댓글 리스트
+$(function(){
+	listPage(1);
+});
+<%-- 
+function listPage(page) {
+	var url="<%=cp%>/club/index/notice/listReply";
+	var num="${dto.serviceReviewIdx}";
+	$.post(url, {num:num, pageNo:page}, function(data){
+		$("#listReply").html(data);
+	});
+}
+
+function login() {
+	location.href="<%=cp%>/member/login";
+}
+
+//댓글 추가
+function sendReply() {
+	var uid="${sessionScope.member.userId}";
+	if(! uid) {
+		login();
+		return false;
+	}
+
+	var num="${dto.serviceReviewIdx}"; // 해당 게시물 번호
+	var content=$.trim($("#content").val());
+	if(! content ) {
+		alert("내용을 입력하세요 !!! ");
+		$("#content").focus();
+		return false;
+	}
+	
+	var params="num="+num;
+	params+="&content="+content;
+	params+="&answer=0";
+	
+	$.ajax({
+		type:"POST"
+		,url:"<%=cp%>/bbs/createdReply"
+		,data:params
+		,dataType:"json"
+		,success:function(data) {
+			$("#content").val("");
+			
+			var state=data.state;
+			if(state=="true") {
+				listPage(1);
+			} else if(state=="false") {
+				alert("댓글을 등록하지 못했습니다. !!!");
+			} else if(state=="loginFail") {
+				login();
+			}
+		}
+		,error:function(e) {
+			alert(e.responseText);
+		}
+	});
+}
+ --%>
+<%-- //좋아요/싫어요 개수
+function countLike(replyNum) {
+	var url="<%=cp%>/bbs/countLike";
+	$.post(url, {replyNum:replyNum}, function(data){
+		var likeCountId="#likeCount"+replyNum;
+		var disLikeCountId="#disLikeCount"+replyNum;
+		var likeCount=data.likeCount;
+		var disLikeCount=data.disLikeCount;
+		
+		$(likeCountId).html(likeCount);
+		$(disLikeCountId).html(disLikeCount);
+	}, "JSON");
+}
+
+//좋아요/싫어요 추가
+function sendLike(replyNum, replyLike) {
+	var uid="${sessionScope.member.userId}";
+	if(! uid) {
+		login();
+		return false;
+	}
+
+	var msg="게시물이 마음에 들지 않으십니까 ?";
+	if(replyLike==1)
+		msg="게시물에 공감하십니까 ?";
+	if(! confirm(msg))
+		return false;
+	
+	var params="replyNum="+replyNum;
+	params+="&replyLike="+replyLike;
+
+	$.ajax({
+		type:"POST"
+		,url:"<%=cp%>/bbs/replyLike"
+		,data:params
+		,dataType:"json"
+		,success:function(data) {
+			
+			var state=data.state;
+			if(state=="true") {
+				countLike(replyNum);
+			} else if(state=="false") {
+				alert("좋아요/싫어요는 한번만 가능합니다. !!!");
+			} else if(state=="loginFail") {
+				login();
+			}
+		}
+		,error:function(e) {
+			alert(e.responseText);
+		}
+	});
+}
+
+//댓글 삭제
+function deleteReply(replyNum, page) {
+	var uid="${sessionScope.member.userId}";
+	if(! uid) {
+		login();
+		return false;
+	}
+	
+	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
+		var url="<%=cp%>/bbs/deleteReply";
+		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
+		        var state=data.state;
+
+				if(state=="loginFail") {
+					login();
+				} else {
+					listPage(page);
+				}
+		}, "json");
+	}
+}
+
+//-------------------------------------
+function deleteNotice() {
+<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
+  var num = "${dto.serviceReviewIdx}";
+  var page = "${page}";
+  var params = "num="+num+"&page="+page;
+  var url = "<%=cp%>/bbs/delete?" + params;
+
+  if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
+  	location.href=url;
+</c:if>    
+<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
+  alert("게시물을 삭제할 수  없습니다.");
+</c:if>
+}
+
+function updateBoard() {
+<c:if test="${sessionScope.member.userId==dto.userId}">
+  var num = "${dto.serviceReviewIdx}";
+  var page = "${page}";
+  var params = "num="+num+"&page="+page;
+  var url = "<%=cp%>/bbs/update?" + params;
+
+  location.href=url;
+</c:if>
+
+<c:if test="${sessionScope.member.userId!=dto.userId}">
+ alert("게시물을 수정할 수  없습니다.");
+</c:if> --%>
+}
+</script>
     <section id="blog-details" class="padding-top">
-            <div class="row">
-                <div class="col-md-9 col-sm-7">
-                    <div class="row">
-                         <div class="col-md-12 col-sm-12">
+               <div class="col-md-12 col-sm-12">
                             <div class="single-blog blog-details two-column">
                                 <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="#">여긴 제목이야</a></h2>
-                                    <h3 class="post-author"><a href="#">글쓴사람이름</a></h3>
-                                    <p>글 내용 들어와 여기(사진 있으면 함께)</p>
+                                    <h2 class="post-title bold"><a href="#">${dto.subject}</a></h2>
+                                    <h3 class="post-author"><a href="#">${dto.userName}</a></h3>
+                                    
+                                    <p>${dto.content}</p>
                                     <div class="post-bottom overflow">
                                         <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-tag"></i>creative</a></li>
-                                            <li><a href="#"><i class="fa fa-heart"></i>32 좋아요</a></li>
+                                            <li><a href="#"><i class="fa fa-thumbs-o-up"></i>32 좋아요</a></li>
                                             <li><a href="#"><i class="fa fa-comments"></i>3 댓글수</a></li>
+                                            <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
                                         </ul>
                                     </div>
+                               <c:if test="${not empty dto.saveFilename}">
+                                    <div class="post-bottom overflow" style="margin-top: 0px">
+                                  			<a href="<%=cp%>/demander/index/review/download?num=${dto.serviceReviewIdx}"><span class="fa fa-download"></span> ${dto.originalFilename}</a>
+                                    </div>
+                               </c:if>
+                               
+                                    <div class="post-bottom overflow" style="margin-top: 0px">
+                                    	이전글:
+                               	<c:if test="${not empty preReadDto }">
+                                  			<a href="<%=cp%>/demander/index/review/article?${params}&num=${preReadDto.serviceReviewIdx}">${preReadDto.subject}</a>
+                             	 </c:if>
+                                    </div>
+                                    
+                                    <div class="post-bottom overflow" style="margin-top: 0px">
+                            		다음글:
+                             	 <c:if test="${not empty nextReadDto }">
+                                  			<a href="<%=cp%>/demander/index/review/article?${params}&num=${nextReadDto.serviceReviewIdx}">${nextReadDto.subject}</a>
+                             	 </c:if>      
+                                    </div>
+                                    
                                     <div class="blog-share">
                                         <span class='st_facebook_hcount'></span>
                                         <span class='st_twitter_hcount'></span>
@@ -29,20 +227,25 @@
                                         <span class='st_pinterest_hcount'></span>
                                         <span class='st_email_hcount'></span>
                                     </div>
-                                    <div class="author-profile padding">
-                                        <div class="row">
-                                            <div class="col-sm-2">
-                                                <img src="images/blogdetails/1.png" alt="">
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <h3>Rodrix Hasel</h3>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliq Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi</p>
-                                                <span>Website:<a href="www.jooomshaper.com"> www.jooomshaper.com</a></span>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="response-area">
-                                    <h2 class="bold">Comments</h2>
+                                    
+                                    <div class="bbs-reply">
+              <div class="bbs-reply-write" >
+                  <div style="clear: both; ">
+                        <div style="float: left; "><span style="font-size:23px;">COMMENTS</span><span>  5개 </span></div>
+                        <div style="float: right; text-align: right;"></div>
+                  </div>
+                  
+                  <div style="clear: both; padding-top: 30px; ">
+                      <textarea id="shareR_content" class="form-control" rows="3" required="required"></textarea>
+                  </div>
+                  <div style="text-align: right; padding-top: 10px;">
+                      <button type="button" class="btn btn-default" style="padding:10px 15px ;background-color:#3897f0; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="glyphicon glyphicon-ok"></span></button>
+                  </div>           
+              </div>
+          
+              <div id="listReply"></div>
+          </div>
                                     <ul class="media-list">
                                         <li class="media">
                                             <div class="post-comment">
@@ -95,8 +298,5 @@
                                 </div><!--/Response-area-->
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                 </div>
-            </div>
+                        </div>   
     </section>

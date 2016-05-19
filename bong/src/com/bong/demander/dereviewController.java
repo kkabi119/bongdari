@@ -155,18 +155,17 @@ public class dereviewController {
 	@RequestMapping(value="/demander/index/review/article")
 	public ModelAndView deArticleReview(
 			HttpSession session,
-			@RequestParam(value="serviceReviewIdx") int num,
+			@RequestParam(value="num") int num,
 			@RequestParam(value="page") int page,
 			@RequestParam(value="searchKey",defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue",defaultValue="") String searchValue
 			) throws Exception {
 		
-		//세션에서넘어온 info가 없으면 로그인창으로 
+	
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		/*if(info==null){
+		if(info==null) {
 			return new ModelAndView("redirect:/member/login");
 		}
-		*/
 		//검색값 decode
 		searchValue= URLDecoder.decode(searchValue,"utf-8");
 		
@@ -176,13 +175,13 @@ public class dereviewController {
 		//해당아티클가져오기
 		DeReview dto=service.readDeReview(num);
 		if(dto==null)
-			return new ModelAndView("redirect:.demander.index.review.list?page="+page);
+			return new ModelAndView("redirect:/");
+			//return new ModelAndView("redirect:.demander.index.review.list?page="+page);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
-		map.put("serviceReviewIdx", num);
-
+		map.put("num", num);
 		DeReview preReadDto = service.preReadDeReview(map);
 		DeReview nextReadDto = service.nextReadDeReview(map);
         
