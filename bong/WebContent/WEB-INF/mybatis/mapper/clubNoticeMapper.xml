@@ -127,7 +127,7 @@
 	
 	<!-- 회원 탈퇴시 게시물 삭제 ................. -->
 	<select id="listNoticeId" parameterType="String" resultType="com.bong.club.notice.Notice">
-	   SELECT clubNoticeIdx, m.userIdx, n.userIdx, userName, subject, content
+	   SELECT clubNoticeIdx, m.userIdx, userName, subject, content
 				   ,hitCount, n.created,  n.saveFilename, n.originalFilename
 		FROM club_notice n JOIN memberinfo m ON n.userIdx=m.userIdx
 		WHERE m.userIdx = #{userIdx}
@@ -139,14 +139,14 @@
 	<!-- 댓글 처리................. -->
 	<insert id="insertNoticeReply" parameterType="com.bong.club.notice.Reply">
 	INSERT INTO club_notice_reply(CNRIDX , CLUBNOTICEIDX, userIdx, content, answer)
-	   VALUES (club_notice_reply.NEXTVAL, #{clubNoticeIdx},#{userId},
+	   VALUES (club_notice_reply_seq.NEXTVAL, #{num},#{userIdx},
 	        #{content}, #{answer})
 	</insert>
 	
 	<select id="replyDataCount" resultType="Integer" 
 	           parameterType="map">
 	   SELECT NVL(COUNT(*), 0)
-	        FROM club_notice_reply WHERE clubNoticeIdx=#{clubNoticeIdx} AND answer=0
+	        FROM club_notice_reply WHERE clubNoticeIdx=#{num} AND answer=0
 	</select>
 	
 	<select id="listReply" resultType="com.bong.club.notice.Reply" 
@@ -164,7 +164,7 @@
 					        FROM club_notice_reply r 
 			                JOIN club_notice n ON r.clubNoticeIdx=n.clubNoticeIdx
 			                JOIN memberinfo m ON r.userIdx=m.userIdx
-			                WHERE r.clubNoticeIdx=#{clubNoticeIdx} AND answer=0
+			                WHERE r.clubNoticeIdx=#{num} AND answer=0
 			           ) tbreply
 			           LEFT OUTER JOIN
 			           (
@@ -182,7 +182,7 @@
 	<!-- 댓글별 답글 리스트 -->
 	<select id="listReplyAnswer" resultType="com.bong.club.notice.Reply" 
 	          parameterType="Integer">
-     SELECT CNRIDX, clubNoticeIdx, m.userIdx, tbreply.userIdx, userName, content, created, answer
+     SELECT CNRIDX, clubNoticeIdx, tbreply.userIdx, userName, content, created, answer
 	          FROM club_notice_reply tbreply 
 	          JOIN memberInfo m ON tbreply.userIdx=m.userIdx
               WHERE answer=#{answer}

@@ -211,7 +211,8 @@ public class NoticeController {
 	
 	@RequestMapping(value="/club/index/notice/update", 
 			method=RequestMethod.GET)
-	public ModelAndView updateForm(HttpSession session,
+	public ModelAndView updateForm(
+			HttpSession session,
 			@RequestParam(value="num") int num,
 			@RequestParam(value="page") String page
 			) throws Exception {
@@ -221,6 +222,7 @@ public class NoticeController {
 		}
 		
 		Notice dto = (Notice) service.readNotice(num);
+		
 		if(dto==null) {
 			return new ModelAndView("redirect:/notice/list?page="+page);
 		}
@@ -229,7 +231,7 @@ public class NoticeController {
 			return new ModelAndView("redirect:/notice/list?page="+page);
 		}
 		
-		ModelAndView mav=new ModelAndView(".four.menu2.notice.created");
+		ModelAndView mav=new ModelAndView(".four.club.dari.notice.created.공지글수정");
 		mav.addObject("dto", dto);
 		mav.addObject("mode", "update");
 		mav.addObject("page", page);
@@ -243,7 +245,6 @@ public class NoticeController {
 			Notice dto, 
 			@RequestParam(value="page") String page
 			) throws Exception {
-		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		if(info==null) {
 			return new ModelAndView("redirect:/member/login");
@@ -255,7 +256,7 @@ public class NoticeController {
 		// 수정 하기
 		service.updateNotice(dto, path);		
 		
-		return new ModelAndView("redirect:.four.club.index.notice.list?page="+page);
+		return new ModelAndView("redirect:/club/index/notice/list?page="+page);
 	}
 	
 	@RequestMapping(value="/club/index/notice/created",method=RequestMethod.GET)
@@ -332,7 +333,7 @@ public class NoticeController {
  	
 		service.deleteNotice(num, dto.getSaveFilename(), path);
 		
-		return new ModelAndView("redirect:.four.club.index.notice.list?page="+page);
+		return new ModelAndView("redirect:/club/index/notice/list?page="+page);
 	}
 	
 	@RequestMapping(value="/club/index/notice/created",method=RequestMethod.POST)
@@ -360,7 +361,6 @@ public class NoticeController {
 				@RequestParam(value="num") int num,
 				@RequestParam(value="pageNo", defaultValue="1") int current_page
 				) throws Exception {
-			
 			int numPerPage=5;
 			int total_page=0;
 			int dataCount=0;
@@ -378,6 +378,8 @@ public class NoticeController {
 			int end=current_page*numPerPage;
 			map.put("start", start);
 			map.put("end", end);
+			
+			
 			List<Reply> listReply=service.listReply(map);
 			
 			// 엔터를 <br>
@@ -394,8 +396,8 @@ public class NoticeController {
 			// 페이징처리(인수2개 짜리 js로 처리)
 			String paging=myUtil.paging(current_page, total_page);
 			
-			ModelAndView mav=new ModelAndView("menu2/notice/listReply");
-
+			ModelAndView mav=new ModelAndView("/club/dari/notice/listReply");
+			
 			// jsp로 넘길 데이터
 			mav.addObject("listReply", listReply);
 			mav.addObject("pageNo", current_page);
@@ -421,7 +423,7 @@ public class NoticeController {
 				dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 			}
 			
-			ModelAndView mav=new ModelAndView("menu2/notice/listReplyAnswer");
+			ModelAndView mav=new ModelAndView("/club/dari/notice/listReplyAnswer");
 
 			// jsp로 넘길 데이터
 			mav.addObject("listReplyAnswer", listReplyAnswer);
@@ -455,12 +457,11 @@ public class NoticeController {
 				Reply dto) throws Exception {
 		
 			SessionInfo info=(SessionInfo) session.getAttribute("member");
-			
 			String state="true";
 			if(info==null) { // 로그인이 되지 않는 경우
 				state="loginFail";
 			} else {
-				dto.setUserId(info.getUserId());
+				dto.setUserIdx(info.getUserIdx());
 				int result=service.insertReply(dto);
 				if(result==0)
 					state="false";

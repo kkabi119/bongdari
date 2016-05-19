@@ -1,13 +1,26 @@
 package com.bong.club.notice;
 
 public class Reply {
-	private int replyNum, num, listNum;
+	private int replyNum, num, listNum, clubNoticeIdx;
 	private String userId, userName, content, created;
-	private int answer;
+	private int answer ,userIdx;
 	private int answerCount;
 	
+	
+	public int getClubNoticeIdx() {
+		return clubNoticeIdx;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public int getReplyNum() {
 		return replyNum;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setClubNoticeIdx(int clubNoticeIdx) {
+		this.clubNoticeIdx = clubNoticeIdx;
 	}
 	public void setReplyNum(int replyNum) {
 		this.replyNum = replyNum;
@@ -24,11 +37,11 @@ public class Reply {
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
 	}
-	public String getUserId() {
-		return userId;
+	public int getUserIdx() {
+		return userIdx;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
 	}
 	public String getUserName() {
 		return userName;

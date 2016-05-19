@@ -184,7 +184,7 @@ int result=0;
 	public int insertReply(Reply dto) {
 		int result=0;
 		try {
-			result=dao.insertInformation("clubnotice.insertReply", dto);
+			result=dao.insertInformation("clubnotice.insertNoticeReply", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

@@ -38,10 +38,9 @@
 .bs-write .td4 {
 }
 </style>
-
 <script type="text/javascript" src="<%=cp%>/res/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
-  function check() {
+ <%--  function check() {
         var f = document.noticeForm;
 
     	var str = f.subject.value;
@@ -60,19 +59,18 @@
     	if(mode=="created")
     		f.action="<%=cp%>/club/index/notice/created";
     	else if(mode=="update")
-    		f.action="<%=cp%>/bbs/update";
+    		f.action="<%=cp%>/club/index/notice/update";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;
- }
+ } --%>
 </script>
 
 <div class="bodyFrame2" >
     <div class="body-title">
           <h2 style="color:#5bc0de;"><span class="glyphicon glyphicon-book" style="color: #5bc0de;"></span> 공지글쓰기 </h2>
     </div>
-    
-    
+       
     <div>
         <form name="noticeForm" method="post" onsubmit="return submitContents(this);" enctype="multipart/form-data">
             <div class="bs-write">
@@ -91,7 +89,7 @@
                         <tr>
                             <td class="td1">제목</td>
                             <td colspan="3" class="td3">
-                                <input type="text" name="subject" class="form-control input-sm" value="${dto.subject}" required="required">
+                                <input type="text" name="subject" class="form-control input-sm" value="${dto.subject}${dto.clubNoticeIdx}" required="required">
                             </td>
                         </tr>
                         
@@ -130,7 +128,7 @@
                                   <button type="button" class="btn btn-default" style="color:#5bc0de;" onclick="javascript:location.href='<%=cp%>/club/index/notice/list';"> 취소 </button>
                                   
                                   <c:if test="${mode=='update'}">
-                                      <input type="hidden" name="num" value="${dto.num}">
+                                      <input type="hidden" name="clubNoticeIdx" value="${dto.clubNoticeIdx}">
                                       <input type="hidden" name="saveFilename" value="${dto.saveFilename}">
                                       <input type="hidden" name="originalFilename" value="${dto.originalFilename}">
                                       <input type="hidden" name="page" value="${page}">
@@ -143,7 +141,6 @@
         </form>
     </div>
 </div>
-
 <script type="text/javascript">
 var oEditors = [];
 nhn.husky.EZCreator.createInIFrame({
@@ -189,4 +186,3 @@ function setDefaultFont() {
 	oEditors.getById["content"].setDefaultFont(sDefaultFont, nFontSize);
 }
 </script>    
-
