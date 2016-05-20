@@ -7,7 +7,7 @@ public interface ApplyService {
 	public List<Apply> listApply(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
 	
-	public int applyCount_club(Map<String, Object> map);
+	public int applyCount_club(int volunIdx) ;
 	public int applyCount(Map<String, Object> map);
 
 	public Apply readApply(int num);

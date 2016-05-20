@@ -67,16 +67,16 @@ padding-top: 13px;
 <c:forEach var="dto" items="${list}">
 									<tr>
                         				<td class="text-center">${dto.listNum}</td>
-                        				<td colspan="4"><a href="${urlArticle}&num=${dto.clubApplyIdx}">${dto.subject}</a></td>
+                        				<td colspan="4"><a style="font-weight:bold; font-size:14px; "href="${urlArticle}&num=${dto.clubApplyIdx}">${dto.subject}</a></td>
                         				<td class="text-center">${dto.startDay } ~ ${dto.endDay }</td>
                         				<td class="text-center" >${dto.place } </td>
                         				<td class="text-center"><a href="#">${dto.serviceName }</a></td>
-                       				 	<td class="text-center" style="">${dto.applyNum}명/10명</td>
+                       				 	<td class="text-center" style=""><span style="font-weight:bold;">${dto.applyNum}명</span>/${dto.maxNum}명</td>
                        				 	<c:if test="${dto.progress.equals('모집마감')}">
-                       				 		<td class="text-center" style="font-weight:bold; color:white; font-size:15px;"> <span class="label label-default" style="padding:5px;">${dto.progress}</span></td>
+                       				 		<td class="text-center" style="font-weight:bold; color:white; font-size:16px;"> <span class="label label-default" style="padding:5px;">${dto.progress}</span></td>
                        				 	</c:if>
                        				 	<c:if test="${dto.progress.equals('모집중')}">
-                       				 		<td class="text-center" style="font-weight:bold; color:white; font-size:15px;"><span class="label label-warning" style="padding:5px;">${dto.progress}</span></td>
+                       				 		<td class="text-center" style="font-weight:bold; color:white; font-size:16px;"><span class="label label-warning" style="padding:5px;">${dto.progress}</span></td>
                        				 	</c:if>
                     				</tr>
  </c:forEach><!-- 리스트끝 -->

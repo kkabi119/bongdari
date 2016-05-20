@@ -80,17 +80,7 @@ public class ApplyController {
                        
         // 글 리스트
         List<Apply> list = service.listApply(map);
-        
-        ////////////////// 현재 신청자수 가져오기
-        /*int applyNum; //현재 신청자수
-        Map<String, Object> map2 = new HashMap<String, Object>();
-       
-        map2.put("list",list);
-      
-        System.out.println(map2);
-        
-        applyNum=service.applyCount_club(map2); */
-             
+                     
      // 리스트의 번호
         int listNum, n = 0;
         Iterator<Apply> it=list.iterator();
@@ -99,9 +89,8 @@ public class ApplyController {
             Apply data = it.next();
             listNum = dataCount - (start + n - 1);
             
-            data.setListNum(listNum);   
-            System.out.println("야야야:" +data.getVolunIdx());         
-            System.out.println("listNum: "+listNum);
+            data.setListNum(listNum);
+              
             n++;
         }
         
@@ -121,7 +110,7 @@ public class ApplyController {
 		ModelAndView mav = new ModelAndView(".four.club.dari.apply.list.봉사신청");
 		
         mav.addObject("list", list);
-    //    mav.addObject("applyNum",applyNum);
+       
         mav.addObject("urlArticle", urlArticle);
         mav.addObject("page", current_page);
         mav.addObject("dataCount", dataCount);

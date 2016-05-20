@@ -42,13 +42,13 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 	
 	@Override
-	public int applyCount_club(Map<String, Object> map) {
+	public int applyCount_club(int volunIdx) {
 		
 		int result = 0;
 		
 		try {
 			System.out.println("으아아아");
-			result=dao.getIntValue("clubApply.applyCount_club", map);
+			result=dao.getIntValue("clubApply.applyCount_club", volunIdx);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

@@ -38,10 +38,10 @@
 	   WHERE volunIdx=#{volunIdx}
 	</select>
 		<!-- 클럽 신청자리스트  -->
-	<select id="applyCount_club" parameterType="map"  resultType="Integer">
+	<select id="applyCount_club" parameterType="Integer"  resultType="Integer">
 	  SELECT NVL(COUNT(*), 0) 
 	  FROM club_apply_memlist c JOIN club_apply a ON c.clubApplyIdx=a.clubApplyIdx
-	  where a.volunIdx = #{volunIdx};
+	  where a.volunIdx = #{volunIdx}
 	</select>
 	
 	<!-- 글리스트 -->
@@ -49,10 +49,15 @@
 	            resultType="com.bong.club.apply.Apply">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-			     SELECT a.CLUBAPPLYIDX,v.volunIdx AS volunIdx, s.serviceName, subject, v.startDay, v.endDay, a.enabled, 
-			     		   progress, place, volunteer_type, v.volunDays, v.typeIdx1, v.typeIdx2
-            			   FROM volun_bbs v JOIN club_apply a ON v.volunIdx=a.volunIdx
-			        						JOIN serviceInfo s ON v.serviceIdx=s.serviceIdx
+			     SELECT a.CLUBAPPLYIDX,v.volunIdx AS volunIdx, s.serviceName, subject, v.startDay, v.endDay, a.enabled,
+			     		   progress, place, volunteer_type, v.volunDays, v.typeIdx1, v.typeIdx2,
+			     		  ( (SELECT NVL(COUNT(*), 0) FROM club_apply_memlist c JOIN club_apply a ON c.clubApplyIdx=a.clubApplyIdx 
+                       		 WHERE a.volunIdx = v.volunIdx)+
+                       		( SELECT NVL(COUNT(*), 0) FROM volun_bbs_memlist vb
+		                      WHERE vb.volunIdx=v.volunIdx))AS applyNum,
+		                    ( select sum(maxNum) from MEMNUMPERDATE mnpd where mnpd.volunIdx=v.volunIdx ) as maxNum
+        	    FROM volun_bbs v JOIN club_apply a ON v.volunIdx=a.volunIdx
+			        					         	  JOIN serviceInfo s ON v.serviceIdx=s.serviceIdx
                     <where>
                          <if test="searchValue != null and searchValue != ''">
 			                  <include refid="where-list"/>
