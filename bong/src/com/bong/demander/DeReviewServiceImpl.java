@@ -127,7 +127,6 @@ public class DeReviewServiceImpl implements DeReviewService {
 	@Override
 	public int updateDeReview(DeReview dto, String path) {
 		int result=0;
-
 		try{
 			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()) {
 				// 이전파일 지우기
@@ -140,7 +139,9 @@ public class DeReviewServiceImpl implements DeReviewService {
 					dto.setSaveFilename(newFilename);
 				}
 			}
+			
 			dao.updateInformation("demander.updateDeReview", dto);
+			dao.updateInformation("demander.updateDeReviewFile", dto);
 			result=1;
 		} catch(Exception e) {
 			System.out.println(e.toString());
@@ -218,5 +219,68 @@ public class DeReviewServiceImpl implements DeReviewService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	//좋아요상태
+	@Override
+	public int stateDeRevLike(DeReview dto) {
+		int result=0;
+		try {
+			result=dao.getIntValue("demander.stateDeRevLike", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	
+	//좋아요 입력
+	@Override
+	public int insertDeReviewLike(DeReview dto) {
+		int result=0;
+		try {
+			result=dao.insertInformation("demander.insertDeReviewLike", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+	
+	@Override
+	public int deleteDeReviewLike(DeReview dto) {
+		int result=0;
+		try {
+			result=dao.insertInformation("demander.deleteDeReviewLike", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+	
+	
+	//좋아요 개수 올리기 
+	@Override
+	public int updateDeRevLikeCount(DeReview dto) {
+		int result=0;
+		try {
+			result=dao.updateInformation("demander.updateDeRevLikeCount",dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+	
+	//좋아요 개수 세기
+	@Override
+	public Map<String, Object> deRevCountLike(int num) {
+		Map<String, Object> map=null;
+		try {
+			map=dao.getReadInformation("demander.deRevCountLike", num);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return map;
+	}
+
+
 
 }

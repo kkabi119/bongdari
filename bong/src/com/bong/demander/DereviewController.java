@@ -1,6 +1,8 @@
 package com.bong.demander;
 
 import java.io.File;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bong.common.FileManager;
@@ -25,7 +29,7 @@ import com.bong.member.SessionInfo;
 
 
 @Controller("bong.dereviewController")
-public class dereviewController {
+public class DereviewController {
 	@Autowired
 	private DeReviewService service;
 	
@@ -36,7 +40,7 @@ public class dereviewController {
 	private FileManager fileManager;
 	
 	@RequestMapping(value="/demander/index/review/list")
-	public ModelAndView demanderReview(
+	public ModelAndView deReviewList(
 			HttpServletRequest req,
 			@RequestParam(value="page",defaultValue="1")int current_page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
@@ -113,7 +117,7 @@ public class dereviewController {
 	}
 	
 	@RequestMapping(value="/demander/index/review/create",method=RequestMethod.GET)
-	public ModelAndView deCreateRevForm(
+	public ModelAndView deRevCreateForm(
 			HttpSession session
 			) throws Exception {
 		
@@ -128,7 +132,7 @@ public class dereviewController {
 	}
 	
 	@RequestMapping(value="/demander/index/review/create",method=RequestMethod.POST)
-	public ModelAndView deCreateRevSubmit(
+	public ModelAndView deRevCreateSubmit(
 			HttpSession session,
 			DeReview dto
 			) throws Exception {
@@ -152,8 +156,10 @@ public class dereviewController {
 		return new ModelAndView("redirect:/demander/index/review/list");
 		
 	}
+	
+	
 	@RequestMapping(value="/demander/index/review/article")
-	public ModelAndView deArticleReview(
+	public ModelAndView deReArticle(
 			HttpSession session,
 			@RequestParam(value="num") int num,
 			@RequestParam(value="page") int page,
@@ -201,7 +207,195 @@ public class dereviewController {
         return mav;
 	}
 	
+	//다운로드
+	@RequestMapping(value="/demander/index/review/download")
+	public void deReviewDownload(
+			HttpServletRequest req,
+			HttpServletResponse resp,
+			HttpSession session,
+			@RequestParam(value="num") int num
+			) throws Exception{
+		String cp=req.getContextPath();
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		/*if(info==null) {
+			resp.sendRedirect(cp+"/member/login");
+			return;
+		}*/
+		
+		String root=session.getServletContext().getRealPath("/");
+		String path=root+File.separator+"uploads"+File.separator+"review";
+		DeReview dto=service.readDeReview(num);
+		boolean flag=false;
+		
+		if(dto!=null) {
+			flag=fileManager.doFileDownload(
+					     dto.getSaveFilename(), 
+					     dto.getOriginalFilename(), path, resp);
+		}
+		
+		if(! flag) {
+			resp.setContentType("text/html;charset=utf-8");
+			PrintWriter out=resp.getWriter();
+			out.print("<script>alert('파일 다운로드가 실패했습니다.');history.back();</script>");
+		}
+	}
 	
+	@RequestMapping(value = "demander/index/review/update", method=RequestMethod.GET)
+	public ModelAndView deRevUpdateForm(HttpSession session,
+			@RequestParam(value = "num") int num,
+			@RequestParam(value = "page") String page
+			) throws Exception {
+
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+
+		DeReview dto = service.readDeReview(num);
+		/*if (dto == null) {
+			return new ModelAndView("redirect:/demander/index/review/list?page="+page);
+		}*/
+	
+		if (info.getUserIdx()!=dto.getUserIdx())
+			return new ModelAndView("redirect:/demander/index/review/list?page="+page);
+
+		ModelAndView mav=new ModelAndView(".four.demander.dari.review.create.후기게시판");
+		mav.addObject("mode", "update");
+		mav.addObject("page", page);
+		mav.addObject("dto", dto);
+		return mav;
+	}
+
+	@RequestMapping(value = "demander/index/review/update", method=RequestMethod.POST)
+	public String deRevUpdateSubmit(HttpSession session, 
+			DeReview dto,
+			@RequestParam(value = "page") String page) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		/*
+		if (info == null) {
+			return "redirect:/member/login";
+		}*/
+		
+		
+		String root=session.getServletContext().getRealPath("/");
+		String path=root+File.separator+"uploads"+File.separator+"review";
+				
+		// 수정 하기
+		service.updateDeReview(dto, path);
+		
+		return "redirect:/demander/index/review/list?page="+page;
+	}
+
+	@RequestMapping(value="/demander/index/review/deleteFile", 
+			method=RequestMethod.GET)
+	public ModelAndView deleteFile(
+			HttpSession session,
+			@RequestParam(value="num") int num,
+			@RequestParam(value="page") String page
+			) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		/*if(info==null) {
+			return new ModelAndView("redirect:/member/login");
+		}*/
+		
+		DeReview dto = service.readDeReview(num);
+		if(dto==null) {
+			return new ModelAndView("redirect:/demander/index/review/list?page="+page);
+		}
+			
+		if(! info.getUserId().equals(dto.getUserId())) {
+			return new ModelAndView("redirect:.four.demander.dari.review.list?page="+page);
+		}
+		
+		String root = session.getServletContext().getRealPath("/");
+		String path = root + File.separator + "uploads" + File.separator + "notice";		
+		
+		if(dto.getSaveFilename() != null && dto.getSaveFilename().length()!=0) {
+			  fileManager.doFileDelete(dto.getSaveFilename(), path);
+			  
+			  dto.setSaveFilename("");
+			  dto.setOriginalFilename("");
+			  service.updateDeReview(dto, path);
+       }
+		
+		return new ModelAndView("redirect:/demander/index/review/update?num="+num+"&page="+page);
+	}
+	
+
+	@RequestMapping(value="/demander/index/review/delete")
+	public ModelAndView delete(
+			HttpSession session,
+			@RequestParam(value="num") int num,
+			@RequestParam(value="page") String page
+			) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		/*if(info==null) {
+			return new ModelAndView("redirect:/member/login");
+		}*/
+		
+		// 해당 레코드 가져 오기
+		DeReview dto = service.readDeReview(num);
+		if(dto==null) {
+			return new ModelAndView("redirect:/demander/index/review/list?page="+page);
+		}
+		
+		if(! info.getUserId().equals(dto.getUserId()) && ! info.getUserId().equals("admin")) {
+			return new ModelAndView("redirect:/demander/index/review/list?page="+page);
+		}
+		
+		String root = session.getServletContext().getRealPath("/");
+		String path = root + File.separator + "uploads" + File.separator + "notice";		
+ 	
+		service.deleteDeReview(num, dto.getSaveFilename(), path);
+		
+		return new ModelAndView("redirect:/demander/index/review/list?page="+page);
+	}
+	
+	//좋아요
+	@RequestMapping(value="/demander/index/review/sendLike",
+			method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deReviewLike(
+			HttpSession session,
+			DeReview dto) throws Exception {
+	
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		dto.setUserIdx(info.getUserIdx());
+		int state=service.stateDeRevLike(dto);
+		if(state==0){
+			dto.setUserIdx(info.getUserIdx());
+			service.insertDeReviewLike(dto);
+		}else if(state==1){
+			dto.setUserIdx(info.getUserIdx());
+			service.deleteDeReviewLike(dto);
+		}
+		
+   	    // 작업 결과를 json으로 전송
+		Map<String, Object> model = new HashMap<>(); 
+		model.put("state", state);
+		return model;
+	}
+	
+	// 좋아요/싫어요 개수
+	@RequestMapping(value="/demander/index/review/countLike",
+			method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object>  countLike(
+			@RequestParam(value="serviceReviewIdx") int num) throws Exception {
+		System.out.println("asd");
+		int likeCount=0;
+		Map<String, Object> map=service.deRevCountLike(num);
+		if(map!=null) {
+			// resultType이 map인 경우 int는 BigDecimal로 넘어옴
+			likeCount=((BigDecimal)map.get("LIKECOUNT")).intValue();
+		}
+		
+   	    // 작업 결과를 json으로 전송
+		Map<String, Object> model = new HashMap<>(); 
+		model.put("likeCount", likeCount);
+		
+		System.out.println("controller_likeCount:"+likeCount);
+		return model;
+	}
 	
 	
 }
