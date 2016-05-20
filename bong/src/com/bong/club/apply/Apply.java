@@ -6,9 +6,29 @@ public class Apply {
 	
 	private String clubDate, subject, content, serviceName,startDay,endDay;
 	private String progress, place, volunteer_type, volunDays, typeIdx1, typeIdx2;
+	private String startTime, endTime;
 	
 	private int applyNum, maxNum; //현재 신청인원 / 수요인원수
-	
+	private int hitCount;
+		
+		public int getHitCount() {
+		return hitCount;
+	}
+	public void setHitCount(int hitCount) {
+		this.hitCount = hitCount;
+	}
+		public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
 		public int getApplyNum() {
 		return applyNum;
 	}

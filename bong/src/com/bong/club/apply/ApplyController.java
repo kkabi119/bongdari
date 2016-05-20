@@ -39,7 +39,7 @@ public class ApplyController {
 	/*개인동아리 봉사 신청게시판*/
 	
 	///////////////////////////////////////////// 리스트 ///////////////////////////////////////////////////
-	@RequestMapping(value="club/index/vapplyList")
+	@RequestMapping(value="club/index/apply")
 	public ModelAndView clubApplyList(
 			HttpServletRequest req,
 			@RequestParam(value="page", defaultValue="1") int current_page,
@@ -97,11 +97,12 @@ public class ApplyController {
         String params = "";
         String urlList = cp+"/club/index/apply/list";
         String urlArticle = cp+"/club/index/apply/article?page=" + current_page;
+      
+        //검색인경우
         if(searchValue.length()!=0) {
         	params = "searchKey=" +searchKey + 
         	             "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");	
-        }
-        
+        }        
         if(params.length()!=0) {
             urlList = cp+"/club/index/apply/list?" + params;
             urlArticle = cp+"/club/index/apply/article?page=" + current_page + "&"+ params;
@@ -130,21 +131,22 @@ public class ApplyController {
 			) throws Exception {
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
 		if(info==null) {
 			return new ModelAndView("redirect:/member/login");
 		}
 
 		searchValue = URLDecoder.decode(searchValue, "utf-8");
 		
-		// 조회수 증가
-		service.updateHitCount(num);
-
 		// 해당 레코드 가져 오기
 		Apply dto = service.readApply(num);
-
+					
 		if(dto==null)
-			return new ModelAndView("redirect:.club.index.notice.list?page="+page);
+			return new ModelAndView("redirect:.club.index.apply?page="+page);
 		
+		// 조회수 증가
+		service.updateHitCount(dto.getVolunIdx());
+				
 		// 전체 라인수
         // int linesu = dto.getContent().split("\n").length;
 		
@@ -157,8 +159,8 @@ public class ApplyController {
 		map.put("searchValue", searchValue);
 		map.put("num", num);
 
-		Apply preReadDto = service.preReadNotice(map);
-		Apply nextReadDto = service.nextReadNotice(map);
+		/*Apply preReadDto = service.preReadApply(map);
+		Apply nextReadDto = service.nextReadApply(map);*/
         
 		String params = "page="+page;
 		if(searchValue.length()!=0) {
@@ -166,11 +168,11 @@ public class ApplyController {
 		                    "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
 		}
 		
-		ModelAndView mav = new ModelAndView(".four.club.dari.apply.article.봉사신청 글보기");
+		ModelAndView mav = new ModelAndView(".four.club.dari.apply.article.봉다리 개인페이지");
 		mav.addObject("dto", dto);
-		mav.addObject("preReadDto", preReadDto);
+		/*mav.addObject("preReadDto", preReadDto);
 		mav.addObject("nextReadDto", nextReadDto);
-
+*/
 		mav.addObject("page", page);
 		mav.addObject("params", params);
 		return mav;

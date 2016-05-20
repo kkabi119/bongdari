@@ -28,12 +28,12 @@ public class ClubController1 {
 		return mav;
 	}
 	
-	@RequestMapping(value="/club/index/vapply")
+	/*@RequestMapping(value="/club/index/vapply")
 	public ModelAndView clubVapply() throws Exception {
 		
 		ModelAndView mav = new ModelAndView(".four.club.dari.apply.article.봉다리 개인페이지");
 		return mav;
-	}
+	}*/
 	
 	/*@RequestMapping(value="/club/index/vapplyList")
 	public ModelAndView clubVapplyList() throws Exception {

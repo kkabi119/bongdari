@@ -70,7 +70,7 @@ padding-top: 13px;
                         				<td colspan="4"><a style="font-weight:bold; font-size:14px; "href="${urlArticle}&num=${dto.clubApplyIdx}">${dto.subject}</a></td>
                         				<td class="text-center">${dto.startDay } ~ ${dto.endDay }</td>
                         				<td class="text-center" >${dto.place } </td>
-                        				<td class="text-center"><a href="#">${dto.serviceName }</a></td>
+                        				<td class="text-center"><a href="#" style="font-weight:bold; font-size:14px; ;"  >${dto.serviceName }</a></td>
                        				 	<td class="text-center" style=""><span style="font-weight:bold;">${dto.applyNum}명</span>/${dto.maxNum}명</td>
                        				 	<c:if test="${dto.progress.equals('모집마감')}">
                        				 		<td class="text-center" style="font-weight:bold; color:white; font-size:16px;"> <span class="label label-default" style="padding:5px;">${dto.progress}</span></td>

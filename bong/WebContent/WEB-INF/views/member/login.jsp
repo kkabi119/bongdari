@@ -98,6 +98,12 @@ function demanderJoin(){
 	location.href=url;
 }
 </script>
+<style>
+.padding-top{
+	padding-top:0px;
+	min-height:450px;
+}
+</style>
 </head>
 <body>
 <div id="login-form">

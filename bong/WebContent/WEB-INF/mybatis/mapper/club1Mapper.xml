@@ -31,18 +31,6 @@
 	     </where>   
 	</select>
 	
-	<!-- 신청인원 세기  -->
-		<!-- 개인회원 신청자리스트 -->
-	<select id="applyCount" parameterType="map"  resultType="Integer">
-	  SELECT NVL(COUNT(*), 0) FROM volun_bbs_memlist
-	   WHERE volunIdx=#{volunIdx}
-	</select>
-		<!-- 클럽 신청자리스트  -->
-	<select id="applyCount_club" parameterType="Integer"  resultType="Integer">
-	  SELECT NVL(COUNT(*), 0) 
-	  FROM club_apply_memlist c JOIN club_apply a ON c.clubApplyIdx=a.clubApplyIdx
-	  where a.volunIdx = #{volunIdx}
-	</select>
 	
 	<!-- 글리스트 -->
 	<select id="listApply" parameterType="map"
@@ -72,54 +60,59 @@
 	</select>
 	
 	<!-- 글보기 -->
-	<select id="readNotice" resultType="com.bong.club.notice.Notice" parameterType="Integer">
-		SELECT n.clubNoticeIdx, m.userIdx, userId, userName, subject, content
-				   ,hitCount, n.created,  n.saveFilename, n.originalFilename
-		FROM club_notice n JOIN memberInfo m ON n.userIdx=m.userIdx
-		WHERE clubNoticeIdx = #{clubNoticeIdx}
+	<select id="readApply" resultType="com.bong.club.apply.Apply" parameterType="Integer">
+		SELECT a.CLUBAPPLYIDX,v.volunIdx AS volunIdx, s.serviceName, subject, v.startDay, v.endDay, a.enabled, progress, place, volunteer_type, v.volunDays, v.typeIdx1, v.typeIdx2,
+				startTime, endTime, content,
+			     ( (SELECT NVL(COUNT(*), 0) FROM club_apply_memlist c JOIN club_apply a ON c.clubApplyIdx=a.clubApplyIdx 
+                    WHERE a.volunIdx = v.volunIdx)+
+                   ( SELECT NVL(COUNT(*), 0) FROM volun_bbs_memlist vb
+		             WHERE vb.volunIdx=v.volunIdx))AS applyNum,
+		           (select sum(maxNum) from MEMNUMPERDATE mnpd where mnpd.volunIdx=v.volunIdx ) as maxNum
+        	    FROM volun_bbs v JOIN club_apply a ON v.volunIdx=a.volunIdx JOIN serviceInfo s ON v.serviceIdx=s.serviceIdx
+		WHERE clubApplyIdx = #{num}
 	</select>
 	
 	<!-- 조회수 증가 -->
 	<update id="updateHitCount" parameterType="Integer">
-		UPDATE club_notice SET hitCount=hitCount+1 WHERE clubNoticeIdx = #{clubNoticeIdx}
+		UPDATE volun_bbs SET hitCount=hitCount+1 WHERE volunIdx= #{num}
 	</update>
 	
 	<!-- AND 가 필요 없는 경우 자동으로 제거 됨 -->
 	<!-- 이전글 -->
-	<select id="preReadNotice" resultType="com.bong.club.notice.Notice" 
+	<select id="preReadApply" resultType="com.bong.club.apply.Apply" 
 				parameterType="map">
 		SELECT tb.* FROM (
-			SELECT clubNoticeIdx, subject
-			      FROM club_notice n
+			SELECT clubApplyIdx, subject
+			      FROM club_apply n
 			      JOIN memberInfo m ON n.userIdx=m.userIdx
                     <where>
                          <if test="searchValue != null and searchValue != '' ">
 			                  <include refid="where-list"/>
 		                 </if>
 		               <![CDATA[
-		                 AND (clubNoticeIdx > #{num})
+		                 AND (clubApplyIdx > #{num})
 		                 ]]>
 	                </where>
-				ORDER BY clubNoticeIdx ASC
+				ORDER BY clubApplyIdx ASC
 			) tb WHERE ROWNUM=1
 	</select>
 	
 	<!-- 다음글 -->
-	<select id="nextReadNotice" resultType="com.bong.club.notice.Notice" 
+	<select id="nextReadApply" resultType="com.bong.club.apply.Apply" 
 				parameterType="map">
 		SELECT tb.* FROM (
-			SELECT clubNoticeIdx, subject
-			      FROM club_notice n
+			SELECT clubApplyIdx, subject
+			      FROM club_apply n
 			      JOIN memberInfo m ON n.userIdx=m.userIdx
                     <where>
                          <if test="searchValue != null and searchValue != '' ">
 			                  <include refid="where-list"/>
 		                 </if>
 		               <![CDATA[
-		                 AND (clubNoticeIdx < #{num})
+		                 AND (clubApplyIdx < #{num})
 		                 ]]>
 	                </where>
-				ORDER BY clubNoticeIdx DESC
+				ORDER BY clubApplyIdx DESC
 			) tb WHERE ROWNUM=1
 	</select>
 </mapper>

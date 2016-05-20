@@ -56,7 +56,7 @@
                                 <li><a href="<%=cp%>/club/index/japply">가입신청하기<span class="pull-right">(9)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/free/list">자유게시판<span class="pull-right">(3)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/review">후기/포토게시판<span class="pull-right">(4)</span></a></li>
-                                <li><a href="<%=cp%>/club/index/vapplyList">봉사신청게시판<span class="pull-right">(2)</span></a></li>
+                                <li><a href="<%=cp%>/club/index/apply">봉사신청게시판<span class="pull-right">(2)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/calendar">우리동아리 달력<span class="pull-right">(8)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/admin">관리자모드<span class="pull-right">(8)</span></a></li>
                             </ul>

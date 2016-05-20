@@ -42,40 +42,14 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 	
 	@Override
-	public int applyCount_club(int volunIdx) {
-		
-		int result = 0;
-		
-		try {
-			System.out.println("으아아아");
-			result=dao.getIntValue("clubApply.applyCount_club", volunIdx);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return result;
-	}
-
-	@Override
-	public int applyCount(Map<String, Object> map) {
-		int result = 0;
-		
-		try {
-			result=dao.getIntValue("clubApply.applyCount", map);
-			
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return result;
-	}
-	
-
-	@Override
 	public Apply readApply(int num) {
 		Apply dto=null;
 		
 		try {
 			//게시물 가져오기
+			System.out.println("후후후후");
 			dto=dao.getReadInformation("clubApply.readApply", num);
+			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -98,11 +72,11 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 
 	@Override
-	public Apply preReadNotice(Map<String, Object> map) {
+	public Apply preReadApply(Map<String, Object> map) {
 		Apply dto = null;
 		
 		try{
-			dto=dao.getReadInformation("clubApply.preReadNotice", map);
+			dto=dao.getReadInformation("clubApply.preReadApply", map);
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}
@@ -111,11 +85,11 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 
 	@Override
-	public Apply nextReadNotice(Map<String, Object> map) {
+	public Apply nextReadApply(Map<String, Object> map) {
 		Apply dto = null;
 		
 		try{
-			dto=dao.getReadInformation("clubApply.nextReadNotice", map);
+			dto=dao.getReadInformation("clubApply.nextReadApply", map);
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}
