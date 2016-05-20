@@ -110,4 +110,5 @@ public class MemberController {
 		model.put("passed", passed);
 		return model;
 	}
+	
 }

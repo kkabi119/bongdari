@@ -45,5 +45,8 @@
                modify_date=SYSDATE 
                WHERE userIdx=#{userIdx}
     </update>
-    
+    <update id="updateImage" parameterType="String">
+      UPDATE memberInfo SET memImg=''
+          WHERE userId=#{userId}
+    </update>
 </mapper>

@@ -15,7 +15,7 @@ public interface MemberService {
 	public int updateLastLogin(String userId);
 	
 	public int deleteMember2(Map<String, Object> map);
-	
+	public int deleteImage(String userId, String pathname, String filename);
 	public int dataCount(Map<String, Object> map);
 	public List<Member> listMember(Map<String, Object> map);
 	

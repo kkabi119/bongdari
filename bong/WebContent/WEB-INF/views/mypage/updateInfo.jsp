@@ -139,7 +139,7 @@ function changeEmail() {
 
 function imageDelete(){
 	if(confirm("등록된 사진을 삭제 하시겠습니까?")){
-		var url="<%=cp%>/member/imageDelete";
+		var url="<%=cp%>/member/index/imageDelete";
 		var filename="${dto.memImg}";
 		$.post(url, {filename:filename}, function(data){
 			var isLogin=data.isLogin;

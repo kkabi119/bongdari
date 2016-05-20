@@ -1,6 +1,8 @@
 package com.bong.mypage;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bong.member.Member;
@@ -94,5 +98,31 @@ public class MypageController {
 		ModelAndView mav= new ModelAndView("/mypage/myApply");
 		return mav;
 	}
-	
+	@RequestMapping(value="/member/index/imageDelete", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> imageDelete(
+			HttpSession session,
+			@RequestParam String filename
+			) throws Exception{
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		boolean isLogin=true;
+		boolean state=false;
+		
+		if(info==null){
+			isLogin=false;
+		} else {
+			String root=session.getServletContext().getRealPath("/");
+			String pathname=root+File.separator+"uploads"+
+			File.separator+"memImg";
+			service.deleteImage(info.getUserId(), pathname, filename);
+			state=true;
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("isLogin", isLogin);
+		model.put("state", state);
+		
+		return model;
+		
+	}
 }

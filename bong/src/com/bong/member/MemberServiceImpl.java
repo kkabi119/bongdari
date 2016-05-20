@@ -175,11 +175,24 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return result;
 	}
-
+   
 	@Override
 	public int deleteMember2(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public int deleteImage(String userId, String pathname, String filename) {
+		int result=0;
+		
+		try {
+	fileManager.doFileDelete(filename, pathname);
+			
+			result=dao.updateInformation("member.updateImage", userId);
+		} catch (Exception e) {
+		}
+		return result;
 	}
 
 	@Override
@@ -193,7 +206,7 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+   
 	@Override
 	public int insertAuthority(Member dto) {
 		// TODO Auto-generated method stub
@@ -223,6 +236,7 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 	
 	
