@@ -7,8 +7,14 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
+<link rel="stylesheet" href="<%=cp%>/res/css/fileinput.css" type="text/css">
+
+<script type="text/javascript" src="<%=cp%>/res/js/util.js"></script>
+<script type="text/javascript" src="<%=cp%>/res/js/fileinput.js"></script>
+
 <script type="text/javascript">
 </script>
+
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">

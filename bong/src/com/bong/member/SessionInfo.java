@@ -1,10 +1,14 @@
 package com.bong.member;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class SessionInfo {
 	private int userIdx;
 	private String userId;
 	private String userName;
 	private int memberLevel;
+	private String memImgname;
+	private MultipartFile memImg;
 	
 	public int getUserIdx() {
 		return userIdx;
@@ -30,4 +34,17 @@ public class SessionInfo {
 	public void setMemberLevel(int memberLevel) {
 		this.memberLevel = memberLevel;
 	}
+	public String getMemImgname() {
+		return memImgname;
+	}
+	public void setMemImgname(String memImgname) {
+		this.memImgname = memImgname;
+	}
+	public MultipartFile getMemImg() {
+		return memImg;
+	}
+	public void setMemImg(MultipartFile memImg) {
+		this.memImg = memImg;
+	}
+	
 }

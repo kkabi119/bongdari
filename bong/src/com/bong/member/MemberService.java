@@ -7,6 +7,7 @@ public interface MemberService {
 	
 	public Member readMember1(int userIdx);
 	public Member readMemberLogin(String userIdx);
+	public Member readMemberInfo(String userIdx);
 	
 	public int insertMember(Member dto, String pathname) throws Exception;
 	
@@ -14,7 +15,7 @@ public interface MemberService {
 	public int updateLastLogin(String userId);
 	
 	public int deleteMember2(Map<String, Object> map);
-	
+	public int deleteImage(String userId, String pathname, String filename);
 	public int dataCount(Map<String, Object> map);
 	public List<Member> listMember(Map<String, Object> map);
 	

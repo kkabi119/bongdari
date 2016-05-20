@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+
+	<!-- 검색 시 유저 이름 또는 아이디로 검색 -->
+	<sql id="where-list">
+	  <if test="searchKey=='userName'">
+	      userName=#{searchValue}
+	  </if>
+	  <if test="searchKey=='userId'">
+	      userId=#{userId}
+	  </if>
+	</sql>
+	
+	
+	<!-- 회원 수 -->
+	<select id="dataCount" parameterType="map"
+	            resultType="Integer">
+	  SELECT COUNT(*) FROM memberInfo
+	     <where>
+	     	<if test="searchValue!=null and searchValue!='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	     </where>   
+	</select>
+	
+	<!-- 회원 리스트 -->
+	<select id="memberList" parameterType="map"
+	            resultType="com.bong.admin.Member">
+		SELECT * FROM (
+		    SELECT ROWNUM rNum, tb.* FROM (
+			     SELECT userIdx, userId, userTel, userName, userGender, userLevel,
+           userNoshow, userScore,
+           TO_CHAR(created_date, 'YYYY-MM-DD') created_date
+           ,TO_CHAR(last_Login, 'YYYY-MM-DD') last_Login
+			        FROM memberInfo
+                    <where>
+                         <if test="searchValue != null and searchValue != ''">
+			                  <include refid="where-list"/>
+		                 </if>
+	                </where>
+	                ORDER BY userIdx DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	
+
+	</select>
+	
+	
+</mapper>

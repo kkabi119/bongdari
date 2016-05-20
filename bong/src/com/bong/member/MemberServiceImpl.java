@@ -72,6 +72,36 @@ public class MemberServiceImpl implements MemberService{
 		return dto;
 	}
 	@Override
+	public Member readMemberInfo(String userIdx) {
+		Member dto=null;
+		try {
+			dto=dao.getReadInformation("member.readMemberInfo", userIdx);
+			//"member. -> mapper namespace, readMemberInfo=>실행할 쿼리이름
+			
+			//전화번호 나누기
+			if(dto!=null){
+				if(dto.getUserTel()!=null){
+					String [] s=dto.getUserTel().split("-");
+					dto.setTel1(s[0]);
+					dto.setTel2(s[1]);
+					dto.setTel3(s[2]);
+				}
+			}
+			//이메일 나누기
+			if(dto!=null){
+				if(dto.getUserEmail()!=null){
+					String [] s=dto.getUserEmail().split("@");
+					dto.setEmail1(s[0]);
+					dto.setEmail2(s[1]);
+				}
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+	@Override
 	public int insertMember(Member dto, String pathname) throws Exception {
 		int result = 0;
 		try {
@@ -87,7 +117,7 @@ public class MemberServiceImpl implements MemberService{
 				dto.setUserEmail(dto.getEmail1() + "@" + dto.getEmail2());
 			int seq=dao.getIntValue("member.memberSeq");
 			dto.setUserIdx(seq);
-			
+			//사진 
 			if(dto.getUploads()!=null && !dto.getUploads().isEmpty()){
 				String memImg=fileManager.doFileUpload(dto.getUploads(), pathname);
 			    dto.setMemImg(memImg);
@@ -145,11 +175,24 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return result;
 	}
-
+   
 	@Override
 	public int deleteMember2(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public int deleteImage(String userId, String pathname, String filename) {
+		int result=0;
+		
+		try {
+	fileManager.doFileDelete(filename, pathname);
+			
+			result=dao.updateInformation("member.updateImage", userId);
+		} catch (Exception e) {
+		}
+		return result;
 	}
 
 	@Override
@@ -163,7 +206,7 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+   
 	@Override
 	public int insertAuthority(Member dto) {
 		// TODO Auto-generated method stub
@@ -193,6 +236,7 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 	
 	

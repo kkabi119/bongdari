@@ -50,7 +50,7 @@ function searchList() {
                        				 	<td class="text-center">${dto.hitCount }</td>
                        				 	<td class="text-center">
 <c:if test="${not empty dto.saveFilename}">
-                                <a href="#" class="fa fa-download"></a>
+                                <a href="<%=cp%>/club/index/notice/download?num=${dto.clubNoticeIdx}" class="fa fa-download"></a>
 </c:if>
                         				</td>
                     				</tr>

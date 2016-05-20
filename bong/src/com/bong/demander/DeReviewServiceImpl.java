@@ -88,37 +88,81 @@ public class DeReviewServiceImpl implements DeReviewService {
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		return null;
+		return dto;
 	}
 
 	@Override
 	public int updateHitCount(int num) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.updateInformation("demander.hitCountDeReview", num);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public DeReview preReadDeReview(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		DeReview dto=null;
+		try {
+			dto=dao.getReadInformation("demander.preReadDeReview", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override
 	public DeReview nextReadDeReview(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		DeReview dto=null;
+		try {
+			dto=dao.getReadInformation("demander.nextReadDeReview", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override
 	public int updateDeReview(DeReview dto, String path) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+
+		try{
+			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()) {
+				// 이전파일 지우기
+				if(dto.getSaveFilename().length()!=0)
+					fileManager.doFileDelete(dto.getSaveFilename(), path);
+				
+				String newFilename = fileManager.doFileUpload(dto.getUpload(), path);
+				if (newFilename != null) {
+					dto.setOriginalFilename(dto.getUpload().getOriginalFilename());
+					dto.setSaveFilename(newFilename);
+				}
+			}
+			dao.updateInformation("demander.updateDeReview", dto);
+			result=1;
+		} catch(Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public int deleteDeReview(int num, String saveFilename, String path) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+
+		try{
+			
+			if(saveFilename != null ) {
+			  fileManager.doFileDelete(saveFilename, path);
+			}
+			
+			dao.deleteInformation("demander.deleteDeReview", num);
+			result=1;
+		} catch(Exception e) {
+		}
+		return result;
 	}
 
 	@Override

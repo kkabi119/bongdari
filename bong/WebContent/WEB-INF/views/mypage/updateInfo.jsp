@@ -16,10 +16,10 @@ $(function(){
 });
 
 function updateInfo() {
-   var f = document.memberForm;
+   var f = document.memberUpdateForm;
    var str;
 
-    str=f.userId.value;
+   str=f.userId.value;
    if(!/^[a-z][a-z0-9_]{4,9}$/i.test(str)) { 
       $("#userId + .help-block").html("<span style='color:red;'>아이디를 확인해주세요! <span>");
       f.userId.focus();
@@ -56,11 +56,11 @@ function updateInfo() {
     else {
       $("#userName + .help-block").html("이름은 한글로 2자이상 4자 이하입니다.");
    }   
-    str=f.memImg.value;
+    str=f.uploads.value;
     if(str){
-    	if(! isImageFile(f.memImg.value)){
+    	if(! isImageFile(f.uploads.value)){
     		alert("이미지파일만 가능합니다.")
-    		f.memImg.focus();
+    		f.uploads.focus();
     		return false;
     	}
     }
@@ -116,13 +116,13 @@ function updateInfo() {
     if(mode=="created") {
           f.action = "<%=cp%>/member/register";
     } else if(mode=="update") {
-       f.action = "<%=cp%>/member/update_ok.sst";
+       f.action = "<%=cp%>/member/index/updateInfo";
     }
 
     return true;
 }
 function changeEmail() {
-    var f = document.memberForm;
+    var f = document.memberUpdateForm;
     
     var str = f.selectEmail.value;
     if(str!="direct") {
@@ -139,8 +139,8 @@ function changeEmail() {
 
 function imageDelete(){
 	if(confirm("등록된 사진을 삭제 하시겠습니까?")){
-		var url="<%=cp%>/member/imageDelete";
-		var filename="${dto.memImgname}";
+		var url="<%=cp%>/member/index/imageDelete";
+		var filename="${dto.memImg}";
 		$.post(url, {filename:filename}, function(data){
 			var isLogin=data.isLogin;
 			if(isLogin==false){
@@ -150,6 +150,11 @@ function imageDelete(){
 			
 			$("#imgPhoto").attr("src", "<%=cp%>/res/images/noimage.png");
 			$("#btnDeletePhoto").hide();
+			
+			var f = document.memberUpdateForm;
+			f.memImgname.value="";
+			f.memImg.value="";
+			
 		},"json");
 	}
 }
@@ -158,7 +163,7 @@ function imageDelete(){
 <div class="container" role="main" style="margin-top:50px;">
 
   <div class="bodyFrame">
-  <form class="form-horizontal" name="memberForm" method="post" onsubmit="return updateInfo();" enctype="multipart/form-data">
+  <form class="form-horizontal" name="memberUpdateForm" method="post" onsubmit="return updateInfo();" enctype="multipart/form-data">
     <div class="form-group" style="margin-bottom:0px;">
         <label class="col-sm-2 control-label" for="userId">아이디</label>
         <div class="col-sm-7">
@@ -198,14 +203,14 @@ function imageDelete(){
             <div class="fileinput fileinput-new" data-provides="fileinput" style="float: left;">
                 <div class="fileinput-preview thumbnail" style="width: 130px; height: 150px;"></div>
                 <div>
-                     <span class="btn btn-default wbtn btn-file"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="uploads" id="memImgname" accept="image/png, image/jpeg, image/gif"></span>
+                     <span class="btn btn-default wbtn btn-file"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="uploads" accept="image/png, image/jpeg, image/gif"></span>
                      <a href="#" class="btn btn-default wbtn fileinput-exists" data-dismiss="fileinput">삭제</a>
                 </div>
             </div>
 
             <div style="float: left; margin-left: 10px;">
                <c:if test="${not empty dto.memImgname}">
-                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img id="imgPhoto" src="<%=cp%>/uploads/memImg/${dto.memImgname}" style="width: 100%; height: 100%;"></div>
+                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img id="imgPhoto" src="<%=cp%>/uploads/memImg/${dto.memImg}" style="width: 100%; height: 100%;"></div>
                     <div style="padding-left: 15px;">
                          <span>등록 이미지</span>
                          <a id="btnDeletePhoto" href="javascript:imageDelete();" class="close" style="float: none">&times;</a>
@@ -326,7 +331,10 @@ function imageDelete(){
                   다시입력 <span class="glyphicon glyphicon-ok"></span></button>
             <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/';" style="margin-right:20px; height:40px; width:130px;">
                   수정취소 <span class="glyphicon glyphicon-remove"></span></button>
-			
+		
+		<input type="hidden" name="memImgname" value="${dto.memImgname}">	
+		<input type="hidden" name="memImg" value="${dto.memImg}">	
+		
 	
 			
   <div class="form-group">
