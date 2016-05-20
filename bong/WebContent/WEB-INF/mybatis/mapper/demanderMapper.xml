@@ -145,6 +145,35 @@
            DELETE FROM service_review WHERE serviceReviewIdx = #{serviceReviewIdx}
       </delete>
       
+    
+    <!-- 좋아요상태 -->
+    <select id="stateDeRevLike" parameterType="com.bong.demander.DeReview" resultType="Integer">
+     SELECT NVL(COUNT(*),0) FROM service_review_like 
+     WHERE userIdx=#{userIdx} AND serviceReviewIdx=#{serviceReviewIdx}
+    </select>
+    
+    <!-- 댓글 좋아요-->
+	<insert id="insertDeReviewLike" parameterType="com.bong.demander.DeReview">
+	INSERT INTO service_review_like(serviceReviewIdx, userIdx)
+	   VALUES (#{serviceReviewIdx}, #{userIdx})
+	</insert>
+	
+	<!-- 좋아요가 이미 눌렸을때 해제 되도록 -->
+	<delete id="deleteDeReviewLike" parameterType="com.bong.demander.DeReview">
+	DELETE FROM service_review_like WHERE serviceReviewIdx=#{serviceReviewIdx} AND userIdx=#{userIdx}
+	</delete>
+	
+	<!-- 
+	<update id="updateDeRevLikeCount" parameterType="com.bong.demander.DeReview">
+		UPDATE bbsReplyLike SET replyLike=#{replyLike} WHERE userId=#{userId} and replyNum=#{replyNum}
+	</update> -->
+	
+	<select id="deRevCountLike" resultType="map" 
+	           parameterType="Integer">
+	   SELECT  NVL(COUNT(*), 0 ) likeCount  
+	   FROM service_review_like WHERE serviceReviewIdx=#{serviceReviewIdx}
+	</select>
+      
 <!-- 	
 	회원 탈퇴시 게시물 삭제 .................
 	<select id="listNoticeId" parameterType="String" resultType="com.bong.club.notice.Notice">
@@ -157,6 +186,7 @@
          DELETE FROM club_notice WHERE userIdx = #{userIdx}
     </delete>
 	 -->
+	
 	
 
 </mapper>

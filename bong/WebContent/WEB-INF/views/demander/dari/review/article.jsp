@@ -6,37 +6,79 @@
 	String cp=request.getContextPath();
 %>
 <style type="text/css">
-.bbs-reply {
-    border-top: #3897f0 solid 2px; 
-    border-bottom: #3897f0 solid 2px; padding:15px;
-    margin-bottom:70px;
+.item-click {
+   color: #424951; display: inline-block; cursor: pointer;
+}
+.item-click:hover {
+   color:#000000;
+}
+.item-title {
+   color: #aaa; display: inline-block;
 }
 
-.bbs-reply-write {   
-   border-bottom: #ddd solid 2px; 
+.file-list-content {
+   position: relative;
+   display: none;
+}
+.file-list{
+  border:1px solid #2f3741;
+  width: 250px;
+  position: absolute;
+  z-index:1000;
+  padding:10px;
+  background: #fefefe;
+  
+  top: 10px;
+  left: 120px;
+}
+.file-list-item{
+    width: 240px;
+    text-overflow:ellipsis;
+    white-space: nowrap;overflow:hidden;
+    text-align: left;
+}
+
+.reply-write {
+    border: #d5d5d5 solid 1px;
     padding: 10px;
     min-height: 50px;
 }
 </style>
 <script type="text/javascript">
-//댓글 리스트
+//댓글
 $(function(){
+	$("#reply-open-close").click(function(){
+		  if($("#reply-content").is(':visible')) {
+			  $("#reply-content").fadeOut(100);
+			  $("#reply-open-close").text("댓글 ▼");
+		  } else {
+			  $("#reply-content").fadeIn(100);
+			  $("#reply-open-close").text("댓글 ▲");
+		  }
+	});
+})
+
+
+
+ $(function(){
 	listPage(1);
+	countRevLike(31);
 });
-<%-- 
+ 
 function listPage(page) {
-	var url="<%=cp%>/club/index/notice/listReply";
+	var url="<%=cp%>/demander/index/review/listReply";
 	var num="${dto.serviceReviewIdx}";
 	$.post(url, {num:num, pageNo:page}, function(data){
 		$("#listReply").html(data);
 	});
 }
 
+<%-- 
 function login() {
 	location.href="<%=cp%>/member/login";
 }
-
-//댓글 추가
+ --%>
+<%-- //댓글 추가
 function sendReply() {
 	var uid="${sessionScope.member.userId}";
 	if(! uid) {
@@ -45,10 +87,10 @@ function sendReply() {
 	}
 
 	var num="${dto.serviceReviewIdx}"; // 해당 게시물 번호
-	var content=$.trim($("#content").val());
+	var content=$.trim($("#replyContent").val());
 	if(! content ) {
 		alert("내용을 입력하세요 !!! ");
-		$("#content").focus();
+		$("#replyContent").focus();
 		return false;
 	}
 	
@@ -58,11 +100,11 @@ function sendReply() {
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/bbs/createdReply"
+		,url:"<%=cp%>/demander/index/review/createdReply"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
-			$("#content").val("");
+			$("#replyContent").val("");
 			
 			var state=data.state;
 			if(state=="true") {
@@ -79,60 +121,49 @@ function sendReply() {
 	});
 }
  --%>
-<%-- //좋아요/싫어요 개수
-function countLike(replyNum) {
-	var url="<%=cp%>/bbs/countLike";
-	$.post(url, {replyNum:replyNum}, function(data){
-		var likeCountId="#likeCount"+replyNum;
-		var disLikeCountId="#disLikeCount"+replyNum;
+ //좋아요/싫어요 개수
+ function countRevLike(serviceReviewIdx) {
+	var url="<%=cp%>/demander/index/review/countLike";
+	
+	$.post(url, {serviceReviewIdx:serviceReviewIdx}, function(data){
+		var likeCountId="#likeCount"+serviceReviewIdx;
 		var likeCount=data.likeCount;
-		var disLikeCount=data.disLikeCount;
-		
+		//alert(likeCount+"zz");
 		$(likeCountId).html(likeCount);
-		$(disLikeCountId).html(disLikeCount);
 	}, "JSON");
+	
 }
 
-//좋아요/싫어요 추가
-function sendLike(replyNum, replyLike) {
+//좋아요추가
+function sendLike(serviceReviewIdx) {
 	var uid="${sessionScope.member.userId}";
 	if(! uid) {
 		login();
 		return false;
 	}
-
-	var msg="게시물이 마음에 들지 않으십니까 ?";
-	if(replyLike==1)
-		msg="게시물에 공감하십니까 ?";
-	if(! confirm(msg))
-		return false;
+	//alert("sendLike:"+serviceReviewIdx);
 	
-	var params="replyNum="+replyNum;
-	params+="&replyLike="+replyLike;
+	var params="serviceReviewIdx="+serviceReviewIdx;
+	
 
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/bbs/replyLike"
+		,url:"<%=cp%>/demander/index/review/sendLike"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
-			
 			var state=data.state;
-			if(state=="true") {
-				countLike(replyNum);
-			} else if(state=="false") {
-				alert("좋아요/싫어요는 한번만 가능합니다. !!!");
-			} else if(state=="loginFail") {
-				login();
-			}
+			countRevLike(serviceReviewIdx);
 		}
 		,error:function(e) {
 			alert(e.responseText);
 		}
 	});
 }
+ 
+ 
 
-//댓글 삭제
+<%-- //댓글 삭제
 function deleteReply(replyNum, page) {
 	var uid="${sessionScope.member.userId}";
 	if(! uid) {
@@ -152,15 +183,15 @@ function deleteReply(replyNum, page) {
 				}
 		}, "json");
 	}
-}
+} --%>
 
 //-------------------------------------
-function deleteNotice() {
+function deleteReview() {
 <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
   var num = "${dto.serviceReviewIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/bbs/delete?" + params;
+  var url = "<%=cp%>/demander/index/review/delete?" + params;
 
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
@@ -170,19 +201,19 @@ function deleteNotice() {
 </c:if>
 }
 
-function updateBoard() {
+function updateReview() {
 <c:if test="${sessionScope.member.userId==dto.userId}">
   var num = "${dto.serviceReviewIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/bbs/update?" + params;
+  var url = "<%=cp%>/demander/index/review/update?" + params;
 
   location.href=url;
 </c:if>
 
 <c:if test="${sessionScope.member.userId!=dto.userId}">
  alert("게시물을 수정할 수  없습니다.");
-</c:if> --%>
+</c:if> 
 }
 </script>
     <section id="blog-details" class="padding-top">
@@ -191,11 +222,14 @@ function updateBoard() {
                                 <div class="post-content overflow">
                                     <h2 class="post-title bold"><a href="#">${dto.subject}</a></h2>
                                     <h3 class="post-author"><a href="#">${dto.userName}</a></h3>
-                                    
                                     <p>${dto.content}</p>
                                     <div class="post-bottom overflow">
+                               
+                                    
                                         <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-thumbs-o-up"></i>32 좋아요</a></li>
+                                        
+                                         	<li onclick="sendLike('${dto.serviceReviewIdx}')"><i class="fa fa-thumbs-o-up"></i> 좋아요 <span id="likeCount${dto.serviceReviewIdx}"> </span></li> 
+                                                                                        
                                             <li><a href="#"><i class="fa fa-comments"></i>3 댓글수</a></li>
                                             <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
                                         </ul>
@@ -205,96 +239,66 @@ function updateBoard() {
                                   			<a href="<%=cp%>/demander/index/review/download?num=${dto.serviceReviewIdx}"><span class="fa fa-download"></span> ${dto.originalFilename}</a>
                                     </div>
                                </c:if>
+                               <c:if test="${not empty preReadDto }">
+                                    <div class="post-bottom overflow" style="margin-top: 0px">
                                
+                                  			<a href="<%=cp%>/demander/index/review/article?${params}&num=${preReadDto.serviceReviewIdx}">이전글 : ${preReadDto.subject}</a>
+                              
+                                    </div>
+                                </c:if>
+                                <c:if test="${not empty nextReadDto }">    
                                     <div class="post-bottom overflow" style="margin-top: 0px">
-                                    	이전글:
-                               	<c:if test="${not empty preReadDto }">
-                                  			<a href="<%=cp%>/demander/index/review/article?${params}&num=${preReadDto.serviceReviewIdx}">${preReadDto.subject}</a>
-                             	 </c:if>
+                              
+                                  			<a href="<%=cp%>/demander/index/review/article?${params}&num=${nextReadDto.serviceReviewIdx}">다음글 : ${nextReadDto.subject}</a>
+                                
                                     </div>
-                                    
-                                    <div class="post-bottom overflow" style="margin-top: 0px">
-                            		다음글:
-                             	 <c:if test="${not empty nextReadDto }">
-                                  			<a href="<%=cp%>/demander/index/review/article?${params}&num=${nextReadDto.serviceReviewIdx}">${nextReadDto.subject}</a>
-                             	 </c:if>      
-                                    </div>
-                                    
-                                    <div class="blog-share">
-                                        <span class='st_facebook_hcount'></span>
-                                        <span class='st_twitter_hcount'></span>
-                                        <span class='st_linkedin_hcount'></span>
-                                        <span class='st_pinterest_hcount'></span>
-                                        <span class='st_email_hcount'></span>
-                                    </div>
-                                    <div class="response-area">
-                                    
-                                    <div class="bbs-reply">
-              <div class="bbs-reply-write" >
+                               </c:if>
+                               <div>
+                               		<div style="float:left; padding-top: 20px; padding-right: 10px">
+                              				<span class="item-click" id="reply-open-close">댓글 ▼</span>&nbsp;<span id="postReplyCountView" class="item-title" style="color:#424951">(5개)</span>
+                     				</div>
+                                  	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/demander/index/review/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
+                  					</div>
+                                     
+                                   <%-- <div style="float:right; padding-top: 10px;padding-bottom: 10px; ">
+                      					<button type="button" class="btn btn-info btn-sm" style="color:red;" onclick="sendLike('${dto.serviceReviewIdx}')">
+                                    	 좋아요 <span id="likeCount${dto.serviceReviewIdx}"></span></button>
+                  					</div> --%>  
+                  					
+                                    <div style="float:right; padding-top: 10px;padding-bottom: 10px;">
+                      					<button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="updateReview();"> 수정 <span class="fa fa-pencil"></span></button>
+                  					</div>
+                  					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="deleteReview();"> 삭제 <span class="fa fa-times"></span></button>
+                  					</div>
+                  				</div>
+                  					
+                  					
+                                    <div class="response-area" style="clear: both">
+                <!-- 댓글 폼 및 리스트-->                    
+               <div id="reply-content"  style="display:none; margin-top: 10px; margin-bottom: 10px;">
+               
+              <div class="reply-write" >
+                  
                   <div style="clear: both; ">
-                        <div style="float: left; "><span style="font-size:23px;">COMMENTS</span><span>  5개 </span></div>
+                        <div style="float: left; "><span style="font-size:23px;">COMMENTS</span><span></span></div>
                         <div style="float: right; text-align: right;"></div>
                   </div>
                   
                   <div style="clear: both; padding-top: 30px; ">
-                      <textarea id="shareR_content" class="form-control" rows="3" required="required"></textarea>
+                      <textarea id="replyContent" class="form-control" rows="3" required="required"></textarea>
                   </div>
+                  
                   <div style="text-align: right; padding-top: 10px;">
-                      <button type="button" class="btn btn-default" style="padding:10px 15px ;background-color:#3897f0; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="glyphicon glyphicon-ok"></span></button>
+                      <button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="fa fa-pencil"></span></button>
                   </div>           
+              
               </div>
           
               <div id="listReply"></div>
-          </div>
-                                    <ul class="media-list">
-                                        <li class="media">
-                                            <div class="post-comment">
-                                                <a class="pull-left" href="#">
-                                                    <img class="media-object" src="images/blogdetails/2.png" alt="">
-                                                </a>
-                                                <div class="media-body">
-                                                    <span><i class="fa fa-user"></i>Posted by <a href="#">Endure</a></span>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliq Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
-                                                    <ul class="nav navbar-nav post-nav">
-                                                        <li><a href="#"><i class="fa fa-clock-o"></i>February 11,2014</a></li>
-                                                        <li><a href="#"><i class="fa fa-reply"></i>Reply</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="parrent">
-                                                <ul class="media-list">
-                                                    <li class="post-comment reply">
-                                                        <a class="pull-left" href="#">
-                                                            <img class="media-object" src="images/blogdetails/3.png" alt="">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <span><i class="fa fa-user"></i>Posted by <a href="#">Endure</a></span>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut </p>
-                                                            <ul class="nav navbar-nav post-nav">
-                                                                <li><a href="#"><i class="fa fa-clock-o"></i>February 11,2014</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <div class="post-comment">
-                                                <a class="pull-left" href="#">
-                                                    <img class="media-object" src="images/blogdetails/4.png" alt="">
-                                                </a>
-                                                <div class="media-body">
-                                                    <span><i class="fa fa-user"></i>Posted by <a href="#">Endure</a></span>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliq Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
-                                                    <ul class="nav navbar-nav post-nav">
-                                                        <li><a href="#"><i class="fa fa-clock-o"></i>February 11,2014</a></li>
-                                                        <li><a href="#"><i class="fa fa-reply"></i>Reply</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        
-                                    </ul>                   
+              
+          </div>                 
                                 </div><!--/Response-area-->
                                 </div>
                             </div>

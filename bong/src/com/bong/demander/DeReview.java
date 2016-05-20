@@ -8,6 +8,11 @@ public class DeReview {
     private String demanderName;
     private String userName, userId, subject, content, created;
     private int hitCount;
+    
+    private int reviewLike;
+	private int reviewLikeCount;
+	
+    
     private MultipartFile upload;  // <input type='file' name='upload' ..
 	
 	private String saveFilename;
@@ -97,6 +102,19 @@ public class DeReview {
 	public void setServiceReviewIdx(int serviceReviewIdx) {
 		this.serviceReviewIdx = serviceReviewIdx;
 	}
+	public int getReviewLike() {
+		return reviewLike;
+	}
+	public void setReviewLike(int reviewLike) {
+		this.reviewLike = reviewLike;
+	}
+	public int getReviewLikeCount() {
+		return reviewLikeCount;
+	}
+	public void setReviewLikeCount(int reviewLikeCount) {
+		this.reviewLikeCount = reviewLikeCount;
+	}
+
 	
 	
 	

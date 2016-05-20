@@ -79,7 +79,7 @@
     	if(mode=="created")
     		f.action="<%=cp%>/demander/index/review/create";
     	else if(mode=="update")
-    		f.action="<%=cp%>/bbs/update";
+    		f.action="<%=cp%>/demander/index/review/update";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;
@@ -109,6 +109,7 @@
 						</td>
 						<td class="td1" align="center"></td>
 						<td class="td2 col-md-5 col-sm-5"></td>
+					
 					</tr>
 
 					<tr>
@@ -139,7 +140,7 @@
 							<td colspan="3" class="td3">${dto.originalFilename} <c:if
 									test="${not empty dto.originalFilename}">
                                     | <a
-										href="<%=cp%>/bbs/deleteFile?num=${dto.num}&page=${page}">삭제</a>
+										href="<%=cp%>/demander/index/review/deleteFile?num=${dto.serviceReviewIdx}&page=${page}">삭제</a>
 								</c:if>
 							</td>
 						</tr>
@@ -155,7 +156,9 @@
 								style="color: #F0AD4E;"
 								onclick="javascript:location.href='<%=cp%>/demander/index/review/list';">
 								취소</button> <c:if test="${mode=='update'}">
-								<input type="hidden" name="num" value="${dto.num}">
+								
+								
+								<input type="hidden" name="serviceReviewIdx" value="${dto.serviceReviewIdx}">
 								<input type="hidden" name="saveFilename"
 									value="${dto.saveFilename}">
 								<input type="hidden" name="originalFilename"
