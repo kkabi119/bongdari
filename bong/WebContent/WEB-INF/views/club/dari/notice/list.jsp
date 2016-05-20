@@ -41,7 +41,7 @@ function searchList() {
                     				</tr>
                 				</thead>
                 				<tbody>
-                		<c:forEach var="dto" items="${list}">
+<c:forEach var="dto" items="${list}">
 									<tr>
                         				<td class="text-center">${dto.listNum}</td>
                         				<td><a href="${urlArticle}&num=${dto.clubNoticeIdx}">${dto.subject}</a></td>
@@ -54,7 +54,7 @@ function searchList() {
 </c:if>
                         				</td>
                     				</tr>
-                    </c:forEach>
+</c:forEach>
                 				</tbody>
             				</table>
         				</div>

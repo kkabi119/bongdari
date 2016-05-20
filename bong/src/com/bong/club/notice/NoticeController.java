@@ -87,7 +87,9 @@ public class NoticeController {
         
      // 리스트의 번호
         int listNum, n = 0;
+        
         Iterator<Notice> it=list.iterator();
+        
         while(it.hasNext()) {
             Notice data = it.next();
             listNum = dataCount - (start + n - 1);

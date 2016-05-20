@@ -39,6 +39,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public List<Notice> listNotice(Map<String, Object> map) {
+		
 		List<Notice> list=null;
 		try {
 			list=dao.getListInformation("clubnotice.listNotice", map);

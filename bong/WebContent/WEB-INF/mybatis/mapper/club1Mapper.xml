@@ -1,7 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="club1">
+<mapper namespace="clubApply">
 	
-	<insert id=""></insert>
+	<sql id="where-list">
+	  <if test="searchKey=='userName'">
+	      userName=#{searchValue}
+	  </if>
+	  <if test="searchKey=='subject'">
+	      INSTR(subject, #{searchValue}) &gt; 0
+	  </if>
+	  <if test="searchKey=='content'">
+	      DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0 
+	  </if>
+	  <if test="searchKey=='created'">
+	      TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
+	      OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue}
+	  </if>
+	</sql>
+	
+	<!-- 글개수 -->
+	<select id="dataCount" parameterType="map"  resultType="Integer">
+	  SELECT NVL(COUNT(*), 0) FROM volun_bbs v
+	        JOIN club_apply a
+	        ON v.volunIdx=a.volunIdx
+	     <where>
+	     	<if test="searchValue!=null and searchValue!='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	     </where>   
+	</select>
+	
+	<!-- 신청인원 세기  -->
+		<!-- 개인회원 신청자리스트 -->
+	<select id="applyCount" parameterType="map"  resultType="Integer">
+	  SELECT NVL(COUNT(*), 0) FROM volun_bbs_memlist
+	   WHERE volunIdx=#{volunIdx}
+	</select>
+		<!-- 클럽 신청자리스트  -->
+	<select id="applyCount_club" parameterType="map"  resultType="Integer">
+	  SELECT NVL(COUNT(*), 0) 
+	  FROM club_apply_memlist c JOIN club_apply a ON c.clubApplyIdx=a.clubApplyIdx
+	  where a.volunIdx = #{volunIdx};
+	</select>
+	
+	<!-- 글리스트 -->
+	<select id="listApply" parameterType="map"
+	            resultType="com.bong.club.apply.Apply">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			     SELECT a.CLUBAPPLYIDX,v.volunIdx AS volunIdx, s.serviceName, subject, v.startDay, v.endDay, a.enabled, 
+			     		   progress, place, volunteer_type, v.volunDays, v.typeIdx1, v.typeIdx2
+            			   FROM volun_bbs v JOIN club_apply a ON v.volunIdx=a.volunIdx
+			        						JOIN serviceInfo s ON v.serviceIdx=s.serviceIdx
+                    <where>
+                         <if test="searchValue != null and searchValue != ''">
+			                  <include refid="where-list"/>
+		                 </if>
+	                </where>
+	                WHERE a.enabled=1 
+	                ORDER BY volunIdx DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	</select>
+	
+	<!-- 글보기 -->
+	<select id="readNotice" resultType="com.bong.club.notice.Notice" parameterType="Integer">
+		SELECT n.clubNoticeIdx, m.userIdx, userId, userName, subject, content
+				   ,hitCount, n.created,  n.saveFilename, n.originalFilename
+		FROM club_notice n JOIN memberInfo m ON n.userIdx=m.userIdx
+		WHERE clubNoticeIdx = #{clubNoticeIdx}
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE club_notice SET hitCount=hitCount+1 WHERE clubNoticeIdx = #{clubNoticeIdx}
+	</update>
+	
+	<!-- AND 가 필요 없는 경우 자동으로 제거 됨 -->
+	<!-- 이전글 -->
+	<select id="preReadNotice" resultType="com.bong.club.notice.Notice" 
+				parameterType="map">
+		SELECT tb.* FROM (
+			SELECT clubNoticeIdx, subject
+			      FROM club_notice n
+			      JOIN memberInfo m ON n.userIdx=m.userIdx
+                    <where>
+                         <if test="searchValue != null and searchValue != '' ">
+			                  <include refid="where-list"/>
+		                 </if>
+		               <![CDATA[
+		                 AND (clubNoticeIdx > #{num})
+		                 ]]>
+	                </where>
+				ORDER BY clubNoticeIdx ASC
+			) tb WHERE ROWNUM=1
+	</select>
+	
+	<!-- 다음글 -->
+	<select id="nextReadNotice" resultType="com.bong.club.notice.Notice" 
+				parameterType="map">
+		SELECT tb.* FROM (
+			SELECT clubNoticeIdx, subject
+			      FROM club_notice n
+			      JOIN memberInfo m ON n.userIdx=m.userIdx
+                    <where>
+                         <if test="searchValue != null and searchValue != '' ">
+			                  <include refid="where-list"/>
+		                 </if>
+		               <![CDATA[
+		                 AND (clubNoticeIdx < #{num})
+		                 ]]>
+	                </where>
+				ORDER BY clubNoticeIdx DESC
+			) tb WHERE ROWNUM=1
+	</select>
 </mapper>
