@@ -6,6 +6,9 @@
 	String cp=request.getContextPath();
 %>
 <style type="text/css">
+li{
+	color:#0099AE;
+}
 .item-click {
    color: #424951; display: inline-block; cursor: pointer;
 }
@@ -108,6 +111,7 @@ function sendReply() {
 			var state=data.state;
 			if(state=="true") {
 				listPage(1);
+				replyCount();
 			} else if(state=="false") {
 				alert("댓글을 등록하지 못했습니다. !!!");
 			} else if(state=="loginFail") {
@@ -119,7 +123,15 @@ function sendReply() {
 		}
 	});
 }
-
+//댓글 개수
+function replyCount() {
+	var num="${dto.clubNoticeIdx}";// 해당 게시물 번호
+	var url="<%=cp%>/club/index/notice/replyCount";
+	$.post(url, {num:num}, function(data){
+		var count=data.count;
+		$("#replyCountView").text("("+count+")");
+	}, "JSON");
+}
 <%-- //좋아요/싫어요 개수
 function countLike(replyNum) {
 	var url="<%=cp%>/bbs/countLike";
@@ -172,7 +184,7 @@ function sendLike(replyNum, replyLike) {
 		}
 	});
 }
-
+--%>
 //댓글 삭제
 function deleteReply(replyNum, page) {
 	var uid="${sessionScope.member.userId}";
@@ -182,19 +194,19 @@ function deleteReply(replyNum, page) {
 	}
 	
 	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/bbs/deleteReply";
+		var url="<%=cp%>/club/index/notice/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
 		        var state=data.state;
-
 				if(state=="loginFail") {
 					login();
 				} else {
 					listPage(page);
+					replyCount();
 				}
 		}, "json");
 	}
 }
---%>
+
 //-------------------------------------
 function deleteNotice() {
 <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
@@ -235,9 +247,7 @@ function updateNotice() {
                                     <p>${dto.content}</p>
                                     <div class="post-bottom overflow">
                                         <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-thumbs-o-up"></i>32 좋아요</a></li>
-                                            <li><a href="#"><i class="fa fa-comments"></i>3 댓글수</a></li>
-                                            <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
+                                            <li><i class="fa fa-clock-o"></i> ${dto.created}</li>
                                         </ul>
                                     </div>
                                <c:if test="${not empty dto.saveFilename}">
@@ -261,7 +271,7 @@ function updateNotice() {
                                </c:if>
                                <div>
                                		<div style="float:left; padding-top: 20px; padding-right: 10px">
-                              				<span class="item-click" id="reply-open-close">댓글 ▼</span>&nbsp;<span id="postReplyCountView" class="item-title" style="color:#424951">(5개)</span>
+                              				<span class="item-click" id="reply-open-close">댓글 ▼</span>&nbsp;<span id="replyCountView" class="item-title" style="color:#424951">(${replyCount})</span>
                      				</div>
                                   	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
                       					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/club/index/notice/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
@@ -292,7 +302,7 @@ function updateNotice() {
                   </div>
                   
                   <div style="text-align: right; padding-top: 10px;">
-                      <button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="fa fa-pencil"></span></button>
+                      <button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="sendReply();"> REPLY <span class="fa fa-pencil"></span></button>
                   </div>           
               
               </div>

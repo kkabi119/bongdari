@@ -50,13 +50,13 @@
         <div class="carousel-inner">
             <div class="item active">
             
-            	<div class="fill" style="background-image:url('<%=cp%>/res/images/mainslide/fill11.jpg');"></div>
+            	<div class="fill" style="background-image:url('<%=cp%>/res/images/mainslide/1234.jpg');"></div>
                 <div class="carousel-caption">
                     <h2></h2>
                 </div>
             </div>
             <div class="item">	
-                <div class="fill" style="background-image:url('<%=cp%>/res/images/mainslide/fill22.jpg');"></div>
+                <div class="fill" style="background-image:url('<%=cp%>/res/images/mainslide/12345.jpg');"></div>
                 <div class="carousel-caption">
                     <h2></h2>
                 </div>

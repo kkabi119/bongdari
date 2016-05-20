@@ -41,13 +41,14 @@ padding-top: 13px;
 				<div class="post-content overflow" style="padding:0px;">
  					<div class="bodyFrame2">
           				<h3  style="font-size:30px;"> 봉사 신청<span style="margin-left:10px;color:gray; font-size:15px;">  봉사를 신청할 수 있는 게시판입니다</span> </h3>
+ <c:if test="${dataCount!=0 }">    					
     					<div style="clear: both; height: 30px; line-height: 30px;">
-            				<div style="float: left; color:#3897f0;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 전체 132개 <span style="color:#777;">(1/10 페이지)</span> </div>
-            			
+            				<div style="float: left; color:#3897f0;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
+            					전체 ${dataCount}개 <span style="color:#777;">(${page}/${total_page}  페이지)</span> </div>
         				</div> 
         		<!-- <hr style="margin-bottom:10px; margin-top:0px; border:1px solid gray;"> -->
         		
-        				<div class="table-responsive" style="clear: both; "> <!-- 테이블 반응형 -->
+        				<div class="table-responsive" style="clear: both; ">
             				<table class="table table-hover" style="overflow:hidden;" >
                 				<thead style="min-width:100%; font-size:15px; background-color:#DFE6E8; color:#555; ">
                     				<tr >
@@ -62,7 +63,24 @@ padding-top: 13px;
                 				</thead>
                 				
                 				<tbody>
+ <!--  리스트 시작 -->
+<c:forEach var="dto" items="${list}">
 									<tr>
+                        				<td class="text-center">${dto.listNum}</td>
+                        				<td colspan="4"><a href="${urlArticle}&num=${dto.clubApplyIdx}">${dto.subject}</a></td>
+                        				<td class="text-center">${dto.startDay } ~ ${dto.endDay }</td>
+                        				<td class="text-center" >${dto.place } </td>
+                        				<td class="text-center"><a href="#">${dto.serviceName }</a></td>
+                       				 	<td class="text-center" style="">${dto.applyNum}명/10명</td>
+                       				 	<c:if test="${dto.progress.equals('모집마감')}">
+                       				 		<td class="text-center" style="font-weight:bold; color:white; font-size:15px;"> <span class="label label-default" style="padding:5px;">${dto.progress}</span></td>
+                       				 	</c:if>
+                       				 	<c:if test="${dto.progress.equals('모집중')}">
+                       				 		<td class="text-center" style="font-weight:bold; color:white; font-size:15px;"><span class="label label-warning" style="padding:5px;">${dto.progress}</span></td>
+                       				 	</c:if>
+                    				</tr>
+ </c:forEach><!-- 리스트끝 -->
+								<%-- 	<tr>
                         				<td class="text-center">1</td>
                         				<td colspan="4" style=""><a href="<%=cp%>/club/index/notice/article"></a>노원 동네주민 축제의 안전요원을 모집합니다</td>
                        				 	<td class="text-center" >2016-10-10 ~ 2016-10-13</td>
@@ -72,98 +90,14 @@ padding-top: 13px;
                         				<td class="text-center" style="font-weight:bold; color:#E0844F; ">[ 모집중 ]</td>
             						</tr>
             						
-            						<tr>
-                        				<td class="text-center">1</td>
-                        				<td colspan="4" ><a href="<%=cp%>/club/index/notice/article"></a>노원 동네주민 축제의 안전요원을 모집합니다 </td>
-                       				 	<td class="text-center">2016-10-10 ~ 2016-10-13</td>
-                       				 	<td class="text-center">중랑구 산천역</td>
-                       				 	<td class="text-center" style=""><a href="#">희망복지관</a></td>
-                        				<td class="text-center" style="">15/10명</td>
-                        				<td class="text-center" style="font-weight:bold; color:#E0844F; ">[ 모집중 ]</td>
-            						</tr>
-            						
-            						<tr>
-                        				<td class="text-center">1</td>
-                        				<td colspan="4" ><a href="<%=cp%>/club/index/notice/article"></a>노원 동네주민 축제의 안전요원을 모집합니다 </td>
-                       				 	<td class="text-center">2016-10-10 ~ 2016-10-13</td>
-                       				 	<td class="text-center">중랑구 산천역</td>
-                       				 	<td class="text-center" style=""><a href="#">희망복지관</a></td>
-                        				<td class="text-center" style="">15/10명</td>
-                        				<td class="text-center" style="font-weight:bold; color:#E0844F; ">[ 모집중 ]</td>
-            						</tr>
-            						
-            						<tr>
-                        				<td class="text-center">1</td>
-                        				<td colspan="4" ><a href="<%=cp%>/club/index/notice/article"></a>노원 동네주민 축제의 안전요원을 모집합니다 </td>
-                       				 	<td class="text-center">2016-10-10 ~ 2016-10-13</td>
-                       				 	<td class="text-center">중랑구 산천역</td>
-                       				 	<td class="text-center" style=""><a href="#">희망복지관</a></td>
-                        				<td class="text-center" style="">15/10명</td>
-                        				<td class="text-center" style="font-weight:bold; color:#E0844F; ">[ 모집중 ]</td>
-            						</tr>
-            						
-            						<tr>
-                        				<td class="text-center">1</td>
-                        				<td colspan="4" ><a href="<%=cp%>/club/index/notice/article"></a>노원 동네주민 축제의 안전요원을 모집합니다 </td>
-                       				 	<td class="text-center">2016-10-10 ~ 2016-10-13</td>
-                       				 	<td class="text-center">중랑구 산천역</td>
-                       				 	<td class="text-center" style=""><a href="#">희망복지관</a></td>
-                        				<td class="text-center" style="">15/10명</td>
-                        				<td class="text-center" style="font-weight:bold; color:#E0844F; ">[ 모집중 ]</td>
-            						</tr>
-            						
-            						<tr>
-                        				<td class="text-center">1</td>
-                        				<td colspan="4" ><a href="<%=cp%>/club/index/notice/article"></a>노원 동네주민 축제의 안전요원을 모집합니다 </td>
-                       				 	<td class="text-center">2016-10-10 ~ 2016-10-13</td>
-                       				 	<td class="text-center">중랑구 산천역</td>
-                       				 	<td class="text-center" style=""><a href="#">희망복지관</a></td>
-                        				<td class="text-center" style="">15/10명</td>
-                        				<td class="text-center" style="font-weight:bold; color:#E0844F; ">[ 모집중 ]</td>
-            						</tr>
-            						
-            						<tr>
-                        				<td class="text-center">1</td>
-                        				<td colspan="4" ><a href="<%=cp%>/club/index/notice/article"></a>노원 동네주민 축제의 안전요원을 모집합니다 </td>
-                       				 	<td class="text-center">2016-10-10 ~ 2016-10-13</td>
-                       				 	<td class="text-center">중랑구 산천역</td>
-                       				 	<td class="text-center" style=""><a href="#">희망복지관</a></td>
-                        				<td class="text-center" style="">15/10명</td>
-                        				<td class="text-center" style="font-weight:bold; color:#E0844F; ">[ 모집중 ]</td>
-            						</tr>
-            						
-            						<tr>
-                        				<td class="text-center">1</td>
-                        				<td colspan="4" ><a href="<%=cp%>/club/index/notice/article"></a>노원 동네주민 축제의 안전요원을 모집합니다 </td>
-                       				 	<td class="text-center">2016-10-10 ~ 2016-10-13</td>
-                       				 	<td class="text-center">중랑구 산천역</td>
-                       				 	<td class="text-center" style=""><a href="#">희망복지관</a></td>
-                        				<td class="text-center" style="">15/10명</td>
-                        				<td class="text-center" style="font-weight:bold; color:#E0844F; ">[ 모집중 ]</td>
-            						</tr>
-            						<tr>
-                        				<td class="text-center">1</td>
-                        				<td colspan="4" ><a href="<%=cp%>/club/index/notice/article"></a>노원 동네주민 축제의 안전요원을 모집합니다 </td>
-                       				 	<td class="text-center">2016-10-10 ~ 2016-10-13</td>
-                       				 	<td class="text-center">중랑구 산천역</td>
-                       				 	<td class="text-center" style=""><a href="#">희망복지관</a></td>
-                        				<td class="text-center" style="">15/10명</td>
-                        				<td class="text-center" style="font-weight:bold; color:#E0844F; ">[ 모집중 ]</td>
-            						</tr>
-            						<tr>
-                        				<td class="text-center">1</td>
-                        				<td colspan="4" ><a href="<%=cp%>/club/index/notice/article"></a>노원 동네주민 축제의 안전요원을 모집합니다 </td>
-                       				 	<td class="text-center">2016-10-10 ~ 2016-10-13</td>
-                       				 	<td class="text-center">중랑구 산천역</td>
-                       				 	<td class="text-center" style=""><a href="#">희망복지관</a></td>
-                        				<td class="text-center" style="">15/10명</td>
-                        				<td class="text-center" style="font-weight:bold; color:#E0844F; ">[ 모집중 ]</td>
-            						</tr>
+            						 --%>
                 				</tbody>
             				</table>
         				</div>
+  </c:if>
 
-        				<div class="paging" style="text-align: center; min-height: 30px; line-height: 30px;">
+<!------------------------------------------------ paging 처리  ----------------------------------------------------------->
+<div class="paging" style="text-align: center; min-height: 30px; line-height: 30px;">
 <c:if test="${dataCount==0 }">
                   등록된 게시물이 없습니다.
 </c:if>
@@ -195,19 +129,4 @@ padding-top: 13px;
         	</div>
         </div>
 	</div>
-    <div class="blog-pagination">
     
-		<ul class="pagination">
-			<li><a href="#">left</a></li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li class="list-page" ><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#">6</a></li>
-			<li><a href="#">7</a></li>
-			<li><a href="#">8</a></li>
-			<li><a href="#">9</a></li>
-			<li><a href="#">right</a></li>
-		</ul>
-	</div>

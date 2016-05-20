@@ -1,19 +1,13 @@
-package com.bong.club.notice;
+package com.bong.club.apply;
 
 public class Reply {
 	private int replyNum, num, listNum;
 	private String userId, userName, content, created;
-	private int answer ,userIdx;
+	private int answer;
 	private int answerCount;
 	
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 	public int getReplyNum() {
 		return replyNum;
-	}
-	public String getUserId() {
-		return userId;
 	}
 	public void setReplyNum(int replyNum) {
 		this.replyNum = replyNum;
@@ -30,11 +24,11 @@ public class Reply {
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
 	}
-	public int getUserIdx() {
-		return userIdx;
+	public String getUserId() {
+		return userId;
 	}
-	public void setUserIdx(int userIdx) {
-		this.userIdx = userIdx;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getUserName() {
 		return userName;

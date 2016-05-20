@@ -135,11 +135,14 @@
     <delete id="deleteNoticeId" parameterType="String">
          DELETE FROM club_notice WHERE userIdx = #{userIdx}
     </delete>
-
+    
+	<select id="CNRSeq" resultType="Integer">
+		SELECT club_notice_reply_seq.NEXTVAL FROM DUAL
+	</select>
 	<!-- 댓글 처리................. -->
 	<insert id="insertNoticeReply" parameterType="com.bong.club.notice.Reply">
 	INSERT INTO club_notice_reply(CNRIDX , CLUBNOTICEIDX, userIdx, content, answer)
-	   VALUES (club_notice_reply_seq.NEXTVAL, #{num},#{userIdx},
+	   VALUES (#{replyNum}, #{num},#{userIdx},
 	        #{content}, #{answer})
 	</insert>
 	
@@ -153,7 +156,7 @@
 	          parameterType="map">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		        SELECT tbreply.CNRIDX, clubNoticeIdx, userId, userName 
+		        SELECT tbreply.CNRIDX as replyNum, clubNoticeIdx as num, userId, userName 
 		                    ,content, created, tbreply.answer
 		                    ,NVL(answerCount, 0) answerCount
 		        FROM
@@ -172,7 +175,7 @@
                                  FROM club_notice_reply GROUP BY answer
 			           ) tbanswer ON tbreply.CNRIDX = tbanswer.answer
 	           )
-	           ORDER BY CNRIDX DESC
+	           ORDER BY replyNum DESC
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start}
@@ -182,11 +185,11 @@
 	<!-- 댓글별 답글 리스트 -->
 	<select id="listReplyAnswer" resultType="com.bong.club.notice.Reply" 
 	          parameterType="Integer">
-     SELECT CNRIDX, clubNoticeIdx, tbreply.userIdx, userName, content, created, answer
+     SELECT CNRIDX AS replyNum, clubNoticeIdx AS num, tbreply.userIdx, userName, content, created, answer
 	          FROM club_notice_reply tbreply 
 	          JOIN memberInfo m ON tbreply.userIdx=m.userIdx
               WHERE answer=#{answer}
-              ORDER BY CNRIDX DESC
+              ORDER BY replyNum DESC
 	</select>
 	
 	<!-- 댓글별 답글 개수 -->
@@ -199,15 +202,15 @@
 	<delete id="deleteReply" parameterType="map">
 	DELETE club_notice_reply WHERE
 	    <if test="mode == 'num' ">
-			 clubNoticeIdx=#{clubNoticeIdx}
+			 clubNoticeIdx=#{num}
 		</if>
 	    <if test="mode == 'reply' ">
 			 CNRIDX IN 
-               (SELECT CNRIDX FROM club_notice_reply START WITH  CNRIDX = #{CNRIDX}
+               (SELECT CNRIDX FROM club_notice_reply START WITH  CNRIDX = #{replyNum}
 	            CONNECT BY PRIOR CNRIDX = answer)
 		</if>
 	    <if test="mode == 'answer' ">
-			 CNRIDX=#{CNRIDX}
+			 CNRIDX=#{replyNum}
 		</if>
 	</delete>
 	

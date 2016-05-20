@@ -7,13 +7,12 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
-<script type="text/javascript">
-function searchList() {
-	var f=document.searchForm;
-	f.action="<%=cp%>/club/index/notice/list";
-	f.submit();
-}
+<link rel="stylesheet" href="<%=cp%>/res/css/fileinput.css" type="text/css">
 
+<script type="text/javascript" src="<%=cp%>/res/js/util.js"></script>
+<script type="text/javascript" src="<%=cp%>/res/js/fileinput.js"></script>
+
+<script type="text/javascript">
 </script>
 
 	<div class="row">
@@ -21,10 +20,9 @@ function searchList() {
 			<div class="single-blog two-column">
 				<div class="post-content overflow">
  					<div class="bodyFrame2">
-          				<h1 style="color:#5bc0de"><i class="fa fa-bell"></i>공지사항 </h1>
-    		<c:if test="${dataCount!=0 }">
+          				<h1 style="color:#5bc0de"><i class="fa fa-bell"></i>나의 봉사신청 현황</h1>
     					<div style="clear: both; height: 30px; line-height: 30px;">
-            				<div style="float: left;">${dataCount}개(${page}/${total_page} 페이지)</div>
+            				<div style="float: left;">1개(1/10 페이지)</div>
             				<div style="float: right;">&nbsp;</div>
         				</div>
         
@@ -33,32 +31,30 @@ function searchList() {
                 				<thead>
                     				<tr>
                         				<th class="text-center" style="width: 70px;">번호</th>
-                        				<th >제목</th>
-                        				<th class="text-center" style="width: 100px;">글쓴이</th>
-                        				<th class="text-center" style="width: 100px;">날짜</th>
-                       				 	<th class="text-center" style="width: 70px;">조회수</th>
-                        				<th class="text-center" style="width: 50px;">첨부</th>
+                        				<th class="text-left" style="width: 50px;">봉사명</th>
+                        				<th class="text-center" style="width: 50px;">봉사주기</th>
+                        				<th class="text-center" style="width: 50px;">봉사지역</th>
+                       				 	<th class="text-center" style="width: 70px;">봉사기간</th>
+                        				<th class="text-center" style="width: 50px;">봉사분야</th>
+                        				<th class="text-center" style="width: 50px;">봉사자유형</th>
+                        				<th class="text-center" style="width: 50px;">신청현황</th>
                     				</tr>
                 				</thead>
                 				<tbody>
-<c:forEach var="dto" items="${list}">
 									<tr>
-                        				<td class="text-center">${dto.listNum}</td>
-                        				<td><a href="${urlArticle}&num=${dto.clubNoticeIdx}">${dto.subject}</a></td>
-                        				<td class="text-center">${dto.userName }</td>
-                       				 	<td class="text-center">${dto.created }</td>
-                       				 	<td class="text-center">${dto.hitCount }</td>
-                       				 	<td class="text-center">
-<c:if test="${not empty dto.saveFilename}">
-                                <a href="<%=cp%>/club/index/notice/download?num=${dto.clubNoticeIdx}" class="fa fa-download"></a>
-</c:if>
-                        				</td>
+                        				<td class="text-center">6</td>
+                        				<td><a href="<%=cp%>/club/index/notice/article">노인봉사</a></td>
+                        				<td class="text-center">정기</td>
+                       				 	<td class="text-center">서울시종로구</td>
+                       				 	<td class="text-center">2016-06-01</td>
+                       				 	<td class="text-center">노인 복지</td>
+                       				 	<td class="text-center">승인</td>
+                       				 	<td class="text-center">노인 복지 동아리</td>
                     				</tr>
-</c:forEach>
                 				</tbody>
             				</table>
         				</div>
-				</c:if>
+
         				<div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
 <c:if test="${dataCount==0 }">
                   등록된 게시물이 없습니다.
@@ -70,13 +66,13 @@ function searchList() {
         
         				<div style="clear: both;">
         					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/club/index/notice/list';">새로고침</button>
+        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/bong/index/member/myPage;">새로고침</button>
         					</div>
         					<div style="float: left; width: 60%; text-align: center;">
         		     			<form name="searchForm" method="post" class="form-inline">
 						  			<select class="form-control input-sm" name="searchKey" style="height:32px">
-						      			<option value="subject">제목</option>
-						      			<option value="userName">작성자</option>
+						      			<option value="subject">검색어</option>
+						      			<option value="userName">지역</option>
 						      			<option value="content">내용</option>
 						      			<option value="created">등록일</option>
 						  			</select>
@@ -84,12 +80,25 @@ function searchList() {
 						  			<button type="button" class="btn btn-info" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
         		     			</form>
         					</div>
-        					<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    			<button type="button" class="btn btn-info" onclick="javascript:location.href='<%=cp%>/club/index/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
-        					</div>
+
         				</div>
         			</div>
         		</div>
         	</div>
         </div>
+	</div>
+    <div class="blog-pagination">
+		<ul class="pagination">
+			<li><a href="#">left</a></li>
+			<li><a href="#">1</a></li>
+			<li><a href="#">2</a></li>
+			<li class="active"><a href="#">3</a></li>
+			<li><a href="#">4</a></li>
+			<li><a href="#">5</a></li>
+			<li><a href="#">6</a></li>
+			<li><a href="#">7</a></li>
+			<li><a href="#">8</a></li>
+			<li><a href="#">9</a></li>
+			<li><a href="#">right</a></li>
+		</ul>
 	</div>

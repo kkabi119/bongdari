@@ -1,6 +1,8 @@
 package com.bong.mypage;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bong.member.Member;
@@ -21,24 +25,30 @@ public class MypageController {
 	
 	//내정보
 	@RequestMapping(value="/member/index/myPage", method=RequestMethod.GET)
-	public ModelAndView mypageMain(
+	public ModelAndView myPage(
 			 HttpSession session
 			) throws Exception{
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+File.separator+"uploads"+File.separator+"memImg";
-		
+		ModelAndView mav= new ModelAndView(".layout.mypage.mypageMain.내정보 보기");
+		return mav;
+	}
+	
+	@RequestMapping(value="/member/index/myInfo")
+	public ModelAndView myInfo(
+			 HttpSession session
+			) throws Exception{
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
         
 		Member dto=service.readMemberInfo(Integer.toString(info.getUserIdx()));
 		
-		
-		ModelAndView mav= new ModelAndView(".layout.mypage.myInfo.내정보 보기");
+		ModelAndView mav= new ModelAndView("mypage/myInfo");
 		mav.addObject("dto", dto);
 		return mav;
 	}
+
+	
 	//정보 수정
-/*@RequestMapping(value="/member/index/myPage", method=RequestMethod.GET)
-	public ModelAndView mypageMain(
+@RequestMapping(value="/member/index/updateInfo", method=RequestMethod.GET)
+	public ModelAndView updateInfo(
 			HttpSession session
 			
 			) throws Exception {
@@ -59,11 +69,13 @@ public class MypageController {
 		service.updateMember2(dto,pathname);
 		
 		// 회원정보수정폼
-	    ModelAndView mav=new ModelAndView(".layout.mypage.updateInfo.마이페이지 메인");
+	    ModelAndView mav=new ModelAndView("/mypage/updateInfo");
+	    mav.addObject("mode", "update");
 	    mav.addObject("dto", dto);
 	    return mav;
 	}
-	@RequestMapping(value="/member/index/myPage", method=RequestMethod.POST)
+
+	@RequestMapping(value="/member/index/updateInfo", method=RequestMethod.POST)
 	public ModelAndView updateSubmit(
 			HttpSession session
            ,Member dto){
@@ -74,13 +86,43 @@ public class MypageController {
 		dto.setUserIdx(info.getUserIdx());
 		service.updateMember2(dto, pathname);
 		
-		ModelAndView mav=new ModelAndView("redirect:/");
+		ModelAndView mav=new ModelAndView("redirect:/member/index/myPage");
 		
-		StringBuffer sb=new StringBuffer();
-		sb.append(dto.getUserName()+"님의 회원정보가 변경되었습니다.<br>");
-		
-		mav.addObject("title", "수정");
-		mav.addObject("message", sb.toString());
 		return mav;
-	}*/
+	}
+	
+	@RequestMapping(value="/member/index/myApply", method=RequestMethod.GET)
+	public ModelAndView MyApply(
+			HttpSession session
+			) throws Exception{
+		ModelAndView mav= new ModelAndView("/mypage/myApply");
+		return mav;
+	}
+	@RequestMapping(value="/member/index/imageDelete", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> imageDelete(
+			HttpSession session,
+			@RequestParam String filename
+			) throws Exception{
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		boolean isLogin=true;
+		boolean state=false;
+		
+		if(info==null){
+			isLogin=false;
+		} else {
+			String root=session.getServletContext().getRealPath("/");
+			String pathname=root+File.separator+"uploads"+
+			File.separator+"memImg";
+			service.deleteImage(info.getUserId(), pathname, filename);
+			state=true;
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("isLogin", isLogin);
+		model.put("state", state);
+		
+		return model;
+		
+	}
 }

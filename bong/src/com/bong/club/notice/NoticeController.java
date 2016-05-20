@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -87,7 +88,9 @@ public class NoticeController {
         
      // 리스트의 번호
         int listNum, n = 0;
+        
         Iterator<Notice> it=list.iterator();
+        
         while(it.hasNext()) {
             Notice data = it.next();
             listNum = dataCount - (start + n - 1);
@@ -199,6 +202,8 @@ public class NoticeController {
 		                    "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
 		}
 		
+		int replyCount=service.replyDataCount(map);
+		
 		ModelAndView mav = new ModelAndView(".four.club.dari.notice.article.공지글보기");
 		mav.addObject("dto", dto);
 		mav.addObject("preReadDto", preReadDto);
@@ -206,6 +211,7 @@ public class NoticeController {
 
 		mav.addObject("page", page);
 		mav.addObject("params", params);
+		mav.addObject("replyCount",replyCount);
 		return mav;
 	}
 	
@@ -378,8 +384,6 @@ public class NoticeController {
 			int end=current_page*numPerPage;
 			map.put("start", start);
 			map.put("end", end);
-			
-			
 			List<Reply> listReply=service.listReply(map);
 			
 			// 엔터를 <br>
@@ -392,7 +396,6 @@ public class NoticeController {
 				dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 				n++;
 			}
-			
 			// 페이징처리(인수2개 짜리 js로 처리)
 			String paging=myUtil.paging(current_page, total_page);
 			
@@ -414,7 +417,10 @@ public class NoticeController {
 				@RequestParam(value="answer") int answer
 				) throws Exception {
 			
-			List<Reply> listReplyAnswer=service.listReplyAnswer(answer);
+			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("answer", answer);
+			
+			List<Reply> listReplyAnswer=service.listReplyAnswer(map);
 			
 			// 엔터를 <br>
 			Iterator<Reply> it=listReplyAnswer.iterator();
@@ -429,6 +435,31 @@ public class NoticeController {
 			mav.addObject("listReplyAnswer", listReplyAnswer);
 			
 			return mav;
+		}
+		
+		@RequestMapping(value="/club/index/notice/replyCount",
+				method=RequestMethod.POST)
+		@ResponseBody
+		public Map<String, Object> replyCount(
+				@RequestParam(value="num") int num
+				) throws Exception {
+			// AJAX(JSON) - 댓글별 개수
+
+			String state="true";
+			int count=0;
+
+			//String tableName="b_"+blogSeq;
+	        Map<String, Object> map=new HashMap<String, Object>();
+	 		//map.put("tableName", tableName);
+	   		map.put("num", num);
+	  	    
+	   	    count=service.replyDataCount(map);
+	   	    
+	   	    Map<String, Object> model = new HashMap<>(); 
+			model.put("state", state);
+			model.put("count", count);
+			
+			return model;
 		}
 		
 		// 댓글별 답글 개수
@@ -455,7 +486,6 @@ public class NoticeController {
 		public Map<String, Object>  createdReply(
 				HttpSession session,
 				Reply dto) throws Exception {
-		
 			SessionInfo info=(SessionInfo) session.getAttribute("member");
 			String state="true";
 			if(info==null) { // 로그인이 되지 않는 경우
