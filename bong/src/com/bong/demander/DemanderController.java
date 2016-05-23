@@ -157,8 +157,13 @@ public class DemanderController {
 	
 	@RequestMapping(value="/demander/index/admin/tab1/showList")
 	public ModelAndView showList() throws Exception {
-		
 		ModelAndView mav = new ModelAndView("/demander/dari/admin/appliedMembers");
+		return mav;
+	}
+	
+	@RequestMapping(value="/demander/index/admin/tab1/eval")
+	public ModelAndView eval() throws Exception {
+		ModelAndView mav = new ModelAndView("/demander/dari/admin/eval");
 		return mav;
 	}
 	
