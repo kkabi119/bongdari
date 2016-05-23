@@ -397,5 +397,180 @@ public class DereviewController {
 		return model;
 	}
 	
+	//댓글리스트
+	@RequestMapping(value="/demander/index/review/listReply")
+	public ModelAndView listReply(
+			@RequestParam(value="num") int num,
+			@RequestParam(value="pageNo", defaultValue="1") int current_page
+			) throws Exception {
+		int numPerPage=5;
+		int total_page=0;
+		int dataCount=0;
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("serviceReviewIdx", num);
+		
+		
+		dataCount=service.DeReviewReplyDataCount(map);
+		total_page=myUtil.pageCount(numPerPage, dataCount);
+		if(current_page>total_page)
+			current_page=total_page;
+		
+		// 리스트에 출력할 데이터
+		int start=(current_page-1)*numPerPage+1;
+		int end=current_page*numPerPage;
+		map.put("start", start);
+		map.put("end", end);
+		map.put("serviceReviewIdx", num);
+		List<DeReviewReply> listReply=service.listDeReviewReply(map);
+		
+		// 엔터를 <br>
+		Iterator<DeReviewReply> it=listReply.iterator();
+		int listNum, n=0;
+		while(it.hasNext()) {
+			DeReviewReply dto=it.next();
+			listNum=dataCount-(start+n-1);
+			dto.setListNum(listNum);
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+			n++;
+		}
+		// 페이징처리(인수2개 짜리 js로 처리)
+		String paging=myUtil.paging(current_page, total_page);
+		
+		ModelAndView mav=new ModelAndView("/demander/dari/review/listReply");
+		
+		// jsp로 넘길 데이터
+		mav.addObject("listReply", listReply);
+		mav.addObject("pageNo", current_page);
+		mav.addObject("replyCount", dataCount);
+		mav.addObject("total_page", total_page);
+		mav.addObject("paging", paging);
+		
+		return mav;
+	}
+	
+	// 댓글별 답글 리스트
+			@RequestMapping(value="/demander/index/review/listReplyAnswer")
+			public ModelAndView listReplyAnswer(
+					@RequestParam(value="answer") int answer
+					) throws Exception {
+				
+				Map<String, Object> map=new HashMap<String, Object>();
+				map.put("answer", answer);
+				List<DeReviewReply> listReplyAnswer=service.listDeReviewReplyAnswer(answer);
+				
+				// 엔터를 <br>
+				Iterator<DeReviewReply> it=listReplyAnswer.iterator();
+				while(it.hasNext()) {
+					DeReviewReply dto=it.next();
+					dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+				}
+				
+				ModelAndView mav=new ModelAndView("/demander/dari/review/listReplyAnswer");
+
+				// jsp로 넘길 데이터
+				mav.addObject("listReplyAnswer", listReplyAnswer);
+				
+				return mav;
+			}
+	
+			@RequestMapping(value="/demander/index/review/replyCount",
+					method=RequestMethod.POST)
+			@ResponseBody
+			public Map<String, Object> replyCount(
+					@RequestParam(value="num") int num
+					) throws Exception {
+				// AJAX(JSON) - 댓글별 개수
+
+				String state="true";
+				int count=0;
+
+				//String tableName="b_"+blogSeq;
+		        Map<String, Object> map=new HashMap<String, Object>();
+		 		//map.put("tableName", tableName);
+		   		map.put("serviceReviewIdx", num);
+		  	    
+		   	    count=service.DeReviewReplyDataCount(map);
+		   	    
+		   	    Map<String, Object> model = new HashMap<>(); 
+				model.put("state", state);
+				model.put("count", count);
+				
+				return model;
+			}
+			
+			@RequestMapping(value="/demander/index/review/replyCountAnswer",
+					method=RequestMethod.POST)
+			@ResponseBody
+			public Map<String, Object>  replyCountAnswer(
+					@RequestParam(value="answer") int answer) throws Exception {
+				int count=0;
+				count=service.DeReviewReplyCountAnswer(answer);
+				
+		   	    // 작업 결과를 json으로 전송
+				Map<String, Object> model = new HashMap<>(); 
+				model.put("count", count);
+				return model;
+			}
+			
+			// 댓글 및 리플별 답글 추가
+			@RequestMapping(value="/demander/index/review/createdReply",
+					method=RequestMethod.POST)
+			@ResponseBody
+			public Map<String, Object>  createdReply(
+					HttpSession session,
+					DeReviewReply dto) throws Exception {
+				SessionInfo info=(SessionInfo) session.getAttribute("member");
+				String state="true";
+				if(info==null) { // 로그인이 되지 않는 경우
+					state="loginFail";
+				} else {
+					dto.setUserIdx(info.getUserIdx());
+					int result=service.insertDeReviewReply(dto);
+					if(result==0)
+						state="false";
+				}
+				
+		   	    // 작업 결과를 json으로 전송
+				Map<String, Object> model = new HashMap<>(); 
+				model.put("state", state);
+				return model;
+			}
+			
+			// 댓글 및 댓글별답글 삭제
+			@RequestMapping(value="/demander/index/review/deleteReply",
+					method=RequestMethod.POST)
+			@ResponseBody	
+			public Map<String, Object>  deleteReply(
+					HttpSession session,
+					@RequestParam(value="replyNum") int replyNum,
+					@RequestParam(value="mode") String mode
+					) throws Exception {
+				SessionInfo info=(SessionInfo) session.getAttribute("member");
+				
+				String state="true";
+				if(info==null) { // 로그인이 되지 않는 경우
+					state="loginFail";
+				} else {
+					Map<String, Object> map=new HashMap<String, Object>();
+					map.put("mode", mode);
+					map.put("replyNum", replyNum);
+
+					// 좋아요/싫어요 는 ON DELETE CASCADE 로 자동 삭제
+
+		            // 댓글삭제
+					int result=service.deleteDeReviewReply(map);
+
+					if(result==0)
+						state="false";
+				}
+				
+		   	    // 작업 결과를 json으로 전송
+				Map<String, Object> model = new HashMap<>(); 
+				model.put("state", state);
+				return model;
+			}
+			
+	
 	
 }

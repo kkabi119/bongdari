@@ -1,26 +1,17 @@
 package com.bong.demander.review;
 
 public class DeReviewReply {
+	//replyNum 에 srridx(serviceReviewReplyIndex 값이 들어간다 )
 	private int replyNum, num, listNum;
 	private String userId, userName, content, created;
-	private int answer;
+	private int answer,userIdx;
 	private int replyLike;
 	
 	private int answerCount;
 	private int likeCount;
 	private int disLikeCount;
-	public int getReplyNum() {
-		return replyNum;
-	}
-	public void setReplyNum(int replyNum) {
-		this.replyNum = replyNum;
-	}
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
-	}
+
+	
 	public int getListNum() {
 		return listNum;
 	}
@@ -81,6 +72,25 @@ public class DeReviewReply {
 	public void setDisLikeCount(int disLikeCount) {
 		this.disLikeCount = disLikeCount;
 	}
+	public int getUserIdx() {
+		return userIdx;
+	}
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
+	}
+	public int getReplyNum() {
+		return replyNum;
+	}
+	public void setReplyNum(int replyNum) {
+		this.replyNum = replyNum;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	
 	
 	
 }

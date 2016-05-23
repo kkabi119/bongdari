@@ -23,7 +23,6 @@ public interface DeReviewService {
 	
 	public int deleteDeReviewId(String userId, String root);
 	
-	
 	public int insertDeReviewReply(DeReviewReply dto);
 	public List<DeReviewReply> listDeReviewReply(Map<String, Object> map);
 	public List<DeReviewReply> listDeReviewReplyAnswer(int answer);

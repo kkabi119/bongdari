@@ -55,17 +55,30 @@
 	            resultType="com.bong.demander.review.DeReview">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
+          SELECT tbrev.servicereviewidx, tbrev.useridx,userid, username, subject
+			          , created  ,hitcount,NVL(replyCount, 0) replyCount
+        FROM
+        (
+         (
 			     SELECT serviceReviewIdx, m.userIdx,userId, userName, subject
 			           ,TO_CHAR(s.created, 'YYYY-MM-DD') created
 					   ,hitCount
 			        FROM service_review s
 	       			 JOIN memberInfo m
 	       			 ON s.userIdx=m.userIdx
-                    <where>
+	       			  <where>
                          <if test="searchValue != null and searchValue != ''">
 			                  <include refid="where-list"/>
 		                 </if>
 	                </where>
+                  )tbrev
+                  LEFT OUTER JOIN
+			        (
+			                SELECT serviceReviewIdx, count(*) replycount
+                                 FROM service_review_reply  tbreply GROUP BY serviceReviewIdx
+			        ) tbreply ON tbrev.serviceReviewIdx = tbreply.serviceReviewIdx
+	            )    
+                   
 	                ORDER BY serviceReviewIdx DESC
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
@@ -76,9 +89,13 @@
 	<!-- 리뷰 글보기 -->
 	<select id="readDeReview" parameterType="Integer" resultType="com.bong.demander.review.DeReview">
 		SELECT r.servicereviewidx, m.useridx, userid, username, subject,
-		content,hitcount, r.created, f.savefilename, f.originalfilename
+		content,hitcount, r.created, f.savefilename, f.originalfilename,NVL(replyCount, 0) replyCount
 		FROM service_review r JOIN memberinfo m ON r.useridx=m.useridx
 		JOIN service_review_file f ON r.servicereviewidx = f.servicereviewidx
+   	    LEFT OUTER JOIN
+			        ( SELECT serviceReviewIdx, count(*) replycount
+                                 FROM service_review_reply  tbreply GROUP BY serviceReviewIdx
+			        ) tbreply ON r.servicereviewidx = tbreply.servicereviewidx
 		WHERE r.servicereviewidx = #{serviceReviewIdx}
 	</select>
 	
@@ -152,7 +169,7 @@
      WHERE userIdx=#{userIdx} AND serviceReviewIdx=#{serviceReviewIdx}
     </select>
     
-    <!-- 댓글 좋아요-->
+    <!--send 좋아요-->
 	<insert id="insertDeReviewLike" parameterType="com.bong.demander.review.DeReview">
 	INSERT INTO service_review_like(serviceReviewIdx, userIdx)
 	   VALUES (#{serviceReviewIdx}, #{userIdx})
@@ -173,6 +190,104 @@
 	   SELECT  NVL(COUNT(*), 0 ) likeCount  
 	   FROM service_review_like WHERE serviceReviewIdx=#{serviceReviewIdx}
 	</select>
+      
+      
+
+    
+	<!-- 댓글 처리................. -->
+	<select id="SRRSeq" resultType="Integer">
+		SELECT service_rr_seq.NEXTVAL FROM DUAL
+	</select>
+	
+	<insert id="deRevInsertReply" parameterType="com.bong.demander.review.DeReviewReply">
+	INSERT INTO service_review_reply(srrIdx, serviceReviewIdx, userIdx, CONTENT, answer)
+    VALUES (#{replyNum}, #{num},#{userIdx},
+	       #{content}, #{answer})
+	</insert>
+	
+	
+	<select id="DeRevReplyDataCount" resultType="Integer" 
+	           parameterType="map">
+	   SELECT NVL(COUNT(*), 0)
+	        FROM service_review_reply WHERE serviceReviewIdx=#{serviceReviewIdx} AND answer=0
+	</select>
+	
+	<!-- 댓글 리스트 -->
+	<select id="listDeReviewReply" resultType="com.bong.demander.review.DeReviewReply" 
+	          parameterType="map">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT tbreply.SRRIDX as replyNum, serviceReviewIdx as num, userId, userName 
+		                    ,content, created, tbreply.answer
+		                    ,NVL(answerCount, 0) answerCount
+		        FROM
+		        (
+				      (
+					     SELECT srridx, r.serviceReviewIdx, r.userIdx, userid,
+               userName, r.content, r.created, answer
+					        FROM service_review_reply r 
+			                JOIN service_review s ON r.serviceReviewIdx=s.serviceReviewIdx
+			                JOIN memberinfo m ON r.useridx=m.useridx
+			                WHERE r.serviceReviewIdx=#{serviceReviewIdx} AND answer=0
+			           ) tbreply
+			           LEFT OUTER JOIN
+			           (
+			                SELECT answer, COUNT(*) answerCount
+                                 FROM service_review_reply GROUP BY answer
+			           ) tbanswer ON tbreply.SRRIDX = tbanswer.answer
+	           )
+	           ORDER BY replynum DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+
+	</select>
+
+    <!-- 댓글별 답글 리스트 -->
+	<select id="listDeRevReplyAnswer" resultType="com.bong.demander.review.DeReviewReply" 
+	          parameterType="Integer">
+       SELECT SRRIDX AS replyNum, serviceReviewIdx AS num, tbreply.userIdx, userName, content, created, answer
+	          FROM service_review_reply tbreply 
+	          JOIN memberInfo m ON tbreply.userIdx=m.userIdx
+              WHERE answer=#{answer}
+              ORDER BY replyNum DESC
+	</select>
+	
+    <!-- 댓글별 답글 개수 -->
+	<select id="DeRevReplyCountAnswer" resultType="Integer" 
+	           parameterType="Integer">
+	   SELECT NVL(COUNT(*), 0)
+	        FROM service_review_reply WHERE answer=#{answer}
+	</select>
+	
+	<delete id="deleteDeRevReply" parameterType="map">
+	DELETE service_review_reply WHERE
+	    <if test="mode == 'num' ">
+			 serviceReviewIdx=#{num}
+		</if>
+	    <if test="mode == 'reply' ">
+			 replyNum IN 
+               (SELECT replyNum FROM service_review_reply START WITH  replyNum = #{replyNum}
+	            CONNECT BY PRIOR replyNum = answer)
+		</if>
+	    <if test="mode == 'answer' ">
+			 SRRIDX=#{replyNum}
+		</if>
+	</delete>
+<!-- 	
+	(보류)댓글 좋아요/싫어요 처리.................
+	<insert id="insertDeRevReplyLike" parameterType="com.bong.demander.review.DeReviewReply">
+	INSERT INTO service_review_reply_like(replyNum, userId, replyLike)
+	   VALUES (#{replyNum}, #{userId}, #{replyLike})
+	</insert>
+
+	<select id="DeRevReplyCountLike" resultType="map" 
+	           parameterType="Integer">
+	   SELECT  NVL(COUNT(DECODE(replyLike, 1, 1)), 0) likeCount,
+			        NVL(COUNT(DECODE(replyLike, 0, 1)), 0) disLikeCount
+	        FROM bbsReplyLike WHERE replyNum=#{replyNum}
+	</select> -->
       
 <!-- 	
 	회원 탈퇴시 게시물 삭제 .................

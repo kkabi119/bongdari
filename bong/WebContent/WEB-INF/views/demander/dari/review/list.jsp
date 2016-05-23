@@ -104,7 +104,7 @@
       </div>
       
       <div class="col1">
-         <h3 style="font-weight:600; color:#908E8A; font-size: 16pt; line-height: 6px;">${dto.subject}</h3>
+         <h3 style="font-weight:600; color:#908E8A; font-size: 16pt; line-height: 6px;">${dto.subject}<small style="color: black; font-size: 13pt;"> &nbsp;(${dto.replyCount})</small></h3>
          <hr>
          <h5>글번호: ${dto.serviceReviewIdx}</h5>
          <h5>작성자 : ${dto.userName} &nbsp;&nbsp;|&nbsp;&nbsp; 조회수 : ${dto.hitCount}</h5> 

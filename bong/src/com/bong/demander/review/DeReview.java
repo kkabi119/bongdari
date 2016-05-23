@@ -8,6 +8,7 @@ public class DeReview {
     private String demanderName;
     private String userName, userId, subject, content, created;
     private int hitCount;
+    private int replyCount;
     
     private int reviewLike;
 	private int reviewLikeCount;
@@ -113,6 +114,12 @@ public class DeReview {
 	}
 	public void setReviewLikeCount(int reviewLikeCount) {
 		this.reviewLikeCount = reviewLikeCount;
+	}
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
 	}
 
 	
