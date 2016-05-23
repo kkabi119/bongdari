@@ -44,6 +44,88 @@ padding-top: 13px;
 
 </style>
 
+<script type="text/javascript">
+//댓글
+$(function(){
+	$("#reply-open-close").click(function(){
+		  if($("#reply-content").is(':visible')) {
+			  $("#reply-content").fadeOut(100);
+			  $("#reply-open-close").text("댓글 ▼");
+		  } else {
+			  $("#reply-content").fadeIn(100);
+			  $("#reply-open-close").text("댓글 ▲");
+		  }
+	});
+})
+
+ $(function(){
+	listPage(1);
+});
+ 
+function listPage(page) {
+	var url="<%=cp%>/club/index/apply/listReply";
+	var num="${dto.clubApplyIdx}";
+	$.post(url, {num:num, pageNo:page}, function(data){
+		$("#listReply").html(data);
+	});
+}
+
+//댓글 추가
+function sendReply() {
+	var uid="${sessionScope.member.userId}";
+	if(! uid) {
+		login();
+		return false;
+	}
+
+	var num="${dto.clubApplyIdx}"; // 해당 게시물 번호
+	var content=$.trim($("#replyContent").val());
+	if(! content ) {
+		alert("내용을 입력하세요 !!! ");
+		$("#replyContent").focus();
+		return false;
+	}
+	
+	var params="num="+num;
+	params+="&content="+content;
+	params+="&answer=0";
+	
+	$.ajax({
+		type:"POST"
+		,url:"<%=cp%>/club/index/apply/createdReply"
+		,data:params
+		,dataType:"json"
+		,success:function(data) {
+			$("#replyContent").val("");
+			
+			var state=data.state;
+			if(state=="true") {
+				listPage(1);
+				replyCount();
+			} else if(state=="false") {
+				alert("댓글을 등록하지 못했습니다. !!!");
+			} else if(state=="loginFail") {
+				login();
+			}
+		}
+		,error:function(e) {
+			alert(e.responseText);
+		}
+	});
+}
+//댓글 개수
+function replyCount() {
+	var num="${dto.clubApplyIdx}";// 해당 게시물 번호
+	alert("데이터개수우우");
+	var url="<%=cp%>/club/index/apply/replyCount";
+	$.post(url, {num:num}, function(data){
+		
+		var count=data.count;
+		$("#replyCountView").text("("+count+")");
+	}, "JSON");
+}
+</script>
+
 
 	<div class="row" style="margin-left:15px;">
 		<div class="col-md-12 col-sm-12">
@@ -60,7 +142,8 @@ padding-top: 13px;
        <hr style="margin-bottom:10px; margin-top:0px; border:1px solid gray;">
        
        
-       <div class="table-responsive" style="clear: both;">
+      
+      <div class="table-responsive" style="clear: both;">
            <div >
                <table class="table">
                     <thead >
@@ -79,17 +162,17 @@ padding-top: 13px;
                    <thead>
                     <tbody>
                         <tr >
-                        	<td bgcolor="#DFE6E8" style="color:black;;border-top:none;text-align: left; width:14%; height:45px; ">
-                        	 	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;   	봉사일정
+                        	<td bgcolor="#DFE6E8" style="color:black; border-top:none;text-align: left; height:45px; width:14%; ">
+                        	 	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;	봉사일정
                         	</td>
-                            <td style="text-align: left; width:25%; height:45px; ">${dto.startDay } ~ ${dto.endDay }</td>
+                            <td style="text-align: left;height:45px; width:230px; ">${dto.startDay } ~ ${dto.endDay }</td>
                             
-                            <td  bgcolor="#DFE6E8" style="color:black;; border-top:none; text-align: left; width:14%; height:45px; ">
+                            <td  bgcolor="#DFE6E8" style="color:black; border-top:none; text-align: left; width:14%;  ">
                             	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉사시간
                             </td>
-                           <td style="text-align: left; width:20%; height:45px; ">${dto.startTime } ~ ${dto.endTime }</td>
+                           <td style="text-align: left;  height:45px; width:150px; ">${dto.startTime } ~ ${dto.endTime }</td>
                          
-                        	<td  bgcolor="#DFE6E8" style="color:black;;border-top:none; border-top:none; text-align: left;  height:45px; ">
+                        	<td  bgcolor="#DFE6E8" style="color:black;;border-top:none; border-top:none; text-align: left;  width:14%; ">
                          		  	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉사요일
                            	</td>
                             <td colspan="3"  style="text-align: left; width:200px; height:45px; ">${dto.volunDays }</td>
@@ -102,16 +185,16 @@ padding-top: 13px;
                            	</td>
                             <td  style="text-align: left;  height:45px; "> 2016-02-22 ~ 2016-02-25 </td>
                             
-                             <td  bgcolor="#DFE6E8" style="color:black;border-top:none;text-align: left; width:12%; height:45px; ">
+                             <td  bgcolor="#DFE6E8" style="color:black;border-top:none;text-align: left; height:45px; ">
                          		  	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;모집인원
                            	</td>
-                            <td  style="text-align: left; width:200px; height:45px; "> 총 ${dto.maxNum}명 </td>
+                            <td  style="text-align: left; height:45px; "> 총 ${dto.maxNum}명 </td>
                             
                              	
-                            <td bgcolor="#DFE6E8" style="color:black;;border-top:none; text-align: left; width:12%; height:45px; ">
+                            <td bgcolor="#DFE6E8" style="color:black;;border-top:none; text-align: left;  height:45px; ">
                             		<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;신청인원
                             </td>
-                            <td colspan="3"  style="text-align: left; width:200px; height:45px; ">${dto.applyNum}명</td>
+                            <td colspan="3"  style="text-align: left; height:45px; ">${dto.applyNum}명</td>
                         </tr>
                         
                         <tr>
@@ -120,20 +203,20 @@ padding-top: 13px;
                            	</td>
                             <td style="text-align: left; height:45px; ">문화체육 > 행사보조</td>
                             
-                             <td  bgcolor="#DFE6E8" style="color:black;;border-top:none; text-align: left; width:12%; height:45px; ">
+                             <td  bgcolor="#DFE6E8" style="color:black;;border-top:none; text-align: left; height:45px; ">
                          		  	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉사자 유형
                            	</td>
-                            <td  style="text-align: left; width:200px; height:45px; "> ${dto.volunteer_type } </td>
+                            <td  style="text-align: left;height:45px; "> ${dto.volunteer_type } </td>
                             
-                            <td bgcolor="#DFE6E8" style="color:black; border-top:none; text-align: left; width:12%; height:45px; ">
+                            <td bgcolor="#DFE6E8" style="color:black; border-top:none; text-align: left;height:45px; ">
                             		<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;수요처
                             </td>
-                            <td colspan="3"  style="text-align: left; width:200px; height:45px; "><a href="#"> ${dto.serviceName}</a></td>
+                            <td colspan="3"  style="text-align: left; height:45px; "><a href="#"> ${dto.serviceName}</a></td>
                              	
                            
                         </tr>
                         <tr>
-                        	<td  bgcolor="#DFE6E8" style="color:black;;border-top:none; text-align: left; width:12%; height:45px; ">
+                        	<td  bgcolor="#DFE6E8" style="color:black;;border-top:none; text-align: left; height:45px; ">
                             		<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉사장소
                             </td>
                             <td colspan="6" style="text-align: left; width:200px; height:45px; ">
@@ -168,46 +251,74 @@ padding-top: 13px;
                           		</div><br>
                           		</td>
                         </tr>        
-                                                 
-                        <tr height="35">
-					    <td colspan="1"bgcolor="#EEEEEE" align="center">이전글</td>
-					    <td colspan="6" align="left" style="padding-left:10px;" colspan="3">
-								<a href="<%=cp%>/club/index/apply/article?${params}&num=${preReadDto.clubApplyIdx}">
-										이전글 : ${preReadDto.subject} 
-										<c:if test="${dto.progress.equals('모집마감')}">
-                       				 		<span class="text-center" style="font-weight:bold; color:white; font-size:16px;"> 
-                       				 			<span class="label label-default" style="padding:5px;">${dto.progress}</span>
-                       				 		</span>
-                       				 	</c:if>
-                       				 	<c:if test="${dto.progress.equals('모집중')}">
-                       				 		<span class="text-center" style="font-weight:bold; color:white; font-size:16px;">
-                       				 			<span class="label label-warning" style="padding:5px;">${dto.progress}</span>
-                       				 		</span>
-                       				 	</c:if>
-								</a>
-                              
-							
-						</td>
-					</tr>
-                        <tr height="35">
+                         
+                           <tr style=" border-top: 2px solid gray;  border-bottom: 2px solid gray; ">
+                     		 <td colspan="1" bgcolor="#DFE6E8" style="width:15%;color:black; text-align: left; " >
+                                     <i class="fa fa-clock-o"></i> &nbsp;작성일 
+                         	 </td>
+                         	 <td  style="">
+                         	         &nbsp;${dto.created}
+                         	 </td>
+                         	 <td colspan="1" bgcolor="#DFE6E8" style=" color:black; text-align: left; ">
+                                      <i class="fa fa-clock-o"></i> &nbsp;수정일 
+                         	 </td>
+                         	 <td style="width:160px;">
+                         		  &nbsp; ${dto.modified}
+                         	 </td>
+                         </tr>
+                         <c:if test="${not empty dto.saveFileName}">
+                             <tr style=" border-top: 1px solid gray;  border-bottom: 1px solid gray;">
+                                    <td class="post-bottom overflow" style="margin-top: 0px">
+                                  			<a href="<%=cp%>/club/index/apply/download?num=${dto.clubApplyIdx}">
+                                  				<span class="fa fa-download"></span> ${dto.originalFilename}
+                                  			</a>
+                                    </td>
+                                 </tr>
+                         </c:if>              
+                                                
+                        <c:if test="${not empty preReadDto }">
+						 	<tr height="35">
+						 	   <td colspan="1"bgcolor="#EEEEEE" align="center">이전글</td>
+						    
+							    <td colspan="6" align="left" style="padding-left:10px;" colspan="3">
+									<a href="<%=cp%>/club/index/apply/article?${params}&num=${preReadDto.clubApplyIdx}">
+											${preReadDto.subject} 
+									</a>
+									<c:if test="${preReadDto.progress.equals('모집마감')}">
+	                       				 	<span class="text-center" style="font-weight:bold; color:white; font-size:16px;"> 
+	                       				 		<span class="label label-default" style="padding:5px;">${preReadDto.progress}</span>
+	                       				 	</span>
+	                       			</c:if>
+	                       			<c:if test="${preReadDto.progress.equals('모집중')}">
+	                       				 		<span class="text-center" style="font-weight:bold; color:white; font-size:16px;">
+	                       				 			<span class="label label-warning" style="padding:5px;">${preReadDto.progress}</span>
+	                       				 		</span>
+	                       			</c:if>
+									
+								</td>
+							</tr>
+					 	</c:if>
+					 <c:if test="${not empty nextReadDto }">    
+                      <tr height="35">
 					    <td colspan="1"bgcolor="#EEEEEE" align="center">다음글</td>
 					    <td colspan="6" align="left" style="padding-left:10px;" colspan="3">
 							<a href="<%=cp%>/club/index/apply/article?${params}&num=${nextReadDto.clubApplyIdx}">
-								다음글 : ${nextReadDto.subject}
-							
-								<c:if test="${dto.progress.equals('모집마감')}">
-                       				 		<span class="text-center" style="font-weight:bold; color:white; font-size:16px;"> 
-                       				 			<span class="label label-default" style="padding:5px;">${dto.progress}</span>
-                       				 		</span>
-                       				 	</c:if>
-                       				 	<c:if test="${dto.progress.equals('모집중')}">
-                       				 		<span class="text-center" style="font-weight:bold; color:white; font-size:16px;">
-                       				 			<span class="label label-warning" style="padding:5px;">${dto.progress}</span>
-                       				 		</span>
-                       				 	</c:if>
+								 ${nextReadDto.subject}
 							</a>							
-					    </td>
-					</tr>
+							<c:if test="${nextReadDto.progress.equals('모집마감')}">
+	                       				 	<span class="text-center" style="font-weight:bold; color:white; font-size:16px;"> 
+	                       				 		<span class="label label-default" style="padding:5px;">${nextReadDto.progress}</span>
+	                       				 	</span>
+	                       	</c:if>
+	                       	<c:if test="${nextReadDto.progress.equals('모집중')}">
+	                       		<span class="text-center" style="font-weight:bold; color:white; font-size:16px;">
+	                       			<span class="label label-warning" style="padding:5px;">${nextReadDto.progress}</span>
+	                       		</span>
+	                       	</c:if>
+															
+					   	 	</td>
+						</tr>
+						</c:if>
                    </tbody>
                    <tfoot>
                     <tr>
@@ -225,14 +336,18 @@ padding-top: 13px;
           </div>
           
           <div class="bbs-reply">
+         
               <div class="bbs-reply-write" >
                   <div style="clear: both; ">
-                        <div style="float: left; "><span style="font-size:23px;">COMMENTS</span><span>  3개 </span></div>
+                        <div style="float: left; ">
+                        	<span class="item-click" id="reply-open-close" style="font-size:23px;">COMMENTS ▼</span>&nbsp;
+                        		<span id="replyCountView" class="item-title" style="color:#424951">(${replyCount}개)</span>
+                        </div>
                         <div style="float: right; text-align: right;"></div>
                   </div>
                   
                   <div style="clear: both; padding-top: 30px; ">
-                      <textarea id="shareR_content" class="form-control" rows="3" required="required"></textarea>
+                      <textarea id="replyContent" class="form-control" rows="3" required="required"></textarea>
                   </div>
                   <div style="text-align: right; padding-top: 10px;">
                       <button type="button" class="btn btn-default" style="padding:10px 15px ;background-color:#3897f0; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="glyphicon glyphicon-ok"></span></button>

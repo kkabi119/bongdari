@@ -6,11 +6,36 @@ public class Apply {
 	
 	private String clubDate, subject, content, serviceName,startDay,endDay;
 	private String progress, place, volunteer_type, volunDays, typeIdx1, typeIdx2;
-	private String startTime, endTime;
+	private String startTime, endTime, created, modified;
+	private String saveFileName, originalFileName;
 	
 	private int applyNum, maxNum; //현재 신청인원 / 수요인원수
 	private int hitCount;
 		
+	public String getSaveFileName() {
+		return saveFileName;
+	}
+	public void setSaveFileName(String saveFileName) {
+		this.saveFileName = saveFileName;
+	}
+	public String getOriginalFileName() {
+		return originalFileName;
+	}
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
+	}
+	public String getCreated() {
+		return created;
+	}
+	public void setCreated(String created) {
+		this.created = created;
+	}
+	public String getModified() {
+		return modified;
+	}
+	public void setModified(String modified) {
+		this.modified = modified;
+	}
 		public int getHitCount() {
 		return hitCount;
 	}

@@ -33,11 +33,10 @@
 	
 	
 	<!-- 글리스트 -->
-	<select id="listApply" parameterType="map"
-	            resultType="com.bong.club.apply.Apply">
+	<select id="listApply" parameterType="map" resultType="com.bong.club.apply.Apply">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-			     SELECT a.CLUBAPPLYIDX,v.volunIdx AS volunIdx, s.serviceName, subject, v.startDay, v.endDay, a.enabled,
+			     SELECT a.clubApplyIdx, v.volunIdx AS volunIdx, s.serviceName, subject, v.startDay, v.endDay, a.enabled,
 			     		   progress, place, volunteer_type, v.volunDays, v.typeIdx1, v.typeIdx2,
 			     		  ( (SELECT NVL(COUNT(*), 0) FROM club_apply_memlist c JOIN club_apply a ON c.clubApplyIdx=a.clubApplyIdx 
                        		 WHERE a.volunIdx = v.volunIdx)+
@@ -62,7 +61,7 @@
 	<!-- 글보기 -->
 	<select id="readApply" resultType="com.bong.club.apply.Apply" parameterType="Integer">
 		SELECT a.CLUBAPPLYIDX,v.volunIdx AS volunIdx, s.serviceName, subject, v.startDay, v.endDay, a.enabled, progress, place, volunteer_type, v.volunDays, v.typeIdx1, v.typeIdx2,
-				startTime, endTime, content,
+				startTime, endTime, content,v.created,v.modified,
 			     ( (SELECT NVL(COUNT(*), 0) FROM club_apply_memlist c JOIN club_apply a ON c.clubApplyIdx=a.clubApplyIdx 
                     WHERE a.volunIdx = v.volunIdx)+
                    ( SELECT NVL(COUNT(*), 0) FROM volun_bbs_memlist vb
@@ -82,9 +81,8 @@
 	<select id="preReadApply" resultType="com.bong.club.apply.Apply" 
 				parameterType="map">
 		SELECT tb.* FROM (
-			SELECT clubApplyIdx, subject
-			      FROM club_apply n
-			      JOIN memberInfo m ON n.userIdx=m.userIdx
+			SELECT clubApplyIdx, subject, progress
+			FROM volun_bbs v JOIN club_apply a ON v.volunIdx=a.volunIdx
                     <where>
                          <if test="searchValue != null and searchValue != '' ">
 			                  <include refid="where-list"/>
@@ -101,9 +99,9 @@
 	<select id="nextReadApply" resultType="com.bong.club.apply.Apply" 
 				parameterType="map">
 		SELECT tb.* FROM (
-			SELECT clubApplyIdx, subject
-			      FROM club_apply n
-			      JOIN memberInfo m ON n.userIdx=m.userIdx
+			SELECT clubApplyIdx, subject, progress
+			 FROM volun_bbs v JOIN club_apply a ON v.volunIdx=a.volunIdx
+			 
                     <where>
                          <if test="searchValue != null and searchValue != '' ">
 			                  <include refid="where-list"/>
@@ -114,5 +112,53 @@
 	                </where>
 				ORDER BY clubApplyIdx DESC
 			) tb WHERE ROWNUM=1
+	</select>
+	
+	
+	<!--								 댓글 처리	 								-->
+	
+	<select id="CARSeq" resultType="Integer">
+		SELECT club_applyR_seq.NEXTVAL FROM DUAL
+	</select>
+	
+	<insert id="insertApplyReply" parameterType="com.bong.club.apply.Reply">
+	INSERT INTO club_applyR(CARIDX , clubApplyIdx, userIdx, content, answer)
+	   VALUES (#{replyNum}, #{num},#{userIdx}, #{content}, #{answer})
+	</insert>
+	
+	<select id="replyDataCount" resultType="Integer" 
+	           parameterType="map">
+	   SELECT NVL(COUNT(*), 0)
+	        FROM club_applyR WHERE clubApplyIdx=#{num} AND answer=0
+	</select>
+	
+	<select id="listReply" resultType="com.bong.club.apply.Reply" 
+	          parameterType="map">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT tbreply.CARIDX as replyNum, clubApplyIdx as num, userId, userName 
+		                    ,content, created, tbreply.answer
+		                    ,NVL(answerCount, 0) answerCount
+		        FROM
+		        (
+				      (
+					     SELECT CARIDX, r.clubApplyIdx, r.userIdx, userid,
+               userName, r.content, r.created, answer
+					        FROM club_applyR r 
+			                JOIN club_apply a ON r.clubApplyIdx=a.clubApplyIdx
+			                JOIN memberinfo m ON r.userIdx=m.userIdx
+			                WHERE r.clubApplyIdx=#{num} AND answer=0
+			           ) tbreply
+			           LEFT OUTER JOIN
+			           (
+			                SELECT answer, COUNT(*) answerCount
+                                 FROM club_applyR GROUP BY answer
+			           ) tbanswer ON tbreply.CARIDX = tbanswer.answer
+	           )
+	           ORDER BY replyNum DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
 	</select>
 </mapper>

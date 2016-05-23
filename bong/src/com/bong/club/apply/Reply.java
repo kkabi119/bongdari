@@ -3,9 +3,19 @@ package com.bong.club.apply;
 public class Reply {
 	private int replyNum, num, listNum;
 	private String userId, userName, content, created;
-	private int answer;
+	private int answer ,userIdx;
 	private int answerCount;
 	
+	
+	public int getUserIdx() {
+		return userIdx;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public int getReplyNum() {
 		return replyNum;
 	}
@@ -24,12 +34,7 @@ public class Reply {
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
 	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -59,6 +64,10 @@ public class Reply {
 	}
 	public void setAnswerCount(int answerCount) {
 		this.answerCount = answerCount;
+	}
+	public void setUserIdx(int userIdx) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

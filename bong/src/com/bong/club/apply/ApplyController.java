@@ -39,7 +39,7 @@ public class ApplyController {
 	/*개인동아리 봉사 신청게시판*/
 	
 	///////////////////////////////////////////// 리스트 ///////////////////////////////////////////////////
-	@RequestMapping(value="club/index/apply")
+	@RequestMapping(value="club/index/apply/list")
 	public ModelAndView clubApplyList(
 			HttpServletRequest req,
 			@RequestParam(value="page", defaultValue="1") int current_page,
@@ -153,14 +153,14 @@ public class ApplyController {
 		// 스마트에디터를 사용하므로 엔터를 <br>로 변경하지 않음
         // dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
         
-		// 이전 글, 다음 글
+		/////////////////// 이전 글, 다음 글 05/23 3시시작
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
 		map.put("num", num);
 
-		/*Apply preReadDto = service.preReadApply(map);
-		Apply nextReadDto = service.nextReadApply(map);*/
+		Apply preReadDto = service.preReadApply(map);
+		Apply nextReadDto = service.nextReadApply(map);
         
 		String params = "page="+page;
 		if(searchValue.length()!=0) {
@@ -170,13 +170,108 @@ public class ApplyController {
 		
 		ModelAndView mav = new ModelAndView(".four.club.dari.apply.article.봉다리 개인페이지");
 		mav.addObject("dto", dto);
-		/*mav.addObject("preReadDto", preReadDto);
+		mav.addObject("preReadDto", preReadDto);
 		mav.addObject("nextReadDto", nextReadDto);
-*/
+
 		mav.addObject("page", page);
 		mav.addObject("params", params);
 		return mav;
 	}
+	
+	////////////////////////////////////////////////////////// 		댓글관련 	///////////////////////////////////////////////////////
+	@RequestMapping(value="/club/index/apply/createdReply",
+			method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object>  createdReply(	HttpSession session, Reply dto) throws Exception {
+		
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		String state="true";
+		if(info==null) { // 로그인이 되지 않는 경우
+			state="loginFail";
+		} else {
+			dto.setUserIdx(info.getUserIdx());
+			int result=service.insertReply(dto);
+			if(result==0)
+				state="false";
+		}
+		
+   	    // 작업 결과를 json으로 전송
+		Map<String, Object> model = new HashMap<>(); 
+		model.put("state", state);
+		return model;
+	}
+	
+	@RequestMapping(value="/club/index/apply/listReply")
+	public ModelAndView listReply(
+			@RequestParam(value="num") int num,
+			@RequestParam(value="pageNo", defaultValue="1") int current_page
+			) throws Exception {
+		int numPerPage=5;
+		int total_page=0;
+		int dataCount=0;
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("num", num);
+		
+		dataCount=service.replyDataCount(map);
+		total_page=myUtil.pageCount(numPerPage, dataCount);
+		if(current_page>total_page)
+			current_page=total_page;
+		
+		// 리스트에 출력할 데이터
+		int start=(current_page-1)*numPerPage+1;
+		int end=current_page*numPerPage;
+		map.put("start", start);
+		map.put("end", end);
+		List<Reply> listReply=service.listReply(map);
+		
+		// 엔터를 <br>
+		Iterator<Reply> it=listReply.iterator();
+		int listNum, n=0;
+		while(it.hasNext()) {
+			Reply dto=it.next();
+			listNum=dataCount-(start+n-1);
+			dto.setListNum(listNum);
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+			
+			n++;
+		}
+		// 페이징처리(인수2개 짜리 js로 처리)
+		String paging=myUtil.paging(current_page, total_page);
+		
+		ModelAndView mav=new ModelAndView("/club/dari/apply/listReply");
+		System.out.println("replycount느느는="+dataCount);
+		// jsp로 넘길 데이터
+		mav.addObject("listReply", listReply);
+		mav.addObject("pageNo", current_page);
+		mav.addObject("replyCount", dataCount);
+		mav.addObject("total_page", total_page);
+		mav.addObject("paging", paging);
+		
+		return mav;
+	}
+	@RequestMapping(value="/club/index/apply/replyCount",  method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> replyCount(	@RequestParam(value="num") int num) throws Exception {
+		// AJAX(JSON) - 댓글별 개수
+
+		String state="true";
+		int count=0;
+
+		//String tableName="b_"+blogSeq;
+        Map<String, Object> map=new HashMap<String, Object>();
+ 		//map.put("tableName", tableName);
+   		map.put("num", num);
+  	    
+   	    count=service.replyDataCount(map);
+   	    
+   	    Map<String, Object> model = new HashMap<>(); 
+		model.put("state", state);
+		model.put("count", count);
+		
+		return model;
+	}
+	
 	
 }
 	

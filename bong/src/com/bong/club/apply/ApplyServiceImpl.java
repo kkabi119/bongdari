@@ -98,33 +98,45 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 
 	@Override
-	public int updateNotice(Apply dto, String path) {
+	public int updateApply(Apply dto, String path) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int deleteNotice(int num, String saveFilename, String path) {
+	public int deleteApply(int num, String saveFilename, String path) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int deleteNoticeId(String userId, String root) {
+	public int deleteApplyId(String userId, String root) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int insertReply(Reply dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			dto.setReplyNum(dao.getIntValue("clubApply.CARSeq"));
+			result=dao.insertInformation("clubApply.insertApplyReply", dto);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public List<Reply> listReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Reply> list=null;
+		try {
+			list=dao.getListInformation("clubApply.listReply", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
 	}
 
 	@Override
@@ -135,8 +147,13 @@ public class ApplyServiceImpl implements ApplyService {
 
 	@Override
 	public int replyDataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.getIntValue("clubApply.replyDataCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
