@@ -1,4 +1,4 @@
-package com.bong.demander;
+package com.bong.demander.review;
 
 public class DeReviewReply {
 	private int replyNum, num, listNum;

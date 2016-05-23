@@ -1,4 +1,4 @@
-package com.bong.demander;
+package com.bong.demander.review;
 
 import org.springframework.web.multipart.MultipartFile;
 

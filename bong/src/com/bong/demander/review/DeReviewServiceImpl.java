@@ -1,4 +1,4 @@
-package com.bong.demander;
+package com.bong.demander.review;
 
 import java.util.List;
 import java.util.Map;

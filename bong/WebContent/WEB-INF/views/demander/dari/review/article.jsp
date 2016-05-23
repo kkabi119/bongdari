@@ -228,9 +228,9 @@ function updateReview() {
                                     
                                         <ul class="nav navbar-nav post-nav">
                                         
-                                         	<li onclick="sendLike('${dto.serviceReviewIdx}')"><i class="fa fa-thumbs-o-up"></i> 좋아요 <span id="likeCount${dto.serviceReviewIdx}"> </span></li> 
+                                         	<li onclick="sendLike('${dto.serviceReviewIdx}')"><a href="#"><i class="fa fa-thumbs-o-up"></i>좋아요 <span id="likeCount${dto.serviceReviewIdx}"> </span></a></li> 
                                                                                         
-                                            <li><a href="#"><i class="fa fa-comments"></i>3 댓글수</a></li>
+                                            <li><a href="#"><i class="fa fa-comments"></i>댓글수  3</a></li>
                                             <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
                                         </ul>
                                     </div>

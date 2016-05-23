@@ -9,18 +9,18 @@
 	</select>
 	
 	<!-- 리뷰 글넣기 -->
-	<insert id="insertDeReview" parameterType="com.bong.demander.DeReview">
+	<insert id="insertDeReview" parameterType="com.bong.demander.review.DeReview">
 	INSERT INTO service_review(servicereviewidx,subject,CONTENT,serviceidx,useridx)
 	VALUES(#{serviceReviewIdx},#{subject},#{content},'4',#{userIdx})
 	</insert>
 	
 	<!-- 리뷰 파일넣기 -->
-	<insert id="insertDeReFile" parameterType="com.bong.demander.DeReview">
+	<insert id="insertDeReFile" parameterType="com.bong.demander.review.DeReview">
 	INSERT INTO service_review_file(servicefileidx,savefilename,originalfilename,servicereviewidx
 	)VALUES(service_rf_seq.NEXTVAL,#{saveFilename, jdbcType=VARCHAR},#{originalFilename, jdbcType=VARCHAR},#{serviceReviewIdx})
 	</insert>
 	
-<!-- 리뷰 list관련 -->
+	<!-- 리뷰 list관련 -->
 	<sql id="where-list">
 	  <if test="searchKey=='userName'">
 	      userName=#{searchValue}
@@ -52,7 +52,7 @@
 	
 	<!-- 리뷰 리스트 -->
 	<select id="listDeReview" parameterType="map"
-	            resultType="com.bong.demander.DeReview">
+	            resultType="com.bong.demander.review.DeReview">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
 			     SELECT serviceReviewIdx, m.userIdx,userId, userName, subject
@@ -74,7 +74,7 @@
 	</select>
 	
 	<!-- 리뷰 글보기 -->
-	<select id="readDeReview" parameterType="Integer" resultType="com.bong.demander.DeReview">
+	<select id="readDeReview" parameterType="Integer" resultType="com.bong.demander.review.DeReview">
 		SELECT r.servicereviewidx, m.useridx, userid, username, subject,
 		content,hitcount, r.created, f.savefilename, f.originalfilename
 		FROM service_review r JOIN memberinfo m ON r.useridx=m.useridx
@@ -90,7 +90,7 @@
 	
 	<!-- AND 가 필요 없는 경우 자동으로 제거 됨 -->
 	<!-- 이전글 -->
-	<select id="preReadDeReview" resultType="com.bong.demander.DeReview" 
+	<select id="preReadDeReview" resultType="com.bong.demander.review.DeReview" 
 				parameterType="map">
 		SELECT tb.* FROM (
 			SELECT serviceReviewIdx, subject
@@ -109,7 +109,7 @@
 	</select>
 	
 	<!-- 다음글 -->
-	<select id="nextReadDeReview" resultType="com.bong.demander.DeReview" 
+	<select id="nextReadDeReview" resultType="com.bong.demander.review.DeReview" 
 				parameterType="map">
 	SELECT tb.* FROM (
 			SELECT serviceReviewIdx, subject
@@ -128,13 +128,13 @@
 	</select>
 	
 	<!-- 수정  service_review-->
-     <update id="updateDeReview" parameterType="com.bong.demander.DeReview">
+     <update id="updateDeReview" parameterType="com.bong.demander.review.DeReview">
          UPDATE service_review SET subject=#{subject}, content=#{content}
                     WHERE serviceReviewIdx = #{serviceReviewIdx}
       </update>
       
    <!-- 수정  service_review_file-->
-     <update id="updateDeReviewFile" parameterType="com.bong.demander.DeReview">
+     <update id="updateDeReviewFile" parameterType="com.bong.demander.review.DeReview">
          UPDATE service_review_file SET originalFilename=#{originalFilename, jdbcType=VARCHAR}, 
          saveFilename=#{saveFilename, jdbcType=VARCHAR}
                     WHERE serviceReviewIdx = #{serviceReviewIdx}
@@ -147,19 +147,19 @@
       
     
     <!-- 좋아요상태 -->
-    <select id="stateDeRevLike" parameterType="com.bong.demander.DeReview" resultType="Integer">
+    <select id="stateDeRevLike" parameterType="com.bong.demander.review.DeReview" resultType="Integer">
      SELECT NVL(COUNT(*),0) FROM service_review_like 
      WHERE userIdx=#{userIdx} AND serviceReviewIdx=#{serviceReviewIdx}
     </select>
     
     <!-- 댓글 좋아요-->
-	<insert id="insertDeReviewLike" parameterType="com.bong.demander.DeReview">
+	<insert id="insertDeReviewLike" parameterType="com.bong.demander.review.DeReview">
 	INSERT INTO service_review_like(serviceReviewIdx, userIdx)
 	   VALUES (#{serviceReviewIdx}, #{userIdx})
 	</insert>
 	
 	<!-- 좋아요가 이미 눌렸을때 해제 되도록 -->
-	<delete id="deleteDeReviewLike" parameterType="com.bong.demander.DeReview">
+	<delete id="deleteDeReviewLike" parameterType="com.bong.demander.review.DeReview">
 	DELETE FROM service_review_like WHERE serviceReviewIdx=#{serviceReviewIdx} AND userIdx=#{userIdx}
 	</delete>
 	
