@@ -174,38 +174,70 @@ public class DeReviewServiceImpl implements DeReviewService {
 
 	@Override
 	public int insertDeReviewReply(DeReviewReply dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			int seq = dao.getIntValue("demander.SRRSeq");
+			dto.setReplyNum(seq);
+			result = dao.insertInformation("demander.deRevInsertReply", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public List<DeReviewReply> listDeReviewReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<DeReviewReply> list=null;
+		try {
+			list=dao.getListInformation("demander.listDeReviewReply", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
 	}
 
 	@Override
 	public List<DeReviewReply> listDeReviewReplyAnswer(int answer) {
-		// TODO Auto-generated method stub
-		return null;
+		List<DeReviewReply> list=null;
+		try {
+			list=dao.getListInformation("demander.listDeRevReplyAnswer", answer);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
 	}
 
 	@Override
 	public int DeReviewReplyDataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.getIntValue("demander.DeRevReplyDataCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public int DeReviewReplyCountAnswer(int answer) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.getIntValue("demander.DeRevReplyCountAnswer", answer);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public int deleteDeReviewReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.deleteInformation("demander.deleteDeRevReply", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override

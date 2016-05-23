@@ -1,102 +1,166 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%
-   String cp = request.getContextPath();
-// String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
+	String cp = request.getContextPath();
 %>
+<style type="text/css">
+#chatMsgContainer {
+	clear: both;
+	border: 1px solid #ccc;
+	height: 277px;
+	overflow-y: scroll;
+	padding: 3px;
+	width: 100%;
+}
 
-                <div class="col-md-9 col-sm-7">
-                    <div class="row">
-                         <div class="col-md-12 col-sm-12">
-                            <div class="single-blog two-column">
-                                <div class="post-thumb">
-                                    <a href="blogdetails.html"><img src="<%=cp%>/res/images/blog/7.jpg" class="img-responsive" alt=""></a>
-                                    <div class="post-overlay">
-                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
-                                    </div>
-                                </div>
-                                <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="blogdetails.html">수요처 평가페이지!!</a></h2>
-                                    <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
-                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
-                                    <a href="#" class="read-more">View More</a>
-                                    <div class="post-bottom overflow">
-                                        <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
-                                            <li><a href="#"><i class="fa fa-heart"></i>32 Love</a></li>
-                                            <li><a href="#"><i class="fa fa-comments"></i>3 Comments</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="single-blog two-column">
-                                <div class="post-thumb">
-                                    <a href="blogdetails.html"><img src="<%=cp%>/res/images/blog/8.jpg" class="img-responsive" alt=""></a>
-                                    <div class="post-overlay">
-                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
-                                    </div>
-                                </div>
-                                <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="blogdetails.html">Advanced business cards design</a></h2>
-                                    <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
-                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
-                                    <a href="#" class="read-more">View More</a>
-                                    <div class="post-bottom overflow">
-                                        <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
-                                            <li><a href="#"><i class="fa fa-heart"></i>32 Love</a></li>
-                                            <li><a href="#"><i class="fa fa-comments"></i>3 Comments</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="single-blog two-column">
-                                <div class="post-thumb">
-                                    <a href="blogdetails.html"><img src="<%=cp%>/res/images/blog/9.jpg" class="img-responsive" alt=""></a>
-                                    <div class="post-overlay">
-                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
-                                    </div>
-                                </div>
-                                <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="blogdetails.html">Advanced business cards design</a></h2>
-                                    <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
-                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
-                                    <a href="#" class="read-more">View More</a>
-                                    <div class="post-bottom overflow">
-                                        <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
-                                            <li><a href="#"><i class="fa fa-heart"></i>32 Love</a></li>
-                                            <li><a href="#"><i class="fa fa-comments"></i>3 Comments</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="blog-pagination">
-                        <ul class="pagination">
-                          <li><a href="#">left</a></li>
-                          <li><a href="#">1</a></li>
-                          <li><a href="#">2</a></li>
-                          <li class="active"><a href="#">3</a></li>
-                          <li><a href="#">4</a></li>
-                          <li><a href="#">5</a></li>
-                          <li><a href="#">6</a></li>
-                          <li><a href="#">7</a></li>
-                          <li><a href="#">8</a></li>
-                          <li><a href="#">9</a></li>
-                          <li><a href="#">right</a></li>
-                        </ul>
-                    </div>
-                 </div>
-            </div>
-        </div>
-    </section>
-    <!--/#blog-->
+#chatMsgContainer p {
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
+
+#chatConnectList {
+	clear: both;
+	width: 100%;
+	height: 315px;
+	text-align: left;
+	padding: 5px 5px 5px 5px;
+	overflow-y: scroll;
+	border: 1px solid #ccc;
+}
+</style>
+<script type="text/javascript">
+	$(function() {
+		var listClosed = "${listClosed}";
+		/* if(listClosed=="1") {
+			$("#bodyFrame2").hide("slow", function() {
+			    alert( "Animation complete." );
+			  });
+		} */
+	});
+</script>
+<div class="bodyFrame2">
+	<div class="body-title">
+		<h3>
+			<span class="glyphicon glyphicon-send"></span> 평가하기
+		</h3>
+	</div>
+
+	<div style="clear: both;">
+		<div class="col-md-2">
+			<div style="clear: both; padding-bottom: 5px;">
+				<span class="glyphicon glyphicon-menu-right"></span> <span
+					style="font-weight: bold; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">봉사자
+					리스트</span>
+			</div>
+			<div id="chatConnectList">
+				<input type='checkbox' value='친구아이디'> 아이디
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div class="col-md-12">
+				<span class="glyphicon glyphicon-menu-right"></span> <span
+					style="font-weight: bold; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">봉사자
+					정보</span>
+			</div>
+
+			<div class="col-md-12" style="float: clear; padding-top: 25px;"></div>
+
+			<div class="col-md-12">
+				<div class="col-md-5" style="text-align: left;">
+					<img src="<%=cp%>/uploads/memImg/${dto.memImg}"
+						style="width: 150px; height: 150px;">
+				</div>
+				<div class="col-md-7">
+
+					<div class="col-md-6"
+						style="color: black;; border-top: none; text-align: left;">
+						<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
+						아이디
+					</div>
+					<div class="col-md-6" style="text-align: left;">kimchul</div>
+
+					<div class="col-md-6"
+						style="color: black;; border-top: none; text-align: left;">
+						<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;이름
+					</div>
+					<div class="col-md-6" style="text-align: left;">김철수</div>
+
+					<div class="col-md-6"
+						style="color: black;; border-top: none; text-align: left;">
+						<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;성별
+					</div>
+					<div class="col-md-6" style="text-align: left;">남자</div>
+
+					<div class="col-md-6"
+						style="color: black;; border-top: none; border-top: none; text-align: left;">
+						<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;직업
+					</div>
+					<div class="col-md-6" style="text-align: left;">학생</div>
+					<div class="col-md-6"
+						style="color: black;; border-top: none; text-align: left;">
+						<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;생년월일
+					</div>
+					<div class="col-md-6" style="text-align: left;">1989-01-20</div>
+					<div class="col-md-6"
+						style="color: black;; border-top: none; text-align: left;">
+						<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;전화번호
+					</div>
+					<div class="col-md-6" style="text-align: left;">010-0000-0000</div>
+				</div>
+			</div>
+			<div class="col-md-12" style="float: clear; padding-top: 10px;"></div>
+
+			<div class="col-md-3"
+				style="color: black;; border-top: none; border-top: none; text-align: left;">
+				<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;이메일
+			</div>
+			<div class="col-md-8" style="text-align: left;">
+				susanghanja@naver.com</div>
+
+			<div class="col-md-12" style="float: clear; padding-top: 10px;"></div>
+
+			<div class="col-md-3"
+				style="color: black;; border-top: none; text-align: left;">
+				<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;주소
+			</div>
+			<div class="col-md-8" style="text-align: left;">인천광역시 경서동</div>
+
+			<div class="col-md-12" style="float: clear; padding-top: 10px;"></div>
+
+			<div class="col-md-4">
+				<button type="button" class="btn btn-info"
+					onclick="javascript:location.href='<%=cp%>/club/index/notice/created';">
+					<span class="fa fa-arrow-right"></span>
+				</button>
+			</div>
+			
+			<div class="col-md-4" align="center">
+				<button type="button" class="btn btn-info"
+					onclick="javascript:location.href='<%=cp%>/club/index/notice/created';">
+					<span class="fa fa">완료하기</span>
+				</button>
+			</div>
+
+			<div class="col-md-4" align="right">
+				<button type="button" class="btn btn-info"
+					onclick="javascript:location.href='<%=cp%>/club/index/notice/created';">
+					<span class="fa fa-arrow-left"></span>
+				</button>
+			</div>
+		</div>
+
+		<div class="col-md-2" style="margin-bottom: 10px;">
+			<div style="clear: both; padding-bottom: 5px;">
+				<span class="glyphicon glyphicon-menu-right"></span> <span
+					style="font-weight: bold; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">확정자
+					리스트</span>
+			</div>
+			<div id="chatConnectList"></div>
+		</div>
+
+	</div>
+	<input type="hidden" name="listClosed" id="listClosed"
+		value="${listClosed}">
+</div>

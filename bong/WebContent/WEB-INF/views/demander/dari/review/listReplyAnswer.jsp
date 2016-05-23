@@ -15,7 +15,7 @@
                                                             <img class="media-object" src="images/blogdetails/3.png" alt="">
                                                         </a>
                                                         <div class="media-body">
-                                                            <span><i class="fa fa-user"></i>Posted by <a href="#">${Adto.userName }</a></span>
+                                                            <span><i class="fa fa-user"></i>Posted by <a href="#">${Adto.userName}</a></span>
                                                             <p>${Adto.content}</p>
                                                             <ul class="nav navbar-nav post-nav">
                                                                 <li><a href="#"><i class="fa fa-clock-o"></i>${Adto.created }</a></li>

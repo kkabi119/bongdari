@@ -8,10 +8,11 @@
 
 <c:if test="${dataCount!=0}">
 <script type="text/javascript">
+
 // 댓글별 답글 리스트
   function listAnswer(answer) {
 	var listReplyAnswerId="#listReplyAnswer"+answer;
-	var url="<%=cp%>/club/index/notice/listReplyAnswer";
+	var url="<%=cp%>/demander/index/review/listReplyAnswer";
 	$.post(url, {answer:answer}, function(data){
 		$(listReplyAnswerId).html(data);
 	});
@@ -19,7 +20,7 @@
 
 // 댓글별 답글 갯수
 function countAnswer(answer) {
-	var url="<%=cp%>/club/index/notice/replyCountAnswer";
+	var url="<%=cp%>/demander/index/review/replyCountAnswer";
 	$.post(url, {answer:answer}, function(data){
 		var count="("+data.count+")";
 		var answerCountId="#answerCount"+answer;
@@ -80,7 +81,7 @@ function sendReplyAnswer(num, replyNum) {
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/club/index/notice/createdReply"
+		,url:"<%=cp%>/demander/index/review/createdReply"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
@@ -111,7 +112,7 @@ function deleteReplyAnswer(replyNum, answer) {
 	}
 	
 	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/club/index/notice/deleteReply";
+		var url="<%=cp%>/demander/index/review/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"answer"}, function(data){
 		        var state=data.state;
 				if(state=="loginFail") {
@@ -133,7 +134,7 @@ function deleteReplyAnswer(replyNum, answer) {
                                                     <img class="media-object" src="images/blogdetails/2.png" alt="">
                                                 </a>
                                                 <div class="media-body">
-                                                    <span><i class="fa fa-user"></i>Posted by <a href="#">${Rdto.userName}${Rdto.num}</a></span>
+                                                    <span><i class="fa fa-user"></i>Posted by <a href="#">${Rdto.userName}</a></span>
                                                     <p>${Rdto.content}</p>
                                                     <ul class="nav navbar-nav post-nav">
                                                         <li><a href="#"><i class="fa fa-clock-o"></i>${Rdto.created}</a></li>
