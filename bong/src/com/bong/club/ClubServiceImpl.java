@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bong.club.post.Category;
 import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
 

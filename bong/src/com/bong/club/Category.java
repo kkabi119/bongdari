@@ -1,4 +1,4 @@
-package com.bong.club.post;
+package com.bong.club;
 
 public class Category {
 	private int categoryNum;
