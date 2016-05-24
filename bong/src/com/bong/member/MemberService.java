@@ -3,6 +3,8 @@ package com.bong.member;
 import java.util.List;
 import java.util.Map;
 
+import com.bong.mypage.MyApply;
+
 public interface MemberService {
 	
 	public Member readMember1(int userIdx);
@@ -25,5 +27,5 @@ public interface MemberService {
 	public List<Member> listAuthority(String userId);
 	public int deleteAuthority(Map<String, Object> map);
 
-	
+
 }
