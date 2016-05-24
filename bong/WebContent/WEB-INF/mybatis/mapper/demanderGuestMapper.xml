@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="deGuest">
+
+<insert id="insertGuest" parameterType="com.bong.demander.guest.Guest">
+	  INSERT INTO service_guest (sguestIdx, userIdx, content,serviceIdx)  
+	  VALUES (service_guest_seq.NEXTVAL, #{userIdx}, #{content},4)
+	</insert>
+	
+	<select id="dataCount" resultType="Integer">
+	SELECT NVL(COUNT(*), 0) FROM service_guest  
+	</select>
+
+     <select id="listGuest" parameterType="map"
+                 resultType="com.bong.demander.guest.Guest">
+		 SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		       SELECT sguestIdx, g.useridx, CONTENT, created,userName
+		               FROM service_guest g JOIN memberInfo m
+                   ON g.useridx=m.useridx
+		               ORDER BY sguestIdx DESC
+<![CDATA[		               
+		    ) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+]]>
+     </select>
+     
+     <delete id="deleteGuest" parameterType="Integer">
+    	 DELETE FROM service_guest  WHERE sguestIdx=#{sguestIdx}
+     </delete>
+
+</mapper>
