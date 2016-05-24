@@ -40,7 +40,7 @@
 </style>
 <script type="text/javascript" src="<%=cp%>/res/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
- <%--  function check() {
+ function check() {
         var f = document.noticeForm;
 
     	var str = f.subject.value;
@@ -57,13 +57,13 @@
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/club/index/notice/created";
+    		f.action="<%=cp%>/club/${clubSeq}/notice/created";
     	else if(mode=="update")
-    		f.action="<%=cp%>/club/index/notice/update";
+    		f.action="<%=cp%>/club/${clubSeq}/notice/update";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;
- } --%>
+ }
 </script>
 
 <div class="bodyFrame2" >
@@ -89,7 +89,7 @@
                         <tr>
                             <td class="td1">제목</td>
                             <td colspan="3" class="td3">
-                                <input type="text" name="subject" class="form-control input-sm" value="${dto.subject}${dto.clubNoticeIdx}" required="required">
+                                <input type="text" name="subject" class="form-control input-sm" value="${dto.subject}" required="required">
                             </td>
                         </tr>
                         
@@ -125,7 +125,7 @@
                         <tr>
                             <td colspan="4" style="text-align: center; padding-top: 15px;">
                                   <button type="submit" class="btn btn-info">확인 <span class="glyphicon glyphicon-ok"></span></button>
-                                  <button type="button" class="btn btn-default" style="color:#5bc0de;" onclick="javascript:location.href='<%=cp%>/club/index/notice/list';"> 취소 </button>
+                                  <button type="button" class="btn btn-default" style="color:#5bc0de;" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/notice/list';"> 취소 </button>
                                   
                                   <c:if test="${mode=='update'}">
                                       <input type="hidden" name="clubNoticeIdx" value="${dto.clubNoticeIdx}">

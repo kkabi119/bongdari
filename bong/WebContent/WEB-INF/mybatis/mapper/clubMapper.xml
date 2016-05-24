@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club">
+	<!-- 동아리 카테고리 대분류 -->
+	<select id="listClubThemeGroup" resultType="com.bong.club.ClubTheme">
+	    SELECT themeNum, subject FROM clubInfo_theme
+	          WHERE parent IS NULL
+	          ORDER BY themeNum ASC
+	</select>
+	
+	<!-- 동아리 카테고리 중분류 -->
+	<select id="listClubTheme" parameterType="Integer" resultType="com.bong.club.ClubTheme">
+	    SELECT themeNum, subject, parent FROM ClubInfo_theme
+	          WHERE parent = #{groupNum}
+	          ORDER BY themeNum ASC
+	</select>
+	
+	<!-- 동아리 카테고리를 계층적으로 가져오기 -->
+	<select id="listClubThemeAll" resultType="com.bong.club.ClubTheme">
+	    SELECT themeNum, subject, NVL(parent, 0) parent
+	    FROM
+	    (
+	         SELECT 0 themeNum, null subject, null parent
+	            FROM DUAL
+	         UNION ALL
+	         SELECT themeNum, subject, NVL(parent, 0) parent
+  	            FROM clubInfo_theme
+	    )
+	    WHERE themeNum!=0
+	    START WITH themeNum=0
+	    CONNECT BY PRIOR themeNum=parent	
+	</select>
+	
+	<!-- 생성되는 동아리 정보 저장 -->
+	<select id="clubseq" resultType="integer">
+	    SELECT club_seq.NEXTVAL FROM DUAL
+	</select>
+	
+	<insert id="insertClub" parameterType="com.bong.club.ClubInfo">
+		INSERT INTO club(clubIdx, isclub) VALUES(#{clubSeq}, 1)
+	</insert>
+	
+	<insert id="insertClubInfo" parameterType="com.bong.club.ClubInfo">
+	    INSERT INTO clubInfo(clubIdx, userId, typeidx, clubname, introduce, prologue, closed)
+	      VALUES (#{clubSeq}, #{userId}, #{themeNum}, 
+	                #{clubname}, #{introduce}, #{prologue}, #{closed})
+	</insert>
+	
+	<!-- 블로그 정보 수정 -->
+	<update id="updateClubInfo" parameterType="com.bong.club.ClubInfo">
+	    UPDATE ClubInfo SET nickName=#{nickName},
+	           themeNum=#{themeNum},
+	           title=#{title}, introduce=#{introduce}, prologue=#{prologue}, closed=#{closed}
+	           WHERE ClubSeq=#{ClubSeq}
+	</update>
+
+	<update id="updateClubProfile" parameterType="com.bong.club.ClubInfo">
+	    UPDATE ClubProfile SET isUserName=#{isUserName},
+	           photoFilename=#{photoFilename, jdbcType=VARCHAR},
+	           city=#{city}, isCity=#{isCity},
+	           gender=#{gender}, isGender=#{isGender}, 
+	           hobby=#{hobby, jdbcType=VARCHAR}, isHobby=#{isHobby}
+	           WHERE ClubSeq=#{ClubSeq}
+	</update>
+	
+    <update id="deleteClubProfileImage" parameterType="Long">
+        UPDATE ClubProfile SET photoFilename=''
+                    WHERE ClubSeq=#{ClubSeq}
+    </update>
+	
+	<!-- 블로그 정보 삭제 -->
+	<delete id="deleteClubInfo" parameterType="Long">
+	    DELETE FROM ClubInfo WHERE ClubSeq=#{ClubSeq}
+	</delete>
+
+	<delete id="deleteClubProfile" parameterType="Long">
+	    DELETE FROM ClubProfile WHERE ClubSeq=#{ClubSeq}
+	</delete>
+
+	<!-- 블로그 전체 리스트 -->
+	<sql id="Club-where">
+	   INSTR(g.subject, #{query}) &gt; 0 OR
+	   INSTR(c.subject, #{query}) &gt; 0 OR
+	   userId = #{query} OR
+	   nickName = #{query} OR
+	   INSTR(title, #{query}) &gt; 0 OR
+	   INSTR(introduce, #{query}) &gt; 0
+	</sql>
+	
+	<select id="dataCountClub" parameterType="map" resultType="Integer">
+	    SELECT NVL(COUNT(*), 0) 
+               FROM ClubInfo b
+	           JOIN ClubProfile p ON b.ClubSeq = p.ClubSeq
+	           JOIN ClubInfo_theme c ON b.themeNum=c.themeNum
+               JOIN (
+                         SELECT themeNum, subject FROM ClubInfo_theme
+                         WHERE parent IS NULL
+                       ) g ON c.parent = g.themeNum
+	     <where>
+	     	<if test="query!=null and query!='' ">
+	     	    <include refid="Club-where"/>
+	     	</if>
+	     	<if test="themeNum!=0 ">
+	     	    AND b.themeNum = #{themeNum}
+	     	</if>
+	     	<if test="user=='general' ">	     	
+	     	    AND closed=0
+	     	 </if>
+	     </where>
+	</select>
+	
+	<select id="listClub" parameterType="map" resultType="com.bong.club.ClubInfo">
+ 		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			     SELECT b.ClubSeq, userId, nickName, b.themeNum, c.parent groupNum
+			            ,title, introduce, visitorCount, closed, created, userName
+	                    ,c.subject, g.subject groupSubject
+      	           FROM ClubInfo b
+	               JOIN ClubProfile p ON b.ClubSeq = p.ClubSeq
+	               JOIN ClubInfo_theme c ON b.themeNum=c.themeNum
+	               JOIN (
+	                         SELECT themeNum, subject FROM ClubInfo_theme
+	                         WHERE parent IS NULL
+	                       ) g ON c.parent = g.themeNum
+	               <where>
+	     	          <if test="query!=null and query!='' ">
+	     	               <include refid="Club-where"/>
+	     	          </if>
+	     	          <if test="themeNum!=0 ">
+	     	               AND b.themeNum = #{themeNum}
+	     	          </if>
+	     	          <if test="user=='general' ">	     	
+	     	              AND closed=0
+	     	          </if>
+	               </where>
+	                ORDER BY visitorCount DESC, created DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+ 	</select>
+	
+	<!-- 내 블로그의 전체 정보 -->
+	<select id="readClubInfo" parameterType="map" resultType="com.bong.club.ClubInfo">
+	    SELECT clubidx, userId, typeidx, c.parent groupNum ,clubname, introduce, prologue, 
+				 b.CLUBBIRTH, closed, c.subject, g.subject groupSubject 
+			FROM ClubInfo b  
+			JOIN ClubInfo_theme c ON b.themeNum=c.themeNum 
+			JOIN ( SELECT themeNum, subject 
+				FROM ClubInfo_theme WHERE parent IS NULL ) g ON c.parent = g.themeNum  
+				WHERE ${field}=#{field_value}
+	</select>
+	
+	<!-- 개인 블로그의 메인 화면에 출력할 정보 -->
+	<select id="readClubInfoHome" parameterType="Long" resultType="com.bong.club.ClubInfo">
+	    SELECT b.ClubSeq, userId, nickName, b.themeNum, c.parent groupNum
+	                ,title, introduce, visitorCount, created, photoFilename
+	                ,c.subject, g.subject groupSubject
+	           FROM ClubInfo b
+	           JOIN ClubProfile p ON b.ClubSeq = p.ClubSeq
+	           JOIN ClubInfo_theme c ON b.themeNum=c.themeNum
+               JOIN (
+                         SELECT themeNum, subject FROM ClubInfo_theme
+                         WHERE parent IS NULL
+                       ) g ON c.parent = g.themeNum
+	           WHERE b.ClubSeq=#{ClubSeq}
+	</select>
+	
+	<!-- 개인 블로그의 프로필에 출력할 정보 -->
+	<select id="readClubInfoProfile" parameterType="Long" resultType="com.bong.club.ClubInfo">
+	    SELECT b.ClubSeq, userId, nickName, introduce  
+	              ,userName, isUserName, photoFilename, city
+	              ,isCity, gender, isGender, hobby, isHobby
+	           FROM ClubInfo b
+	           JOIN ClubProfile p ON b.ClubSeq = p.ClubSeq
+	           WHERE b.ClubSeq=#{ClubSeq}
+	</select>
+
+	<!-- 개인 블로그의 방문자수 증가 -->
+	<update id="updateClubVisitorCount" parameterType="Long" >
+	    UPDATE ClubInfo SET  visitorCount=visitorCount+1 WHERE ClubSeq=#{ClubSeq}
+	</update>
+
+	<!-- 테이블 생성 및 삭제  -->
+	<!-- 블로그 게시판 카테고리 -->
+	<update id="createClubNotice" parameterType="Integer">
+		create table club_notice_${value}(
+			CLUBNOTICEIDX     NUMBER NOT NULL
+			,USERIDX          NUMBER NOT NULL
+			,CLUBIDX          NUMBER NOT NULL 
+			,SUBJECT          VARCHAR2(255) NOT NULL 
+			,CONTENT          CLOB NOT NULL 
+			,HITCOUNT                  NUMBER DEFAULT 0       
+			,CREATED                   DATE DEFAULT SYSDATE          
+			,MODIFIED                  DATE            
+			,SAVEFILENAME              VARCHAR2(255) 
+			,ORIGINALFILENAME          VARCHAR2(255)
+			,CONSTRAINT pk_club_notice_${value} PRIMARY KEY(clubNoticeIdx)
+			,CONSTRAINT fk_club_Notice_userIdx_${value} FOREIGN KEY(userIdx)
+			  REFERENCES memberInfo(userIdx) ON DELETE CASCADE
+			,CONSTRAINT fk_club_Notice_clubIdx_${value} FOREIGN KEY(clubIdx) 
+	 REFERENCES clubInfo(clubIdx) ON DELETE CASCADE
+)
+	</update>
+	
+	<update id="createClubNoticeReply" parameterType="Integer">
+		create table club_notice_reply_${value}(
+			CNRIDX    	NUMBER NOT NULL 
+			,USERIDX   	NUMBER NOT NULL 
+			,CLUBNOTICEIDX NUMBER NOT NULL 
+			,CONTENT   	CLOB NOT NULL   
+			,CREATED    DATE  DEFAULT SYSDATE
+			,ANSWER    	NUMBER NOT NULL
+			,CONSTRAINT pk_club_notice_reply_${value} PRIMARY KEY(cnrIdx)
+			,CONSTRAINT fk_club_Noticer_userIdx_${value} FOREIGN KEY(userIdx)
+			  REFERENCES memberInfo(userIdx) ON DELETE CASCADE
+			,CONSTRAINT fk_clubNoticeIdx_${value} FOREIGN KEY(CLUBNOTICEIDX)
+	REFERENCES club_notice_${value} (CLUBNOTICEIDX) ON DELETE CASCADE
+)
+	</update>
+	
+	<update id="dropBoardCategoryTable" parameterType="Long">
+	    DROP TABLE b_${value}_category PURGE
+	</update>
+
+	<!-- 블로그 게시판 -->
+	<update id="createBoardTable" parameterType="Long">
+		CREATE TABLE b_${value}_board (
+  		  num         NUMBER NOT NULL
+  		  ,ClubSeq      NUMBER NOT NULL
+ 	      ,categoryNum  NUMBER NOT NULL
+  		  ,subject     VARCHAR2(255) NOT NULL
+  		  ,content     CLOB NOT NULL
+  		  ,hitCount    NUMBER  DEFAULT 0
+  		  ,created     DATE DEFAULT SYSDATE
+  		  ,PRIMARY   KEY(num)
+ 		  ,FOREIGN    KEY(ClubSeq) REFERENCES ClubInfo(ClubSeq)
+                     ON DELETE CASCADE
+  		  ,FOREIGN   KEY(categoryNum) REFERENCES b_${value}_category(categoryNum)
+  		             ON DELETE CASCADE
+       )
+	</update>
+
+	<update id="dropBoardTable" parameterType="Long">
+	    DROP TABLE b_${value}_board PURGE
+	</update>
+
+	<!-- 블로그 게시판 공감 -->
+	<update id="createBoardLikeTable" parameterType="Long">
+	CREATE TABLE b_${value}_boardLike (
+  	  num       NUMBER NOT NULL
+  	  ,userId   VARCHAR2(50) NOT NULL
+  	  ,PRIMARY  KEY(num, userId)
+  	  ,FOREIGN  KEY(num) REFERENCES b_${value}_board(num)
+	      ON DELETE CASCADE
+ 	   ,FOREIGN  KEY(userId) REFERENCES member2(userId)
+	      ON DELETE CASCADE
+	)
+	</update>
+	<update id="dropBoardLikeTable" parameterType="Long">
+	    DROP TABLE b_${value}_boardLike PURGE
+	</update>
+
+	<!-- 블로그 게시판 파일 -->
+	<update id="createBoardFileTable" parameterType="Long">
+	CREATE TABLE b_${value}_boardFile (
+ 	   fileNum              NUMBER NOT NULL
+ 	   ,num                  NUMBER NOT NULL
+ 	   ,saveFilename     VARCHAR2(255) NOT NULL
+ 	   ,originalFilename VARCHAR2(255) NOT NULL
+ 	   ,fileSize         NUMBER
+ 	   ,PRIMARY KEY(fileNum)
+ 	   ,FOREIGN KEY(num) REFERENCES b_${value}_board(num)
+                      ON DELETE CASCADE
+	)
+	</update>
+
+	<update id="dropBoardFileTable" parameterType="Integer">
+	    DROP TABLE b_${value}_boardFile PURGE
+	</update>
+	
+	<!-- 블로그 게시판 리플 -->
+	<update id="createBoardReplyTable" parameterType="Long">
+	CREATE TABLE b_${value}_boardReply (
+ 	   replyNum  NUMBER NOT NULL
+  	   ,num      NUMBER NOT NULL
+  	   ,userId   VARCHAR2(50) NOT NULL
+  	   ,content  VARCHAR2(4000) NOT NULL
+   	   ,created  DATE DEFAULT SYSDATE
+  	   ,answer   NUMBER NOT NULL
+ 	   ,PRIMARY  KEY(replyNum)
+   	   ,FOREIGN  KEY(num) REFERENCES b_${value}_board(num)
+	         ON DELETE CASCADE
+   	   ,FOREIGN  KEY(userId) REFERENCES member2(userId)
+	         ON DELETE CASCADE
+	)
+	</update>
+	<update id="dropBoardReplyTable" parameterType="Long">
+	    DROP TABLE b_${value}_boardReply PURGE
+	</update>
+
+ 	<!-- 블로그 게시판 리플 공감/비공감 -->
+	<update id="createBoardReplyLikeTable" parameterType="Long">
+	CREATE TABLE b_${value}_boardReplyLike (
+ 	    replyNum  NUMBER NOT NULL
+ 	    ,userId   VARCHAR2(50) NOT NULL
+ 	    ,replyLike NUMBER(1) NOT NULL
+ 	    ,PRIMARY  KEY(replyNum, userId)
+ 	    ,FOREIGN  KEY(replyNum) REFERENCES b_${value}_boardReply(replyNum)
+	         ON DELETE CASCADE
+ 	    ,FOREIGN  KEY(userId) REFERENCES member2(userId)
+	         ON DELETE CASCADE
+	)
+	</update>    
+	<update id="dropBoardReplyLikeTable" parameterType="Long">
+	    DROP TABLE b_${value}_boardReplyLike PURGE
+	</update>
+
+ 	<!-- 블로그 방명록 -->
+	<update id="createGuestTable" parameterType="Long">
+	CREATE TABLE b_${value}_guest (
+ 	    num       NUMBER NOT NULL
+	    ,ClubSeq      NUMBER NOT NULL
+	    ,userId   VARCHAR2(50) NOT NULL
+	    ,content  VARCHAR2(4000) NOT NULL
+	    ,created  DATE DEFAULT SYSDATE
+	    ,PRIMARY  KEY(num)
+ 	    ,FOREIGN    KEY(ClubSeq) REFERENCES ClubInfo(ClubSeq)
+                     ON DELETE CASCADE
+        ,FOREIGN  KEY(userId) REFERENCES member2(userId)
+	      ON DELETE CASCADE
+	)
+	</update>    
+	<update id="dropGuestTable" parameterType="Long">
+	    DROP TABLE b_${value}_guest PURGE
+	</update>
+
+ 	<!-- 블로그 포토 -->
+	<update id="createPhotoTable" parameterType="Long">
+	CREATE TABLE b_${value}_photo (
+ 	   num       NUMBER NOT NULL
+  	   ,ClubSeq      NUMBER NOT NULL
+ 	   ,subject  VARCHAR2(255) NOT NULL
+  	   ,content  VARCHAR2(4000) NOT NULL
+ 	   ,imageFilename VARCHAR2(255) NOT NULL
+ 	   ,created  DATE DEFAULT SYSDATE
+  	   ,PRIMARY  KEY(num)
+   	   ,FOREIGN    KEY(ClubSeq) REFERENCES ClubInfo(ClubSeq)
+  	                   ON DELETE CASCADE
+	)
+	</update>    
+	<update id="dropPhotoTable" parameterType="Long">
+	    DROP TABLE b_${value}_photo PURGE
+	</update>
+</mapper>

@@ -39,7 +39,6 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public List<Notice> listNotice(Map<String, Object> map) {
-		
 		List<Notice> list=null;
 		try {
 			list=dao.getListInformation("clubnotice.listNotice", map);
@@ -62,12 +61,12 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public Notice readNotice(int num) {
+	public Notice readNotice(Map<String, Object> map) {
 		Notice dto=null;
 		
 		try {
 			//게시물 가져오기
-			dto=dao.getReadInformation("clubnotice.readNotice", num);
+			dto=dao.getReadInformation("clubnotice.readNotice", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -76,12 +75,12 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public int updateHitCount(int num) {
+	public int updateHitCount(Map<String, Object> map) {
 int result=0;
 		
 		try{
 			// 조회수 증가
-			result=dao.updateInformation("clubnotice.updateHitCount", num);
+			result=dao.updateInformation("clubnotice.updateHitCount", map);
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}
@@ -141,7 +140,7 @@ int result=0;
 	}
 
 	@Override
-	public int deleteNotice(int num, String saveFilename, String path) {
+	public int deleteNotice(Map<String, Object> map, String saveFilename, String path) {
 		int result=0;
 
 		try{
@@ -150,7 +149,7 @@ int result=0;
 			  fileManager.doFileDelete(saveFilename, path);
 			}
 			
-			dao.deleteInformation("clubnotice.deleteNotice", num);
+			dao.deleteInformation("clubnotice.deleteNotice", map);
 			result=1;
 		} catch(Exception e) {
 		}
@@ -227,10 +226,10 @@ int result=0;
 	}
 
 	@Override
-	public int replyCountAnswer(int answer) {
+	public int replyCountAnswer(Map<String, Object> map) {
 		int result=0;
 		try {
-			result=dao.getIntValue("clubnotice.replyCountAnswer", answer);
+			result=dao.getIntValue("clubnotice.replyCountAnswer", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
