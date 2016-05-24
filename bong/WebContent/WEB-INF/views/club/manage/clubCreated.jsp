@@ -58,7 +58,7 @@ function themeList() {
   function sendClub() {
         var f = document.clubForm;
 
-    	var str = f.groupNum.value;
+    	 var str = f.groupNum.value;
         if(!str) {
             alert("동아리 주제를 선택 하세요. ");
             f.groupNum.focus();
@@ -86,33 +86,27 @@ function themeList() {
             return;
         }
         
-    	str = f.nickName.value;
-        if(!str || str.length>10) {
-            alert("10자 이내의 닉네임을 입력 하세요. ");
-            f.nickName.focus();
-            return;
-        }
-
     	str = f.city.value;
         if(!str) {
             alert("지역를 선택 하세요. ");
             f.city.focus();
             return;
         }
-
+/* 
     	if(f.upload.value!="") {
     		if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test(f.upload.value)) {
     			alert("사진은 이미지 파일만 가능합니다. ");
     			f.upload.focus();
     			return false;
     		}
-    	}        
+    	} */
+    	
     	str = f.prologue.value;
         if(!str) {
             alert("프롤로그를 입력하세요. ");
             f.prologue.focus();
             return false;
-        }
+        } 
 
         var mode="${mode}";
         if(mode=="created")
@@ -123,90 +117,58 @@ function themeList() {
        f.submit();
   }
 </script>
-
-<div class="bodyFrame3">
-    <div style="width:600px; padding-top:35px; clear: both; margin: 0px auto;">
+<div class="container" role="main" style="margin-top:50px;">
+  <div class="bodyFrame">
+  <div style="width:600px; padding-top:35px; clear: both; margin: 0px auto;">
         <div class="body-clubname">
               <h3> 동아리 ${mode=="created"?"생성":"수정" }</h3>
         </div>
      </div>
-    		
-    <div style="width:600px; padding-top:25px; clear: both; margin: 0px auto;">
-    		<form name="clubForm" method="post" enctype="multipart/form-data">
-			  <table style="width: 600px; margin: 0px auto; border-spacing: 0px;">
-			  <tr><td colspan="3" height="2" bgcolor="#212121"></td></tr>
-
-			  <tr align="left" height="40"> 
-			      <td width="100" bgcolor="#EEEEEE" style="text-align: center;">동아리주제</td>
-			      <td width="500" colspan="2" style="padding-left:10px;"> 
-			          <select name="groupNum" id="groupNum" class="selectField"
-			                      onchange="themeList();">
-			               <option value="">:: 대분류 ::</option>
-			               <c:forEach var="vo" items="${listGroup}">
-			                   <option value="${vo.themeNum}" ${vo.themeNum==dto.groupNum ? "selected='selected'" : ""}>${vo.subject}</option>
-			               </c:forEach>
-			          </select>
-			          <select name="themeNum" id="themeNum" class="selectField">
-			               <option value="">:: 중분류 ::</option>
-			          </select>
-			      </td>
-			  </tr>
-			  <tr><td colspan="3" height="1" bgcolor="#C3C3C3"></td></tr>
-			
-			  <tr align="left" height="40"> 
-			      <td width="100" bgcolor="#EEEEEE" style="text-align: center;">제목</td>
-			      <td width="500" colspan="2" style="padding-left:10px;"> 
-			        <input type="text" name="clubname" size="75" maxlength="100" class="boxTF" value="${dto.clubname}">
-			      </td>
-			  </tr>
-			   <tr><td colspan="3" height="1" bgcolor="#C3C3C3"></td></tr>
-			
-			  <tr align="left"> 
-			      <td width="100" bgcolor="#EEEEEE" style="text-align: center; padding-top:5px;" valign="top">동아리 소개<br>(150자 이내)</td>
-			      <td width="500" colspan="2" valign="top" style="padding:5px 0px 5px 10px;"> 
-			        <textarea name="introduce" cols="75" rows="5" class="boxTA" style="height: 50px;">${dto.introduce}</textarea>
-			      </td>
-			  </tr>
-			  <tr><td colspan="3" height="1" bgcolor="#C3C3C3"></td></tr>
-			   
-			  <tr align="left" height="40">
-			      <td width="100" bgcolor="#EEEEEE" style="text-align: center;">이름</td>
-			      <td width="250" style="padding-left:10px;"> 
-						<input type="text" name="userName" maxlength="10" class="boxTF" value="${sessionScope.member.userName}"
-						            readonly="readonly" style="width: 210px; border: none;">
-				  </td>
-                  <td style="padding-left:10px;"> 				  
-						 <input type="checkbox" name="isUserName" value="1" ${dto.isUserName=="1"?"checked='checked'":"" }> <span>공개</span>
-			      </td>
-			  </tr>
-			   <tr><td colspan="3" height="1" bgcolor="#C3C3C3"></td></tr>
-
-			  <tr align="left" height="40">
-			      <td width="100" bgcolor="#EEEEEE" style="text-align: center;">닉네임</td>
-			      <td width="500" colspan="2" style="padding-left:10px;"> 
-						<input type="text" name="nickName" style="width: 210px;" maxlength="10" class="boxTF" value="${dto.nickName}">
-			      </td>
-			  </tr>
-			   <tr><td colspan="3" height="1" bgcolor="#C3C3C3"></td></tr>
-			
-			  <tr align="left" height="40">
-			      <td width="100" bgcolor="#EEEEEE" style="text-align: center;">성별</td>
-			      <td width="250" style="padding-left:10px;"> 
-			            <select name="gender" class="selectField" style="width: 222px;">
-			                <option value="남자" ${dto.gender=="남자" ? "selected='selected'" : ""}>남자</option>
-			                <option value="여자" ${dto.gender=="여자" ? "selected='selected'" : ""}>여자</option>
-			            </select>
-				  </td>
-                  <td style="padding-left:10px;"> 				  
-						 <input type="checkbox" name="isGender" value="1" ${dto.isGender=="1"?"checked='checked'":"" }> <span>공개</span>
-			      </td>
-			  </tr>
-			   <tr><td colspan="3" height="1" bgcolor="#C3C3C3"></td></tr>
-			
-			  <tr align="left" height="40">
-			      <td width="100" bgcolor="#EEEEEE" style="text-align: center;">지역</td>
-			      <td width="250" style="padding-left:10px;"> 
-			            <select name="city" class="selectField" style="width: 222px;">
+  <form class="form-horizontal" name="clubForm" method="post" enctype="multipart/form-data">
+      <div class="form-group" style="margin-bottom:0px;">
+        <label class="col-sm-2 control-label" for="userId">주제</label>
+        <div class="col-sm-7">
+            <select name="groupNum" id="groupNum" class="form-control" onchange="themeList();" style="float:left; width:20%;margin-right: 10px">
+			<option value="">:: 대분류 ::</option>
+             	<c:forEach var="vo" items="${listGroup}">
+			          <option value="${vo.themeNum}" ${vo.themeNum==dto.groupNum ? "selected='selected'" : ""}>${vo.subject}</option>
+			    </c:forEach>
+			</select>
+			<select name="themeNum" id="themeNum" class="form-control" style="float:left; width:20%;">
+			     <option value="">:: 중분류 ::</option>
+			 </select>
+			  <p style="clear:both" class="help-block"> 주요활동분야 혹은 관심분야를 지정해주세요</p>
+        </div>
+    </div>
+    <div class="form-group" style="margin-bottom:0px;">
+        <label class="col-sm-2 control-label">동아리이름</label>
+        <div class="col-sm-7">
+            <input style="width:200px;"class="form-control" id="clubname" name="clubname" type="text" 
+                  placeholder="동아리이름"  value="${dto.clubname}" ${mode=="update" ? "readonly='readonly' style='border:none;'":""}>
+            <p class="help-block"> 의미있는 동아리의 이름을 멋있게 지어주세요</p>
+        </div>
+    </div>
+ 
+    <div class="form-group" style="margin-bottom:0px;">
+        <label class="col-sm-2 control-label" for="userPwd">동아리소개</label>
+        <div class="col-sm-7">
+            <textarea name="introduce" cols="75" rows="5" class="form-control" style="height: 50px;">${dto.introduce}</textarea>
+            <p class="help-block">간단히 동아리를 소개해주세요</p>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2 control-label">동아리주인</label>
+        <div class="col-sm-7">
+            <input class="form-control" id="userName" style="width:200px; border: none; background-color: white" 
+            name="userName" type="text" value="${sessionScope.member.userName}" readonly="readonly">
+        </div>
+    </div>
+ 
+    <div class="form-group">
+        <label class="col-sm-2 control-label">지역</label>
+        <div class="col-sm-7">
+            <select name="city" class="form-control" style="width: 222px;">
 			                <option value="">:: 선택 ::</option>
 			                <option value="서울" ${dto.city=="서울" ? "selected='selected'" : ""}>서울</option>
 			                <option value="부산" ${dto.city=="부산" ? "selected='selected'" : ""}>부산</option>
@@ -226,64 +188,63 @@ function themeList() {
 			                <option value="경북" ${dto.city=="경북" ? "selected='selected'" : ""}>경북</option>
 			                <option value="제주" ${dto.city=="제주" ? "selected='selected'" : ""}>제주</option>
 			            </select>
-				  </td>
-                  <td style="padding-left:10px;"> 				  
-						 <input type="checkbox" name="isCity" value="1" ${dto.isCity=="1"?"checked='checked'":"" }> <span>공개</span>
-			      </td>
-			  </tr>
-			   <tr><td colspan="3" height="1" bgcolor="#C3C3C3"></td></tr>
-
-			  <tr align="left" height="40">
-			      <td width="100" bgcolor="#EEEEEE" style="text-align: center;">취미</td>
-			      <td width="250" style="padding-left:10px;"> 
-						<input type="text" name="hobby" maxlength="10" class="boxTF" value="${dto.hobby}"  style="width: 210px;">
-				  </td>
-                  <td style="padding-left:10px;"> 				  
-						 <input type="checkbox" name="isHobby" value="1" ${dto.isHobby=="1"?"checked='checked'":"" }> <span>공개</span>
-			      </td>
-			  </tr>
-			   <tr><td colspan="3" height="1" bgcolor="#C3C3C3"></td></tr>
-
-			  <tr align="left" height="40" >
-			      <td width="100" bgcolor="#EEEEEE" style="text-align: center;">사진</td>
-			      <td width="500" colspan="2" style="padding-left:10px;"> 
-                      <input type="file" name="upload" class="boxTF"  size="61"  style="height: 20px;">			           
-			       </td>
-			  </tr> 
-			   <tr><td colspan="3" height="1" bgcolor="#C3C3C3"></td></tr>
-
-			  <tr align="left" height="40">
-			      <td width="100" bgcolor="#EEEEEE" style="text-align: center;">동아리공개</td>
-			      <td width="500" colspan="2"  style="padding-left:10px;"> 
-			            <input type="radio" value="0" name="closed" ${dto.closed=="0"?"checked='checked'":"" }> 공개&nbsp;&nbsp;&nbsp;
-			            <input type="radio" value="1" name="closed" ${dto.closed=="1"?"checked='checked'":"" }> 비공개
-			      </td>
-			  </tr>
-			   <tr><td colspan="3" height="1" bgcolor="#C3C3C3"></td></tr>
-
-			  <tr align="left"> 
-			      <td width="100" bgcolor="#EEEEEE" style="text-align: center; padding-top:5px;" valign="top">프롤로그</td>
-			      <td width="500" colspan="2" valign="top" style="padding:5px 0px 5px 10px;"> 
-			        <textarea name="prologue" cols="75" rows="7" class="boxTA" style="height: 100px;">${dto.prologue}</textarea>
-			      </td>
-			  </tr>
-			
-			  <tr><td colspan="3" height="2" bgcolor="#212121"></td></tr>
-			  </table>
-			
-			  <table style="width: 600px; margin: 0px auto; border-spacing: 0px;">
-			     <tr height="45"> 
-			      <td align="center" >
-					   <button type="button" class="btn1" onclick="sendClub();"> ${mode=="created"?"등록완료":"수정완료"} </button>
-                       <button type="button" class="btn1" onclick="javascript:history.back();"> ${mode=="created"?"등록취소":"수정취소"} </button>
-                       <c:if test="${mode=='update'}">
-                           <input type="hidden" name="clubSeq" value="${dto.clubSeq}">
-                           <input type="hidden" name="photoFilename" value="${dto.photoFilename}">
-                       </c:if>
-			      </td>
-			    </tr>
-			  </table>
-			</form>
-		
-		</div>
+        <p class="help-block">주활동 지역을 선택해주세요</p>
+     </div>
+    </div>
+  <div class="form-group">
+        <label class="col-sm-2 control-label" for="memImgname">사진</label>
+        <div class="col-sm-7">
+            <div class="fileinput fileinput-new" data-provides="fileinput" style="float: left;">
+                <div class="fileinput-preview thumbnail" style="width: 130px; height: 150px;"></div>
+                <div>
+                     <span class="btn btn-default wbtn btn-file"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="uploads" id="memImgname" accept="image/png, image/jpeg, image/gif"></span>
+                     <a href="#" class="btn btn-default wbtn fileinput-exists" data-dismiss="fileinput">삭제</a>
+                </div>
+            </div>
+<c:if test="${mode=='update'}">
+            <div style="float: left; margin-left: 10px;">
+               <c:if test="${not empty dto.memImgname}">
+                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img id="imgPhoto" src="<%=cp%>/uploads/memImg/${dto.memImgname}" style="width: 100%; height: 100%;"></div>
+                    <div style="padding-left: 15px;">
+                         <span>등록 이미지</span>
+                         <a id="btnDeletePhoto" href="javascript:imageDelete();" class="close" style="float: none">&times;</a>
+                    </div>
+                </c:if>
+               <c:if test="${empty dto.memImgname}">
+                   <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img src="<%=cp%>/res/images/noimage.png" style="width: 100%; height: 100%;"></div>
+                   <div style="padding-left: 15px;">
+                         <span>등록 이미지</span>
+                   </div>
+                </c:if>
+            </div>
+</c:if>
+        </div>
+    </div>
+    <div style=""class="form-group">
+        <label class="col-sm-2 control-label">프롤로그</label>
+        <div class="col-sm-7">
+            <textarea name="prologue" cols="75" rows="7" class="form-control" style="height: 100px;">${dto.prologue}</textarea>
+        </div>
+    </div>    
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="agree">약관 동의</label>
+        <div class="col-sm-7 checkbox">
+            <label>
+                <input id="agree" name="agree" type="checkbox" checked="checked"
+                         onchange="form.sendButton.disabled = !checked"> <a href="#">이용약관</a>에 동의합니다.
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+      <c:if test="${mode=='created'}">
+            <button type="button" name="sendButton" class="btn btn-info btn-sm btn-search" onclick="sendClub();" style="margin-right:20px; height:40px; width:130px;">
+                   ${mode=="created"?"등록완료":"수정완료"} <span class="glyphicon glyphicon-ok"></span></button>
+            <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:history.back();" style="margin-right:20px; height:40px; width:130px;">
+                 ${mode=="created"?"등록취소":"수정취소"} <span class="glyphicon glyphicon-remove"></span></button>
+       </c:if>    
+    </div>
 </div>
+  </form>
+  </div>
+ </div>

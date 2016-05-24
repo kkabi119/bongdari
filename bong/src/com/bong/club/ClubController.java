@@ -97,7 +97,7 @@ public class ClubController {
 		}
 		
 		Map<String, Object> map=new HashMap<>();
-		map.put("field", "b.userId");
+		map.put("field", "userId");
 		map.put("field_value", info.getUserId());
 		ClubInfo clubInfo=service.readClubInfo(map);
 		if(clubInfo!=null){
@@ -137,7 +137,9 @@ public class ClubController {
 				File.separator+info.getUserId();
 
 		dto.setUserId(info.getUserId());
+		dto.setUserIdx(info.getUserIdx());
 		int result=service.insertClub(dto, pathname);
+		
 		if(result==0) {
 			ModelAndView mav = new ModelAndView(".club.manage.message");
 			mav.addObject("message", "동아리를 생성하지 못했습니다. 다시 시도 하시기 바랍니다.");
@@ -179,7 +181,7 @@ public class ClubController {
 			return new ModelAndView("redirect:/club/created");
 		
 		// 내 동아리로 이동
-		return new ModelAndView("redirect:/club/"+clubInfo.getClubSeq());
+		return new ModelAndView("redirect:/club/"+clubInfo.getClubSeq()+"/main");
 	}
 	
 }

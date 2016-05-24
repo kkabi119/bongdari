@@ -33,7 +33,7 @@ public class ClubServiceImpl  implements ClubService {
 			
 			dao.insertInformation("club.insertClub", seq);
 			dao.insertInformation("club.insertClubInfo", dto);
-			//dao.insertInformation("club.insertClubProfile", dto);
+			dao.insertInformation("club.insertJoinClub", dto);
 			
 			createClubTable(seq);
 			

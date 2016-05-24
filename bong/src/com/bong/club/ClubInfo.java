@@ -5,15 +5,32 @@ import org.springframework.web.multipart.MultipartFile;
 public class ClubInfo {
 	private int clubSeq;
 	private String userId, nickName, userName;
-	private int groupNum, themeNum;
-	private String introduce, clubname, prologue, gender, city, hobby, created;
+	private int groupNum, themeNum, typeIdx, userIdx;
+	private String introduce, clubname, prologue, gender, city, hobby, clubBirth;
 	private String groupSubject, subject;
-	private int visitorCount, closed;
+	private int  closed;
 	private MultipartFile upload;
 	private String photoFilename;
-	
 	private int isUserName, isCity, isGender, isHobby;
 	
+	public int getUserIdx() {
+		return userIdx;
+	}
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
+	}
+	public int getTypeIdx() {
+		return typeIdx;
+	}
+	public void setTypeIdx(int typeIdx) {
+		this.typeIdx = typeIdx;
+	}
+	public String getClubBirth() {
+		return clubBirth;
+	}
+	public void setClubBirth(String clubBirth) {
+		this.clubBirth = clubBirth;
+	}
 	public int getIsGender() {
 		return isGender;
 	}
@@ -111,12 +128,6 @@ public class ClubInfo {
 	public void setHobby(String hobby) {
 		this.hobby = hobby;
 	}
-	public String getCreated() {
-		return created;
-	}
-	public void setCreated(String created) {
-		this.created = created;
-	}
 	public String getGroupSubject() {
 		return groupSubject;
 	}
@@ -128,12 +139,6 @@ public class ClubInfo {
 	}
 	public void setSubject(String subject) {
 		this.subject = subject;
-	}
-	public int getVisitorCount() {
-		return visitorCount;
-	}
-	public void setVisitorCount(int visitorCount) {
-		this.visitorCount = visitorCount;
 	}
 	public int getClosed() {
 		return closed;
