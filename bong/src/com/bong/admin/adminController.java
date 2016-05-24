@@ -1,5 +1,6 @@
 package com.bong.admin;
 
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,7 +21,7 @@ import com.bong.common.MyUtil;
 public class adminController {
 	
 	@Autowired
-	private MemberService mService;
+	private AdminService aService;
 	
 	@Autowired
 	private MyUtil myutil;
@@ -51,7 +52,7 @@ public class adminController {
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
 		
-		dataCount = mService.dataCount(map);
+		dataCount = aService.memberCount(map);
 		if(dataCount != 0)
 			total_page = myutil.pageCount(numPerPage, dataCount);
 		
@@ -63,7 +64,7 @@ public class adminController {
 		map.put("start", start);
 		map.put("end", end);
 		
-		List<Member> list = mService.listMember(map);
+		List<Member> list = aService.listMember(map);
 		
 		int listNum, n = 0;
 		Iterator<Member> it = list.iterator();
@@ -98,9 +99,68 @@ public class adminController {
 	}
 	
 	@RequestMapping(value="/admin/club")
-	public ModelAndView adminClub() throws Exception {
+	public ModelAndView adminClub(
+			HttpServletRequest req,
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue
+			) throws Exception {
+		String cp=req.getContextPath();
+		
+		int numPerPage = 10;
+		int total_page = 0;
+		int dataCount = 0;
+		
+		if(req.getMethod().equals("GET")){
+			searchValue = URLDecoder.decode(searchValue, "utf-8");
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		
+		dataCount = aService.clubCount(map);
+		if(dataCount != 0)
+			total_page = myutil.pageCount(numPerPage, dataCount);
+		
+		if(total_page < current_page)
+			current_page = total_page;
+		
+		int start = (current_page - 1) * numPerPage + 1;
+		int end = current_page * numPerPage;
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<Club> list = aService.listClub(map);
+		
+		int listNum, n=0;
+		
+		Iterator<Club> it=list.iterator();
+		
+		while(it.hasNext()){
+			Club data = it.next();
+			listNum = dataCount - (start + n - 1);
+			data.setListNum(listNum);
+			n++;
+		}
+		
+		String params="";
+		String urlList = cp+"/admin/club";
+		if(searchValue.length()!=0){
+			params = "searchKey=" + searchKey +
+						"&searchValue="+URLEncoder.encode(searchValue, "utf-8");
+		}
+		
+		if(params.length()!=0){
+			urlList = cp+"/admin/club?" + params;
+		}
 		
 		ModelAndView mav = new ModelAndView(".admin4.main.club");
+		mav.addObject("list", list);
+		mav.addObject("page", current_page);
+		mav.addObject("dataCount", dataCount);
+		mav.addObject("total_page", total_page);
+		mav.addObject("paging", myutil.paging(current_page, total_page, urlList));
 		return mav;
 	}
 	
@@ -108,6 +168,12 @@ public class adminController {
 	public ModelAndView adminDemander() throws Exception {
 		
 		ModelAndView mav = new ModelAndView(".admin4.main.demander");
+		return mav;
+	}
+	
+	@RequestMapping(value="/admin/appDetail")
+	public ModelAndView adminAppDetail() throws Exception {
+		ModelAndView mav = new ModelAndView(".admin4.main.appDetail");
 		return mav;
 	}
 	
