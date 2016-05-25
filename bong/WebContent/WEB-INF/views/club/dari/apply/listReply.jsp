@@ -13,34 +13,31 @@
 	p{
 		color:black;
 	}
+	
+	.btn{
+		border-radius:0px;
+	}
+	
+	.post-comment{
+		border-top:1px solid #ccc;
+		min-height:150px;
+		padding-top:12px;
+		padding-left:20px;
+	}
+	.post-comment .pull-left img{
+		margin-right:40px;
+		border:1px solid #ccc;
+	}
+	
 </style>
+
 <c:if test="${dataCount!=0}">
+
 <script type="text/javascript">
-// 댓글별 답글 리스트
-  function listAnswer(answer) {
-	var listReplyAnswerId="#listReplyAnswer"+answer;
-	var url="<%=cp%>/club/index/apply/listReplyAnswer";
-	$.post(url, {answer:answer}, function(data){
-		$(listReplyAnswerId).html(data);
-	});
-}
 
-// 댓글별 답글 갯수
-function countAnswer(answer) {
-	var url="<%=cp%>/club/index/apply/replyCountAnswer";
-	$.post(url, {answer:answer}, function(data){
-		var count="("+data.count+")";
-		var answerCountId="#answerCount"+answer;
-		var answerGlyphiconId="#answerGlyphicon"+answer;
-		
-		$(answerCountId).html(count);
-		$(answerGlyphiconId).removeClass("glyphicon-triangle-bottom");
-		$(answerGlyphiconId).addClass("glyphicon-triangle-top");
-	}, "JSON");
-}
-
-// 댓글별 답글 폼
+////////////////////////////////////////////////////////////////////////////////대댓글 폼
 function replyAnswerLayout(replyNum) {
+
 	var id="#replyAnswerLayout"+replyNum;
 	var replyContent="#replyContent"+replyNum;
 	var answerGlyphiconId="#answerGlyphicon"+replyNum;
@@ -66,7 +63,34 @@ function replyAnswerLayout(replyNum) {
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////////// 댓글별 답글 리스트 불러오기 
+  function listAnswer(answer) {
+	var listReplyAnswerId="#listReplyAnswer"+answer;
+	
+	var url="<%=cp%>/club/index/apply/listReplyAnswer";
+	
+	$.post(url, {answer:answer}, function(data){
+		
+		$(listReplyAnswerId).html(data);
+	});
+}
 
+////////////////////////////////////////////////////////////////////////// 대댓글 갯수
+function countAnswer(answer) {
+	
+	var url="<%=cp%>/club/index/apply/replyCountAnswer";
+	$.post(url, {answer:answer}, function(data){
+		var count="("+data.count+")";
+		var answerCountId="#answerCount"+answer;
+		var answerGlyphiconId="#answerGlyphicon"+answer;
+		
+		$(answerCountId).html(count);
+		$(answerGlyphiconId).removeClass("glyphicon-triangle-bottom");
+		$(answerGlyphiconId).addClass("glyphicon-triangle-top");
+	}, "JSON");
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////// 대댓글 쓰기 
 function sendReplyAnswer(num, replyNum) {
 	var uid="${sessionScope.member.userId}";
 	if(! uid) {
@@ -77,7 +101,7 @@ function sendReplyAnswer(num, replyNum) {
 	var rta="#replyContent"+replyNum;
 	var content=$.trim($(rta).val());
 	if(! content ) {
-		alert("내용을 입력하세요 !!!\n");
+		alert("내용을 입력하세요!\n");
 		$(rta).focus();
 		return false;
 	}
@@ -95,11 +119,13 @@ function sendReplyAnswer(num, replyNum) {
 			$(rta).val("");
 			
   			var state=data.state;
+  			
 			if(state=="true") {
 				listAnswer(replyNum);
 				countAnswer(replyNum);
-			} else if(state=="false") {
-				alert("답글을 등록하지 못했습니다. !!!");
+			} 
+			else if(state=="false") {
+				alert("답글을 등록하지 못했습니다!");
 			} else if(state=="loginFail") {
 				login();
 			}
@@ -110,16 +136,19 @@ function sendReplyAnswer(num, replyNum) {
 	});
 } 
 
-// 댓글별 답글 삭제
+//////////////////////////////////////////////////////// 대댓글 삭제
 function deleteReplyAnswer(replyNum, answer) {
+	
 	var uid="${sessionScope.member.userId}";
+	
 	if(! uid) {
 		login();
 		return false;
 	}
 	
-	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
+	if(confirm("댓글을 삭제하시겠습니까 ? ")) {	
 		var url="<%=cp%>/club/index/apply/deleteReply";
+		
 		$.post(url, {replyNum:replyNum, mode:"answer"}, function(data){
 		        var state=data.state;
 				if(state=="loginFail") {
@@ -136,31 +165,67 @@ function deleteReplyAnswer(replyNum, answer) {
 				<ul class="media-list">
 
    						<li class="media">
-                                            <div class="post-comment">
-                                                <a class="pull-left" href="#">
-                                                    <img class="media-object" src="images/blogdetails/2.png" alt="">
+                                            <div class="post-comment" style="">
+                                                <a class="pull-left" href="#" >
+                                                    <img style=" width:137px; height:127px; background-size:cover; "class="media-object" src="<%=cp%>/res/images/blogdetails/2.png" alt="">
                                                 </a>
-                                                <div class="media-body" style="padding-bottom: 10px">
-                                                    <span><i class="fa fa-user"></i>Posted by <a href="#">${Rdto.userName}</a></span>
-                                                    <p>${Rdto.content}</p>
-                                                    <ul class="nav navbar-nav post-nav" style="float: right;">
-                                                        <li  style="color:#0099AE"><i class="fa fa-clock-o"></i>${Rdto.created}</li>
-                                                        <li><a onclick="replyAnswerLayout('${Rdto.replyNum}');"><i class="fa fa-reply"></i>Answer</a></li>
-                        <c:if test="${sessionScope.member.userId==Adto.userId || sessionScope.member.userId=='admin'}">   
-		     											<li><a onclick='deleteReply("${Rdto.replyNum}", "${pageNo}");' style="color:#C03035">삭제</a></li>
+                                                <div class="media-body" style="padding-bottom: 0px">
+                                                    <span><i class="fa fa-user"></i><a href="#">${Rdto.userName}</a></span>
+                                                  
+                                                      <c:if test="${sessionScope.member.userId==Adto.userId || sessionScope.member.userId=='admin'}">   
+		     											<span style="margin-right:0px; float:right; ">
+		     												<a class="btn btn-default" onclick='deleteReply("${Rdto.replyNum}", "${pageNo}");' style="margin-top:-5px;color:#C03035; border:none;">
+		     													삭제
+		     												</a>
+		     											</span>
+		     											  <span  style="color:#888; float:right;"><i class="fa fa-clock-o"  style="color:#888"></i>${Rdto.created}</span>
 						</c:if>
-                                                    </ul>
+                                                    <p style="min-height:45px;">${Rdto.content}</p>
+                                                    
                                                     
                                                 </div>
+                                                <ul class="nav navbar-nav post-nav" style="float: right; ">
+                                                         <li>
+                                                         <button type="button" class="btn btn-default btn-sm" onclick="sendLike('${Rdto.replyNum}')" 
+                                                         		style="font-weight: bold; color: #6D6D6D;padding: 7px 15px; margin-right:-40px;">
+                                                         		<span class="glyphicon glyphicon-hand-up"></span> 
+										                			좋아요 <span id="likeCount${Rdto.replyNum}">${Rdto.likeCount}</span>
+										                </button>
+										                </li>
+                                                        <li style="margin-right:0px;">
+                                                        	<button class="btn btn-default" onclick="replyAnswerLayout('${Rdto.replyNum}');" style="font-weight: bold; color: #6D6D6D;">
+                                                        	답글 <span style="font-weight:bold; "id="answerCount${Rdto.replyNum}">(${Rdto.answerCount})</span>
+                                                        	</button>
+                                                        </li>
+                      
+                                                    </ul>
                                             </div>
-                                            <div id="replyAnswerLayout${Rdto.replyNum}" style="display: none;">
-                                            <div style="clear: both; margin-top:10px; padding: 5px; border-top: #d5d5d5 solid 1px;">
-                									<textarea id="replyContent${Rdto.replyNum}" class="form-control" rows="3" required="required"></textarea>
-           									 </div>
-           									 <div style="text-align: right; padding-top: 10px;">
-                      								<button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="sendReplyAnswer('${Rdto.num}','${Rdto.replyNum}')"> Answer <span class="fa fa-pencil"></span></button>
+                               <!-- 																			대댓글폼																								-->
+                              <div id="replyAnswerLayout${Rdto.replyNum}" 
+                                    style="margin-top:10px; display: none; background-color:#EEE; padding:15px; padding-right:25px; padding-left:25px; margin-bottom:0px;
+                                       		 border-top:2px solid #ccc; border-bottom:2px solid #ccc;">
+                                        
+                                            <div style="clear: both;  ">
+                                         	   <div  style="font-size:17px; color:#6D6D6D; margin-bottom:-15px; margin-left:15px;" > COMMENTS </div>&nbsp;
+                                           
+                                         
+                 						<div id="listReplyAnswer${Rdto.replyNum}" style="padding-top: 5px;"></div>                                       
+                                           <div style="margin-top:10px; border-top:1px solid #ccc; "></div>
+                                         <div style="background-color:white; margin-top:15px;">
+	                                            <div style="border: 1px solid #A2A2A2; ">
+	                                            
+	                									<textarea id="replyContent${Rdto.replyNum}" class="form-control" rows="3" required="required"></textarea>
+	           									 		 <div style="text-align: right; padding-top: 0px;">
+		                      								<button type="button" class="btn btn-info" style=" padding:13px 20px ; color:white; border:none;" 
+		                      											onclick="sendReplyAnswer('${Rdto.num}','${Rdto.replyNum}')">
+		                      								 등록 
+		                      								 </button>
+		                 							 	</div>
+		                 							 	
+		                 							</div>
                  							 </div>
-                 							 <div id="listReplyAnswer${Rdto.replyNum}" style="padding-top: 5px;"></div>                                       
+                 							  
+                                         </div>
                                           </div>
                                         </li>
                                         </ul>
@@ -168,6 +233,6 @@ function deleteReplyAnswer(replyNum, answer) {
 </c:if>              
 
               
-<div style="clear: both; padding-top: 10px; text-align: center;">
+<div style="clear: both; border-top:1px solid #ccc;padding-top: 10px; text-align: center;">
     ${paging}
 </div>

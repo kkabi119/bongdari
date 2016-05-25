@@ -180,7 +180,36 @@ public class FileManager {
         if (file.exists())
            file.delete();
 	}
-
+	
+	// 파일 또는 폴더 삭제
+	public void removePathname(String pathname) {
+		try {
+			File f=new File(pathname);
+			if (! f.exists())
+				return;
+			
+			if(f.isDirectory())
+				removeSubDirectory(pathname);
+			
+			f.delete();
+		} catch (Exception e) {
+		}
+	}
+	private void removeSubDirectory(String pathname) {
+		File[] listFile = new File(pathname).listFiles();
+		try {
+			if (listFile.length > 0) {
+				for (int i = 0; i < listFile.length; i++) {
+					if (listFile[i].isDirectory()) {
+						removeSubDirectory(listFile[i].getPath());
+					}
+					listFile[i].delete();
+				}
+			}
+		} catch (Exception e) {
+		}
+	}
+	
 	// 파일 길이
 	public long getFilesize(String pathname) {
 		long size=-1;

@@ -4,8 +4,8 @@
 <mapper namespace="clubnotice">
 	
 	<insert id="insertNotice" parameterType="com.bong.club.notice.Notice">
-		INSERT INTO club_notice(clubnoticeIdx, userIdx, clubIdx,subject, content, saveFilename, originalFilename)
-			VALUES(club_notice_seq.NEXTVAL, #{userIdx}, '4', #{subject}
+		INSERT INTO club_notice_${clubIdx}(clubnoticeIdx, userIdx, clubIdx, subject, content, saveFilename, originalFilename)
+			VALUES(club_notice_seq.NEXTVAL, #{userIdx}, #{clubIdx}, #{subject}
 						,#{content}, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename,jdbcType=VARCHAR})
 	</insert>
 	
@@ -29,7 +29,7 @@
 	<!-- 글개수 -->
 	<select id="dataCount" parameterType="map"
 	            resultType="Integer">
-	  SELECT NVL(COUNT(*), 0) FROM club_notice n
+	         SELECT NVL(COUNT(*), 0) FROM club_notice_${clubSeq} n
 	        JOIN memberInfo m
 	        ON n.userIdx=m.userIdx
 	     <where>
@@ -47,7 +47,7 @@
 			     SELECT clubnoticeIdx, m.userIdx, userId, m.userName, subject
 			           ,TO_CHAR(n.created, 'YYYY-MM-DD') created
 					   ,hitCount, n.saveFilename
-			        FROM club_notice n JOIN memberInfo m ON n.userIdx=m.userIdx
+			        FROM club_notice_${clubSeq} n JOIN memberInfo m ON n.userIdx=m.userIdx
                     <where>
                          <if test="searchValue != null and searchValue != ''">
 			                  <include refid="where-list"/>
@@ -61,16 +61,16 @@
 	</select>
 	
 	<!-- 글보기 -->
-	<select id="readNotice" resultType="com.bong.club.notice.Notice" parameterType="Integer">
+	<select id="readNotice" resultType="com.bong.club.notice.Notice" parameterType="map">
 		SELECT n.clubNoticeIdx, m.userIdx, userId, userName, subject, content
 				   ,hitCount, n.created,  n.saveFilename, n.originalFilename
-		FROM club_notice n JOIN memberInfo m ON n.userIdx=m.userIdx
-		WHERE clubNoticeIdx = #{clubNoticeIdx}
+		FROM club_notice_${clubSeq} n JOIN memberInfo m ON n.userIdx=m.userIdx
+		WHERE clubNoticeIdx = #{num}
 	</select>
 	
 	<!-- 조회수 증가 -->
-	<update id="updateHitCount" parameterType="Integer">
-		UPDATE club_notice SET hitCount=hitCount+1 WHERE clubNoticeIdx = #{clubNoticeIdx}
+	<update id="updateHitCount" parameterType="map">
+		UPDATE club_notice_${clubSeq} SET hitCount=hitCount+1 WHERE clubNoticeIdx = #{num}
 	</update>
 	
 	<!-- AND 가 필요 없는 경우 자동으로 제거 됨 -->
@@ -79,7 +79,7 @@
 				parameterType="map">
 		SELECT tb.* FROM (
 			SELECT clubNoticeIdx, subject
-			      FROM club_notice n
+			      FROM club_notice_${clubSeq} n
 			      JOIN memberInfo m ON n.userIdx=m.userIdx
                     <where>
                          <if test="searchValue != null and searchValue != '' ">
@@ -98,7 +98,7 @@
 				parameterType="map">
 		SELECT tb.* FROM (
 			SELECT clubNoticeIdx, subject
-			      FROM club_notice n
+			      FROM club_notice_${clubSeq} n
 			      JOIN memberInfo m ON n.userIdx=m.userIdx
                     <where>
                          <if test="searchValue != null and searchValue != '' ">
@@ -114,26 +114,26 @@
 	
 	<!-- 수정 -->
      <update id="updateNotice" parameterType="com.bong.club.notice.Notice">
-         UPDATE club_notice SET subject=#{subject}, content=#{content}
+         UPDATE club_notice_${clubIdx} SET subject=#{subject}, content=#{content}
                     ,saveFilename=#{saveFilename, jdbcType=VARCHAR}
                     ,originalFilename=#{originalFilename, jdbcType=VARCHAR}
                     WHERE clubNoticeIdx = #{clubNoticeIdx}
       </update>
 	
 	<!-- 삭제 -->
-      <delete id="deleteNotice" parameterType="Integer">
-           DELETE FROM club_notice WHERE clubNoticeIdx = #{clubNoticeIdx}
+      <delete id="deleteNotice" parameterType="map">
+           DELETE FROM club_notice_${clubSeq} WHERE clubNoticeIdx = #{num}
       </delete>
 	
 	<!-- 회원 탈퇴시 게시물 삭제 ................. -->
 	<select id="listNoticeId" parameterType="String" resultType="com.bong.club.notice.Notice">
 	   SELECT clubNoticeIdx, m.userIdx, userName, subject, content
 				   ,hitCount, n.created,  n.saveFilename, n.originalFilename
-		FROM club_notice n JOIN memberinfo m ON n.userIdx=m.userIdx
+		FROM club_notice_${clubSeq} n JOIN memberinfo m ON n.userIdx=m.userIdx
 		WHERE m.userIdx = #{userIdx}
 	</select>
     <delete id="deleteNoticeId" parameterType="String">
-         DELETE FROM club_notice WHERE userIdx = #{userIdx}
+         DELETE FROM club_notice_${clubSeq} WHERE userIdx = #{userIdx}
     </delete>
     
 	<select id="CNRSeq" resultType="Integer">
@@ -141,7 +141,7 @@
 	</select>
 	<!-- 댓글 처리................. -->
 	<insert id="insertNoticeReply" parameterType="com.bong.club.notice.Reply">
-	INSERT INTO club_notice_reply(CNRIDX , CLUBNOTICEIDX, userIdx, content, answer)
+	INSERT INTO club_notice_reply_${clubSeq}(CNRIDX , CLUBNOTICEIDX, userIdx, content, answer)
 	   VALUES (#{replyNum}, #{num},#{userIdx},
 	        #{content}, #{answer})
 	</insert>
@@ -149,7 +149,7 @@
 	<select id="replyDataCount" resultType="Integer" 
 	           parameterType="map">
 	   SELECT NVL(COUNT(*), 0)
-	        FROM club_notice_reply WHERE clubNoticeIdx=#{num} AND answer=0
+	        FROM club_notice_reply_${clubSeq} WHERE clubNoticeIdx=#{num} AND answer=0
 	</select>
 	
 	<select id="listReply" resultType="com.bong.club.notice.Reply" 
@@ -164,15 +164,15 @@
 				      (
 					     SELECT cnridx, r.clubNoticeIdx, r.userIdx, userid,
                userName, r.content, r.created, answer
-					        FROM club_notice_reply r 
-			                JOIN club_notice n ON r.clubNoticeIdx=n.clubNoticeIdx
+					        FROM club_notice_reply_${clubSeq} r 
+			                JOIN club_notice_${clubSeq} n ON r.clubNoticeIdx=n.clubNoticeIdx
 			                JOIN memberinfo m ON r.userIdx=m.userIdx
 			                WHERE r.clubNoticeIdx=#{num} AND answer=0
 			           ) tbreply
 			           LEFT OUTER JOIN
 			           (
 			                SELECT answer, COUNT(*) answerCount
-                                 FROM club_notice_reply GROUP BY answer
+                                 FROM club_notice_reply_${clubSeq} GROUP BY answer
 			           ) tbanswer ON tbreply.CNRIDX = tbanswer.answer
 	           )
 	           ORDER BY replyNum DESC
@@ -186,7 +186,7 @@
 	<select id="listReplyAnswer" resultType="com.bong.club.notice.Reply" 
 	          parameterType="Integer">
      SELECT CNRIDX AS replyNum, clubNoticeIdx AS num, tbreply.userIdx, userName, content, created, answer
-	          FROM club_notice_reply tbreply 
+	          FROM club_notice_reply_${clubSeq} tbreply 
 	          JOIN memberInfo m ON tbreply.userIdx=m.userIdx
               WHERE answer=#{answer}
               ORDER BY replyNum DESC
@@ -194,19 +194,19 @@
 	
 	<!-- 댓글별 답글 개수 -->
 	<select id="replyCountAnswer" resultType="Integer" 
-	           parameterType="Integer">
+	           parameterType="map">
 	   SELECT NVL(COUNT(*), 0)
-	        FROM club_notice_reply WHERE answer=#{answer}
+	        FROM club_notice_reply_${clubSeq} WHERE answer=#{answer}
 	</select>
 	
 	<delete id="deleteReply" parameterType="map">
-	DELETE club_notice_reply WHERE
+	DELETE club_notice_reply_${clubSeq} WHERE
 	    <if test="mode == 'num' ">
 			 clubNoticeIdx=#{num}
 		</if>
 	    <if test="mode == 'reply' ">
 			 CNRIDX IN 
-               (SELECT CNRIDX FROM club_notice_reply START WITH  CNRIDX = #{replyNum}
+               (SELECT CNRIDX FROM club_notice_reply_${clubSeq} START WITH  CNRIDX = #{replyNum}
 	            CONNECT BY PRIOR CNRIDX = answer)
 		</if>
 	    <if test="mode == 'answer' ">

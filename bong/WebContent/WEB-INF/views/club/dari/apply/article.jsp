@@ -29,10 +29,13 @@
 
 	font-size:20px; text-align: center;
 	 padding:14px; 
-	 border-bottom: 2px solid gray;
+	 border-bottom: 2px solid #6D6D6D;
 
 }
-
+.icon-wrapper{
+box-shadow:none;
+background-color: #4FCCCD;
+}
 .icon-wrapper:hover{
 	background-color:#4FCCCD;
 }
@@ -42,18 +45,36 @@
 padding-top: 13px;
 }
 
+.form-control{
+	border-radius:0px;
+	height:120px;
+	font-weight:lighter;
+	font-size:15px;
+	border:none;
+	border-bottom: 1px solid #ddd;
+	resize:none;
+}
+.form-control:hover, .form-control:focus{
+
+	border-bottom: 1px solid #999;'
+}
+
+.btn{
+	border-radius:2px;
+}
 </style>
 
 <script type="text/javascript">
-//댓글
+///////////////////////////////////////////////////////////////		댓글관련
+/////////////////////		페이지 틀자마자 실행되는 함수들
 $(function(){
 	$("#reply-open-close").click(function(){
 		  if($("#reply-content").is(':visible')) {
 			  $("#reply-content").fadeOut(100);
-			  $("#reply-open-close").text("댓글 ▼");
+			  $("#reply-open-close").text("COMMENTS ▼");
 		  } else {
 			  $("#reply-content").fadeIn(100);
-			  $("#reply-open-close").text("댓글 ▲");
+			  $("#reply-open-close").text("COMMENTS ▲");
 		  }
 	});
 })
@@ -65,12 +86,13 @@ $(function(){
 function listPage(page) {
 	var url="<%=cp%>/club/index/apply/listReply";
 	var num="${dto.clubApplyIdx}";
+	replyCount();
 	$.post(url, {num:num, pageNo:page}, function(data){
 		$("#listReply").html(data);
 	});
 }
 
-//댓글 추가
+/////////////////////////////////////////////////////////////////////////// 댓글 추가
 function sendReply() {
 	var uid="${sessionScope.member.userId}";
 	if(! uid) {
@@ -101,7 +123,6 @@ function sendReply() {
 			var state=data.state;
 			if(state=="true") {
 				listPage(1);
-				replyCount();
 			} else if(state=="false") {
 				alert("댓글을 등록하지 못했습니다. !!!");
 			} else if(state=="loginFail") {
@@ -113,16 +134,89 @@ function sendReply() {
 		}
 	});
 }
-//댓글 개수
+//////////////////////////////////////////////////////////////////////////댓글 개수
 function replyCount() {
 	var num="${dto.clubApplyIdx}";// 해당 게시물 번호
-	alert("데이터개수우우");
+
 	var url="<%=cp%>/club/index/apply/replyCount";
 	$.post(url, {num:num}, function(data){
 		
 		var count=data.count;
-		$("#replyCountView").text("("+count+")");
+		$("#replyCountView").text(""+count+"개");
 	}, "JSON");
+}
+
+
+
+
+////////////////////////////////////////////////////// 댓글 삭 제 
+function deleteReply(replyNum, page) {
+	var uid="${sessionScope.member.userId}";
+	if(! uid) {
+		login();
+		return false;
+	}
+	
+	if(confirm("댓글을 삭제하시겠습니까 ? ")) {	
+		var url="<%=cp%>/club/index/apply/deleteReply";
+		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
+		        var state=data.state;
+				if(state=="loginFail") {
+					login();
+				} else {
+					listPage(page);
+					replyCount();
+				}
+		}, "json");
+	}
+}
+
+
+//////////////////////////////////////// 댓글 좋 아 요 
+//좋아요/싫어요 개수
+function countLike(replyNum) {
+	var url="<%=cp%>/apply/countLike";
+	
+	$.post(url, {replyNum:replyNum}, function(data){
+		
+		var likeCountId="#likeCount"+replyNum;
+		var disLikeCountId="#disLikeCount"+replyNum;
+		var likeCount=data.likeCount;
+		var disLikeCount=data.disLikeCount;
+		
+		$(likeCountId).html(likeCount);
+		$(disLikeCountId).html(disLikeCount);
+		
+	}, "JSON");
+}
+
+//좋아요/싫어요 추가
+function sendLike(replyNum) {
+	var uid="${sessionScope.member.userId}";
+	if(! uid) {
+		login();
+		return false;
+	}
+
+	var params="replyNum="+replyNum;
+	$.ajax({
+		type:"POST"
+		,url:"<%=cp%>/apply/replyLike"
+		,data:params
+		,dataType:"json"
+		,success:function(data) {
+			
+			var state=data.state;
+			if(state=="true") {
+				countLike(replyNum);
+			} else if(state=="false") {
+				
+			} 
+		}
+		,error:function(e) {
+			alert(e.responseText);
+		}
+	});
 }
 </script>
 
@@ -134,12 +228,12 @@ function replyCount() {
     <div class="col-sm-10_2"  style="float:none; margin-left: auto; margin-right: auto;">
 
        <div class="body-title">
-             <h3  style="font-size:30px;"> 봉사 신청<span style="margin-left:10px;color:gray; font-size:15px;">  봉사를 신청할 수 있는 게시판입니다</span> </h3>
+             <h3  style="font-size:30px;"> 봉사 신청<span style="margin-left:10px;color:#6D6D6D; font-size:15px;">  봉사를 신청할 수 있는 게시판입니다</span> </h3>
              
        </div>
                  
        </div>
-       <hr style="margin-bottom:10px; margin-top:0px; border:1px solid gray;">
+       <hr style="margin-bottom:10px; margin-top:0px; border:1px solid #6D6D6D;">
        
        
       
@@ -151,10 +245,10 @@ function replyCount() {
                             <th style="color:#555;"colspan="7" class="bbs-subject" >
                                  ${dto.subject } <span style="color:#E0844F;">
                                  <c:if test="${dto.progress.equals('모집마감')}">
-                              	   <span class="label label-default">${dto.progress}</span>
+                              	   <span class="label label-default" style="padding:8px 10px; border-radius:2px;">${dto.progress}</span>
                                  </c:if>
                                  <c:if test="${dto.progress.equals('모집중')}">
-                              	    <span class="label label-warning">${dto.progress}</span>
+                              	    <span class="label label-warning" style="padding:8px 10px; border-radius:2px;">${dto.progress}</span>
                                  </c:if>
                                  </span>
                             </th>
@@ -224,7 +318,7 @@ function replyCount() {
                             </td>
                         </tr>
                       <tr>
-                            <td colspan="7" style="border-top:2px solid gray;  padding:50px 20px 50px 20px; line-height:20pt;">
+                            <td colspan="7" style="border-top:2px solid #6D6D6D;  padding:50px 20px 50px 20px; line-height:20pt;">
                                ${dto.content }
                             </td>
                         </tr>
@@ -242,7 +336,7 @@ function replyCount() {
                           		</span></a>
                           		<br>
                           		<div style="">
-	                          		<span style="font-size:18px; margin-left:43.5%; margin-top:-2px; text-align: center; color:#00AFF0; ">
+	                          		<span style="font-size:18px; margin-left:42%; margin-top:-2px; text-align: center; color:#00AFF0; ">
 	                          				<a style="font-weight:bold;" href="#"> 신청 </a>
 	                          		</span>
 	                          		<span style="font-size:18px;text-align: center; color:#00AFF0; ">
@@ -252,7 +346,7 @@ function replyCount() {
                           		</td>
                         </tr>        
                          
-                           <tr style=" border-top: 2px solid gray;  border-bottom: 2px solid gray; ">
+                           <tr style=" border-top: 2px solid #6D6D6D;  border-bottom: 2px solid #6D6D6D; ">
                      		 <td colspan="1" bgcolor="#DFE6E8" style="width:15%;color:black; text-align: left; " >
                                      <i class="fa fa-clock-o"></i> &nbsp;작성일 
                          	 </td>
@@ -267,7 +361,7 @@ function replyCount() {
                          	 </td>
                          </tr>
                          <c:if test="${not empty dto.saveFileName}">
-                             <tr style=" border-top: 1px solid gray;  border-bottom: 1px solid gray;">
+                             <tr style=" border-top: 1px solid #6D6D6D;  border-bottom: 1px solid #6D6D6D;">
                                     <td class="post-bottom overflow" style="margin-top: 0px">
                                   			<a href="<%=cp%>/club/index/apply/download?num=${dto.clubApplyIdx}">
                                   				<span class="fa fa-download"></span> ${dto.originalFilename}
@@ -326,7 +420,7 @@ function replyCount() {
    						 	<button type="button" class="btn btn-default" onclick="deleteApply();">삭제</button>
    						</td>
    						
-   						<td align="right" colspan="2">
+   						<td align="right" colspan="2" style="margin-bottom:30px; ">
 					           <button type="button" class="btn btn-default"  onclick="javascript:location.href='<%=cp%>/club/index/apply/list?${params}';">목록으로</button>
 
 					    </td>
@@ -334,29 +428,35 @@ function replyCount() {
                    </tfoot>
                </table>
           </div>
-          
-          <div class="bbs-reply">
-         
-              <div class="bbs-reply-write" >
-                  <div style="clear: both; ">
-                        <div style="float: left; ">
-                        	<span class="item-click" id="reply-open-close" style="font-size:23px;">COMMENTS ▼</span>&nbsp;
-                        		<span id="replyCountView" class="item-title" style="color:#424951">(${replyCount}개)</span>
-                        </div>
-                        <div style="float: right; text-align: right;"></div>
-                  </div>
+           
+           <div style="clear: both;  margin-bottom:30px; border-top: 2px solid #6D6D6D; border-bottom:2px solid #6D6D6D;">
+                   <div style="float: left; margin-bottom:20px;margin-top:20px;">
+                    <span class="item-click" id="reply-open-close" style="cursor:pointer; font-size:20px; color:#6D6D6D;" >COMMENTS ▼</span>&nbsp;
+                	    <span id="replyCountView" class="item-title" style='color:#f0ad4e; font-size:20px; font-weight: bold;'> </span>
+                     <div style="float: right; text-align: right;"></div>
+                     
+           </div>
+         <div class="reply-write"  style="margin-bottom:20px;">
                   
-                  <div style="clear: both; padding-top: 30px; ">
-                      <textarea id="replyContent" class="form-control" rows="3" required="required"></textarea>
+                  <div style="clear: both; margin-top:0px; border: 1px solid #A2A2A2;">
+                      <textarea id="replyContent" class="form-control" rows="4" required="required"  ></textarea>
+                 
+                  <div style="text-align: right; padding-top: 0px; margin-right:0px; ">
+                      <button type="button" class="btn btn-default" style="border-radius:0px; padding:15px 25px ; margin-bottom:0px; background-color:#3897f0; color:white; border:none;" onclick="sendReply();">
+                       		등록 
+                       </button>
                   </div>
-                  <div style="text-align: right; padding-top: 10px;">
-                      <button type="button" class="btn btn-default" style="padding:10px 15px ;background-color:#3897f0; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="glyphicon glyphicon-ok"></span></button>
-                  </div>           
+                   </div>           
               </div>
           
+          
+          <div id="reply-content"  style="display:none; margin-top: 10px; margin-bottom: 10px;">
+               
+              
               <div id="listReply"></div>
           </div>
-          
+                         
+          </div>
       </div>
  	</div>
 </div>

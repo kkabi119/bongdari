@@ -19,7 +19,7 @@
 // 댓글별 답글 리스트
   function listAnswer(answer) {
 	var listReplyAnswerId="#listReplyAnswer"+answer;
-	var url="<%=cp%>/club/index/notice/listReplyAnswer";
+	var url="<%=cp%>/club/${clubSeq}/notice/listReplyAnswer";
 	$.post(url, {answer:answer}, function(data){
 		$(listReplyAnswerId).html(data);
 	});
@@ -27,12 +27,11 @@
 
 // 댓글별 답글 갯수
 function countAnswer(answer) {
-	var url="<%=cp%>/club/index/notice/replyCountAnswer";
+	var url="<%=cp%>/club/${clubSeq}/notice/replyCountAnswer";
+	
 	$.post(url, {answer:answer}, function(data){
 		var count="("+data.count+")";
-		var answerCountId="#answerCount"+answer;
-		var answerGlyphiconId="#answerGlyphicon"+answer;
-		
+		var answerCountId="#answerCount"+answer;		
 		$(answerCountId).html(count);
 		$(answerGlyphiconId).removeClass("glyphicon-triangle-bottom");
 		$(answerGlyphiconId).addClass("glyphicon-triangle-top");
@@ -88,7 +87,7 @@ function sendReplyAnswer(num, replyNum) {
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/club/index/notice/createdReply"
+		,url:"<%=cp%>/club/${clubSeq}/notice/createdReply"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
@@ -119,7 +118,7 @@ function deleteReplyAnswer(replyNum, answer) {
 	}
 	
 	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/club/index/notice/deleteReply";
+		var url="<%=cp%>/club/${clubSeq}/notice/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"answer"}, function(data){
 		        var state=data.state;
 				if(state=="loginFail") {
@@ -138,7 +137,7 @@ function deleteReplyAnswer(replyNum, answer) {
    						<li class="media">
                                             <div class="post-comment">
                                                 <a class="pull-left" href="#">
-                                                    <img class="media-object" src="<%=cp%>/res/images/blogdetails/2.png" alt="">
+                                                    <img class="media-object" src="images/blogdetails/2.png" alt="">
                                                 </a>
                                                 <div class="media-body" style="padding-bottom: 10px">
                                                     <span><i class="fa fa-user"></i>Posted by <a href="#">${Rdto.userName}</a></span>

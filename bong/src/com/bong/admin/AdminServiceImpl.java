@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.bong.common.dao.bongDAO;
 
-@Service("bbs.boardService")
-public class MemberServiceImpl implements MemberService{
+@Service("admin.AdminService")
+public class AdminServiceImpl implements AdminService{
 	@Autowired
 	private bongDAO  dao;
 	
@@ -26,11 +26,11 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int dataCount(Map<String, Object> map) {
+	public int memberCount(Map<String, Object> map) {
 		int result=0;
 		
 		try{
-			result=dao.getIntValue("admin.dataCount", map);			
+			result=dao.getIntValue("admin.memberCount", map);			
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}
@@ -38,18 +38,27 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}
 
+
 	@Override
-	public Member readBoard(int num) {
-		Member dto=null;
-		
-		try{
-			dto=dao.getReadInformation("bbs.readBoard", num);
-		} catch(Exception e) {
+	public List<Club> listClub(Map<String, Object> map) {
+		List<Club> list=null;
+		try {
+			list=dao.getListInformation("admin.listClub", map);
+		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		
-		return dto;
+		return list;
 	}
 
+	@Override
+	public int clubCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.getIntValue("admin.clubCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
 	
 }

@@ -10,7 +10,7 @@
 <script type="text/javascript">
 function searchList() {
 	var f=document.searchForm;
-	f.action="<%=cp%>/club/index/notice/list";
+	f.action="<%=cp%>/club/${clubSeq}/notice/list";
 	f.submit();
 }
 
@@ -41,7 +41,7 @@ function searchList() {
                     				</tr>
                 				</thead>
                 				<tbody>
-<c:forEach var="dto" items="${list}">
+                		<c:forEach var="dto" items="${list}">
 									<tr>
                         				<td class="text-center">${dto.listNum}</td>
                         				<td><a href="${urlArticle}&num=${dto.clubNoticeIdx}">${dto.subject}</a></td>
@@ -50,11 +50,11 @@ function searchList() {
                        				 	<td class="text-center">${dto.hitCount }</td>
                        				 	<td class="text-center">
 <c:if test="${not empty dto.saveFilename}">
-                                <a href="<%=cp%>/club/index/notice/download?num=${dto.clubNoticeIdx}" class="fa fa-download"></a>
+                                <a href="<%=cp%>/club/${clubSeq}/notice/download?num=${dto.clubNoticeIdx}" class="fa fa-download"></a>
 </c:if>
                         				</td>
                     				</tr>
-</c:forEach>
+                    </c:forEach>
                 				</tbody>
             				</table>
         				</div>
@@ -70,7 +70,7 @@ function searchList() {
         
         				<div style="clear: both;">
         					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/club/index/notice/list';">새로고침</button>
+        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/notice/list';">새로고침</button>
         					</div>
         					<div style="float: left; width: 60%; text-align: center;">
         		     			<form name="searchForm" method="post" class="form-inline">
@@ -85,7 +85,7 @@ function searchList() {
         		     			</form>
         					</div>
         					<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    			<button type="button" class="btn btn-info" onclick="javascript:location.href='<%=cp%>/club/index/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+        		    			<button type="button" class="btn btn-info" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
         					</div>
         				</div>
         			</div>

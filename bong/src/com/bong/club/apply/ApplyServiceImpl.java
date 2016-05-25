@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bong.club.apply.Reply;
 import com.bong.common.dao.bongDAO;
 
 @Service("clubApply.applyService")
@@ -116,6 +117,16 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 
 	@Override
+	public List<Reply> listReply(Map<String, Object> map) {
+		List<Reply> list=null;
+		try {
+			list=dao.getListInformation("clubApply.listReply", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+	@Override
 	public int insertReply(Reply dto) {
 		int result=0;
 		try {
@@ -127,24 +138,7 @@ public class ApplyServiceImpl implements ApplyService {
 		}
 		return result;
 	}
-
-	@Override
-	public List<Reply> listReply(Map<String, Object> map) {
-		List<Reply> list=null;
-		try {
-			list=dao.getListInformation("clubApply.listReply", map);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return list;
-	}
-
-	@Override
-	public List<Reply> listReplyAnswer(int answer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public int replyDataCount(Map<String, Object> map) {
 		int result=0;
@@ -156,19 +150,65 @@ public class ApplyServiceImpl implements ApplyService {
 		return result;
 	}
 
+	
 	@Override
 	public int replyCountAnswer(int answer) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+		int result=0;
+		try {
+			result=dao.getIntValue("clubApply.replyCountAnswer", answer);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public int deleteReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.deleteInformation("clubApply.deleteReply", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+		
 	}
 
-	
+	@Override
+	public List<Reply> listReplyAnswer(Map<String, Object> map) {
+		List<Reply> list=null;
+		try {
+			list=dao.getListInformation("clubApply.listReplyAnswer", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+		
 	}
+
+	@Override
+	public int insertReplyLike(Reply dto) {
+		int result=0;
+		try {
+			result=dao.insertInformation("clubApply.insertReplyLike", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> replyCountLike(int replyNum) {
+		Map<String, Object> map=null;
+		try {
+			map=dao.getReadInformation("clubApply.replyCountLike", replyNum);
+			System.out.println(map+"ばばばば");
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return map;
+	}	
+}
 
 	
