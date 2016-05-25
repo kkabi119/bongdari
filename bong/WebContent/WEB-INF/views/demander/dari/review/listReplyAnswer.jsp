@@ -20,7 +20,7 @@
                                                             <ul class="nav navbar-nav post-nav">
                                                                 <li><a href="#"><i class="fa fa-clock-o"></i>${Adto.created }</a></li>
 <c:if test="${sessionScope.member.userId==Adto.userId || sessionScope.member.userId=='admin'}">   
-		     														<li><a onclick='deleteReplyAnswer("${Adto.replyNum}", "${Adto.answer}");'>삭제</a></li>
+		     														<li><a href="#" onclick='deleteReplyAnswer("${Adto.replyNum}", "${Adto.answer}");'>삭제</a></li>
 </c:if>
                                                             </ul>
                                                         </div>
@@ -30,7 +30,7 @@
 	</c:forEach>
 </c:if>
 
-
+<%-- 
 <c:if test="${not empty listReplyAnswer}">
     <c:forEach var="vo" items="${listReplyAnswer}">
         <div style="clear: both; border-top: #d5d5d5 solid 1px; margin-top: 7px; padding-top: 5px;">
@@ -48,4 +48,4 @@
             ${vo.content}
         </div>
     </c:forEach>
-</c:if>
+</c:if> --%>

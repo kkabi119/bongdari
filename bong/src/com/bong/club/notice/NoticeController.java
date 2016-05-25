@@ -39,17 +39,30 @@ public class NoticeController {
 	@Autowired
 	private FileManager fileManager;
 	
-	@RequestMapping(value="/club/index/main")
-	public ModelAndView myClubMain() throws Exception {
+	@RequestMapping(value="/club/{clubSeq}/main")
+	public ModelAndView myClubMain(
+			HttpServletRequest req,
+			HttpSession session,
+			@PathVariable int clubSeq
+			) throws Exception {
+		
+		//String cp=req.getContextPath();
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if (info == null) {
+			return new ModelAndView("redirect:/member/login");
+		}
 		
 		ModelAndView mav = new ModelAndView(".four.club.dari.main.내 동아리 메인");
+		mav.addObject("clubSeq", clubSeq);
 		return mav;
 	}
 	
 	/*개인동아리 공지게시판*/
-	@RequestMapping(value="/club/index/notice/list")
+	@RequestMapping(value="/club/{clubSeq}/notice/list")
 	public ModelAndView clubNoticeList(
 			HttpServletRequest req,
+			@PathVariable int clubSeq,
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue
@@ -68,6 +81,7 @@ public class NoticeController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("searchKey", searchKey);
         map.put("searchValue", searchValue);
+        map.put("clubSeq", clubSeq);
         
         dataCount = service.dataCount(map);
         if(dataCount != 0)
@@ -83,14 +97,13 @@ public class NoticeController {
         map.put("start", start);
         map.put("end", end);
         
+        
         // 글 리스트
         List<Notice> list = service.listNotice(map);
         
      // 리스트의 번호
         int listNum, n = 0;
-        
         Iterator<Notice> it=list.iterator();
-        
         while(it.hasNext()) {
             Notice data = it.next();
             listNum = dataCount - (start + n - 1);
@@ -99,21 +112,22 @@ public class NoticeController {
         }
         
         String params = "";
-        String urlList = cp+"/club/index/notice/list";
-        String urlArticle = cp+"/club/index/notice/article?page=" + current_page;
+        String urlList = cp+"/club/"+clubSeq+"/notice/list";
+        String urlArticle = cp+"/club/"+clubSeq+"/notice/article?page=" + current_page;
         if(searchValue.length()!=0) {
         	params = "searchKey=" +searchKey + 
         	             "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");	
         }
         
         if(params.length()!=0) {
-            urlList = cp+"/club/index/notice/list?" + params;
-            urlArticle = cp+"/club/index/notice/article?page=" + current_page + "&"+ params;
+            urlList = cp+"/club/"+clubSeq+"/notice/list?" + params;
+            urlArticle = cp+"/club/"+clubSeq+"/notice/article?page=" + current_page + "&"+ params;
         }
         
 		ModelAndView mav = new ModelAndView(".four.club.dari.notice.list.공지게시판");
 		
         mav.addObject("list", list);
+        mav.addObject("clubSeq",clubSeq);
         mav.addObject("urlArticle", urlArticle);
         mav.addObject("page", current_page);
         mav.addObject("dataCount", dataCount);
@@ -122,11 +136,12 @@ public class NoticeController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/club/index/notice/download")
+	@RequestMapping(value="/club/{clubSeq}/notice/download")
 	public void download(
 			HttpServletRequest req,
 			HttpServletResponse resp,
 			HttpSession session,
+			@PathVariable int clubSeq,
 			@RequestParam(value="num") int num
 			) throws Exception{
 		String cp=req.getContextPath();
@@ -136,10 +151,12 @@ public class NoticeController {
 			resp.sendRedirect(cp+"/member/login");
 			return;
 		}
-		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("clubSeq", clubSeq);
 		String root=session.getServletContext().getRealPath("/");
 		String path=root+File.separator+"uploads"+File.separator+"notice";
-		Notice dto=service.readNotice(num);
+		Notice dto=service.readNotice(map);
 		boolean flag=false;
 		
 		if(dto!=null) {
@@ -155,10 +172,9 @@ public class NoticeController {
 		}
 	}
 	
-	
-	
-	@RequestMapping(value="/club/index/notice/article")
+	@RequestMapping(value="/club/{clubSeq}/notice/article")
 	public ModelAndView readClubNotice(HttpSession session,
+			@PathVariable int clubSeq,
 			@RequestParam(value="num") int num,
 			@RequestParam(value="page") String page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
@@ -173,13 +189,16 @@ public class NoticeController {
 		searchValue = URLDecoder.decode(searchValue, "utf-8");
 		
 		// 조회수 증가
-		service.updateHitCount(num);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("clubSeq", clubSeq);
+		service.updateHitCount(map);
 
 		// 해당 레코드 가져 오기
-		Notice dto = service.readNotice(num);
+		Notice dto = service.readNotice(map);
 
 		if(dto==null)
-			return new ModelAndView("redirect:.club.index.notice.list?page="+page);
+			return new ModelAndView("redirect:.club.{clubSeq}.notice.list?page="+page);
 		
 		// 전체 라인수
         // int linesu = dto.getContent().split("\n").length;
@@ -188,10 +207,8 @@ public class NoticeController {
         // dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
         
 		// 이전 글, 다음 글
-		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
-		map.put("num", num);
 
 		Notice preReadDto = service.preReadNotice(map);
 		Notice nextReadDto = service.nextReadNotice(map);
@@ -215,10 +232,11 @@ public class NoticeController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/club/index/notice/update", 
+	@RequestMapping(value="/club/{clubSeq}/notice/update", 
 			method=RequestMethod.GET)
 	public ModelAndView updateForm(
 			HttpSession session,
+			@PathVariable int clubSeq,
 			@RequestParam(value="num") int num,
 			@RequestParam(value="page") String page
 			) throws Exception {
@@ -227,7 +245,10 @@ public class NoticeController {
 			return new ModelAndView("redirect:/member/login");
 		}
 		
-		Notice dto = (Notice) service.readNotice(num);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("clubSeq", clubSeq);
+		Notice dto = (Notice) service.readNotice(map);
 		
 		if(dto==null) {
 			return new ModelAndView("redirect:/notice/list?page="+page);
@@ -239,16 +260,18 @@ public class NoticeController {
 		
 		ModelAndView mav=new ModelAndView(".four.club.dari.notice.created.공지글수정");
 		mav.addObject("dto", dto);
+		mav.addObject("clubSeq",clubSeq);
 		mav.addObject("mode", "update");
 		mav.addObject("page", page);
 		return mav;
 	}
 	
-	@RequestMapping(value="/club/index/notice/update", 
+	@RequestMapping(value="/club/{clubSeq}/notice/update", 
 			method=RequestMethod.POST)
 	public ModelAndView updateSubmit(
 			HttpSession session,	
 			Notice dto, 
+			@PathVariable int clubSeq,
 			@RequestParam(value="page") String page
 			) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
@@ -260,14 +283,16 @@ public class NoticeController {
 		String path = root + File.separator + "uploads" + File.separator + "notice";		
 	
 		// 수정 하기
-		service.updateNotice(dto, path);		
+		dto.setClubIdx(clubSeq);
+		service.updateNotice(dto, path);
 		
-		return new ModelAndView("redirect:/club/index/notice/list?page="+page);
+		return new ModelAndView("redirect:/club/"+clubSeq+"/notice/list?page="+page);
 	}
 	
-	@RequestMapping(value="/club/index/notice/created",method=RequestMethod.GET)
+	@RequestMapping(value="/club/{clubSeq}/notice/created",method=RequestMethod.GET)
 	public ModelAndView createNoticeForm(
-			HttpSession session
+			HttpSession session,
+			@PathVariable int clubSeq
 			) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		if(info==null) {
@@ -276,13 +301,15 @@ public class NoticeController {
 		
 		ModelAndView mav = new ModelAndView(".four.club.dari.notice.created.공지글쓰기");
 		mav.addObject("mode", "created");
+		mav.addObject("clubSeq", clubSeq);
 		return mav;
 	}
 	
-	@RequestMapping(value="/club/index/notice/deleteFile", 
+	@RequestMapping(value="/club/{clubSeq}/notice/deleteFile", 
 			method=RequestMethod.GET)
 	public ModelAndView deleteFile(
 			HttpSession session,
+			@PathVariable int clubSeq,
 			@RequestParam(value="num") int num,
 			@RequestParam(value="page") String page
 			) throws Exception {
@@ -290,8 +317,10 @@ public class NoticeController {
 		if(info==null) {
 			return new ModelAndView("redirect:/member/login");
 		}
-		
-		Notice dto = service.readNotice(num);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("clubSeq", clubSeq);
+		Notice dto = service.readNotice(map);
 		if(dto==null) {
 			return new ModelAndView("redirect:/notice/list?page="+page);
 		}
@@ -313,9 +342,10 @@ public class NoticeController {
 		return new ModelAndView("redirect:.four.club.dari.notice.update?num="+num+"&page="+page);
 	}
 	
-	@RequestMapping(value="/club/index/notice/delete")
+	@RequestMapping(value="/club/{clubSeq}/notice/delete")
 	public ModelAndView delete(
 			HttpSession session,
+			@PathVariable int clubSeq,
 			@RequestParam(value="num") int num,
 			@RequestParam(value="page") String page
 			) throws Exception {
@@ -325,26 +355,30 @@ public class NoticeController {
 		}
 		
 		// 해당 레코드 가져 오기
-		Notice dto = service.readNotice(num);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("clubSeq", clubSeq);
+		Notice dto = service.readNotice(map);
 		if(dto==null) {
-			return new ModelAndView("redirect:/club/index/notice/list?page="+page);
+			return new ModelAndView("redirect:/club/{clubSeq}/notice/list?page="+page);
 		}
 		
 		if(! info.getUserId().equals(dto.getUserId()) && ! info.getUserId().equals("admin")) {
-			return new ModelAndView("redirect:/club/index/notice/list?page="+page);
+			return new ModelAndView("redirect:/club/{clubSeq}/notice/list?page="+page);
 		}
 		
 		String root = session.getServletContext().getRealPath("/");
 		String path = root + File.separator + "uploads" + File.separator + "notice";		
  	
-		service.deleteNotice(num, dto.getSaveFilename(), path);
+		service.deleteNotice(map, dto.getSaveFilename(), path);
 		
-		return new ModelAndView("redirect:/club/index/notice/list?page="+page);
+		return new ModelAndView("redirect:/club/{clubSeq}/notice/list?page="+page);
 	}
 	
-	@RequestMapping(value="/club/index/notice/created",method=RequestMethod.POST)
+	@RequestMapping(value="/club/{clubSeq}/notice/created",method=RequestMethod.POST)
 	public ModelAndView insertClubNotice(
 			HttpSession session,
+			@PathVariable int clubSeq,
 			Notice dto
 			) throws Exception {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
@@ -357,14 +391,16 @@ public class NoticeController {
 		
 		dto.setUserId(info.getUserId());
 		dto.setUserIdx(info.getUserIdx());
+		dto.setClubIdx(clubSeq);
 		service.insertNotice(dto, pathname);
-		return new ModelAndView("redirect:/club/index/notice/list");
+		return new ModelAndView("redirect:/club/{clubSeq}/notice/list");
 	}
 	
 	// 댓글 리스트
-		@RequestMapping(value="/club/index/notice/listReply")
+		@RequestMapping(value="/club/{clubSeq}/notice/listReply")
 		public ModelAndView listReply(
 				@RequestParam(value="num") int num,
+				@PathVariable int clubSeq,
 				@RequestParam(value="pageNo", defaultValue="1") int current_page
 				) throws Exception {
 			int numPerPage=5;
@@ -372,6 +408,7 @@ public class NoticeController {
 			int dataCount=0;
 			
 			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("clubSeq", clubSeq);
 			map.put("num", num);
 			
 			dataCount=service.replyDataCount(map);
@@ -412,12 +449,14 @@ public class NoticeController {
 		}
 
 		// 댓글별 답글 리스트
-		@RequestMapping(value="/club/index/notice/listReplyAnswer")
+		@RequestMapping(value="/club/{clubSeq}/notice/listReplyAnswer")
 		public ModelAndView listReplyAnswer(
+				@PathVariable int clubSeq,
 				@RequestParam(value="answer") int answer
 				) throws Exception {
 			
 			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("clubSeq", clubSeq);
 			map.put("answer", answer);
 			
 			List<Reply> listReplyAnswer=service.listReplyAnswer(map);
@@ -437,20 +476,19 @@ public class NoticeController {
 			return mav;
 		}
 		
-		@RequestMapping(value="/club/index/notice/replyCount",
+		@RequestMapping(value="/club/{clubSeq}/notice/replyCount",
 				method=RequestMethod.POST)
 		@ResponseBody
 		public Map<String, Object> replyCount(
+				@PathVariable int clubSeq,
 				@RequestParam(value="num") int num
 				) throws Exception {
 			// AJAX(JSON) - 댓글별 개수
 
 			String state="true";
 			int count=0;
-
-			//String tableName="b_"+blogSeq;
 	        Map<String, Object> map=new HashMap<String, Object>();
-	 		//map.put("tableName", tableName);
+	        map.put("clubSeq", clubSeq);
 	   		map.put("num", num);
 	  	    
 	   	    count=service.replyDataCount(map);
@@ -463,35 +501,42 @@ public class NoticeController {
 		}
 		
 		// 댓글별 답글 개수
-		@RequestMapping(value="/club/index/notice/replyCountAnswer",
+		@RequestMapping(value="/club/{clubSeq}/notice/replyCountAnswer",
 				method=RequestMethod.POST)
 		@ResponseBody
 		public Map<String, Object>  replyCountAnswer(
-				@RequestParam(value="answer") int answer) throws Exception {
+				@PathVariable int clubSeq,
+				@RequestParam(value="answer") int answer
+				) throws Exception {
 			
 			int count=0;
-			
-			count=service.replyCountAnswer(answer);
+			Map<String , Object> map = new HashMap<String, Object>();
+			map.put("clubSeq", clubSeq);
+			map.put("answer", answer);
+			count=service.replyCountAnswer(map);
 			
 	   	    // 작업 결과를 json으로 전송
-			Map<String, Object> model = new HashMap<>(); 
-			model.put("count", count);
-			return model;
+						
+			map.put("count", count);
+			return map;
 		}
 		
 		// 댓글 및 리플별 답글 추가
-		@RequestMapping(value="/club/index/notice/createdReply",
+		@RequestMapping(value="/club/{clubSeq}/notice/createdReply",
 				method=RequestMethod.POST)
 		@ResponseBody
 		public Map<String, Object>  createdReply(
 				HttpSession session,
-				Reply dto) throws Exception {
+				@PathVariable int clubSeq,
+				Reply dto
+				) throws Exception {
 			SessionInfo info=(SessionInfo) session.getAttribute("member");
 			String state="true";
 			if(info==null) { // 로그인이 되지 않는 경우
 				state="loginFail";
 			} else {
 				dto.setUserIdx(info.getUserIdx());
+				
 				int result=service.insertReply(dto);
 				if(result==0)
 					state="false";
@@ -500,15 +545,17 @@ public class NoticeController {
 	   	    // 작업 결과를 json으로 전송
 			Map<String, Object> model = new HashMap<>(); 
 			model.put("state", state);
+			model.put("clubSeq", clubSeq);
 			return model;
 		}
 		
 		// 댓글 및 댓글별답글 삭제
-		@RequestMapping(value="/club/index/notice/deleteReply",
+		@RequestMapping(value="/club/{clubSeq}/notice/deleteReply",
 				method=RequestMethod.POST)
 		@ResponseBody	
 		public Map<String, Object>  deleteReply(
 				HttpSession session,
+				@PathVariable int clubSeq,
 				@RequestParam(value="replyNum") int replyNum,
 				@RequestParam(value="mode") String mode
 				) throws Exception {
@@ -519,6 +566,7 @@ public class NoticeController {
 				state="loginFail";
 			} else {
 				Map<String, Object> map=new HashMap<String, Object>();
+				map.put("clubSeq", clubSeq);
 				map.put("mode", mode);
 				map.put("replyNum", replyNum);
 
@@ -539,21 +587,21 @@ public class NoticeController {
 	/*개인동아리 공지게시판 끝*/
 	
 	/*개인동아리 자유게시판*/
-	@RequestMapping(value="/club/index/free/list")
+	@RequestMapping(value="/club/{clubSeq}/free/list")
 	public ModelAndView ListClubFree() throws Exception {
 		
 		ModelAndView mav = new ModelAndView(".four.club.dari.free.list.자유게시판");
 		return mav;
 	}
 	
-	@RequestMapping(value="/club/index/free/create")
+	@RequestMapping(value="/club/{clubSeq}/free/create")
 	public ModelAndView insertClubFree() throws Exception {
 		
 		ModelAndView mav = new ModelAndView(".four.club.dari.free.create.자유글쓰기");
 		return mav;
 	}
 	
-	@RequestMapping(value="/club/index/free/article")
+	@RequestMapping(value="/club/{clubSeq}/free/article")
 	public ModelAndView readClubFree() throws Exception {
 		
 		ModelAndView mav = new ModelAndView(".four.club.dari.free.article.자유글보기");

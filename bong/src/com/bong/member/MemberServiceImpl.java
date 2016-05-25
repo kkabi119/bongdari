@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
+import com.bong.mypage.MyApply;
 
 @Service("member.memberService")
 public class MemberServiceImpl implements MemberService{
@@ -195,11 +196,7 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}
 
-	@Override
-	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 	@Override
 	public List<Member> listMember(Map<String, Object> map) {
@@ -237,7 +234,12 @@ public class MemberServiceImpl implements MemberService{
 		return 0;
 	}
 
-
+	
+	@Override
+	public int dataCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 }

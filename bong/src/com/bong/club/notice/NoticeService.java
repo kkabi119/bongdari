@@ -8,12 +8,12 @@ public interface NoticeService {
 	public List<Notice> listNotice(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
 	
-	public Notice readNotice(int num);
-	public int updateHitCount(int num);
+	public Notice readNotice(Map<String, Object> map);
+	public int updateHitCount(Map<String, Object> map);
 	public Notice preReadNotice(Map<String, Object> map);
 	public Notice nextReadNotice(Map<String, Object> map);
 	public int updateNotice(Notice dto, String path);
-	public int deleteNotice(int num, String saveFilename, String path);
+	public int deleteNotice(Map<String, Object> map, String saveFilename, String path);
 	
 	public int deleteNoticeId(String userId, String root);
 	
@@ -21,6 +21,6 @@ public interface NoticeService {
 	public List<Reply> listReply(Map<String, Object> map);
 	public List<Reply> listReplyAnswer(Map<String, Object> map);
 	public int replyDataCount(Map<String, Object> map);
-	public int replyCountAnswer(int answer);
+	public int replyCountAnswer(Map<String, Object> map);
 	public int deleteReply(Map<String, Object> map);
 }

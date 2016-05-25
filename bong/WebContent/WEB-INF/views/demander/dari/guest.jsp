@@ -8,120 +8,65 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 <!-- sp3의 guest -->
-<link rel="stylesheet" href="<%=cp%>/res/css/style.css" type="text/css">
 <style type="text/css">
-.title {
-	font-weight: bold;
-	font-size:13pt;
-	margin-bottom:10px;
-	font-family: 나눔고딕, "맑은 고딕", 돋움, sans-serif;
+.guest {
+    font-family: NanumGothic, 나눔고딕, "Malgun Gothic", "맑은 고딕", 돋움, sans-serif;
+}
+.guest-write {
+    border: #d5d5d5 solid 1px;
+    padding: 10px;
+    min-height: 50px;
 }
 
+.table td {
+    font-weight: normal;
+    border-top: none;
+}
+.table .guest-header{
+    border: #d5d5d5 solid 1px;
+    background: #eeeeee; color: #787878;
+} 
 </style>
 
-
 <script type="text/javascript">
-<%-- $(function(){
+$(function(){
 	listPage(1);
 });
 
 function listPage(page) {
-	var url="<%=cp%>/guest/list.do";
-	var params="pageNo="+page;
+
+	var url="<%=cp%>/demander/index/guest/list";
+	$.post(url, {pageNo:page}, function(data){
+		printGuest(data);
+	}, "JSON");
+}
+
+function sendGuest() {
+	var uid="${sessionScope.member.userId}";
+	
+	
+	var content=$.trim($("#content").val());
+	
+	var params="content="+content;
 	
 	$.ajax({
-		type:"post"
-		,url:url
+		type:"POST"
+		,url:"<%=cp%>/demander/index/guest/created"
 		,data:params
-		,dataType:"xml"
+		,dataType:"JSON"
 		,success:function(data) {
 			printGuest(data);
+			$("#content").val("");
 		}
-	    ,error:function(e) {
-	    	alert(e.responseText);
-	    }
+		,beforeSend:check
+		,error:function(e) {
+			alert(e.responseText);
+		}
 	});
 }
-
-function printGuest(data) {
-	$("#listGuest").show();
-
-	var dataCount=$(data).find("dataCount").text();
-	var pageNo=$(data).find("pageNo").text();
-	var paging=$(data).find("paging").text();
-	
-	var out="";
-	if(dataCount!=0) {
-		out="<table style='width: 600px; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;'>";
-		$(data).find("record").each(function(){
-			var record=$(this);
-			var num=record.attr("num");
-			var name=record.find("name").text();
-			var content=record.find("content").text();
-			var created=record.find("created").text();
-			
-			out+="<tr height='30' bgcolor='#EEEEEE' style='border: 1px solid #DBDBDB;'>";
-			out+="  <td width='50%' style='padding-left: 5px;'>"+ name+"</td>";
-			out+="  <td width='50%' align='right' style='padding-right: 5px;'>" + created;
-			out+=" | <a onclick='deleteGuest(\""+num+"\", \""+pageNo+"\");'>삭제</a></td>" ;
-			out+="</tr>";
-			out+="<tr height='50'>";
-			out+="   <td colspan='2' style='padding: 5px;' valign='top'>"+content+"</td>";
-			out+="</tr>";
-		});
-		out+="<tr height='30'>";
-		out+="  <td colspan='2' align='center'>";
-		out+=paging;
-		out+="  </td>";
-		out+="</tr>";
-		out+="</table>";
-	}
-	
-	$("#listGuest").html(out);
-}
-
-$(function(){
-	$("#btnSend").click(function(){
-		var name=$("#name").val().trim();
-		var content=$("#content").val().trim();
-		
-		var url="<%=cp%>/guest/insert.do";
-		var params="name="+name;
-		params+="&content="+content;
-		
-		$.ajax({
-			type:"post"
-			,url:url
-			,data:params
-			,dataType:"xml"
-			,success:function(data) {
-				// var state=$(data).find("state").text();
-				listPage(1);
-				
-				$("#name").val("");
-				$("#content").val("");
-			}
-		    ,error:function(e) {
-		    	alert(e.responseText);
-		    }
-		    ,beforeSend:check
-		});
-		
-	});
-});
 
 function check() {
-	var name=$("#name").val().trim();
-	var content=$("#content").val().trim();
-	
-	if(! name) {
-		alert("이름을 입력하세요 !!!");
-		$("#name").focus();
-		return false;
-	}
-	
-	if(! content) {
-		alert("내용을 입력하세요 !!!");
+	if(! $.trim($("#content").val()) ) {
 		$("#content").focus();
 		return false;
 	}
@@ -130,21 +75,72 @@ function check() {
 }
 
 function deleteGuest(num, page) {
-	if(! confirm("게시물을 삭제 하시 겠습니까 ?"))
-		return false;
+	var uid="${sessionScope.member.userId}";
+	if(! uid) {
+		alert("로그인이 필요 합니다.");
+		return;
+	}
 	
-	var url="<%=cp%>/guest/delete.do";
+	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
+		var url="<%=cp%>/demander/index/guest/delete";
+		$.post(url, {num:num, pageNo:page}, function(data){
+			printGuest(data);
 
-	$.post(url, {num:num}, function(data) {
-		   listPage(page);
-	}, "xml");	
-} --%>
+		}, "JSON");
+	}
+}
+
+function printGuest(data) {
+	var uid="${sessionScope.member.userId}";
+	var total_page=data.total_page;
+	var dataCount=data.dataCount;
+	var pageNo=data.pageNo;
+	var paging=data.paging;
+	
+	var out="<div style='clear: both; padding-top: 20px;'>";
+	out+="  <div style='float: left;'>";
+	out+="    <span style='color: #3EA9CD; font-weight: bold;'>방명록 "+dataCount+"개</span>";
+	out+="    <span>[목록, "+pageNo+"/"+total_page+" 페이지]</span>";
+	out+="  </div>";
+	out+="  <div style='float: right; text-align: right;'></div>";
+	if(dataCount!=0) {
+		out+="  <div class='table-responsive' style='clear: both; padding-top: 5px;'>";
+		out+="    <table class='table'>";
+		for(var idx=0; idx<data.list.length; idx++) {
+			var num=data.list[idx].num;
+			var userName=data.list[idx].userName;
+			var userId=data.list[idx].userId;
+			var content=data.list[idx].content;
+			var created=data.list[idx].created;
+			
+			out+="    <tr class='guest-header'>";
+			out+="      <td style='width: 50%;'>"+ userName+"</td>";
+			out+="      <td style='width: 50%; text-align: right;'>" + created;
+			if(uid==userId || uid=="admin") {
+				out+=" | <a onclick='deleteGuest(\""+num+"\", \""+pageNo+"\");'>삭제</a></td>" ;
+			} else {
+				out+=" | <a href='#'>신고</a></td>" ;
+			}
+			out+="    </tr>";
+			out+="    <tr style='height: 50px;'>";
+			out+="      <td colspan='2'>"+content+"</td>";
+			out+="    </tr>";
+		}
+		out+="    <tr style='height: 30px;'>";
+		out+="      <td colspan='2' style='text-align: center;'>";
+		out+=paging;
+		out+="      </td>";
+		out+="    </tr>";
+		out+="  </table>";
+	}
+	
+	$("#listGuest").html(out);
+}
 </script>
+
 
 </head>
 <body>
-
-
 		<div class="col-lg-12">
 			<h1 class="page-header" style="color:#F0AD4E;">
 			<i class="fa fa-comments-o" aria-hidden="true"></i>
@@ -164,7 +160,7 @@ function deleteGuest(num, page) {
          <tr height="60">
          		<td width="520">
          		   <i class="fa fa-user" aria-hidden="true" style="size: 60px;">  작성자 :</i> 
-         		   <input type="text" id="name" class="boxTF" size="30">
+         		  ${sessionScope.member.userName}
          		</td>
          		<td width="80">&nbsp;</td>
          </tr>
@@ -175,7 +171,7 @@ function deleteGuest(num, page) {
 			</td>
 			<td width="80" align="right" >
 			<br>
-			   <button type="button"  class="btn btn-warning"  id="btnSend" class="btn"
+			   <button type="button" onclick="sendGuest();" class="btn btn-warning"  id="btnSend" class="btn"
 			           style="width: 70px; height: 42px;">등록</button> 
 			</td>
 		</tr>           

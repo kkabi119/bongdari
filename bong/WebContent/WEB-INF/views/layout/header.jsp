@@ -52,10 +52,12 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a href="<%=cp%>/">Home</a></li>
-                        <li class="dropdown"><a href="#">동아리 <i class="fa fa-angle-down"></i></a>
+                        <li class="dropdown"><a href="<%=cp%>/main/club">동아리 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
-                                <li><a href="<%=cp%>/main/createClub">동아리 개설</a></li>
-                                <li><a href="<%=cp%>/main/club">전체 동아리 메인</a></li>
+                                <li><a href="<%=cp%>/club/me">동아리 개설하기</a></li>
+                                <li><a href="#">내가 개설한 동아리</a></li>
+                                <li><a href="<%=cp%>/club/index/main">클럽1</a></li>
+                                <li><a href="<%=cp%>/main/club2">클럽2</a></li>
                                 <li><a href="<%=cp%>/main/searchClub">동아리 검색하기</a></li>
                                 
                             </ul>
@@ -64,13 +66,6 @@
                             <ul role="menu" class="sub-menu">
                                 <li><a href="<%=cp%>/main/demander">수요처 전체 메인</a></li>
                                 <li><a href="<%=cp%>/main/searchDemander">수요처 검색</a></li>
-                            </ul>
-                        </li>
-                        
-                        <li class="dropdown"><a href="blog.html">나의동아리 <i class="fa fa-angle-down"></i></a>
-                            <ul role="menu" class="sub-menu">
-                                <li><a href="<%=cp%>/club/index/main">클럽1</a></li>
-                                <li><a href="<%=cp%>/main/club2">클럽2</a></li>
                             </ul>
                         </li>
                         

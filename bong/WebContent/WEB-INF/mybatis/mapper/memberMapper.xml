@@ -49,4 +49,66 @@
       UPDATE memberInfo SET memImg=''
           WHERE userId=#{userId}
     </update>
+    <select id="myApplyList" resultType="com.bong.mypage.MyApply" parameterType="map">
+    SELECT * FROM (
+		    SELECT ROWNUM rNum, tb.* FROM (
+    SELECT vb.volunIdx, vbm.userIdx,0.clubIdx, vb.subject,vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_Type, vb.volunDays, vbm.hopeDate,vb.typeIdx1, vb.typeIdx2  
+    FROM volun_bbs vb
+     LEFT OUTER JOIN volun_bbs_memlist vbm ON vb.volunIdx=vbm.volunIdx where userIdx=#{userIdx}
+ 
+         <if test="searchValue != null and searchValue != ''">
+         AND
+	     <include refid="where-list"/>
+		 </if>
+	
+      
+    UNION ALL
+    SELECT vb.volunIdx, cam.userIdx, clubIdx, vb.subject, vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_type, vb.volunDays, cam.hopeDate ,vb.typeIdx1, vb.typeIdx2 
+    FROM club_apply ca
+     LEFT OUTER JOIN club_apply_memlist cam ON ca.clubApplyIdx=cam.clubApplyIdx
+     LEFT OUTER JOIN volun_bbs vb ON vb.volunIdx=ca.volunIdx where userIdx=#{userIdx}
+         <if test="searchValue != null and searchValue != ''">
+         AND
+	     <include refid="where-list"/>
+		 </if>
+     ORDER BY userIdx DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+    </select>
+    
+	<!-- 글개수 -->
+	<select id="dataCount" parameterType="map"  resultType="Integer">
+	SELECT COUNT(*) FROM (
+		SELECT vb.volunIdx FROM volun_bbs vb
+	    LEFT OUTER JOIN volun_bbs_memlist vbm ON vb.volunIdx=vbm.volunIdx 
+	    where userIdx=#{userIdx}	  
+         <if test="searchValue != null and searchValue != ''">
+           AND 
+	     <include refid="where-list"/>
+		 </if>
+	    UNION ALL
+	    SELECT vb.volunIdx FROM club_apply ca
+	    LEFT OUTER JOIN club_apply_memlist cam ON ca.clubApplyIdx=cam.clubApplyIdx
+	    LEFT OUTER JOIN volun_bbs vb ON vb.volunIdx=ca.volunIdx 
+	    where userIdx=#{userIdx}	   
+         <if test="searchValue != null and searchValue != ''">
+           AND 
+	     <include refid="where-list"/>
+		 </if>	
+	)
+	</select>
+		<!-- 검색 시 유저 이름 또는 아이디로 검색 -->
+	<sql id="where-list">
+	  <if test="searchKey=='subject'">
+	      INSTR(subject, #{searchValue}) &gt; 0
+	  </if>
+	  <if test="searchKey=='place'">
+	      INSTR(place, #{searchValue}) &gt; 0
+	  </if>
+	   <if test="searchKey=='hopeDate'">
+	      hopeDate=#{searchValue}
+	  </if>
+	</sql>
 </mapper>

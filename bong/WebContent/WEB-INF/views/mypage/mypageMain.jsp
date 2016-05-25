@@ -44,7 +44,17 @@ function tabPageView() {
 	});
 }
 
+function searchList() {
+	var f=document.searchForm;
+	var searchKey=f.searchKey.value;
+	var searchValue=f.searchValue.value;
+	var url="<%=cp%>/member/index/myApply";
 
+	$.post(url, {searchKey:searchKey,searchValue:searchValue}, function(data){
+		var id="#tabContent2";
+		$(id).html(data);
+	});
+}
   
 </script>
 

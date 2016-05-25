@@ -51,12 +51,12 @@
                             <h3>Categories</h3>
                             <ul class="nav navbar-stacked">
                                 <li><a href="<%=cp%>/main/club/">동아리 메인페이지<span class="pull-right">(1)</span></a></li>
-                                <li class="active"><a href="<%=cp%>/club/index/main">내 동아리 메인<span class="pull-right">(8)</span></a></li>
-                                <li><a href="<%=cp%>/club/index/notice/list">공지사항<span class="pull-right">(4)</span></a></li>
+                                <li class="active"><a href="<%=cp%>/club/${clubSeq}/main">내 동아리 메인<span class="pull-right">(8)</span></a></li>
+                                <li><a href="<%=cp%>/club/${clubSeq}/notice/list">공지사항<span class="pull-right">(4)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/japply">가입신청하기<span class="pull-right">(9)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/free/list">자유게시판<span class="pull-right">(3)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/review">후기/포토게시판<span class="pull-right">(4)</span></a></li>
-                                <li><a href="<%=cp%>/club/index/apply/list">봉사신청게시판<span class="pull-right">(2)</span></a></li>
+                                <li><a href="<%=cp%>/club/index/vapply">봉사신청게시판<span class="pull-right">(2)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/calendar">우리동아리 달력<span class="pull-right">(8)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/admin">관리자모드<span class="pull-right">(8)</span></a></li>
                             </ul>

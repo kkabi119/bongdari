@@ -15,7 +15,7 @@
 	
 	
 	<!-- 회원 수 -->
-	<select id="dataCount" parameterType="map"
+	<select id="memberCount" parameterType="map"
 	            resultType="Integer">
 	  SELECT COUNT(*) FROM memberInfo
 	     <where>
@@ -45,8 +45,34 @@
 	        ) tb WHERE ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start}
 	]]>
+	</select>
 	
-
+	<!-- 클럽 수 -->
+	<select id="clubCount" parameterType="map"
+	            resultType="Integer">
+	  SELECT COUNT(*) FROM clubInfo
+	     <where>
+	     	<if test="searchValue!=null and searchValue!='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	     </where>   
+	</select>
+	
+	<!-- 동아리 리스트 -->
+	<select id="listClub" resultType="com.bong.admin.Club" 
+	          parameterType="map">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT clubName, TO_CHAR(clubBirth, 'YYYY-MM-DD') clubBirth, clubAddr, typeIdx, userId, closed, prologue, introduce, themeNum,
+			          	NVL(cvl.total_hours, 0) total_hours, NVL(cvl.total_NoShow, 0) total_NoShow, NVL(jc.member, 0) member FROM clubinfo ci
+			         	LEFT OUTER JOIN (SELECT SUM(clubhours) total_hours, SUM(clubnoshow) total_noshow, clubIdx FROM clubVolList
+						GROUP BY clubIdx) cvl ON ci.clubIdx=cvl.clubIdx
+          				LEFT OUTER JOIN (SELECT COUNT(userIdx) member, clubIdx FROM joinclub
+						GROUP BY clubIdx) jc ON ci.clubIdx=jc.clubIdx
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
 	</select>
 	
 	

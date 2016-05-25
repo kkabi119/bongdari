@@ -3,7 +3,7 @@ package com.bong.club.notice;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Notice {
-	private int userIdx,clubIndx, hitCount, clubNoticeIdx, listNum;
+	private int userIdx,clubIdx, hitCount, clubNoticeIdx, listNum;
 	private String saveFilename, originalFilename;
 	private String userId, userName, subject, content, created, modified;
 	private MultipartFile upload;
@@ -44,11 +44,11 @@ public class Notice {
 	public void setUserIdx(int userIdx) {
 		this.userIdx = userIdx;
 	}
-	public int getClubIndx() {
-		return clubIndx;
+	public int getClubIdx() {
+		return clubIdx;
 	}
-	public void setClubIndx(int clubIndx) {
-		this.clubIndx = clubIndx;
+	public void setClubIdx(int clubIdx) {
+		this.clubIdx = clubIdx;
 	}
 	public int getHitCount() {
 		return hitCount;
