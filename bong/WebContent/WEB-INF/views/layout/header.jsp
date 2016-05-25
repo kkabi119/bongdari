@@ -54,8 +54,12 @@
                         <li class="active"><a href="<%=cp%>/">Home</a></li>
                         <li class="dropdown"><a href="<%=cp%>/main/club">동아리 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
+                            <c:if test="${sessionScope.member.clubIdx==0}">
                                 <li><a href="<%=cp%>/club/me">동아리 개설하기</a></li>
-                                <li><a href="#">내가 개설한 동아리</a></li>
+                            </c:if>
+                            <c:if test="${sessionScope.member.clubIdx>0}">
+                                <li><a href="<%=cp%>/club/${sessionScope.member.clubIdx}/main">내가 개설한 동아리</a></li>
+                            </c:if>
                                 <li><a href="<%=cp%>/club/index/main">클럽1</a></li>
                                 <li><a href="<%=cp%>/main/club2">클럽2</a></li>
                                 <li><a href="<%=cp%>/main/searchClub">동아리 검색하기</a></li>

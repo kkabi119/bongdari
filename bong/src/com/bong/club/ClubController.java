@@ -110,11 +110,7 @@ public class ClubController {
 		ModelAndView mav = new ModelAndView(".layout.club.manage.clubCreated.동아리 만들기");
 		ClubInfo dto = new ClubInfo();
 		dto.setIsUserName(1);
-		dto.setGender("남자");
 		dto.setClosed(0);
-		dto.setIsCity(1);
-		dto.setIsGender(1);
-		dto.setIsHobby(1);
 
 		mav.addObject("mode", "created");
 		mav.addObject("dto", dto);

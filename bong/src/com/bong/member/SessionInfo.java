@@ -6,10 +6,17 @@ public class SessionInfo {
 	private int userIdx;
 	private String userId;
 	private String userName;
+	private int clubIdx;
 	private int memberLevel;
 	private String memImgname;
 	private MultipartFile memImg;
 	
+	public int getClubIdx() {
+		return clubIdx;
+	}
+	public void setClubIdx(int clubIdx) {
+		this.clubIdx = clubIdx;
+	}
 	public int getUserIdx() {
 		return userIdx;
 	}

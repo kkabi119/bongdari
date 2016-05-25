@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
+import com.bong.member.SessionInfo;
 
 @Service("club.clubService")
 public class ClubServiceImpl  implements ClubService {
@@ -117,8 +118,8 @@ public class ClubServiceImpl  implements ClubService {
 		int result=0;
 		try {
 			// 개인 블로그 파일 폴더 및 파일 삭제  
-		
 			fileManager.removePathname(pathname);
+			
 			dao.deleteInformation("club.deleteClubProfile", clubSeq);
 			dao.deleteInformation("club.deleteClubInfo", clubSeq);
 			
@@ -178,17 +179,6 @@ public class ClubServiceImpl  implements ClubService {
 	}
 
 	@Override
-	public ClubInfo readClubInfoProfile(int clubSeq) {
-		ClubInfo dto=null;
-		try {
-			dto=dao.getReadInformation("club.readClubInfoProfile", clubSeq);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return dto;
-	}
-
-	@Override
 	public int updateClubVisitorCount(int clubSeq) {
 		int result=0;
 		try {
@@ -205,6 +195,9 @@ public class ClubServiceImpl  implements ClubService {
 		try {
 			dao.updateInformation("club.createClubNotice", clubSeq);
 			dao.updateInformation("club.createClubNoticeReply", clubSeq);
+			dao.updateInformation("club.createClubFree", clubSeq);
+			dao.updateInformation("club.createClubFreeP", clubSeq);
+			dao.updateInformation("club.createClubFreeReply", clubSeq);
 			/*dao.updateInformation("club.createBoardCategoryTable", clubSeq);
 			dao.updateInformation("club.createBoardTable", clubSeq);
 			dao.updateInformation("club.createBoardLikeTable", clubSeq);
@@ -244,6 +237,24 @@ public class ClubServiceImpl  implements ClubService {
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
+		return result;
+	}
+
+	@Override
+	public int ReadClubInfoSession(Map<String, Object> map) {
+		int result=0;
+		String value=null;
+		
+		try {
+			value=dao.getReadInformation("club.readClubInfoSession", map);
+			if(value==null)
+				result=0;
+			else
+				result=Integer.parseInt(value);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
 		return result;
 	}
 	
