@@ -151,7 +151,7 @@ public class MemberServiceImpl implements MemberService{
 			if(dto.getEmail1() != null && dto.getEmail1().length()!=0 &&
 					dto.getEmail2() != null && dto.getEmail2().length()!=0 )
 				dto.setUserEmail(dto.getEmail1() + "@" + dto.getEmail2());
-
+           // 이미지 파일 넣기
 			if(dto.getUploads()!=null && !dto.getUploads().isEmpty()){
 				String memImg=fileManager.doFileUpload(dto.getUploads(), pathname);
 			    dto.setMemImg(memImg);

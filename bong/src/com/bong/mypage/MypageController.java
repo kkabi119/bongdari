@@ -29,10 +29,10 @@ public class MypageController {
 	@Autowired
 	private MemberService service;
 	@Autowired
-	private MyApplyService service2;
+	private MyApplyService service2; // 리스트 현황에 사용할 서비스
 	@Autowired
 	private MyUtil myUtil;
-	//내정보
+	//내정보 보기 
 	@RequestMapping(value="/member/index/myPage", method=RequestMethod.GET)
 	public ModelAndView myPage(
 			 HttpSession session
@@ -45,9 +45,10 @@ public class MypageController {
 	public ModelAndView myInfo(
 			 HttpSession session
 			) throws Exception{
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		SessionInfo info = (SessionInfo)session.getAttribute("member"); //세션에 있는 멤버 정보 가져오기
         
 		Member dto=service.readMemberInfo(Integer.toString(info.getUserIdx()));
+		//userIdx 를 통해서 db에 있는 데이터 가져오기.
 		
 		ModelAndView mav= new ModelAndView("mypage/myInfo");
 		mav.addObject("dto", dto);
@@ -75,7 +76,7 @@ public class MypageController {
 			return new ModelAndView("redirect:/");
 		}
 
-		service.updateMember2(dto,pathname);
+		service.updateMember2(dto,pathname); 
 		
 		// 회원정보수정폼
 	    ModelAndView mav=new ModelAndView("/mypage/updateInfo");
@@ -106,15 +107,16 @@ public class MypageController {
 		   ,@RequestParam(value="page",defaultValue="1") int current_page
 		   ,@RequestParam(value="searchKey", defaultValue="subject") String searchKey
 		   ,@RequestParam(value="searchValue", defaultValue="") String searchValue
+		   ,@RequestParam(value="option", defaultValue="myApplyList") String optionC // 전체보기, 개인, 동아리 별 
 		   ,HttpSession session
 			) throws Exception{
 		String cp=req.getContextPath();
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
-		int numPerPage = 10;
-		int total_page;
-		int dataCount;
+		int numPerPage = 10; //한페이지당 보여줄 게시물의 개수
+		int total_page;  //전체 페이지
+		int dataCount;  // 글 개수
 		
 		if(req.getMethod().equalsIgnoreCase("GET")){ //get 방식인경우
 			searchValue = URLDecoder.decode(searchValue,"utf-8");
@@ -125,7 +127,7 @@ public class MypageController {
 		map.put("searchValue", searchValue);
 		map.put("userIdx", Integer.toString(info.getUserIdx()));
 		
-		dataCount = service2.dataCount(map);
+		dataCount = service2.dataCount(map, optionC);
 		total_page= myUtil.pageCount(numPerPage, dataCount);
 		
 		if(total_page < current_page)
@@ -138,7 +140,7 @@ public class MypageController {
 		map.put("end", end);
 		
 		// 글 리스트
-		List<MyApply> list = service2.myApplyList(map);
+		List<MyApply> list = service2.myApplyList(map, optionC);
 		// 리스트 번호
 		int listNum, n=0;
 		Iterator<MyApply> it= list.iterator();

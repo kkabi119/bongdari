@@ -8,23 +8,19 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 
-
-	<div class="row">
+	<div class="row" id="content">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">
 				<div class="post-content overflow">
  					<div class="bodyFrame2">
           				<h1 style="color:#5bc0de"><i class="fa fa-bell"></i>나의 봉사신청 현황</h1>
-<!--           				      <div style="float: right; width: 60%; text-align: center;">
-        		     			<form name="searchForm" method="post" class="form-inline">
-						  			<select class="form-control input-sm" name="searchKey" style="height:32px">
-						      			<option value="subject">전체보기</option>
-						      			<option value="place">동아리만보기</option>
-						      			<option value="content">개인만 보기</option>
+        		     			<form name="listForm" method="post" class="form-inline">
+						  			<select id="searchSelect" class="form-control input-sm" style="height:32px" onchange="searchList();">
+						      			<option value="myApplyList">전체보기</option>
+						      			<option value="myClubList">동아리만보기</option>
+						      			<option value="myIndividualList">개인만 보기</option>
 						  			</select>
-						  			<button type="button" class="btn btn-info" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
         		     			</form> 
-        					</div> -->
           				<c:if test="${dataCount!=0}">
     					<div style="clear: both; height: 30px; line-height: 30px;">
             				<div style="float: left;">전체 ${dataCount}개   (${page}/${total_page} 페이지)</div>
@@ -78,7 +74,7 @@
         
         				<div style="clear: both;">
         					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/member/index/myApply;">새로고침</button>
+        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/member/index/myApply';">새로고침</button>
         					</div>
         					<div style="float: left; width: 60%; text-align: center;">
         		     			<form name="searchForm" method="post" class="form-inline">
@@ -91,11 +87,10 @@
 						  			<button type="button" class="btn btn-info" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
         		     			</form>
         					</div>
-
+        				</div>
         				</div>
         			</div>
         		</div>
         	</div>
-        </div>
 	</div>
  

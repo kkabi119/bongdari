@@ -7,8 +7,8 @@ import java.util.Map;
 
 public interface MyApplyService {
 	
-	public List<MyApply> myApplyList(Map<String, Object> map);
-	public int dataCount(Map<String, Object> map);
+	public List<MyApply> myApplyList(Map<String, Object> map, String option);
+	public int dataCount(Map<String, Object> map, String option);
 	public MyApply readMyApply(int num);
 
 }
