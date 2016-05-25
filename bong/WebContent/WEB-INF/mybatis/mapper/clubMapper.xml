@@ -216,7 +216,7 @@ JOIN ( SELECT themeNum, subject FROM ClubInfo_theme WHERE parent IS NULL ) g ON 
 	
 	<!-- 동아리 자유게시판 -->
 	<update id="createClubFree" parameterType="Integer">
-		CREATE TABLE club_free_{value}(
+		CREATE TABLE club_free_${value}(
 		    CLUBFREEIDX  NUMBER NOT NULL 
 		    ,USERIDX  NUMBER  NOT NULL
 		    ,CLUBIDX  NUMBER NOT NULL        
@@ -225,43 +225,43 @@ JOIN ( SELECT themeNum, subject FROM ClubInfo_theme WHERE parent IS NULL ) g ON 
 		    ,HITCOUNT NUMBER DEFAULT 0      
 		    ,CREATED  DATE DEFAULT SYSDATE         
 		    ,MODIFIED  DATE DEFAULT SYSDATE
-		    ,CONSTRAINT pk_club_free_{value} PRIMARY KEY(clubFreeIdx)
-		    ,CONSTRAINT fk_club_Free_userIdx_{value} FOREIGN KEY(userIdx)
+		    ,CONSTRAINT pk_club_free_${value} PRIMARY KEY(clubFreeIdx)
+		    ,CONSTRAINT fk_club_Free_userIdx_${value} FOREIGN KEY(userIdx)
 		      REFERENCES memberInfo(userIdx) ON DELETE CASCADE
-		    ,CONSTRAINT fk_club_Free_clubIdx_{value} FOREIGN KEY(clubIdx) 
-     	 REFERENCES clubInfo(value) ON DELETE CASCADE
+		    ,CONSTRAINT fk_club_Free_clubIdx_${value} FOREIGN KEY(clubIdx) 
+     	 REFERENCES clubInfo(clubIdx) ON DELETE CASCADE
 		)
 	</update>
 	
 	<update id="createClubFreeP" parameterType="Integer">	
-			CREATE TABLE club_freeP_{value} (
+			CREATE TABLE club_freeP_${value} (
 			   clubFreePIdx NUMBER
 			  ,clubFreeIdx NUMBER NOT NULL
 			   
 			   ,saveFilename VARCHAR2(255)
 			   ,originalFilename VARCHAR2(255)
 			      
-			   ,CONSTRAINT pk_club_freeP_{value} PRIMARY KEY(clubFreePIdx)
+			   ,CONSTRAINT pk_club_freeP_${value} PRIMARY KEY(clubFreePIdx)
 			  
-			   ,CONSTRAINT fk_club_freeP_clubFreeIdx_{value} FOREIGN KEY(clubFreeIdx)
-               REFERENCES club_free_{value}(clubFreeIdx)
+			   ,CONSTRAINT fk_club_freeP_clubFreeIdx_${value} FOREIGN KEY(clubFreeIdx)
+               REFERENCES club_free_${value}(clubFreeIdx)
 			)
 			
 	</update>
 	
 	<update id="createClubFreeReply" parameterType="Integer">
-		create table club_free_reply_{value}(
+		create table club_free_reply_${value}(
 			CFRIDX  	 NUMBER NOT NULL
 			,USERIDX 	 NUMBER NOT NULL
 			,CLUBFREEIDX  NUMBER NOT NULL
 			,CONTENT  CLOB NOT NULL
 			,CREATED  DATE DEFAULT SYSDATE
 			,ANSWER  	 NUMBER NOT NULL   	
-			,CONSTRAINT pk_club_free_reply_{value} PRIMARY KEY(cfrIdx)
-			,CONSTRAINT  fk_clubFreer_userIdx_{value} FOREIGN KEY(userIdx)
+			,CONSTRAINT pk_club_free_reply_${value} PRIMARY KEY(cfrIdx)
+			,CONSTRAINT  fk_clubFreer_userIdx_${value} FOREIGN KEY(userIdx)
 			  REFERENCES memberInfo(userIdx) ON DELETE CASCADE
-			,CONSTRAINT fk_clubFreer_clubFreeIdx_{value} FOREIGN KEY(clubFreeIdx)
-				REFERENCES club_free_{value}(clubFreeIdx) ON DELETE CASCADE
+			,CONSTRAINT fk_clubFreer_clubFreeIdx_${value} FOREIGN KEY(clubFreeIdx)
+				REFERENCES club_free_${value}(clubFreeIdx) ON DELETE CASCADE
 		)
 	</update>	
 	
