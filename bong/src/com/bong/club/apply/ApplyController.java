@@ -2,6 +2,7 @@ package com.bong.club.apply;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bong.common.FileManager;
 import com.bong.common.MyUtil;
 import com.bong.member.SessionInfo;
+
 
 
 @Controller("club.applyController")
@@ -64,11 +66,12 @@ public class ApplyController {
                 
         dataCount = service.dataCount(map);
         
-        System.out.println(dataCount);
         if(dataCount != 0)
             total_page = myUtil.pageCount(numPerPage,  dataCount) ;
 		
-        // 다른 사람이 자료를 삭제하여 전체 페이지수가 변화 된 경우
+        System.out.println("total_page="+total_page);
+    
+		// 다른 사람이 자료를 삭제하여 전체 페이지수가 변화 된 경우
         if(total_page < current_page) 
             current_page = total_page;
 
@@ -77,7 +80,11 @@ public class ApplyController {
         int end = current_page * numPerPage;
         map.put("start", start);
         map.put("end", end);
-                       
+
+        System.out.println("start: "+start);
+        System.out.println("end: "+end);
+        System.out.println("current_page: "+current_page);
+        System.out.println("numPerPage: "+numPerPage);
         // 글 리스트
         List<Apply> list = service.listApply(map);
                      
@@ -189,7 +196,13 @@ public class ApplyController {
 		if(info==null) { // 로그인이 되지 않는 경우
 			state="loginFail";
 		} else {
+			
+			System.out.println("유저 idx="+info.getUserIdx());
+			System.out.println("유저 id="+info.getUserId());
+			
 			dto.setUserIdx(info.getUserIdx());
+			dto.setUserId(info.getUserId());
+			System.out.println("dto유저 id"+dto.getUserIdx());
 			int result=service.insertReply(dto);
 			if(result==0)
 				state="false";
@@ -250,10 +263,11 @@ public class ApplyController {
 		
 		return mav;
 	}
+	
+	//////////////////////////////////// AJAX(JSON) - 댓글별 개수
 	@RequestMapping(value="/club/index/apply/replyCount",  method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> replyCount(	@RequestParam(value="num") int num) throws Exception {
-		// AJAX(JSON) - 댓글별 개수
 
 		String state="true";
 		int count=0;
@@ -272,7 +286,119 @@ public class ApplyController {
 		return model;
 	}
 	
-	
+	//////////////////////////////////////////////////// 댓글 및 대댓글 삭제
+			@RequestMapping(value="/club/index/apply/deleteReply", method=RequestMethod.POST)
+			@ResponseBody	
+			public Map<String, Object>  deleteReply(
+					HttpSession session,	@RequestParam(value="replyNum") int replyNum,	@RequestParam(value="mode") String mode
+					) throws Exception {
+				SessionInfo info=(SessionInfo) session.getAttribute("member");
+				
+				String state="true";
+				if(info==null) { // 로그인이 되지 않는 경우
+					state="loginFail";
+				} else {
+					Map<String, Object> map=new HashMap<String, Object>();
+					map.put("mode", mode);
+					map.put("replyNum", replyNum);
+
+					// 좋아요/싫어요 는 ON DELETE CASCADE 로 자동 삭제
+
+		            // 댓글삭제
+					int result=service.deleteReply(map);
+
+					if(result==0)
+						state="false";
+				}
+				
+		   	    // 작업 결과를 json으로 전송
+				Map<String, Object> model = new HashMap<>(); 
+				model.put("state", state);
+				return model;
+			}
+			
+			//////////////////////////////////////////////////////////////////// 댓글별 답글 리스트
+			@RequestMapping(value="/club/index/apply/listReplyAnswer")
+			
+			public ModelAndView listReplyAnswer(@RequestParam(value="answer") int answer
+					) throws Exception {
+				
+				Map<String, Object> map=new HashMap<String, Object>();
+				map.put("answer", answer);
+				
+				List<Reply> listReplyAnswer=service.listReplyAnswer(map);
+				
+				// 엔터를 <br>
+				Iterator<Reply> it=listReplyAnswer.iterator();
+				while(it.hasNext()) {					
+					Reply dto=it.next();
+					dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+				}
+				
+				ModelAndView mav=new ModelAndView("/club/dari/apply/listReplyAnswer");
+
+				// jsp로 넘길 데이터
+				mav.addObject("listReplyAnswer", listReplyAnswer);
+				
+				return mav;
+			}
+			
+			//////////////////////////////////////////////////////////////////// 댓글별 답글 개수
+			@RequestMapping(value="/club/index/apply/replyCountAnswer",method=RequestMethod.POST)
+			@ResponseBody
+			public Map<String, Object>  replyCountAnswer( @RequestParam(value="answer") int answer) 
+					throws Exception {
+				
+				int count=0;
+				
+				count=service.replyCountAnswer(answer);
+				
+		   	    // 작업 결과를 json으로 전송
+				Map<String, Object> model = new HashMap<>(); 
+				model.put("count", count);
+				return model;
+			}
+			
+			//////////////////////////////////////////////////////////////// 댓글 좋아요 추가
+			@RequestMapping(value="/apply/replyLike",	method=RequestMethod.POST)
+			@ResponseBody
+			public Map<String, Object>  replyLike(
+					HttpSession session, Reply dto) throws Exception {
+			
+				SessionInfo info=(SessionInfo) session.getAttribute("member");
+				
+				String state="true";
+			
+					dto.setUserIdx(info.getUserIdx());
+				int result=service.insertReplyLike(dto);
+					if(result==0)
+						state="false";
+				
+				
+		   	    // 작업 결과를 json으로 전송
+				Map<String, Object> model = new HashMap<>(); 
+				model.put("state", state);
+				return model;
+			}
+			
+			//////////////////////////////////////////////////////////////// 댓글 좋아요 개수
+			@RequestMapping(value="/apply/countLike",	method=RequestMethod.POST)
+			@ResponseBody
+			public Map<String, Object>  countLike(
+					@RequestParam(value="replyNum") int replyNum) throws Exception {
+				
+				int likeCount=0, disLikeCount=0;
+				Map<String, Object> map=service.replyCountLike(replyNum);
+				if(map!=null) {
+					// resultType이 map인 경우 int는 BigDecimal로 넘어옴
+					likeCount=((BigDecimal)map.get("LIKECOUNT")).intValue();
+				}
+				
+		   	    // 작업 결과를 json으로 전송
+				Map<String, Object> model = new HashMap<>(); 
+				model.put("likeCount", likeCount);
+				return model;
+			}
 }
 	
 	

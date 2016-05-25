@@ -161,4 +161,47 @@
 	    ) WHERE rnum >= #{start}
 	]]>
 	</select>
+	
+	<!-- 															댓글삭제  														-->
+	<delete id="deleteReply" parameterType="map"> 
+		DELETE club_applyR WHERE
+	    <if test="mode == 'num' ">
+			 clubApplyIdx=#{num}
+		</if>
+	    <if test="mode == 'reply' ">
+			 CARIDX IN 
+               (SELECT CARIDX FROM club_applyR START WITH CARIDX = #{replyNum}
+	            CONNECT BY PRIOR CARIDX = answer)
+		</if>
+	    <if test="mode == 'answer' ">
+			 CARIDX=#{replyNum}
+		</if>
+	</delete>
+	
+	<!-- 																대댓글 개수 세기											-->
+	<select id="replyCountAnswer" resultType="Integer"   parameterType="Integer">
+	   SELECT NVL(COUNT(*), 0)
+	        FROM club_applyR WHERE answer=#{answer}
+	</select>
+	
+	<!-- 대댓글 리스트 -->
+	<select id="listReplyAnswer" resultType="com.bong.club.apply.Reply" parameterType="Integer">
+     SELECT CARIDX AS replyNum, clubApplyIdx AS num, tbreply.userIdx, userName, content, created, answer
+	          FROM club_applyR tbreply 
+	          JOIN memberInfo m ON tbreply.userIdx=m.userIdx
+              WHERE answer=#{answer}
+              ORDER BY replyNum DESC
+	</select>
+	
+	<!-- 													댓글 좋아요 																-->
+	<insert id="insertReplyLike" parameterType="com.bong.club.apply.Reply">
+	INSERT INTO club_applyR_like(CARIdx, userIdx)
+	   VALUES (#{replyNum}, #{userIdx})
+	</insert>
+
+	<select id="replyCountLike" resultType="map" parameterType="Integer">
+	   SELECT  NVL(COUNT(*), 0) AS likeCount
+	    FROM club_applyR_like
+	    WHERE CARIdx=#{replyNum}
+	</select>
 </mapper>

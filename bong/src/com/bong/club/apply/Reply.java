@@ -5,16 +5,13 @@ public class Reply {
 	private String userId, userName, content, created;
 	private int answer ,userIdx;
 	private int answerCount;
+	private int likeCount;
 	
-	
-	public int getUserIdx() {
-		return userIdx;
+	public int getLikeCount() {
+		return likeCount;
 	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
 	}
 	public int getReplyNum() {
 		return replyNum;
@@ -34,7 +31,12 @@ public class Reply {
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
 	}
-	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String getUserName() {
 		return userName;
 	}
@@ -59,15 +61,19 @@ public class Reply {
 	public void setAnswer(int answer) {
 		this.answer = answer;
 	}
+	public int getUserIdx() {
+		return userIdx;
+	}
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
+	}
 	public int getAnswerCount() {
 		return answerCount;
 	}
 	public void setAnswerCount(int answerCount) {
 		this.answerCount = answerCount;
 	}
-	public void setUserIdx(int userIdx) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
 
 }
