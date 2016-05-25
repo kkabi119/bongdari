@@ -117,8 +117,8 @@ public class ClubServiceImpl  implements ClubService {
 		int result=0;
 		try {
 			// 개인 블로그 파일 폴더 및 파일 삭제  
+		
 			fileManager.removePathname(pathname);
-			
 			dao.deleteInformation("club.deleteClubProfile", clubSeq);
 			dao.deleteInformation("club.deleteClubInfo", clubSeq);
 			
