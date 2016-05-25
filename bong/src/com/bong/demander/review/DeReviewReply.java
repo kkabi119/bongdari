@@ -7,9 +7,9 @@ public class DeReviewReply {
 	private int answer,userIdx;
 	private int replyLike;
 	
-	private int answerCount;
 	private int likeCount;
-	private int disLikeCount;
+	private int answerCount;
+
 
 	
 	public int getListNum() {
@@ -66,12 +66,7 @@ public class DeReviewReply {
 	public void setLikeCount(int likeCount) {
 		this.likeCount = likeCount;
 	}
-	public int getDisLikeCount() {
-		return disLikeCount;
-	}
-	public void setDisLikeCount(int disLikeCount) {
-		this.disLikeCount = disLikeCount;
-	}
+	
 	public int getUserIdx() {
 		return userIdx;
 	}
@@ -90,6 +85,7 @@ public class DeReviewReply {
 	public void setNum(int num) {
 		this.num = num;
 	}
+
 	
 	
 	

@@ -9,6 +9,47 @@
 <c:if test="${dataCount!=0}">
 <script type="text/javascript">
 
+
+$(function(){
+	/* countRevLikeRe(29);
+	countAnswer(29); */
+});  
+
+//댓글의 좋아요/싫어요 개수
+function countRevLikeRe(replyNum) {
+	var url="<%=cp%>/demander/index/review/countLikeReply";
+	$.post(url, {replyNum:replyNum}, function(data){
+		var likeCountReId="#likeCountRe"+replyNum;
+		var likeCountRe=data.likeCount;
+		$(likeCountReId).html(likeCountRe);
+	}, "JSON");
+	
+}
+
+//좋아요추가
+function sendLikeRe(replyNum) {
+	var uid="${sessionScope.member.userId}";
+	if(! uid) {
+		login();
+		return false;
+	}
+	var params="replyNum="+replyNum;
+	
+
+	$.ajax({
+		type:"POST"
+		,url:"<%=cp%>/demander/index/review/sendLikeReply"
+		,data:params
+		,dataType:"json"
+		,success:function(data) {
+			countRevLikeRe(replyNum);
+		}
+		,error:function(e) {
+			alert(e.responseText);
+		}
+	});
+}
+
 // 댓글별 답글 리스트
   function listAnswer(answer) {
 	var listReplyAnswerId="#listReplyAnswer"+answer;
@@ -22,7 +63,7 @@
 function countAnswer(answer) {
 	var url="<%=cp%>/demander/index/review/replyCountAnswer";
 	$.post(url, {answer:answer}, function(data){
-		var count="("+data.count+")";
+		var count=data.count;
 		var answerCountId="#answerCount"+answer;
 		var answerGlyphiconId="#answerGlyphicon"+answer;
 		
@@ -131,15 +172,19 @@ function deleteReplyAnswer(replyNum, answer) {
    						<li class="media">
                                             <div class="post-comment">
                                                 <a class="pull-left" href="#">
-                                                    <img class="media-object" src="images/blogdetails/2.png" alt="">
+                                                    <img style="width: 137px; height: 127px; background-size:cover;" class="media-object" src="<%=cp%>/res/images/demander/demander1.jpg" alt="">
                                                 </a>
                                                 <div class="media-body">
-                                                    <span><i class="fa fa-user"></i>Posted by <a href="#">${Rdto.userName}</a></span>
+                                                    <span><i class="fa fa-user"></i>Posted by <a href="#">${Rdto.userName}|${Rdto.replyNum}</a></span>
                                                     <p>${Rdto.content}</p>
                                                     <ul class="nav navbar-nav post-nav">
                                                         <li><a href="#"><i class="fa fa-clock-o"></i>${Rdto.created}</a></li>
-                                                        <li><a href="#"><i class="fa fa-reply"></i>Answer</a></li>
-                                                        <li><button type="button" class="btn btn-xs btn-default" onclick="replyAnswerLayout('${Rdto.replyNum}');">답글</button></li>
+                                                        <li><a href="#" onclick="replyAnswerLayout('${Rdto.replyNum}');"><i class="fa fa-reply"></i>답변&nbsp;<span id="answerCount${Rdto.replyNum}">${Rdto.answerCount}</span></a></li>
+                                                        <li onclick="sendLikeRe('${Rdto.replyNum}')"><a href="#"><i class="fa fa-thumbs-o-up"></i>좋아요 <span id="likeCountRe${Rdto.replyNum}">${Rdto.likeCount}</span></a></li> 
+                                                 <c:if test="${sessionScope.member.userId==Adto.userId || sessionScope.member.userId=='admin'}">   
+		     											<li><a href="#" onclick='deleteReply("${Rdto.replyNum}", "${pageNo}");' style="color:#C03035">삭제</a></li>
+												</c:if>
+                                                        <%-- <li><button type="button" class="btn btn-xs btn-default" onclick="replyAnswerLayout('${Rdto.replyNum}');">답글</button></li> --%>
                                                     </ul>
                                                 </div>
                                             </div>

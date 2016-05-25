@@ -108,6 +108,7 @@
          <hr>
          <h5>글번호: ${dto.serviceReviewIdx}</h5>
          <h5>작성자 : ${dto.userName} &nbsp;&nbsp;|&nbsp;&nbsp; 조회수 : ${dto.hitCount}</h5> 
+         <h5>좋아요 : ${dto.likeCount} </h5> 
          <br>
          <a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
          href="${urlArticle}&num=${dto.serviceReviewIdx}">Review

@@ -380,8 +380,8 @@ public class DereviewController {
 			method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object>  countLike(
-			@RequestParam(value="serviceReviewIdx") int num) throws Exception {
-		System.out.println("asd");
+			@RequestParam(value="abc") int num) throws Exception {
+		System.out.println("countLike컨트롤러");
 		int likeCount=0;
 		Map<String, Object> map=service.deRevCountLike(num);
 		if(map!=null) {
@@ -403,6 +403,7 @@ public class DereviewController {
 			@RequestParam(value="num") int num,
 			@RequestParam(value="pageNo", defaultValue="1") int current_page
 			) throws Exception {
+		
 		int numPerPage=5;
 		int total_page=0;
 		int dataCount=0;
@@ -434,6 +435,10 @@ public class DereviewController {
 			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 			n++;
 		}
+		
+	
+		
+		
 		// 페이징처리(인수2개 짜리 js로 처리)
 		String paging=myUtil.paging(current_page, total_page);
 		
@@ -571,6 +576,53 @@ public class DereviewController {
 				return model;
 			}
 			
-	
+	//*********댓글 좋아요*************
+			//좋아요
+			@RequestMapping(value="/demander/index/review/sendLikeReply",
+					method=RequestMethod.POST)
+			@ResponseBody
+			public Map<String, Object> deReviewLikeReply(
+					HttpSession session,
+					DeReviewReply dto) throws Exception {
+				
+				SessionInfo info=(SessionInfo) session.getAttribute("member");
+				dto.setUserIdx(info.getUserIdx());
+				int state=service.stateDeRevReplyLike(dto);
+				System.out.println("컨트롤러state:"+state);
+				if(state==0){
+					dto.setUserIdx(info.getUserIdx());
+					service.insertDeReviewReplyLike(dto);
+				}else if(state==1){
+					dto.setUserIdx(info.getUserIdx());
+					service.deleteDeRevReplyLike(dto);
+				}
+				
+		   	    // 작업 결과를 json으로 전송
+				Map<String, Object> model = new HashMap<>(); 
+				model.put("state", state);
+				return model;
+			}
+			
+			// 좋아요/싫어요 개수
+			@RequestMapping(value="/demander/index/review/countLikeReply",
+					method=RequestMethod.POST)
+			@ResponseBody
+			public Map<String, Object>  countLikeReply(
+					@RequestParam(value="replyNum") int num) throws Exception {
+				//성공//System.out.println("countLikeReply컨트롤러:"+num);
+				int likeCount=0;
+				Map<String, Object> map=service.DeReviewReplyCountLike(num);
+				if(map!=null) {
+					// resultType이 map인 경우 int는 BigDecimal로 넘어옴
+					likeCount=((BigDecimal)map.get("LIKECOUNT")).intValue();
+				}
+				//성공//System.out.println("넘어옴likeCount:"+likeCount);
+		   	    // 작업 결과를 json으로 전송
+				Map<String, Object> model = new HashMap<>(); 
+				model.put("likeCount", likeCount);
+				
+				return model;
+			}
+			
 	
 }

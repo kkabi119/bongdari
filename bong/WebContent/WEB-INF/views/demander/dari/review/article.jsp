@@ -61,7 +61,7 @@ $(function(){
 
  $(function(){
 	listPage(1);
-	countRevLike(31);
+	/* countRevLike(31);  */
 });
  
 function listPage(page) {
@@ -76,16 +76,13 @@ function listPage(page) {
  //좋아요/싫어요 개수
  function countRevLike(serviceReviewIdx) {
 	var url="<%=cp%>/demander/index/review/countLike";
-	
-	$.post(url, {serviceReviewIdx:serviceReviewIdx}, function(data){
+	$.post(url, {abc:serviceReviewIdx}, function(data){
 		var likeCountId="#likeCount"+serviceReviewIdx;
 		var likeCount=data.likeCount;
 		//alert(likeCount+"zz");
 		$(likeCountId).html(likeCount);
 	}, "JSON");
-	
 }
-
 //좋아요추가
 function sendLike(serviceReviewIdx) {
 	var uid="${sessionScope.member.userId}";
@@ -93,11 +90,8 @@ function sendLike(serviceReviewIdx) {
 		login();
 		return false;
 	}
-	//alert("sendLike:"+serviceReviewIdx);
-	
 	var params="serviceReviewIdx="+serviceReviewIdx;
 	
-
 	$.ajax({
 		type:"POST"
 		,url:"<%=cp%>/demander/index/review/sendLike"
@@ -167,10 +161,9 @@ function deleteReply(replyNum, page) {
 	}
 	
 	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/bbs/deleteReply";
+		var url="<%=cp%>/demander/index/review/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
 		        var state=data.state;
-
 				if(state=="loginFail") {
 					login();
 				} else {
@@ -215,7 +208,7 @@ function updateReview() {
                <div class="col-md-12 col-sm-12">
                             <div class="single-blog blog-details two-column">
                                 <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="#">${dto.subject}</a></h2>
+                                    <h2 class="post-title bold"><a href="#">${dto.subject}|${dto.serviceReviewIdx}</a></h2>
                                     <h3 class="post-author"><a href="#">${dto.userName}</a></h3>
                                     <p>${dto.content}</p>
                                     <div class="post-bottom overflow">
@@ -223,7 +216,7 @@ function updateReview() {
                                     
                                         <ul class="nav navbar-nav post-nav">
                                         
-                                         	<li onclick="sendLike('${dto.serviceReviewIdx}')"><a href="#"><i class="fa fa-thumbs-o-up"></i>좋아요 <span id="likeCount${dto.serviceReviewIdx}"> </span></a></li> 
+                                         	<li onclick="sendLike('${dto.serviceReviewIdx}')"><a href="#"><i class="fa fa-thumbs-o-up"></i>좋아요 <span id="likeCount${dto.serviceReviewIdx}">${dto.likeCount}</span></a></li> 
                                                                                         
                                             <li><a href="#"><i class="fa fa-comments"></i>댓글수  ${dto.replyCount}</a></li>
                                             <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
