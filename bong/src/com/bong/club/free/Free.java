@@ -1,15 +1,28 @@
-package com.bong.free;
+package com.bong.club.free;
 
 import org.springframework.web.multipart.MultipartFile;
 
 public class Free {
-	private int clubFreeIdx, userIdx, clubIdx,hitCount;
-	private String subject, content, created, modified;
+	private int clubFreeIdx, userIdx, clubIdx,hitCount, listNum;
+	private String subject, content, created, modified, userId;
 	private MultipartFile upload; 
 	
 	private int clubFreePIdx;
 	private String saveFilename, OriginalFilename;
 	
+	
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public int getClubFreePIdx() {
 		return clubFreePIdx;
 	}

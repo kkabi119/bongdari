@@ -3,8 +3,6 @@ package com.bong.club;
 import java.util.List;
 import java.util.Map;
 
-import com.bong.member.SessionInfo;
-
 public interface ClubService {
 	public int insertClub(ClubInfo dto, String pathname);
 	

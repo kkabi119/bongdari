@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
-import com.bong.member.SessionInfo;
 
 @Service("club.clubService")
 public class ClubServiceImpl  implements ClubService {

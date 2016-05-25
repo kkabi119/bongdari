@@ -42,7 +42,7 @@
 <script type="text/javascript" src="<%=cp%>/res/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
   function check() {
-        var f = document.boardForm;
+        var f = document.freeForm;
 
     	var str = f.subject.value;
         if(!str) {
@@ -58,9 +58,9 @@
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/bbs/created";
+    		f.action="<%=cp%>/club/${clubSeq}/free/created";
     	else if(mode=="update")
-    		f.action="<%=cp%>/bbs/update";
+    		f.action="<%=cp%>/club/${clubSeq}/free/update";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;
@@ -74,7 +74,7 @@
     
     
     <div>
-        <form name="boardForm" method="post" onsubmit="return submitContents(this);" enctype="multipart/form-data">
+        <form name="freeForm" method="post" onsubmit="return submitContents(this);" enctype="multipart/form-data">
             <div class="bs-write">
                 <table class="table">
                     <tbody>
@@ -117,7 +117,7 @@
                             <td colspan="3" class="td3">
                                 ${dto.originalFilename}
                                 <c:if test="${not empty dto.originalFilename}">
-                                    | <a href="<%=cp%>/bbs/deleteFile?num=${dto.num}&page=${page}">삭제</a>
+                                    | <a href="<%=cp%>/club/${clubSeq}/free/deleteFile?num=${dto.num}&page=${page}">삭제</a>
                                 </c:if>
                             </td>
                         </tr>
@@ -127,7 +127,7 @@
                         <tr>
                             <td colspan="4" style="text-align: center; padding-top: 15px;">
                                   <button type="submit" class="btn btn-info">확인 <span class="glyphicon glyphicon-ok"></span></button>
-                                  <button type="button" class="btn btn-default" style="color:#5bc0de;" onclick="javascript:location.href='<%=cp%>/demander/index/review';"> 취소 </button>
+                                  <button type="button" class="btn btn-default" style="color:#5bc0de;" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/free/list';"> 취소 </button>
                                   
                                   <c:if test="${mode=='update'}">
                                       <input type="hidden" name="num" value="${dto.num}">

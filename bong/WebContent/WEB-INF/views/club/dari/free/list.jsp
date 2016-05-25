@@ -11,7 +11,7 @@
   <section id="blog" class="padding-bottom">
              <div class="timeline-blog overflow padding-top">
              <div style="float: right; clear:both">
-        		    			<button type="button" class="btn btn-lg btn-info" onclick="javascript:location.href='<%=cp%>/club/index/free/create';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+        		    			<button type="button" class="btn btn-lg btn-info" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/free/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
         					</div>
                     <div class="timeline-date text-center" style="clear:both">
                         <a href="#" class="btn btn-common uppercase">November 2013</a>
@@ -31,7 +31,7 @@
                                     <h2 class="post-title bold"><a href="blogdetails.html">Advanced business cards design</a></h2>
                                     <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
                                     <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber [...]</p>
-                                    <a href="<%=cp%>/club/index/free/article" class="read-more">View More</a>
+                                    <a href="<%=cp%>/club/${clubSeq}/free/article" class="read-more">View More</a>
                                     <div class="post-bottom overflow">
                                         <span class="post-date pull-left">February 11, 2014</span>
                                         <span class="comments-number pull-right"><a href="#">3 comments</a></span>

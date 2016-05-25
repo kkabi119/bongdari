@@ -12,8 +12,6 @@
 		width:22%;
 	}
 </style>
-
-
                 <div class="col-md-3 col-sm-5">
                     <div class="sidebar blog-sidebar">
                     	<!-- 코멘트 쓰려면 쓰기 없어도 됨 -->
@@ -54,7 +52,7 @@
                                 <li class="active"><a href="<%=cp%>/club/${clubSeq}/main">내 동아리 메인<span class="pull-right">(8)</span></a></li>
                                 <li><a href="<%=cp%>/club/${clubSeq}/notice/list">공지사항<span class="pull-right">(4)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/japply">가입신청하기<span class="pull-right">(9)</span></a></li>
-                                <li><a href="<%=cp%>/club/index/free/list">자유게시판<span class="pull-right">(3)</span></a></li>
+                                <li><a href="<%=cp%>/club/${clubSeq}/free/list">자유게시판<span class="pull-right">(3)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/review">후기/포토게시판<span class="pull-right">(4)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/vapply">봉사신청게시판<span class="pull-right">(2)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/calendar">우리동아리 달력<span class="pull-right">(8)</span></a></li>

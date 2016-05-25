@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,25 @@ public class ClubController {
 	
 	@Autowired
 	private MyUtil util;
+	
+	@RequestMapping(value="/club/{clubSeq}/main")
+	public ModelAndView myClubMain(
+			HttpServletRequest req,
+			HttpSession session,
+			@PathVariable int clubSeq
+			) throws Exception {
+		
+		//String cp=req.getContextPath();
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if (info == null) {
+			return new ModelAndView("redirect:/member/login");
+		}
+		
+		ModelAndView mav = new ModelAndView(".four.club.dari.main.내 동아리 메인");
+		mav.addObject("clubSeq", clubSeq);
+		return mav;
+	}
 	
 	@RequestMapping(value = "/club")
 	public ModelAndView main(HttpServletRequest req,
@@ -135,6 +155,13 @@ public class ClubController {
 		dto.setUserId(info.getUserId());
 		dto.setUserIdx(info.getUserIdx());
 		int result=service.insertClub(dto, pathname);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userId",info.getUserId());
+		int clubIdx=service.ReadClubInfoSession(map);
+		info.setClubIdx(clubIdx);
+		
+		session.setAttribute("member", info);
 		
 		if(result==0) {
 			ModelAndView mav = new ModelAndView(".club.manage.message");
