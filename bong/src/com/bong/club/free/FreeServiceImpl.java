@@ -43,38 +43,68 @@ public class FreeServiceImpl implements FreeService {
 
 	@Override
 	public List<Free> listFree(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Free> list=null;
+		try {
+			list=dao.getListInformation("clubfree.listFree", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
 	}
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.getIntValue("clubfree.dataCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public Free readFree(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Free dto = null;
+		try {
+			dto=dao.getReadInformation("clubfree.readFree", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override
 	public int updateHitCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.updateInformation("clubfree.updateHitCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public Free preReadFree(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Free dto=null;
+		try {
+			dto=dao.getReadInformation("clubfree.preReadFree", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override
 	public Free nextReadFree(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Free dto=null;
+		try {
+			dto=dao.getReadInformation("clubfree.nextReadFree", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override

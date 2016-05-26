@@ -3,14 +3,32 @@ package com.bong.club.free;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Free {
-	private int clubFreeIdx, userIdx, clubIdx,hitCount, listNum;
-	private String subject, content, created, modified, userId;
+	private int clubFreeIdx, userIdx, clubIdx,hitCount, listNum, replyDataCount, rnum;
+	private String subject, content, created, modified, userId, userName;
 	private MultipartFile upload; 
 	
 	private int clubFreePIdx;
 	private String saveFilename, OriginalFilename;
 	
 	
+	public int getRnum() {
+		return rnum;
+	}
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
+	public int getReplyDataCount() {
+		return replyDataCount;
+	}
+	public void setReplyDataCount(int replyDataCount) {
+		this.replyDataCount = replyDataCount;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public int getListNum() {
 		return listNum;
 	}

@@ -44,7 +44,9 @@ public class FreeController {
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue
 			) throws Exception {
-		/*String cp=req.getContextPath();
+		
+		
+		String cp=req.getContextPath();
 		
 		int numPerPage   = 10;  // 한 화면에 보여주는 게시물 수
 		int total_page = 0;
@@ -106,8 +108,8 @@ public class FreeController {
         mav.addObject("page", current_page);
         mav.addObject("dataCount", dataCount);
         mav.addObject("total_page", total_page);
-        mav.addObject("paging", myUtil.paging(current_page, total_page, urlList));*/
-		ModelAndView mav = new ModelAndView(".four.club.dari.free.list.자유게시판");
+        mav.addObject("paging", myUtil.paging(current_page, total_page, urlList));
+        
 		return mav;
 	}
 	
@@ -151,11 +153,60 @@ public class FreeController {
 		return new ModelAndView("redirect:/club/{clubSeq}/free/list");
 	}
 	
+	
+	/*개인동아리 자유게시판 끝*/
+	
 	@RequestMapping(value="/club/{clubSeq}/free/article")
-	public ModelAndView readClubFree() throws Exception {
+	public ModelAndView readClubFree(HttpSession session,
+			@PathVariable int clubSeq,
+			@RequestParam(value="num") int num,
+			@RequestParam(value="page") String page,
+			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue
+			) throws Exception {
 		
-		ModelAndView mav = new ModelAndView(".four.club.dari.free.article.자유글보기");
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return new ModelAndView("redirect:/member/login");
+		}
+
+		searchValue = URLDecoder.decode(searchValue, "utf-8");
+		
+		// 조회수 증가
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("clubSeq", clubSeq);
+		service.updateHitCount(map);
+
+		// 해당 레코드 가져 오기
+		Free dto = service.readFree(map);
+
+		if(dto==null)
+			return new ModelAndView("redirect:.club.{clubSeq}.free.list?page="+page);
+        
+		// 이전 글, 다음 글
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+
+		Free preReadDto = service.preReadFree(map);
+		Free nextReadDto = service.nextReadFree(map);
+        
+		String params = "page="+page;
+		if(searchValue.length()!=0) {
+		    params += "&searchKey=" + searchKey + 
+		                    "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
+		}
+		
+		int replyCount=service.replyDataCount(map);
+		
+		ModelAndView mav = new ModelAndView(".four.club.dari.free.article.자유게시판 글보기");
+		mav.addObject("dto", dto);
+		mav.addObject("preReadDto", preReadDto);
+		mav.addObject("nextReadDto", nextReadDto);
+
+		mav.addObject("page", page);
+		mav.addObject("params", params);
+		mav.addObject("replyCount",replyCount);
 		return mav;
 	}
-	/*개인동아리 자유게시판 끝*/
 }
