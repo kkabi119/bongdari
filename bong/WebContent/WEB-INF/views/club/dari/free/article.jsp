@@ -68,7 +68,7 @@ $(function(){
 });
  
 function listPage(page) {
-	var url="<%=cp%>/club/${clubSeq}/Free/listReply";
+	var url="<%=cp%>/club/${clubSeq}/free/listReply";
 	var num="${dto.clubFreeIdx}";
 	$.post(url, {num:num, pageNo:page}, function(data){
 		$("#listReply").html(data);
@@ -102,7 +102,7 @@ function sendReply() {
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/club/${clubSeq}/Free/createdReply"
+		,url:"<%=cp%>/club/${clubSeq}/free/createdReply"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
@@ -126,7 +126,7 @@ function sendReply() {
 //댓글 개수
 function replyCount() {
 	var num="${dto.clubFreeIdx}";// 해당 게시물 번호
-	var url="<%=cp%>/club/${clubSeq}/Free/replyCount";
+	var url="<%=cp%>/club/${clubSeq}/free/replyCount";
 	$.post(url, {num:num}, function(data){
 		var count=data.count;
 		$("#replyCountView").text("("+count+")");
@@ -274,7 +274,7 @@ function updateFree() {
                               				<span class="item-click" id="reply-open-close">댓글 ▼</span>&nbsp;<span id="replyCountView" class="item-title" style="color:#424951">(${replyCount})</span>
                      				</div>
                                   	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
-                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/Free/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/free/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
                   					</div>
                                      
                                     <div style="float:right; padding-top: 10px;padding-bottom: 10px;">

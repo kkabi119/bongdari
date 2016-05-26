@@ -117,7 +117,7 @@
                             <td colspan="3" class="td3">
                                 ${dto.originalFilename}
                                 <c:if test="${not empty dto.originalFilename}">
-                                    | <a href="<%=cp%>/club/${clubSeq}/free/deleteFile?num=${dto.num}&page=${page}">삭제</a>
+                                    | <a href="<%=cp%>/club/${clubSeq}/free/deleteFile?num=${dto.clubFreeIdx}&page=${page}">삭제</a>
                                 </c:if>
                             </td>
                         </tr>
@@ -130,7 +130,7 @@
                                   <button type="button" class="btn btn-default" style="color:#5bc0de;" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/free/list';"> 취소 </button>
                                   
                                   <c:if test="${mode=='update'}">
-                                      <input type="hidden" name="num" value="${dto.num}">
+                                      <input type="hidden" name="num" value="${dto.clubFreeIdx}">
                                       <input type="hidden" name="saveFilename" value="${dto.saveFilename}">
                                       <input type="hidden" name="originalFilename" value="${dto.originalFilename}">
                                       <input type="hidden" name="page" value="${page}">

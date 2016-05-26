@@ -209,4 +209,95 @@ public class FreeController {
 		mav.addObject("replyCount",replyCount);
 		return mav;
 	}
+	
+	@RequestMapping(value="/club/{clubSeq}/free/update", 
+			method=RequestMethod.GET)
+	public ModelAndView updateClubFree(
+			HttpSession session,
+			@PathVariable int clubSeq,
+			@RequestParam(value="num") int num,
+			@RequestParam(value="page") String page
+			) throws Exception {
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return new ModelAndView("redirect:/member/login");
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("clubSeq", clubSeq);
+		Free dto = (Free) service.readFree(map);
+		
+		if(dto==null) {
+			return new ModelAndView("redirect:/free/list?page="+page);
+		}
+			
+		if(! info.getUserId().equals(dto.getUserId())) {
+			return new ModelAndView("redirect:/free/list?page="+page);
+		}
+		
+		ModelAndView mav=new ModelAndView(".four.club.dari.free.created.자유글수정");
+		mav.addObject("dto", dto);
+		mav.addObject("clubSeq",clubSeq);
+		mav.addObject("mode", "update");
+		mav.addObject("page", page);
+		return mav;
+	}
+	
+	@RequestMapping(value="/club/{clubSeq}/free/update", 
+			method=RequestMethod.POST)
+	public ModelAndView updateSubmit(
+			HttpSession session,	
+			Free dto, 
+			@PathVariable int clubSeq,
+			@RequestParam(value="page") String page
+			) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return new ModelAndView("redirect:/member/login");
+		}
+		
+		String root = session.getServletContext().getRealPath("/");
+		String path = root + File.separator + "uploads" + File.separator + "free";		
+	
+		// 수정 하기
+		dto.setClubIdx(clubSeq);
+		service.updateFree(dto, path);
+		
+		return new ModelAndView("redirect:/club/"+clubSeq+"/free/list?page="+page);
+	}
+	
+	@RequestMapping(value="/club/{clubSeq}/free/delete")
+	public ModelAndView delete(
+			HttpSession session,
+			@PathVariable int clubSeq,
+			@RequestParam(value="num") int num,
+			@RequestParam(value="page") String page
+			) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return new ModelAndView("redirect:/member/login");
+		}
+		
+		// 해당 레코드 가져 오기
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("clubSeq", clubSeq);
+		Free dto = service.readFree(map);
+		if(dto==null) {
+			return new ModelAndView("redirect:/club/{clubSeq}/free/list?page="+page);
+		}
+		
+		if(! info.getUserId().equals(dto.getUserId()) && ! info.getUserId().equals("admin")) {
+			return new ModelAndView("redirect:/club/{clubSeq}/free/list?page="+page);
+		}
+		
+		String root = session.getServletContext().getRealPath("/");
+		String path = root + File.separator + "uploads" + File.separator + "free";		
+ 	
+		service.deleteFree(map, dto.getSaveFilename(), path);
+		
+		return new ModelAndView("redirect:/club/{clubSeq}/free/list?page="+page);
+	}
 }

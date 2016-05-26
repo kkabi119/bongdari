@@ -109,15 +109,47 @@ public class FreeServiceImpl implements FreeService {
 
 	@Override
 	public int updateFree(Free dto, String path) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+
+		try{
+			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()) {
+				// 이전파일 지우기
+				if(dto.getSaveFilename().length()!=0)
+					fileManager.doFileDelete(dto.getSaveFilename(), path);
+				
+				String newFilename = fileManager.doFileUpload(dto.getUpload(), path);
+				if (newFilename != null) {
+					dto.setOriginalFilename(dto.getUpload().getOriginalFilename());
+					dto.setSaveFilename(newFilename);
+				}
+			}
+			
+			dao.updateInformation("clubfree.updateFree", dto);
+			result=1;
+		} catch(Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public int deleteFree(Map<String, Object> map, String saveFilename, String path) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+
+		try{
+			
+			if(saveFilename != null ) {
+			  fileManager.doFileDelete(saveFilename, path);
+			}
+			
+			dao.deleteInformation("clubfree.deleteFree", map);
+			result=1;
+		} catch(Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
+	
 
 	@Override
 	public int deleteFreeId(String userId, String root) {

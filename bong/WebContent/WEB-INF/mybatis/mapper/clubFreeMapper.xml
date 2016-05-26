@@ -105,7 +105,18 @@
 			) tb WHERE ROWNUM=1
 	</select>
 	
+	<!-- 수정 -->
+     <update id="updateFree" parameterType="com.bong.club.free.Free">
+         UPDATE club_free_${clubIdx} SET subject=#{subject}, content=#{content}
+                    WHERE clubFreeIdx = #{clubFreeIdx}
+      </update>
 	
+	<!-- 삭제 -->
+      <delete id="deleteFree" parameterType="map">
+           DELETE FROM club_Free_${clubSeq} WHERE clubFreeIdx = #{num}
+      </delete>
+      
+      
 	<sql id="where-list">
 		  <if test="searchKey=='userName'">
 		      userName=#{searchValue}

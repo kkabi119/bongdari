@@ -35,12 +35,14 @@
                                 </div>
                                 <div class="post-content overflow">
                                     <h2 class="post-title bold"><a href="blogdetails.html">${dto.subject}</a></h2>
-                                    <h3 class="post-author"><a href="#">Posted by ${dto.userName}${dto.listNum}${dto.rnum}</a></h3>
+                                    <h3 class="post-author"><a href="#">Posted by ${dto.userName}</a></h3>
                                     <p>${dto.content} [...]</p>
                                     <a href="${urlArticle}&num=${dto.clubFreeIdx}" class="read-more">View More</a>
                                     <div class="post-bottom overflow">
                                         <span class="post-date pull-left">${dto.created}</span>
+                                        <span class="comments-number pull-right" style="padding-left: 10px">${dto.hitCount} views </span>
                                         <span class="comments-number pull-right"><a href="#">${dto.replyDataCount} comments</a></span>
+                                        
                                     </div>
                                 </div>
                             </div>
