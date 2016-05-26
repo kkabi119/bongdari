@@ -107,7 +107,7 @@
 			<div class="col-md-2 control-label">10명/총</div>
 		</div>
 		
-		<div id=eachDay class="col-md-11" style="margin-bottom:10px;"></div>
+		<div id=eachDay class="col-md-12" style="margin-bottom:10px;"></div>
 
 		<div class="form-group">
 			<div>

@@ -9,5 +9,8 @@ public interface AdminService {
 	
 	public List<Club> listClub(Map<String, Object> map);
 	public int clubCount(Map<String, Object> map);
+
+	public List<Demander> listDemander(Map<String, Object> map);
+	public int demanderCount(Map<String, Object> map);
 	
 }

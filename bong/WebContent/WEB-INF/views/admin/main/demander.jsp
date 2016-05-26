@@ -67,7 +67,8 @@ function result() {
 	alert(s);
 }
 </script>
-<div style="margin: 50px auto 10px; height: 200px;" align="center">
+<!-- 지도보기는 나중에 -->
+<%-- <div style="margin: 50px auto 10px; height: 200px;" align="center">
 	<div class="row4">
 		<div class="col-md-12">
 			<ul id="tab2" class="nav nav-pills">
@@ -116,7 +117,7 @@ function result() {
 			</div>
 		</div>
 	</div>
-</div>
+</div> --%>
 
 <!-- 검색결과는 ajax써서 jsp따로 빼야할 듯! -->
 <div class="row" style="margin-left:15px;">
@@ -124,9 +125,9 @@ function result() {
 			<div class="single-blog two-column">
 				<div class="post-content overflow" style="padding:0px;">
  					<div class="bodyFrame2">
-          				<h3  style="font-size:30px;"> 검색결과<span style="margin-left:10px;color:gray; font-size:15px;">다음과 같은 수요처가 있습니다.</span> </h3>
+          				<h3  style="font-size:30px;">수요처 목록<span style="margin-left:10px;color:gray; font-size:15px;">다음과 같은 수요처가 있습니다.</span> </h3>
     					<div style="clear: both; height: 30px; line-height: 30px;">
-            				<div style="float: left; color:#3897f0;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 전체    개 <span style="color:#777;">(1/10 페이지)</span> </div>
+            				<div style="float: left; color:#3897f0;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 전체 ${dataCount}개 <span style="color:#777;">(${page}/${total_page} 페이지)</span> </div>
             			
         				</div> 
         		<!-- <hr style="margin-bottom:10px; margin-top:0px; border:1px solid gray;"> -->
@@ -135,37 +136,30 @@ function result() {
             				<table class="table table-hover" style="overflow:hidden;" >
                 				<thead style="min-width:100%; font-size:15px; background-color:#DFE6E8; color:#555; ">
                     				<tr >
-                        				<th class="text-center" style="width: 60px; font-weight:500;  ">번호</th>
-                        				<th class="text-center"colspan="4" style="white-space: nowrap;  font-weight:500; ">
-                        				수요처 이름</th>
-                        				<th class="text-center" style="width:105px; font-weight:500;">봉사 분야</th>
-                        				<th class="text-center" style="width:110px; font-weight:500;">지역</th>
-                        				<th class="text-center" style="width:150px;font-weight:500;">전화번호</th>
-                        				<th class="text-center" style="width:75px; ;font-weight:500;">인원</th>
+                        				<th class="text-center" style="width:7%; font-weight:500;">번호</th>
+                        				<th class="text-center" style="width:17%; font-weight:500;">수요처 명</th>
+                        				<th class="text-center" style="width:17%; font-weight:500;">봉사 분야</th>
+                        				<th class="text-center" style="width:8%; font-weight:500;">지역</th>
+                        				<th class="text-center" style="width:17%; font-weight:500;">전화번호</th>
+                        				<th class="text-center" style="width:17%; font-weight:500;">E-mail</th>
+                        				<th class="text-center" style="width:17%; font-weight:500;">개설날짜</th>
                         				
                     				</tr>
                 				</thead>
                 				
                 				<tbody>
+                					<c:forEach var="dto" items="${list}">
 									<tr>
-                        				<td class="text-center">1</td>
-                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/main/articleDemander">희망 복지관</a></td>
-                       				 	<td class="text-center" >보육</td>
-                       				 	<td class="text-center">중랑구 산천역</td>
-                       				 	<td class="text-center" style="">010-1111-1111</a></td>
-                        				<td class="text-center" style="">10명</td>
+                        				<td class="text-center">${dto.rNum}</td>
+                        				<td class="text-center"><a href="<%=cp%>/main/articleDemander">${dto.serviceName}</a></td>
+                       				 	<td class="text-center" >${dto.lSubject}>${dto.sSubject}</td>
+                       				 	<td class="text-center">${dto.serviceAddr}</td>
+                       				 	<td class="text-center" style="">${dto.serviceTel}</a></td>
+                        				<td class="text-center" style="">${dto.serviceEmail}</td>
+                        				<td class="text-center" style="">${dto.serviceBirth}</td>
                         				
             						</tr>
-            						
-            						<tr>
-                        				<td class="text-center">2</td>
-                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/main/articleDemander">소망 복지관</a></td>
-                       				 	<td class="text-center" >보육</td>
-                       				 	<td class="text-center">덕양구 삼송역</td>
-                       				 	<td class="text-center" style="">010-2222-2222</td>
-                        				<td class="text-center" style="">20명</td>
-            						</tr>
-            						
+            						</c:forEach>
             						
                 				</tbody>
             				</table>
