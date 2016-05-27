@@ -4,14 +4,33 @@ public class Apply {
 	
 	private int clubApplyIdx, volunIdx, clubIdx, listNum;
 	
-	private String clubDate, subject, content, serviceName,startDay,endDay;
-	private String progress, place, volunteer_type, volunDays, typeIdx1, typeIdx2;
-	private String startTime, endTime, created, modified;
+	private String clubDate, subject, content, serviceName,startDay,endDay,startTime, endTime;
+	private String progress, place, volunteer_type, volunDays, tsubject, tsubject_parent;
+	private String created, modified;
 	private String saveFileName, originalFileName;
-	
 	private int applyNum, maxNum; //현재 신청인원 / 수요인원수
 	private int hitCount;
+	private int userIdx;
 		
+	
+	public int getUserIdx() {
+		return userIdx;
+	}
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
+	}
+	public String getTsubject() {
+		return tsubject;
+	}
+	public void setTsubject(String tsubject) {
+		this.tsubject = tsubject;
+	}
+	public String getTsubject_parent() {
+		return tsubject_parent;
+	}
+	public void setTsubject_parent(String tsubject_parent) {
+		this.tsubject_parent = tsubject_parent;
+	}
 	public String getSaveFileName() {
 		return saveFileName;
 	}
@@ -78,18 +97,7 @@ public class Apply {
 	public void setVolunDays(String volunDays) {
 		this.volunDays = volunDays;
 	}
-	public String getTypeIdx1() {
-		return typeIdx1;
-	}
-	public void setTypeIdx1(String typeIdx1) {
-		this.typeIdx1 = typeIdx1;
-	}
-	public String getTypeIdx2() {
-		return typeIdx2;
-	}
-	public void setTypeIdx2(String typeIdx2) {
-		this.typeIdx2 = typeIdx2;
-	}
+	
 	public String getProgress() {
 		return progress;
 	}

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.bong.club.apply.Reply;
+import com.bong.club.notice.Notice;
+import com.bong.demander.review.DeReview;
 
 public interface ApplyService {
 	public List<Apply> listApply(Map<String, Object> map);
@@ -26,4 +28,7 @@ public interface ApplyService {
 	public int deleteReply(Map<String, Object> map);
 	int insertReplyLike(Reply dto);
 	Map<String, Object> replyCountLike(int replyNum);
+	public int stateReplyLike(Reply dto);
+	int deleteReplyLike(Reply dto);
+	public int updateHitCount_club(int clubApplyIdx);
 }

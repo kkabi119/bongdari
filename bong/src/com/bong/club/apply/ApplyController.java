@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +42,7 @@ public class ApplyController {
 	/*개인동아리 봉사 신청게시판*/
 	
 	///////////////////////////////////////////// 리스트 ///////////////////////////////////////////////////
-	@RequestMapping(value="club/index/apply/list")
+	@RequestMapping(value="/club/index/apply/list")
 	public ModelAndView clubApplyList(
 			HttpServletRequest req,
 			@RequestParam(value="page", defaultValue="1") int current_page,
@@ -147,13 +148,14 @@ public class ApplyController {
 		
 		// 해당 레코드 가져 오기
 		Apply dto = service.readApply(num);
-					
+		System.out.println(dto+" dto를 가져왓다?");
 		if(dto==null)
 			return new ModelAndView("redirect:.club.index.apply?page="+page);
 		
 		// 조회수 증가
 		service.updateHitCount(dto.getVolunIdx());
-				
+		service.updateHitCount_club(dto.getClubApplyIdx());
+		
 		// 전체 라인수
         // int linesu = dto.getContent().split("\n").length;
 		
@@ -213,7 +215,7 @@ public class ApplyController {
 		model.put("state", state);
 		return model;
 	}
-	
+	/////////////////////////////////////////////////////////////////////////////////////////		댓글 리스트 
 	@RequestMapping(value="/club/index/apply/listReply")
 	public ModelAndView listReply(
 			@RequestParam(value="num") int num,
@@ -253,11 +255,11 @@ public class ApplyController {
 		String paging=myUtil.paging(current_page, total_page);
 		
 		ModelAndView mav=new ModelAndView("/club/dari/apply/listReply");
-		System.out.println("replycount느느는="+dataCount);
+		
 		// jsp로 넘길 데이터
 		mav.addObject("listReply", listReply);
 		mav.addObject("pageNo", current_page);
-		mav.addObject("replyCount", dataCount);
+		mav.addObject("replyCount", dataCount); //
 		mav.addObject("total_page", total_page);
 		mav.addObject("paging", paging);
 		
@@ -358,7 +360,7 @@ public class ApplyController {
 				model.put("count", count);
 				return model;
 			}
-			
+			/////////////////////////////////////////////////////////////////////////////////////// 	좋 아 요 
 			//////////////////////////////////////////////////////////////// 댓글 좋아요 추가
 			@RequestMapping(value="/apply/replyLike",	method=RequestMethod.POST)
 			@ResponseBody
@@ -366,13 +368,19 @@ public class ApplyController {
 					HttpSession session, Reply dto) throws Exception {
 			
 				SessionInfo info=(SessionInfo) session.getAttribute("member");
+				dto.setUserIdx(info.getUserIdx());
 				
-				String state="true";
-			
+				int state=service.stateReplyLike(dto);
+				System.out.println(state+"= state");
+				
+				if(state==0){	//좋아요가 처음이라면
+				
+					service.insertReplyLike(dto);
+					
+				}else if(state==1){ // 또 누른거라면 취소 
 					dto.setUserIdx(info.getUserIdx());
-				int result=service.insertReplyLike(dto);
-					if(result==0)
-						state="false";
+					service.deleteReplyLike(dto);
+				}
 				
 				
 		   	    // 작업 결과를 json으로 전송
@@ -398,6 +406,41 @@ public class ApplyController {
 				Map<String, Object> model = new HashMap<>(); 
 				model.put("likeCount", likeCount);
 				return model;
+			}
+			
+			
+			@RequestMapping(value="/club/index/apply/delete")
+			public ModelAndView delete(
+					HttpSession session, @RequestParam(value="num") int num,	@RequestParam(value="page") String page	)
+			throws Exception {
+				
+				SessionInfo info=(SessionInfo)session.getAttribute("member");
+				if(info==null) {
+					return new ModelAndView("redirect:/member/login");
+				}
+				
+				// 해당 레코드 가져 오기
+				Apply dto = service.readApply(num);
+				
+				if(dto==null) {
+					return new ModelAndView("redirect:/club/index/apply/list?page="+page);
+				}				
+								
+				String root = session.getServletContext().getRealPath("/");
+				String path = root + File.separator + "uploads" + File.separator + "notice";		
+		 	
+				service.deleteApply(num, dto.getSaveFileName(), path);
+				
+				return new ModelAndView("redirect:/club/index/apply/list?page="+page);
+			}
+			
+			
+			@RequestMapping(value="/club/index/apply/applyList")
+			public ModelAndView applyList( HttpSession session) {
+				//   /club/index/apply/applyList
+				ModelAndView mav = new ModelAndView(".four.club.dari.apply.applyList.봉다리 개인페이지");
+				
+				return mav;
 			}
 }
 	

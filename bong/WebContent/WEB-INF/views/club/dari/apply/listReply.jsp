@@ -16,6 +16,7 @@
 	
 	.btn{
 		border-radius:0px;
+		padding:9px 12px;
 	}
 	
 	.post-comment{
@@ -174,7 +175,7 @@ function deleteReplyAnswer(replyNum, answer) {
                                                   
                                                       <c:if test="${sessionScope.member.userId==Adto.userId || sessionScope.member.userId=='admin'}">   
 		     											<span style="margin-right:0px; float:right; ">
-		     												<a class="btn btn-default" onclick='deleteReply("${Rdto.replyNum}", "${pageNo}");' style="margin-top:-5px;color:#C03035; border:none;">
+		     												<a class="btn btn-default" onclick='deleteReply("${Rdto.replyNum}", "${pageNo}");' style="margin-top:-8px;color:#C03035; border:none;">
 		     													삭제
 		     												</a>
 		     											</span>
@@ -187,12 +188,14 @@ function deleteReplyAnswer(replyNum, answer) {
                                                 <ul class="nav navbar-nav post-nav" style="float: right; ">
                                                          <li>
                                                          <button type="button" class="btn btn-default btn-sm" onclick="sendLike('${Rdto.replyNum}')" 
-                                                         		style="font-weight: bold; color: #6D6D6D;padding: 7px 15px; margin-right:-40px;">
-                                                         		<span class="glyphicon glyphicon-hand-up"></span> 
-										                			좋아요 <span id="likeCount${Rdto.replyNum}">${Rdto.likeCount}</span>
+                                                         		style="font-weight: bold; width:60px; color: #6D6D6D; padding: 10px 15px; ;">
+                                                         		<span> 
+                                                         			<img style=" width:15px; height:15px; background-size:cover; "src="<%=cp%>/res/images/like.png" alt="">
+										                			
+										                		</span> <span style="text-align:center;"id="likeCount${Rdto.replyNum}">&nbsp; ${Rdto.likeCount}</span>
 										                </button>
 										                </li>
-                                                        <li style="margin-right:0px;">
+                                                        <li style="margin-right:5px; margin-left:-50px">
                                                         	<button class="btn btn-default" onclick="replyAnswerLayout('${Rdto.replyNum}');" style="font-weight: bold; color: #6D6D6D;">
                                                         	답글 <span style="font-weight:bold; "id="answerCount${Rdto.replyNum}">(${Rdto.answerCount})</span>
                                                         	</button>

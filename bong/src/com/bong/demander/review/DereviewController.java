@@ -360,7 +360,9 @@ public class DereviewController {
 	
 		SessionInfo info=(SessionInfo) session.getAttribute("member");
 		dto.setUserIdx(info.getUserIdx());
+		
 		int state=service.stateDeRevLike(dto);
+		
 		if(state==0){
 			dto.setUserIdx(info.getUserIdx());
 			service.insertDeReviewLike(dto);

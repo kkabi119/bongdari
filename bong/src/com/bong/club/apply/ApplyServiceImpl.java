@@ -7,14 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bong.club.apply.Reply;
+import com.bong.club.notice.Notice;
+import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
+import com.bong.demander.review.DeReview;
 
 @Service("clubApply.applyService")
 public class ApplyServiceImpl implements ApplyService {
 	
 	@Autowired
 	private bongDAO dao;
-		
+	
+	@Autowired
+	private FileManager fileManager;
+
+	
 	@Override
 	public List<Apply> listApply(Map<String, Object> map) {
 		
@@ -71,6 +78,24 @@ public class ApplyServiceImpl implements ApplyService {
 		
 		return result;
 	}
+	
+
+	@Override
+	public int updateHitCount_club(int clubApplyIdx) {
+
+		int result=0;
+		
+		try{
+			// 클럽봉사신청게시판 조회수 증가
+			result=	dao.updateInformation("clubApply.updateHitCount_club",clubApplyIdx);
+		
+			
+		} catch(Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
+	}
 
 	@Override
 	public Apply preReadApply(Map<String, Object> map) {
@@ -105,9 +130,20 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 
 	@Override
-	public int deleteApply(int num, String saveFilename, String path) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteApply(int num, String saveFileName, String path) {
+		int result=0;
+
+		try{			
+			
+			if(saveFileName != null ) {
+			  fileManager.doFileDelete(saveFileName, path);
+			}			
+			dao.deleteInformation("clubApply.deleteApply", num);
+			result=1;
+			
+		} catch(Exception e) {
+		}
+		return result;
 	}
 
 	@Override
@@ -198,17 +234,43 @@ public class ApplyServiceImpl implements ApplyService {
 		return result;
 	}
 
+	
 	@Override
 	public Map<String, Object> replyCountLike(int replyNum) {
 		Map<String, Object> map=null;
 		try {
 			map=dao.getReadInformation("clubApply.replyCountLike", replyNum);
-			System.out.println(map+"ㅠㅠㅠㅠ");
+			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		return map;
+	}
+
+	@Override
+	public int stateReplyLike(Reply dto) {
+		int result=0;
+		try {
+			result=dao.getIntValue("clubApply.stateReplyLike", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}	
+	
+	@Override
+	public int deleteReplyLike(Reply dto) {
+		int result=0;
+		try {
+			result=dao.insertInformation("clubApply.deleteReplyLike", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+
+
 }
 
 	

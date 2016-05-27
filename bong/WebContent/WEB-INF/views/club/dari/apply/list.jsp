@@ -7,7 +7,7 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
-<style>
+<style type="text/css">
 .list-page li a{
 	
 	border-color:#3897f0;
@@ -35,6 +35,31 @@ padding-top: 13px;
 }
 
 </style>
+	
+<script type="text/javascript">
+$(function(){
+	replyCount();
+});
+function searchList() {
+	var f=document.searchForm;
+	f.action="<%=cp%>/club/index/apply/list";
+	f.submit();
+}
+
+function replyCount() {
+	var num="${dto.clubApplyIdx}";// 해당 게시물 번호
+	alert(num);
+	
+	var url="<%=cp%>/club/index/apply/replyCount";
+	
+	$.post(url, {num:num}, function(data){
+		
+		var count=data.count;
+		$("#replyCountView").text(""+count+"개");
+		
+	}, "JSON");
+}
+</script>	
 	<div class="row" style="margin-left:15px;">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">
@@ -65,11 +90,15 @@ padding-top: 13px;
                 				<tbody>
  <!--  리스트 시작 -->
 <c:forEach var="dto" items="${list}">
-									<tr>
+									<tr height="20">
                         				<td class="text-center">${dto.listNum}</td>
-                        				<td colspan="4"><a style="font-weight:bold; font-size:14px; "href="${urlArticle}&num=${dto.clubApplyIdx}">${dto.subject}</a></td>
+                        				<td colspan="4">
+                        					<a style="font-weight:bold; font-size:14px; "href="${urlArticle}&num=${dto.clubApplyIdx}"> ${dto.subject}
+                        						    <span id="replyCountView" class="item-title" style='color:#f0ad4e; font-size:12px; font-weight: bold;'> 개 </span>
+                        					</a>
+                        				</td>
                         				<td class="text-center">${dto.startDay } ~ ${dto.endDay }</td>
-                        				<td class="text-center" >${dto.place } </td>
+                        				<td class="text-center"  style="overflow:hidden">${dto.place } </td>
                         				<td class="text-center"><a href="#" style="font-weight:bold; font-size:14px; ;"  >${dto.serviceName }</a></td>
                        				 	<td class="text-center" style=""><span style="font-weight:bold;">${dto.applyNum}명</span>/${dto.maxNum}명</td>
                        				 	<c:if test="${dto.progress.equals('모집마감')}">
@@ -108,13 +137,13 @@ padding-top: 13px;
         
         				<div style="clear: both;">
         					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/bbs/list';">새로고침</button>
+        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/club/index/apply/list?page=${page}';">새로고침</button>
         					</div>
         					<div style="float: left; width: 60%; text-align: center;">
         		     			<form name="searchForm" method="post" class="form-inline">
 						  			<select class="form-control input-sm" name="searchKey" style="height:32px">
 						      			<option value="subject">제목</option>
-						      			<option value="userName">작성자</option>
+						      			<option value="serviceName">수요처</option>
 						      			<option value="content">내용</option>
 						      			<option value="created">등록일</option>
 						  			</select>
