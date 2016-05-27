@@ -130,4 +130,16 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 		return null;
 	}
 
+	@Override
+	public int updateLastLogin(String serviceId) {
+		int result = 0;
+		
+		try {
+			result=dao.updateInformation("demanderjoin.updateLastLogin", serviceId);	
+		} catch (Exception e) {	
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
 }

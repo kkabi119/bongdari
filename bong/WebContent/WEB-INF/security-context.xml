@@ -28,6 +28,7 @@
             <intercept-url pattern="/index.jsp" access="permitAll" />
             <intercept-url pattern="/main" access="permitAll" />
             <intercept-url pattern="/member/login" access="permitAll" />
+            <intercept-url pattern="/demander/login" access="permitAll"/>
             <intercept-url pattern="/member/member" access="permitAll" />
 			<intercept-url pattern="/member/userIdCheck" access="permitAll" />
 			
@@ -68,9 +69,8 @@
      <jdbc-user-service 
          data-source-ref="dataSource"
          id="userService"
-         users-by-username-query="SELECT userIdx AS username, userPwd AS password, enabled FROM memberInfo WHERE userId=?"
+          users-by-username-query="SELECT userIdx AS username, userPwd AS password, enabled FROM checkId WHERE userId=?"
          authorities-by-username-query="SELECT userIdx AS username, authority FROM memAuthority WHERE userIdx=?"/>
-    
 	<!-- <authentication-manager>
 		<authentication-provider user-service-ref="userService">
 		     <password-encoder hash="sha-256" />

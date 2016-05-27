@@ -27,9 +27,9 @@ import com.bong.member.SessionInfo;
 @Controller("mypage.mypageController")
 public class MypageController {
 	@Autowired
-	private MemberService service;
+	private MemberService service; //가입, 수정, 탈퇴 등에 사용할 서비스(맴버)
 	@Autowired
-	private MyApplyService service2; // 리스트 현황에 사용할 서비스
+	private MyApplyService service2; // 신청 리스트 현황에 사용할 서비스
 	@Autowired
 	private MyUtil myUtil;
 	//내정보 보기 
@@ -76,7 +76,7 @@ public class MypageController {
 			return new ModelAndView("redirect:/");
 		}
 
-		service.updateMember2(dto,pathname); 
+		service.updateMember2(dto,pathname); //serviceImpl불르기
 		
 		// 회원정보수정폼
 	    ModelAndView mav=new ModelAndView("/mypage/updateInfo");
@@ -127,7 +127,7 @@ public class MypageController {
 		map.put("searchValue", searchValue);
 		map.put("userIdx", Integer.toString(info.getUserIdx()));
 		
-		dataCount = service2.dataCount(map, optionC);
+		dataCount = service2.dataCount(map, optionC); //글 개수(MyApplyServiceImpl의 dataCount)
 		total_page= myUtil.pageCount(numPerPage, dataCount);
 		
 		if(total_page < current_page)
@@ -201,6 +201,7 @@ public class MypageController {
 		return model;
 		
 	}
+	//회원탈퇴
 	@RequestMapping(value="/member/index/deleteMember", method=RequestMethod.GET)
 	public ModelAndView deleteCheck(
 			 HttpServletRequest req
@@ -215,28 +216,30 @@ public class MypageController {
 		//mav.addObject("userId", info.getUserId());
 		return mav;
 	}
+	//회원탈퇴폼
     @RequestMapping(value="/mypage/deleteMember", method=RequestMethod.POST)
 	public ModelAndView deleteMember (
 			HttpSession session
 		   ,@RequestParam(value="userPwd") String userPwd
 			) throws Exception {
-           SessionInfo info=(SessionInfo)session.getAttribute("member");
+           SessionInfo info=(SessionInfo)session.getAttribute("member"); //세션에 있는 정보 가져오기
            if(info==null){
         	   return new ModelAndView("redirect:/member/login");
            }
-           
+           //readMemberInfo에 있는 데이터들 dto로 가져오기
            Member dto=service.readMemberInfo(Integer.toString(info.getUserIdx()));
            
            if(dto==null){
         	   session.invalidate();
         	   return new ModelAndView("redirect:/");
            }
+           //탈퇴하기전에 비밀번호 확인 하게 해주기
            if(! dto.getUserPwd().equals(userPwd)){
         	   ModelAndView mav=new ModelAndView("/mypage/deleteMember");
         	   mav.addObject("message", "패스워드가 일치하지않습니다");
         	   return mav;
            }
-           
+           //동아리 개설한 동아리 장들은 탈퇴 못하도록 막기
           String check=service.managerCheck(info.getUserId());
            if(check!=null){
         	   return new ModelAndView("redirect:/");

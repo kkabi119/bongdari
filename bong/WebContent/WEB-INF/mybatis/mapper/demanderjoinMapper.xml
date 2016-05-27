@@ -23,4 +23,35 @@
      VALUES(#{serviceIdx},#{serviceId},#{servicePwd}, #{serviceName},#{serviceBirth}
      ,#{serviceTel},#{serviceAddr},#{serviceEmail},#{serviceImgname, jdbcType=VARCHAR})
   </insert>
+  
+  <update id="updateLastLogin" parameterType="String">
+     UPDATE serviceInfo SET last_login=SYSDATE
+      WHERE serviceIdx=#{serviceIdx}
+  </update>
+  
+  <!-- 수요처 권한 테이블 -->
+  
+  <insert id="insertAuthority" parameterType="com.bong.demanderjoin.Demanderjoin">
+     INSERT INTO memAuthority(memAuthIdx, userIdx, authority)
+       VALUES (memAuthority_seq.NEXTVAL, #{serviceIdx}, #{authority})
+  </insert>
+  
+  <select id="readAuthority" parameterType="Integer" resultType="com.bong.demanderjoin.Demanderjoin">
+      SELECT memAuthoIdx, userIdx, authority
+        FROM memAuthority WHERE serviceIdx=#{serviceIdx}
+  </select>
+  
+  <select id="listAuthority" parameterType="String" resultType="com.bong.demanderjoin.Demanderjoin">
+     SELECT memAuthIdx, userIdx, authority
+       FROM memAuthority WHERE serviceIdx=#{serviceIdx}
+  </select>
+  
+  <update id="updateAuthority" parameterType="com.bong.demanderjoin.Demanderjoin">
+      UPDATE memAuthority SET serviceIdx=#{serviceIdx}, authority=#{authority}
+        WHERE serviceIdx=#{serviceIdx}
+  </update>
+  
+  <delete id="deleteAuthority" parameterType="map">
+     DELETE FROM memAuthority WHERE ${field}=#{value}
+  </delete>
 </mapper>

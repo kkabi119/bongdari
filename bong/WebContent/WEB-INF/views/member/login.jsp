@@ -90,7 +90,7 @@ function demanderLogin() {
 		return false;
 	}
 	
-	f.action = "<%=cp%>/demander/login";
+	f.action = "<%=cp%>/member/login";
 	f.submit();
 }
 function demanderJoin(){

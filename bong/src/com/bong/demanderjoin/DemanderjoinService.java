@@ -12,6 +12,8 @@ public interface DemanderjoinService {
   
   public int Demanderjoin2(Demanderjoin dto);
   
+  public int updateLastLogin(String serviceId);
+  
   public int deleteDemanderjoin2(Map<String, Object> map);
   
   public int dataCount(Map<String, Object> map);

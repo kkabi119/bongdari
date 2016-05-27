@@ -10,27 +10,29 @@
 	<insert id="insertMember" parameterType="Integer">
 		INSERT INTO member(userIdx) values(#{userIdx})
 	</insert>
+	<insert id="insertCheck" parameterType="com.bong.member.Member">
+	    INSERT INTO checkId (userId, userPwd,enabled,isService) 
+	    VALUES(#{userId},#{userPwd},1, 0)
+	</insert>
 	<insert id="insertMemberInfo" parameterType="com.bong.member.Member">
 		INSERT INTO memberInfo
-		(userIdx, userId, userName, userPwd, userBirth
+		(userIdx, userName,, userBirth
 			,userAddr, userGender, userTel, userEmail
 			,userJob, memImgname, memImg)
-		VALUES(#{userIdx},#{userId},#{userName},#{userPwd}
+		VALUES(#{userIdx},#{userName}
 		,#{userBirth},#{userAddr},#{userGender},#{userTel}
 		,#{userEmail},#{userJob},#{memImgname, jdbcType=VARCHAR},#{memImg, jdbcType=VARCHAR})
 	</insert>
 	<select id="readMemberLogin" resultType="com.bong.member.Member" parameterType="String">
-	   SELECT userIdx, userId, userName, userPwd,memImgname,memImg
-	          FROM memberInfo
-	          WHERE userIdx=#{userIdx} 
-	
+	SELECT ci.userIdx, userId, userName, userPwd, memImgname, memImg FROM checkId ci
+     LEFT OUTER JOIN memberinfo mi ON ci.userIdx=mi.userIdx WHERE ci.userIdx=#{userIdx}
 	</select>
     <select id="readMemberInfo" resultType="com.bong.member.Member" parameterType="String">
-	   SELECT userIdx, userId, userName, userPwd,TO_CHAR(userBirth, 'YYYY-MM-DD') userBirth, userAddr, userGender,
+	   SELECT ci.userIdx, userId, userName, userPwd,TO_CHAR(userBirth, 'YYYY-MM-DD') userBirth, userAddr, userGender,
 	          userTel, userEmail, userJob, memImgname, memImg, userLevel
-	          FROM memberInfo
-	          WHERE userIdx=#{userIdx} 
-	
+	          FROM checkId ci 
+            LEFT OUTER JOIN memberInfo mi ON ci.userIdx=mi.userIdx  
+	          WHERE ci.userIdx=#{userIdx}
 	</select>
 	<update id="updateLastLogin" parameterType="String">
 	  UPDATE memberInfo SET last_login=SYSDATE
@@ -178,7 +180,7 @@
 	     select userId from clubInfo where userId=#{userId}
 	</select>
 	<!-- 권한 테이블 -->
-		<insert id="insertAuthority" parameterType="com.bong.member.Member">
+	<insert id="insertAuthority" parameterType="com.bong.member.Member">
 	    INSERT INTO memAuthority(memAuthIdx, userIdx, authority)
 	        VALUES (memAuthority_seq.NEXTVAL, #{userIdx}, #{authority})
 	</insert>

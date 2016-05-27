@@ -102,6 +102,9 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return dto;
 	}
+	
+
+
 	@Override
 	public int insertMember(Member dto, String pathname) throws Exception {
 		int result = 0;
@@ -126,6 +129,7 @@ public class MemberServiceImpl implements MemberService{
 			    
 			}
 			//회원정보 저장
+			dao.insertInformation("member.insertCheck", dto);
 			dao.insertInformation("member.insertMember", seq);
 			dao.insertInformation("member.insertMemberInfo", dto);
 			dto.setAuthority("ROLE_USER");
@@ -222,7 +226,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public List<Member> listMember(Map<String, Object> map) {
-		// TODO Auto-generated method stub
+	
 		return null;
 	}
    
@@ -261,14 +265,26 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public List<Member> listAuthority(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Member> list = null;
+		
+		try {
+			list=dao.getListInformation("member.listAuthority", userId);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
 	}
 
 	@Override
 	public int deleteAuthority(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		
+		try {
+			result=dao.deleteInformation("member.deleteAuthority", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	
@@ -277,6 +293,7 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 
 	
