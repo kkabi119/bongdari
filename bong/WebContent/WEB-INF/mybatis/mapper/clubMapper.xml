@@ -4,14 +4,14 @@
 <mapper namespace="club">
 	<!-- 동아리 카테고리 대분류 -->
 	<select id="listClubThemeGroup" resultType="com.bong.club.ClubTheme">
-	    SELECT themeNum, subject FROM clubInfo_theme
+	    SELECT themeNum, subject FROM theme
 	          WHERE parent IS NULL
 	          ORDER BY themeNum ASC
 	</select>
 	
 	<!-- 동아리 카테고리 중분류 -->
 	<select id="listClubTheme" parameterType="Integer" resultType="com.bong.club.ClubTheme">
-	    SELECT themeNum, subject, parent FROM ClubInfo_theme
+	    SELECT themeNum, subject, parent FROM theme
 	          WHERE parent = #{groupNum}
 	          ORDER BY themeNum ASC
 	</select>
@@ -25,7 +25,7 @@
 	            FROM DUAL
 	         UNION ALL
 	         SELECT themeNum, subject, NVL(parent, 0) parent
-  	            FROM clubInfo_theme
+  	            FROM theme
 	    )
 	    WHERE themeNum!=0
 	    START WITH themeNum=0
@@ -42,7 +42,7 @@
 	</insert>
 	
 	<insert id="insertClubInfo" parameterType="com.bong.club.ClubInfo">
-	    INSERT INTO clubInfo(clubIdx, userId, typeidx, clubname, introduce, prologue, closed)
+	    INSERT INTO clubInfo(clubIdx, userId, themeNum, clubname, introduce, prologue, closed)
 	      VALUES (#{clubSeq}, #{userId}, #{themeNum}, 
 	                #{clubname}, #{introduce}, #{prologue}, #{closed})
 	</insert>
@@ -97,9 +97,9 @@
 	    SELECT NVL(COUNT(*), 0) 
                FROM ClubInfo b
 	           JOIN ClubProfile p ON b.ClubSeq = p.ClubSeq
-	           JOIN ClubInfo_theme c ON b.themeNum=c.themeNum
+	           JOIN theme c ON b.themeNum=c.themeNum
                JOIN (
-                         SELECT themeNum, subject FROM ClubInfo_theme
+                         SELECT themeNum, subject FROM theme
                          WHERE parent IS NULL
                        ) g ON c.parent = g.themeNum
 	     <where>
@@ -123,9 +123,9 @@
 	                    ,c.subject, g.subject groupSubject
       	           FROM ClubInfo b
 	               JOIN ClubProfile p ON b.ClubSeq = p.ClubSeq
-	               JOIN ClubInfo_theme c ON b.themeNum=c.themeNum
+	               JOIN theme c ON b.themeNum=c.themeNum
 	               JOIN (
-	                         SELECT themeNum, subject FROM ClubInfo_theme
+	                         SELECT themeNum, subject FROM theme
 	                         WHERE parent IS NULL
 	                       ) g ON c.parent = g.themeNum
 	               <where>
@@ -148,11 +148,11 @@
 	
 	<!-- 내 동아리의 전체 정보 -->
 	<select id="readClubInfo" parameterType="map" resultType="com.bong.club.ClubInfo">
-	    SELECT clubidx AS clubSeq, userId, typeidx, c.parent groupNum ,clubname, introduce, prologue, clubBirth, 
+	    SELECT clubidx AS clubSeq, userId, c.parent groupNum ,clubname, introduce, prologue, clubBirth, 
 closed, c.subject, g.subject groupSubject 
 FROM ClubInfo b 
-JOIN ClubInfo_theme c ON b.typeIdx=c.themeNum 
-JOIN ( SELECT themeNum, subject FROM ClubInfo_theme WHERE parent IS NULL ) g ON c.parent = g.themeNum  
+JOIN theme c ON b.themeNum=c.themeNum 
+JOIN ( SELECT themeNum, subject FROM theme WHERE parent IS NULL ) g ON c.parent = g.themeNum  
 				WHERE ${field}=#{field_value}
 	</select>
 	
@@ -167,9 +167,9 @@ JOIN ( SELECT themeNum, subject FROM ClubInfo_theme WHERE parent IS NULL ) g ON 
 	                ,c.subject, g.subject groupSubject
 	           FROM ClubInfo b
 	           JOIN ClubProfile p ON b.ClubSeq = p.ClubSeq
-	           JOIN ClubInfo_theme c ON b.themeNum=c.themeNum
+	           JOIN theme c ON b.themeNum=c.themeNum
                JOIN (
-                         SELECT themeNum, subject FROM ClubInfo_theme
+                         SELECT themeNum, subject FROM theme
                          WHERE parent IS NULL
                        ) g ON c.parent = g.themeNum
 	           WHERE b.ClubSeq=#{ClubSeq}

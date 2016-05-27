@@ -159,26 +159,46 @@ public class FreeServiceImpl implements FreeService {
 
 	@Override
 	public int insertReply(Reply dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.insertInformation("clubfree.insertFreeReply", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public List<Reply> listReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Reply> list = null;
+		try {
+			list=dao.getListInformation("clubfree.listReply", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
 	}
 
 	@Override
 	public List<Reply> listReplyAnswer(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Reply> list = null;
+		try {
+			list=dao.getListInformation("clubfree.listReplyAnswer", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
 	}
 
 	@Override
 	public int replyDataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.getIntValue("clubfree.replyDataCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override

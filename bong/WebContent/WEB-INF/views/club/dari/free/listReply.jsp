@@ -19,7 +19,7 @@
 // 댓글별 답글 리스트
   function listAnswer(answer) {
 	var listReplyAnswerId="#listReplyAnswer"+answer;
-	var url="<%=cp%>/club/${clubSeq}/notice/listReplyAnswer";
+	var url="<%=cp%>/club/${clubSeq}/free/listReplyAnswer";
 	$.post(url, {answer:answer}, function(data){
 		$(listReplyAnswerId).html(data);
 	});
@@ -27,7 +27,7 @@
 
 // 댓글별 답글 갯수
 function countAnswer(answer) {
-	var url="<%=cp%>/club/${clubSeq}/notice/replyCountAnswer";
+	var url="<%=cp%>/club/${clubSeq}/free/replyCountAnswer";
 	
 	$.post(url, {answer:answer}, function(data){
 		var count="("+data.count+")";
@@ -87,7 +87,7 @@ function sendReplyAnswer(num, replyNum) {
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/club/${clubSeq}/notice/createdReply"
+		,url:"<%=cp%>/club/${clubSeq}/free/createdReply"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
@@ -118,7 +118,7 @@ function deleteReplyAnswer(replyNum, answer) {
 	}
 	
 	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/club/${clubSeq}/notice/deleteReply";
+		var url="<%=cp%>/club/${clubSeq}/free/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"answer"}, function(data){
 		        var state=data.state;
 				if(state=="loginFail") {
@@ -144,22 +144,22 @@ function deleteReplyAnswer(replyNum, answer) {
                                                     <p>${Rdto.content}</p>
                                                     <ul class="nav navbar-nav post-nav" style="float: right;">
                                                         <li  style="color:#0099AE"><i class="fa fa-clock-o"></i>${Rdto.created}</li>
-                                                        <li><a onclick="replyAnswerLayout('${Rdto.replyNum}');"><i class="fa fa-reply"></i>Answer</a></li>
+                                                        <li><a onclick="replyAnswerLayout('${Rdto.cfrIdx}');"><i class="fa fa-reply"></i>Answer</a></li>
                         <c:if test="${sessionScope.member.userId==Adto.userId || sessionScope.member.userId=='admin'}">   
-		     											<li><a onclick='deleteReply("${Rdto.replyNum}", "${pageNo}");' style="color:#C03035">삭제</a></li>
+		     											<li><a onclick='deleteReply("${Rdto.cfrIdx}", "${pageNo}");' style="color:#C03035">삭제</a></li>
 						</c:if>
                                                     </ul>
                                                     
                                                 </div>
                                             </div>
-                                            <div id="replyAnswerLayout${Rdto.replyNum}" style="display: none;">
+                                            <div id="replyAnswerLayout${Rdto.cfrIdx}" style="display: none;">
                                             <div style="clear: both; margin-top:10px; padding: 5px; border-top: #d5d5d5 solid 1px;">
-                									<textarea id="replyContent${Rdto.replyNum}" class="form-control" rows="3" required="required"></textarea>
+                									<textarea id="replyContent${Rdto.cfrIdx}" class="form-control" rows="3" required="required"></textarea>
            									 </div>
            									 <div style="text-align: right; padding-top: 10px;">
-                      								<button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="sendReplyAnswer('${Rdto.num}','${Rdto.replyNum}')"> Answer <span class="fa fa-pencil"></span></button>
+                      								<button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="sendReplyAnswer('${Rdto.clubFreeIdx}','${Rdto.cfrIdx}')"> Answer <span class="fa fa-pencil"></span></button>
                  							 </div>
-                 							 <div id="listReplyAnswer${Rdto.replyNum}" style="padding-top: 5px;"></div>                                       
+                 							 <div id="listReplyAnswer${Rdto.cfrIdx}" style="padding-top: 5px;"></div>                                       
                                           </div>
                                         </li>
                                         </ul>

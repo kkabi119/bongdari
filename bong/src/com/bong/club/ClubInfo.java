@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ClubInfo {
 	private int clubSeq;
 	private String userId, nickName, userName;
-	private int groupNum, themeNum, typeIdx, userIdx;
+	private int groupNum, themeNum, userIdx;
 	private String introduce, clubname, prologue, city,  clubBirth;
 	private String groupSubject, subject;
 	private int  closed;
@@ -18,12 +18,6 @@ public class ClubInfo {
 	}
 	public void setUserIdx(int userIdx) {
 		this.userIdx = userIdx;
-	}
-	public int getTypeIdx() {
-		return typeIdx;
-	}
-	public void setTypeIdx(int typeIdx) {
-		this.typeIdx = typeIdx;
 	}
 	public String getClubBirth() {
 		return clubBirth;

@@ -139,6 +139,7 @@
 	<select id="CNRSeq" resultType="Integer">
 		SELECT club_notice_reply_seq.NEXTVAL FROM DUAL
 	</select>
+	
 	<!-- 댓글 처리................. -->
 	<insert id="insertNoticeReply" parameterType="com.bong.club.notice.Reply">
 	INSERT INTO club_notice_reply_${clubSeq}(CNRIDX , CLUBNOTICEIDX, userIdx, content, answer)

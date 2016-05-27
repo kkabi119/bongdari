@@ -20,21 +20,33 @@
 	<select id="listFree" parameterType="map" resultType="com.bong.club.free.Free">
 			SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		      SELECT f.clubfreeIdx, f.userIdx,f.clubIdx, userName, subject,
-		      (SELECT NVL(COUNT(*), 0) FROM club_free_reply_${clubSeq} WHERE clubFreeIdx=1 AND answer=0) replyDataCount,
-		      TO_CHAR(f.created,'YYYY-MM-DD' ) created, f.content, hitCount
-		      FROM club_free_${clubSeq} f 
-		      JOIN memberInfo m ON f.userIdx = m.userIdx
-		      <where>
-		        <if test="searchValue != null and searchValue != ''">
-					      <include refid="where-list"/>
-				    </if>
-			    </where>
-			    ORDER BY f.clubfreeIdx DESC
-		  <![CDATA[
+		      SELECT tbFree.clubfreeIdx, userIdx, clubIdx, userName, subject
+          , NVL(replyDataCount, 0) replyDataCount, created, content, hitCount
+		       FROM
+		       (
+		           (
+			         SELECT clubFreeIdx, m.userIdx, userId, clubIdx, userName, subject
+			             ,TO_CHAR(created, 'YYYY-MM-DD') created, content
+					     ,hitCount
+			          FROM club_free_${clubSeq} f 
+                JOIN memberInfo m ON f.userIdx=m.userIdx
+                <where>
+                           <if test="searchValue != null and searchValue != ''">
+			                  <include refid="where-list"/>
+		                   </if>
+	                   </where>
+	                ) tbFree
+			        LEFT OUTER JOIN
+			        (
+			                 SELECT clubfreeIdx, COUNT(*) replyDataCount
+                                 FROM club_free_Reply_${clubSeq} r GROUP BY clubfreeIdx
+			        ) tbReply ON tbFree.clubFreeIdx = tbReply.clubFreeIdx
+            )
+			    ORDER BY clubfreeIdx DESC
+		<![CDATA[ 
 		     ) tb WHERE ROWNUM <= #{end}
 		  ) WHERE rnum >= #{start}
-		  ]]>
+    ]]>
 	
 	</select>
 	
@@ -116,7 +128,81 @@
            DELETE FROM club_Free_${clubSeq} WHERE clubFreeIdx = #{num}
       </delete>
       
-      
+     <!-- 댓글 처리................. -->
+	<insert id="insertFreeReply" parameterType="com.bong.club.free.Reply">
+	INSERT INTO club_free_reply_${clubSeq}(cfrIdx , clubFreeIdx, userIdx, content, answer)
+	   VALUES (club_free_reply_seq.NEXTVAL, #{clubFreeIdx},#{userIdx}, #{content}, #{answer})
+	</insert>
+	
+	<select id="replyDataCount" resultType="Integer" 
+	           parameterType="map">
+	   SELECT NVL(COUNT(*), 0)
+	        FROM club_free_reply_${clubSeq} WHERE clubFreeIdx=#{num} AND answer=0
+	</select>
+	
+	<select id="listReply" resultType="com.bong.club.free.Reply" 
+	          parameterType="map">
+			SELECT * FROM (
+				    SELECT ROWNUM rnum, tb.* FROM (
+				        SELECT tbreply.cfrIdx , clubFreeIdx, userId, userName 
+				                    ,content, created, tbreply.answer
+				                    ,NVL(answerCount, 0) answerCount
+				        FROM
+				        (
+						      (
+							     SELECT cfrIdx, r.clubFreeIdx, r.userIdx, userid,
+		               userName, r.content, r.created, answer
+							        FROM club_free_reply_${clubSeq} r 
+					                JOIN club_free_${clubSeq} n ON r.clubFreeIdx=n.clubFreeIdx
+					                JOIN memberinfo m ON r.userIdx=m.userIdx
+					                WHERE r.clubFreeIdx=#{num} AND answer=0
+					           ) tbreply
+					           LEFT OUTER JOIN
+					           (
+					                SELECT answer, COUNT(*) answerCount
+		                                 FROM club_free_reply_${clubSeq} GROUP BY answer
+					           ) tbanswer ON tbreply.cfrIdx = tbanswer.answer
+			           )
+			           ORDER BY cfrIdx DESC
+		<![CDATA[	
+			        ) tb WHERE ROWNUM <= #{end}
+			    ) WHERE rnum >= #{start}
+		]]>
+	</select>
+	
+	<!-- 댓글별 답글 리스트 -->
+	<select id="listReplyAnswer" resultType="com.bong.club.free.Reply" 
+	          parameterType="Integer">
+     SELECT cfrIdx, clubFreeIdx, tbreply.userIdx, userName, content, created, answer
+	          FROM club_free_reply_${clubSeq} tbreply 
+	          JOIN memberInfo m ON tbreply.userIdx=m.userIdx
+              WHERE answer=#{answer}
+              ORDER BY cfrIdx DESC
+	</select>
+	
+	<!-- 댓글별 답글 개수 -->
+	<select id="replyCountAnswer" resultType="Integer" 
+	           parameterType="map">
+	   SELECT NVL(COUNT(*), 0)
+	        FROM club_notice_reply_${clubSeq} WHERE answer=#{answer}
+	</select>
+	
+	<delete id="deleteReply" parameterType="map">
+	DELETE club_notice_reply_${clubSeq} WHERE
+	    <if test="mode == 'num' ">
+			 clubNoticeIdx=#{num}
+		</if>
+	    <if test="mode == 'reply' ">
+			 CNRIDX IN 
+               (SELECT CNRIDX FROM club_notice_reply_${clubSeq} START WITH  CNRIDX = #{replyNum}
+	            CONNECT BY PRIOR CNRIDX = answer)
+		</if>
+	    <if test="mode == 'answer' ">
+			 CNRIDX=#{replyNum}
+		</if>
+	</delete>
+	
+	 
 	<sql id="where-list">
 		  <if test="searchKey=='userName'">
 		      userName=#{searchValue}

@@ -62,7 +62,6 @@ $(function(){
 })
 
 
-
  $(function(){
 	listPage(1);
 });
@@ -73,7 +72,7 @@ function listPage(page) {
 	$.post(url, {num:num, pageNo:page}, function(data){
 		$("#listReply").html(data);
 	});
-}
+} 
 
 <%-- 
 function login() {
