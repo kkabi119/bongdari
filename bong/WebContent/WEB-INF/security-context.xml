@@ -17,8 +17,14 @@
 	<!-- ssl을 사용하지 않을경우 사용하지 않음 -->
 	        <csrf disabled="true"/>
 	        
+            <headers>
+               <frame-options policy="SAMEORIGIN" />
+               <hsts disabled="true"/>
+            </headers>
+        	        
             <!-- 모든 접근자를 항상 승인 -->
             <!-- <intercept-url pattern="/member/**" access="permitAll" />  -->
+            <intercept-url pattern="/" access="permitAll" />
             <intercept-url pattern="/index.jsp" access="permitAll" />
             <intercept-url pattern="/main" access="permitAll" />
             <intercept-url pattern="/member/login" access="permitAll" />

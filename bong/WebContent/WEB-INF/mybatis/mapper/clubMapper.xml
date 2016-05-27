@@ -49,10 +49,10 @@
 	
 	<insert id="insertJoinClub" parameterType="com.bong.club.ClubInfo">
 	    INSERT INTO JoinClub(joinclubIdx, authority, clubIdx, useridx)
-	      VALUES (joinclub_seq.NEXTVAL, "관리자", #{clubSeq},#{userIdx})
+	      VALUES (joinclub_seq.NEXTVAL, '관리자', #{clubSeq},#{userIdx})
 	</insert>
 	
-	<!-- 블로그 정보 수정 -->
+	<!-- 동아리 정보 수정 -->
 	<update id="updateClubInfo" parameterType="com.bong.club.ClubInfo">
 	    UPDATE ClubInfo SET nickName=#{nickName},
 	           themeNum=#{themeNum},
@@ -74,7 +74,7 @@
                     WHERE ClubSeq=#{ClubSeq}
     </update>
 	
-	<!-- 블로그 정보 삭제 -->
+	<!-- 동아리 정보 삭제 -->
 	<delete id="deleteClubInfo" parameterType="Long">
 	    DELETE FROM ClubInfo WHERE ClubSeq=#{ClubSeq}
 	</delete>
@@ -83,7 +83,7 @@
 	    DELETE FROM ClubProfile WHERE ClubSeq=#{ClubSeq}
 	</delete>
 
-	<!-- 블로그 전체 리스트 -->
+	<!-- 동아리 전체 리스트 -->
 	<sql id="Club-where">
 	   INSTR(g.subject, #{query}) &gt; 0 OR
 	   INSTR(c.subject, #{query}) &gt; 0 OR
@@ -146,7 +146,7 @@
 	]]>
  	</select>
 	
-	<!-- 내 블로그의 전체 정보 -->
+	<!-- 내 동아리의 전체 정보 -->
 	<select id="readClubInfo" parameterType="map" resultType="com.bong.club.ClubInfo">
 	    SELECT clubidx AS clubSeq, userId, typeidx, c.parent groupNum ,clubname, introduce, prologue, clubBirth, 
 closed, c.subject, g.subject groupSubject 
@@ -156,7 +156,11 @@ JOIN ( SELECT themeNum, subject FROM ClubInfo_theme WHERE parent IS NULL ) g ON 
 				WHERE ${field}=#{field_value}
 	</select>
 	
-	<!-- 개인 블로그의 메인 화면에 출력할 정보 -->
+	<select id="readClubInfoSession" parameterType="map" resultType="String">
+		SELECT clubIdx FROM CLUBINFO WHERE userId=#{userId}
+	</select>
+	
+	<!-- 개인 동아리의 메인 화면에 출력할 정보 -->
 	<select id="readClubInfoHome" parameterType="Long" resultType="com.bong.club.ClubInfo">
 	    SELECT b.ClubSeq, userId, nickName, b.themeNum, c.parent groupNum
 	                ,title, introduce, visitorCount, created, photoFilename
@@ -171,23 +175,9 @@ JOIN ( SELECT themeNum, subject FROM ClubInfo_theme WHERE parent IS NULL ) g ON 
 	           WHERE b.ClubSeq=#{ClubSeq}
 	</select>
 	
-	<!-- 개인 블로그의 프로필에 출력할 정보 -->
-	<select id="readClubInfoProfile" parameterType="Long" resultType="com.bong.club.ClubInfo">
-	    SELECT b.ClubSeq, userId, nickName, introduce  
-	              ,userName, isUserName, photoFilename, city
-	              ,isCity, gender, isGender, hobby, isHobby
-	           FROM ClubInfo b
-	           JOIN ClubProfile p ON b.ClubSeq = p.ClubSeq
-	           WHERE b.ClubSeq=#{ClubSeq}
-	</select>
-
-	<!-- 개인 블로그의 방문자수 증가 -->
-	<update id="updateClubVisitorCount" parameterType="Long" >
-	    UPDATE ClubInfo SET  visitorCount=visitorCount+1 WHERE ClubSeq=#{ClubSeq}
-	</update>
-
 	<!-- 테이블 생성 및 삭제  -->
-	<!-- 블로그 게시판 카테고리 -->
+	
+	<!-- 동아리 공지사항 게시판  -->
 	<update id="createClubNotice" parameterType="Integer">
 		create table club_notice_${value}(
 			CLUBNOTICEIDX     NUMBER NOT NULL
@@ -224,11 +214,62 @@ JOIN ( SELECT themeNum, subject FROM ClubInfo_theme WHERE parent IS NULL ) g ON 
 )
 	</update>
 	
+	<!-- 동아리 자유게시판 -->
+	<update id="createClubFree" parameterType="Integer">
+		CREATE TABLE club_free_${value}(
+		    CLUBFREEIDX  NUMBER NOT NULL 
+		    ,USERIDX  NUMBER  NOT NULL
+		    ,CLUBIDX  NUMBER NOT NULL        
+		    ,SUBJECT  VARCHAR2(255) NOT NULL 
+		    ,CONTENT  CLOB NOT NULL         
+		    ,HITCOUNT NUMBER DEFAULT 0      
+		    ,CREATED  DATE DEFAULT SYSDATE         
+		    ,MODIFIED  DATE DEFAULT SYSDATE
+		    ,CONSTRAINT pk_club_free_${value} PRIMARY KEY(clubFreeIdx)
+		    ,CONSTRAINT fk_club_Free_userIdx_${value} FOREIGN KEY(userIdx)
+		      REFERENCES memberInfo(userIdx) ON DELETE CASCADE
+		    ,CONSTRAINT fk_club_Free_clubIdx_${value} FOREIGN KEY(clubIdx) 
+     	 REFERENCES clubInfo(clubIdx) ON DELETE CASCADE
+		)
+	</update>
+	
+	<update id="createClubFreeP" parameterType="Integer">	
+			CREATE TABLE club_freeP_${value} (
+			   clubFreePIdx NUMBER
+			  ,clubFreeIdx NUMBER NOT NULL
+			   
+			   ,saveFilename VARCHAR2(255)
+			   ,originalFilename VARCHAR2(255)
+			      
+			   ,CONSTRAINT pk_club_freeP_${value} PRIMARY KEY(clubFreePIdx)
+			  
+			   ,CONSTRAINT fk_club_freeP_clubFreeIdx_${value} FOREIGN KEY(clubFreeIdx)
+               REFERENCES club_free_${value}(clubFreeIdx) ON DELETE CASCADE
+			)
+			
+	</update>
+	
+	<update id="createClubFreeReply" parameterType="Integer">
+		create table club_free_reply_${value}(
+			CFRIDX  	 NUMBER NOT NULL
+			,USERIDX 	 NUMBER NOT NULL
+			,CLUBFREEIDX  NUMBER NOT NULL
+			,CONTENT  CLOB NOT NULL
+			,CREATED  DATE DEFAULT SYSDATE
+			,ANSWER  	 NUMBER NOT NULL   	
+			,CONSTRAINT pk_club_free_reply_${value} PRIMARY KEY(cfrIdx)
+			,CONSTRAINT  fk_clubFreer_userIdx_${value} FOREIGN KEY(userIdx)
+			  REFERENCES memberInfo(userIdx) ON DELETE CASCADE
+			,CONSTRAINT fk_clubFreer_clubFreeIdx_${value} FOREIGN KEY(clubFreeIdx)
+				REFERENCES club_free_${value}(clubFreeIdx) ON DELETE CASCADE
+		)
+	</update>	
+	
 	<update id="dropBoardCategoryTable" parameterType="Long">
 	    DROP TABLE b_${value}_category PURGE
 	</update>
 
-	<!-- 블로그 게시판 -->
+	<!-- 동아리 게시판 -->
 	<update id="createBoardTable" parameterType="Long">
 		CREATE TABLE b_${value}_board (
   		  num         NUMBER NOT NULL
@@ -250,7 +291,7 @@ JOIN ( SELECT themeNum, subject FROM ClubInfo_theme WHERE parent IS NULL ) g ON 
 	    DROP TABLE b_${value}_board PURGE
 	</update>
 
-	<!-- 블로그 게시판 공감 -->
+	<!-- 동아리 게시판 공감 -->
 	<update id="createBoardLikeTable" parameterType="Long">
 	CREATE TABLE b_${value}_boardLike (
   	  num       NUMBER NOT NULL
@@ -266,7 +307,7 @@ JOIN ( SELECT themeNum, subject FROM ClubInfo_theme WHERE parent IS NULL ) g ON 
 	    DROP TABLE b_${value}_boardLike PURGE
 	</update>
 
-	<!-- 블로그 게시판 파일 -->
+	<!-- 동아리 게시판 파일 -->
 	<update id="createBoardFileTable" parameterType="Long">
 	CREATE TABLE b_${value}_boardFile (
  	   fileNum              NUMBER NOT NULL
@@ -284,7 +325,7 @@ JOIN ( SELECT themeNum, subject FROM ClubInfo_theme WHERE parent IS NULL ) g ON 
 	    DROP TABLE b_${value}_boardFile PURGE
 	</update>
 	
-	<!-- 블로그 게시판 리플 -->
+	<!-- 동아리 게시판 리플 -->
 	<update id="createBoardReplyTable" parameterType="Long">
 	CREATE TABLE b_${value}_boardReply (
  	   replyNum  NUMBER NOT NULL
@@ -304,7 +345,7 @@ JOIN ( SELECT themeNum, subject FROM ClubInfo_theme WHERE parent IS NULL ) g ON 
 	    DROP TABLE b_${value}_boardReply PURGE
 	</update>
 
- 	<!-- 블로그 게시판 리플 공감/비공감 -->
+ 	<!-- 동아리 게시판 리플 공감/비공감 -->
 	<update id="createBoardReplyLikeTable" parameterType="Long">
 	CREATE TABLE b_${value}_boardReplyLike (
  	    replyNum  NUMBER NOT NULL
@@ -321,7 +362,7 @@ JOIN ( SELECT themeNum, subject FROM ClubInfo_theme WHERE parent IS NULL ) g ON 
 	    DROP TABLE b_${value}_boardReplyLike PURGE
 	</update>
 
- 	<!-- 블로그 방명록 -->
+ 	<!-- 동아리 방명록 -->
 	<update id="createGuestTable" parameterType="Long">
 	CREATE TABLE b_${value}_guest (
  	    num       NUMBER NOT NULL
@@ -340,7 +381,7 @@ JOIN ( SELECT themeNum, subject FROM ClubInfo_theme WHERE parent IS NULL ) g ON 
 	    DROP TABLE b_${value}_guest PURGE
 	</update>
 
- 	<!-- 블로그 포토 -->
+ 	<!-- 동아리 포토 -->
 	<update id="createPhotoTable" parameterType="Long">
 	CREATE TABLE b_${value}_photo (
  	   num       NUMBER NOT NULL

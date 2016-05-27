@@ -2,8 +2,21 @@ package com.bong.admin;
 
 public class Club {
 	private int rNum, listNum;
-	private String clubName, clubBirth, clubAddr, userId, prologue, introduce;
+	private String clubName, clubBirth, clubAddr, userId, prologue, introduce, lSubject, sSubject;
 	private int typeIdx, closed, themeNum, total_Hours, total_NoShow, member, clubIdx;
+	
+	public String getlSubject() {
+		return lSubject;
+	}
+	public void setlSubject(String lSubject) {
+		this.lSubject = lSubject;
+	}
+	public String getsSubject() {
+		return sSubject;
+	}
+	public void setsSubject(String sSubject) {
+		this.sSubject = sSubject;
+	}
 	public String getClubName() {
 		return clubName;
 	}

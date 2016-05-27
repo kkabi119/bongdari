@@ -8,82 +8,79 @@
 <div class="container-fluid">
 	<form class="form-horizontal">
 		<div class="form-group">
-			<label class="col-md-3 control-label">제목</label>
+			<label class="col-md-2 control-label">제목</label>
 			<div class="col-md-7 control-label" id="schTitle">
 				노원 동네주민 축제의 안전요원을 모집합니다
 			</div>
 		</div>
 
-
+		<div>
 		<div class="form-group">
-			<label class="col-md-3 control-label">봉사일정</label>
-			<div class="col-md-7 control-label" id="schEndDay">
-					2016-03-22 ~ 2016-03-25
+			<label class="col-md-2 control-label">봉사일정</label>
+			<div class="col-md-4 control-label" id="schEndDay" style="text-align:center;">
+					<div class="col-md-5" style="text-align:center; padding-left:0px; padding-right:0px;">2016-03-22</div>
+					<div class="col-md-2" style="text-align:center; width:1px;">~</div>
+					<div class="col-md-5" style="text-align:center; padding-left:0px; padding-right:0px;">2016-03-25</div>
 			</div>
 
-		</div>
-
-		<div class="form-group">
-			<label class="col-md-3 control-label">봉사시간</label>
-			<div class="col-md-7 control-label" id="schStartDay">
-					3:00~5:00
+			<label class="col-md-2 control-label">봉사시간</label>
+			<div class="col-md-4 control-label" id="schStartDay" style="text-align:center;">
+					<div class="col-md-5" style="text-align:center; padding-left:0px; padding-right:0px;">9:00</div>
+					<div class="col-md-2" style="text-align:center; width:1px;">~</div>
+					<div class="col-md-5" style="text-align:center; padding-left:0px; padding-right:0px;">17:00</div>
 			</div>
 		</div>
-
+		</div>
+		
+		<div>
 		<div class="form-group">
-			<label class="col-md-3 control-label">봉사요일</label>
-			<div class="col-md-7 control-label">
+			<label class="col-md-2 control-label">봉사요일</label>
+			<div class="col-md-4 control-label" style="text-align:center;">
 				금,토,일
 			</div>
-		</div>
-
-		<div class="form-group">
-			<label class="col-md-3 control-label">모집인원 /일</label>
-			<div class="col-md-4 control-label" id="maxMember">
+			<label class="col-md-2 control-label">모집인원 /일</label>
+			<div class="col-md-4 control-label" id="maxMember" style="text-align:center;">
 				5명 / 일
 			</div>
 		</div>
+		</div>
 		
+		<div>
 		<div class="form-group">
-			<label class="col-md-3 control-label">신청인원</label>
-			<div class="col-md-4 control-label" id="maxMember">
+			<label class="col-md-2 control-label">신청인원</label>
+			<div class="col-md-4 control-label" id="maxMember" style="text-align:center;">
 				3봉 15명
 			</div>
-		</div>
-
-		<div class="form-group">
-			<label class="col-md-3 control-label">봉사분야</label>
-			<div class="col-md-4 control-label" id="schClassify">
+			
+			<label class="col-md-2 control-label">봉사분야</label>
+			<div class="col-md-4">
+			<div class="col-md-5 control-label" id="schClassify">
 				문화체육
 			</div>
-			<div class="col-md-1 control-label">></div>
-			<div class="col-md-3 control-label" id="schClassify">
+			<div class="col-md-2 control-label">></div>
+			<div class="col-md-5 control-label" id="schClassify">
 				행사보조
 			</div>
-		</div>
-
-		<div class="form-group">
-			<label class="col-md-3 control-label">봉사자 유형</label>
-			<div class="col-md-4 control-label">
-				성인
-			</div>
-			<div class="col-md-5">
-					<div class="col-md-4  control-label">성별 :</div>
-					<div class="col-md-4 control-label">
-						남자
-					</div>					
 			</div>
 		</div>
-
+		</div>
+		
 		<div class="form-group">
-			<label class="col-md-3 control-label">작성자/수요처이름</label>
-			<div class="col-md-7" id="schUserName">
+			<label class="col-md-2 control-label">봉사자 유형</label>
+			<div class="col-md-4" style="text-align:center;">
+				<div class="col-md-5 control-label" style="text-align:center;">성인</div>
+				<div class="col-md-2 control-label" style="text-align:center;">-</div>
+				<div class="col-md-5 control-label" style="text-align:center;">남자</div>
+			</div>
+
+			<label class="col-md-2 control-label">수요처이름</label>
+			<div class="col-md-4" id="schUserName" style="text-align:center;">
 				<p class="form-control-static">희망복지관</p>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="col-md-3 control-label">수요처 장소</label>
+			<label class="col-md-2 control-label">수요처 장소</label>
 			<div class="col-md-7" id="schUserName">
 				<p class="form-control-static">서울특별시 노원구 삼양동 종합복지센터 장암역 1번출구</p>
 			</div>
@@ -109,6 +106,11 @@
 					많은 지원 부탁드립니다^^ 
 				</p>
 			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label">첨부파일</label>
+			<div class="col-md-10 control-label" style="text-align:center;">파일 내용</div>
 		</div>
 	</form>
 

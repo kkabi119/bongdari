@@ -6,12 +6,12 @@ public class ClubInfo {
 	private int clubSeq;
 	private String userId, nickName, userName;
 	private int groupNum, themeNum, typeIdx, userIdx;
-	private String introduce, clubname, prologue, gender, city, hobby, clubBirth;
+	private String introduce, clubname, prologue, city,  clubBirth;
 	private String groupSubject, subject;
 	private int  closed;
 	private MultipartFile upload;
 	private String photoFilename;
-	private int isUserName, isCity, isGender, isHobby;
+	private int isUserName, isCity;
 	
 	public int getUserIdx() {
 		return userIdx;
@@ -30,12 +30,6 @@ public class ClubInfo {
 	}
 	public void setClubBirth(String clubBirth) {
 		this.clubBirth = clubBirth;
-	}
-	public int getIsGender() {
-		return isGender;
-	}
-	public void setIsGender(int isGender) {
-		this.isGender = isGender;
 	}
 	public String getUserId() {
 		return userId;
@@ -66,12 +60,6 @@ public class ClubInfo {
 	}
 	public void setIsCity(int isCity) {
 		this.isCity = isCity;
-	}
-	public int getIsHobby() {
-		return isHobby;
-	}
-	public void setIsHobby(int isHobby) {
-		this.isHobby = isHobby;
 	}
 	public int getClubSeq() {
 		return clubSeq;
@@ -110,23 +98,11 @@ public class ClubInfo {
 	public void setPrologue(String prologue) {
 		this.prologue = prologue;
 	}
-	public String getGender() {
-		return gender;
-	}
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
 	public String getCity() {
 		return city;
 	}
 	public void setCity(String city) {
 		this.city = city;
-	}
-	public String getHobby() {
-		return hobby;
-	}
-	public void setHobby(String hobby) {
-		this.hobby = hobby;
 	}
 	public String getGroupSubject() {
 		return groupSubject;

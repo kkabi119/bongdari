@@ -98,6 +98,7 @@ public class adminController {
 		return mav;
 	}
 	
+	// 동아리 관리 리스트 출력
 	@RequestMapping(value="/admin/club")
 	public ModelAndView adminClub(
 			HttpServletRequest req,
@@ -165,22 +166,75 @@ public class adminController {
 	}
 	
 	@RequestMapping(value="/admin/demander")
-	public ModelAndView adminDemander() throws Exception {
+	public ModelAndView adminDemander(
+			HttpServletRequest req,
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			@RequestParam(value="switching") int switching
+			) throws Exception {
+		String cp=req.getContextPath();
 		
-		ModelAndView mav = new ModelAndView(".admin4.main.demander");
+		int numPerPage = 10;
+		int total_page = 0;
+		int dataCount = 0;
+		
+		if(req.getMethod().equalsIgnoreCase("GET")){
+			searchValue = URLDecoder.decode(searchValue, "utf-8");					
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		
+		// 수요처 목록 또는 승인페이지 구분하는 변수를 넣어줌 0 또는 1
+		// service테이블의 isService로 구분된다.
+		map.put("switching", switching);
+		
+		dataCount = aService.demanderCount(map);
+		if(dataCount !=0)
+			total_page = myutil.pageCount(numPerPage, dataCount);
+		
+		if(total_page < current_page)
+			current_page = total_page;
+		
+		int start = (current_page - 1) * numPerPage + 1;
+		int end = current_page * numPerPage;
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<Demander> list = aService.listDemander(map);
+		
+		String params = "";
+		String urlList = cp+"/admin/demander";
+		if(searchValue.length()!=0){
+			params = "searchKey=" + searchKey +
+					"&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
+		}
+		
+		if(params.length()!=0){
+			urlList = cp+"/admin/demander?" + params;
+		}
+		
+		// 수요처 목록 리스트 uri
+		String selectUri = ".admin4.main.demander";
+		
+		// 수요처 승인으로 갈 경우 uri를 바꿔줌
+		if(switching == 0)
+			selectUri = ".admin4.main.approval";
+		
+		ModelAndView mav = new ModelAndView(selectUri);
+		mav.addObject("list", list);
+		mav.addObject("page", current_page);
+		mav.addObject("dataCount", dataCount);
+		mav.addObject("total_page", total_page);
+		mav.addObject("paging", myutil.paging(current_page, total_page, urlList));
 		return mav;
 	}
 	
 	@RequestMapping(value="/admin/appDetail")
 	public ModelAndView adminAppDetail() throws Exception {
 		ModelAndView mav = new ModelAndView(".admin4.main.appDetail");
-		return mav;
-	}
-	
-	@RequestMapping(value="/admin/approval")
-	public ModelAndView adminApproval() throws Exception {
-		
-		ModelAndView mav = new ModelAndView(".admin4.main.approval");
 		return mav;
 	}
 	

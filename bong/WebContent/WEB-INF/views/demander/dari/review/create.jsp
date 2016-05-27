@@ -57,8 +57,7 @@
 }
 </style>
 
-<script type="text/javascript" src="<%=cp%>/res/se/js/HuskyEZCreator.js"
-	charset="utf-8"></script>
+<script type="text/javascript" src="<%=cp%>/res/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
   function check() {
         var f = document.boardForm;

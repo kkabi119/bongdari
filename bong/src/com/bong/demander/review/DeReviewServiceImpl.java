@@ -240,17 +240,6 @@ public class DeReviewServiceImpl implements DeReviewService {
 		return result;
 	}
 
-	@Override
-	public int insertDeReviewReplyLike(DeReviewReply dto) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Map<String, Object> DeReviewReplyCountLike(int DeReviewReplyNum) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	//좋아요상태
 	@Override
@@ -313,6 +302,55 @@ public class DeReviewServiceImpl implements DeReviewService {
 		return map;
 	}
 
+	
+	//댓글좋아요***************************************************** 
+	//좋아요상태
+	@Override
+	public int stateDeRevReplyLike(DeReviewReply dto) {
+			int result=0;
+			try {
+				result=dao.getIntValue("demander.stateDeRevLikeRe", dto);
+			} catch (Exception e) {
+				System.out.println(e.toString());
+			}
+			return result;
+		}
+	
+	@Override
+	public int insertDeReviewReplyLike(DeReviewReply dto) {
+		int result=0;
+		try {
+			result=dao.insertInformation("demander.insertDeReviewLikeRe", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+	
+	@Override
+	public int deleteDeRevReplyLike(DeReviewReply dto) {
+		int result=0;
+		try {
+			result=dao.insertInformation("demander.deleteDeReviewLikeRe", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+	
+	@Override
+	public Map<String, Object> DeReviewReplyCountLike(int DeReviewReplyNum) {
+		Map<String, Object> map=null;
+		try {
+			map=dao.getReadInformation("demander.deRevCountLikeRe", DeReviewReplyNum);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return map;
+	}
+	
+	//댓글좋아요 끝*****************************************************
+	
 
 
 }

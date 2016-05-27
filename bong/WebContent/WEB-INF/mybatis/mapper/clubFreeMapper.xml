@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="clubfree" >
+	<select id="clubFreeSeq" resultType="Integer">
+		SELECT club_free_seq.NEXTVAL FROM DUAL
+	</select>
+	
+	<insert id="insertFree" parameterType="com.bong.club.free.Free">
+		INSERT INTO club_free_${clubIdx}(clubFreeIdx, userIdx, clubIdx, subject, content)
+					VALUES(#{clubFreeIdx}, #{userIdx}, #{clubIdx}, #{subject}, #{content})
+	</insert>
+	
+	<insert id="insertFreeP" parameterType="com.bong.club.free.Free">
+		INSERT INTO club_freeP_${clubIdx}(clubFreePIdx, saveFilename, originalFilename, clubFreeIdx)
+					VALUES(club_freeP_seq.NEXTVAL, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename, jdbcType=VARCHAR}, #{clubFreeIdx})
+	</insert>
+	
+	<!-- 동아리 자유게시판 리스트 -->
+	<select id="listFree" parameterType="map" resultType="com.bong.club.free.Free">
+			SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		      SELECT f.clubfreeIdx, f.userIdx,f.clubIdx, userName, subject,
+		      (SELECT NVL(COUNT(*), 0) FROM club_free_reply_${clubSeq} WHERE clubFreeIdx=1 AND answer=0) replyDataCount,
+		      TO_CHAR(f.created,'YYYY-MM-DD' ) created, f.content, hitCount
+		      FROM club_free_${clubSeq} f 
+		      JOIN memberInfo m ON f.userIdx = m.userIdx
+		      <where>
+		        <if test="searchValue != null and searchValue != ''">
+					      <include refid="where-list"/>
+				    </if>
+			    </where>
+			    ORDER BY f.clubfreeIdx DESC
+		  <![CDATA[
+		     ) tb WHERE ROWNUM <= #{end}
+		  ) WHERE rnum >= #{start}
+		  ]]>
+	
+	</select>
+	
+	<!-- 동아리 자유게시판 글수세기-->
+	<select id="dataCount" parameterType="map"
+	            resultType="Integer">
+	         SELECT NVL(COUNT(*), 0) FROM club_free_${clubSeq} n
+	        JOIN memberInfo m
+	        ON n.userIdx=m.userIdx
+	     <where>
+	     	<if test="searchValue!=null and searchValue!='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	     </where>   
+	</select>
+	
+	
+	<!-- 조회수 증가 -->
+	<update id="updateHitCount" parameterType="map">
+		UPDATE club_free_${clubSeq} SET hitCount=hitCount+1 WHERE clubFreeIdx = #{num}
+	</update>
+	
+	<!-- 글보기 -->
+	<select id="readFree" resultType="com.bong.club.free.Free" parameterType="map">
+		SELECT clubFreeIdx, m.userIdx, userId, userName, subject, content
+				   ,hitCount, f.created
+		FROM club_free_55 f JOIN memberInfo m ON f.userIdx=m.userIdx
+		WHERE clubFreeIdx = #{num}
+	</select>
+	
+	
+	<!-- AND 가 필요 없는 경우 자동으로 제거 됨 -->
+	<!-- 이전글 -->
+	<select id="preReadFree" resultType="com.bong.club.free.Free" 
+				parameterType="map">
+		SELECT tb.* FROM (
+			SELECT clubFreeIdx, subject
+			      FROM club_free_${clubSeq} f
+			      JOIN memberInfo m ON f.userIdx=m.userIdx
+                  <where>
+                         <if test="searchValue != null and searchValue != '' ">
+			                  <include refid="where-list"/>
+		                 </if>
+		               <![CDATA[
+		               AND (clubFreeIdx > #{num})
+		         		]]>
+	                </where>
+				ORDER BY clubFreeIdx ASC
+			) tb WHERE ROWNUM=1	
+	</select>
+	
+	<!-- 다음글 -->
+	<select id="nextReadFree" resultType="com.bong.club.free.Free" 
+				parameterType="map">
+		SELECT tb.* FROM (
+			SELECT clubFreeIdx, subject
+			      FROM club_free_${clubSeq} f
+			      JOIN memberInfo m ON f.userIdx=m.userIdx
+                  <where>
+                         <if test="searchValue != null and searchValue != '' ">
+			                  <include refid="where-list"/>
+		                 </if>
+		               <![CDATA[
+		               AND (clubFreeIdx < #{num})
+		         		]]>
+	                </where>
+				ORDER BY clubFreeIdx DESC
+			) tb WHERE ROWNUM=1
+	</select>
+	
+	<!-- 수정 -->
+     <update id="updateFree" parameterType="com.bong.club.free.Free">
+         UPDATE club_free_${clubIdx} SET subject=#{subject}, content=#{content}
+                    WHERE clubFreeIdx = #{clubFreeIdx}
+      </update>
+	
+	<!-- 삭제 -->
+      <delete id="deleteFree" parameterType="map">
+           DELETE FROM club_Free_${clubSeq} WHERE clubFreeIdx = #{num}
+      </delete>
+      
+      
+	<sql id="where-list">
+		  <if test="searchKey=='userName'">
+		      userName=#{searchValue}
+		  </if>
+		  <if test="searchKey=='subject'">
+		      INSTR(subject, #{searchValue}) &gt; 0
+		  </if>
+		  <if test="searchKey=='content'">
+		      DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0 
+		  </if>
+		  <if test="searchKey=='created'">
+		      TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
+		      OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue}
+		  </if>
+	</sql>
+</mapper>

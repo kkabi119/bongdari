@@ -39,25 +39,6 @@ public class NoticeController {
 	@Autowired
 	private FileManager fileManager;
 	
-	@RequestMapping(value="/club/{clubSeq}/main")
-	public ModelAndView myClubMain(
-			HttpServletRequest req,
-			HttpSession session,
-			@PathVariable int clubSeq
-			) throws Exception {
-		
-		//String cp=req.getContextPath();
-		
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		if (info == null) {
-			return new ModelAndView("redirect:/member/login");
-		}
-		
-		ModelAndView mav = new ModelAndView(".four.club.dari.main.내 동아리 메인");
-		mav.addObject("clubSeq", clubSeq);
-		return mav;
-	}
-	
 	/*개인동아리 공지게시판*/
 	@RequestMapping(value="/club/{clubSeq}/notice/list")
 	public ModelAndView clubNoticeList(
@@ -234,7 +215,7 @@ public class NoticeController {
 	
 	@RequestMapping(value="/club/{clubSeq}/notice/update", 
 			method=RequestMethod.GET)
-	public ModelAndView updateForm(
+	public ModelAndView updateClubNotice(
 			HttpSession session,
 			@PathVariable int clubSeq,
 			@RequestParam(value="num") int num,
@@ -290,7 +271,7 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/club/{clubSeq}/notice/created",method=RequestMethod.GET)
-	public ModelAndView createNoticeForm(
+	public ModelAndView insertNoticeForm(
 			HttpSession session,
 			@PathVariable int clubSeq
 			) throws Exception {
@@ -303,6 +284,27 @@ public class NoticeController {
 		mav.addObject("mode", "created");
 		mav.addObject("clubSeq", clubSeq);
 		return mav;
+	}
+	
+	@RequestMapping(value="/club/{clubSeq}/notice/created",method=RequestMethod.POST)
+	public ModelAndView insertClubNotice(
+			HttpSession session,
+			@PathVariable int clubSeq,
+			Notice dto
+			) throws Exception {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		if(info==null){
+			return new ModelAndView("redirect:/member/login");
+		}
+		
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"notice";
+		
+		dto.setUserId(info.getUserId());
+		dto.setUserIdx(info.getUserIdx());
+		dto.setClubIdx(clubSeq);
+		service.insertNotice(dto, pathname);
+		return new ModelAndView("redirect:/club/{clubSeq}/notice/list");
 	}
 	
 	@RequestMapping(value="/club/{clubSeq}/notice/deleteFile", 
@@ -373,27 +375,6 @@ public class NoticeController {
 		service.deleteNotice(map, dto.getSaveFilename(), path);
 		
 		return new ModelAndView("redirect:/club/{clubSeq}/notice/list?page="+page);
-	}
-	
-	@RequestMapping(value="/club/{clubSeq}/notice/created",method=RequestMethod.POST)
-	public ModelAndView insertClubNotice(
-			HttpSession session,
-			@PathVariable int clubSeq,
-			Notice dto
-			) throws Exception {
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		if(info==null){
-			return new ModelAndView("redirect:/member/login");
-		}
-		
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+File.separator+"uploads"+File.separator+"notice";
-		
-		dto.setUserId(info.getUserId());
-		dto.setUserIdx(info.getUserIdx());
-		dto.setClubIdx(clubSeq);
-		service.insertNotice(dto, pathname);
-		return new ModelAndView("redirect:/club/{clubSeq}/notice/list");
 	}
 	
 	// 댓글 리스트
@@ -585,28 +566,5 @@ public class NoticeController {
 			return model;
 		}
 	/*개인동아리 공지게시판 끝*/
-	
-	/*개인동아리 자유게시판*/
-	@RequestMapping(value="/club/{clubSeq}/free/list")
-	public ModelAndView ListClubFree() throws Exception {
-		
-		ModelAndView mav = new ModelAndView(".four.club.dari.free.list.자유게시판");
-		return mav;
-	}
-	
-	@RequestMapping(value="/club/{clubSeq}/free/create")
-	public ModelAndView insertClubFree() throws Exception {
-		
-		ModelAndView mav = new ModelAndView(".four.club.dari.free.create.자유글쓰기");
-		return mav;
-	}
-	
-	@RequestMapping(value="/club/{clubSeq}/free/article")
-	public ModelAndView readClubFree() throws Exception {
-		
-		ModelAndView mav = new ModelAndView(".four.club.dari.free.article.자유글보기");
-		return mav;
-	}
-	/*개인동아리 자유게시판 끝*/
 	
 }

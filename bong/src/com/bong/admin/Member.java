@@ -1,7 +1,5 @@
 package com.bong.admin;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class Member {
     private int rNum, listNum;
     private int userIdx;

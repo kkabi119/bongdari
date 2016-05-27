@@ -61,4 +61,26 @@ public class AdminServiceImpl implements AdminService{
 		return result;
 	}
 	
+	@Override
+	public List<Demander> listDemander(Map<String, Object> map) {
+		List<Demander> list=null;
+		try {
+			list=dao.getListInformation("admin.listDemander", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+
+	@Override
+	public int demanderCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.getIntValue("admin.demanderCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+	
 }

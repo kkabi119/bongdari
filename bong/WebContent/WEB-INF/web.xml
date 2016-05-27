@@ -13,7 +13,7 @@
     <!-- 스프링 환경 설정 시작 -->
     <!-- ContextLoaderListener : 서로 다른 DispatcherServlet이 공통으로 사용될 빈 설정  -->
     <!-- context-param 태그로 설정파일을 지정하지 않으면 applicationContext.xml이 설정 파일이 된다.  -->
-    <!--
+
     <context-param>
 	    <param-name>contextConfigLocation</param-name>
         <param-value>
@@ -21,12 +21,12 @@
 				/WEB-INF/common.xml
 		</param-value>
 	</context-param>
-    -->
+
         <context-param>
 	    <param-name>contextConfigLocation</param-name>
         <param-value>
             /WEB-INF/applicationContext.xml
-            /WEB-INF/security-context.xml
+           /WEB-INF/security-context.xml
         </param-value>
 	</context-param>
 	
@@ -78,5 +78,5 @@
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>  
+    </filter-mapping>
 </web-app>
