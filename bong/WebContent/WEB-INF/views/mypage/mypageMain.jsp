@@ -36,7 +36,10 @@ function tabPageView() {
 		url="<%=cp%>/member/index/updateInfo"
 	} else if (tabs==2) {
 		url="<%=cp%>/member/index/myApply"
+	} else if (tabs==3) {
+		url="<%=cp%>/member/index/deleteMember"
 	}
+	
 	
 	$.get(url, {}, function(data){
 		var id="#tabContent"+tabs;
@@ -68,12 +71,14 @@ function searchList() {
 			      <li role="presentation"  class="active"><a href="#tabContent0" aria-controls="0" role="tab" data-toggle="tab">내정보보기</a></li>
 			      <li role="presentation"><a href="#tabContent1" aria-controls="1" role="tab" data-toggle="tab">정보 수정</a></li>
 			      <li role="presentation"><a href="#tabContent2" aria-controls="2" role="tab" data-toggle="tab">나의 봉사 신청현황</a></li>
+			      <li role="presentation"><a href="#tabContent3" aria-controls="3" role="tab" data-toggle="tab">회원탈퇴하기</a></li>
 			  </ul>
 			
 			  <div class="tab-content" style="padding: 5px; margin-top: 15px;">
 			      <div role="tabpanel" class="tab-pane active" id="tabContent0"></div>
 			      <div role="tabpanel" class="tab-pane" id="tabContent1"></div>
 			      <div role="tabpanel" class="tab-pane" id="tabContent2"></div>
+			      <div role="tabpanel" class="tab-pane" id="tabContent3"></div>
 			  </div>
 	    </div>
     </div>

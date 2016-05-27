@@ -10,7 +10,14 @@ public class Member {
 	private int userIdx, isMember, userLevel, userVolNum, userNoShow, userScore, enabled;
 	private MultipartFile uploads;
 	private String memImgname, memImg;
+	private String authority;
 	
+	public String getAuthority() {
+		return authority;
+	}
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
 	public String getUserTel() {
 		return userTel;
 	}

@@ -63,7 +63,7 @@ function demanderRegister() {
    }
    
    str = f.servicePwd.value;
-   if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
+/*    if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
       $("#servicePwd + .help-block").html("<span style='color:red;'>비밀번호 형식을 확인해주세요! <span>");
       f.servicePwd.focus();
       return false;
@@ -77,7 +77,7 @@ function demanderRegister() {
       return false;
    } else {
       $("#servicePwdCheck + .help-block").html("비밀번호를 한번 더 입력해주세요");
-   }
+   } */
    
     str = f.serviceName.value;
    str = $.trim(str);

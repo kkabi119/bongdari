@@ -76,7 +76,7 @@ public class MemberController {
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+File.separator+"uploads"+File.separator+"memImg";
 		
-		int result=service.insertMember(dto,pathname);
+		service.insertMember(dto,pathname);
 		
 		ModelAndView mav=new ModelAndView(".layout.member.login.·Î±×ÀÎ");
 			

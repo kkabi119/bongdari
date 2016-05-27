@@ -201,4 +201,58 @@ public class MypageController {
 		return model;
 		
 	}
-}
+	@RequestMapping(value="/member/index/deleteMember", method=RequestMethod.GET)
+	public ModelAndView deleteCheck(
+			 HttpServletRequest req
+			,HttpSession session
+			) {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null){
+			return new ModelAndView("redirect:/member/login");
+		}
+
+		ModelAndView mav=new ModelAndView("/mypage/deleteMember");
+		//mav.addObject("userId", info.getUserId());
+		return mav;
+	}
+    @RequestMapping(value="/mypage/deleteMember", method=RequestMethod.POST)
+	public ModelAndView deleteMember (
+			HttpSession session
+		   ,@RequestParam(value="userPwd") String userPwd
+			) throws Exception {
+           SessionInfo info=(SessionInfo)session.getAttribute("member");
+           if(info==null){
+        	   return new ModelAndView("redirect:/member/login");
+           }
+           
+           Member dto=service.readMemberInfo(Integer.toString(info.getUserIdx()));
+           
+           if(dto==null){
+        	   session.invalidate();
+        	   return new ModelAndView("redirect:/");
+           }
+           if(! dto.getUserPwd().equals(userPwd)){
+        	   ModelAndView mav=new ModelAndView("/mypage/deleteMember");
+        	   mav.addObject("message", "패스워드가 일치하지않습니다");
+        	   return mav;
+           }
+           
+          String check=service.managerCheck(info.getUserId());
+           if(check!=null){
+        	   return new ModelAndView("redirect:/");
+           }
+   
+           Map<String, Object> map = new HashMap<String, Object>();
+           map.put("userIdx", info.getUserIdx());
+           service.deleteMember2(map);
+           
+           session.removeAttribute("member");
+           session.invalidate();
+           
+          
+           
+           ModelAndView mav = new ModelAndView("/member/login");
+           
+           return mav;
+	}
+}	

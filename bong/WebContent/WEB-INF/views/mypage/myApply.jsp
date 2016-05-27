@@ -48,7 +48,7 @@
                         				<td><a href="<%=cp%>/club/index/notice/article">${dto.subject}</a></td>
                         				<td class="text-center">${dto.startDay}~${dto.endDay}</td>
                        				 	<td class="text-center">${dto.place}</td>
-                       				 	<td class="text-center">${dto.typeIdx1}</td>
+                       				 	<td class="text-center">${dto.themenum}</td>
                        				 	<td class="text-center">${dto.volunteer_Type}</td>
                        				 	<td class="text-center">${dto.hopeDate}</td>                       
                        				    <c:if test="${dto.progress.equals('모집마감')}">

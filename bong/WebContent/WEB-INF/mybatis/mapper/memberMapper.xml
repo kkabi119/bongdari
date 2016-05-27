@@ -53,7 +53,7 @@
     <select id="myApplyList" resultType="com.bong.mypage.MyApply" parameterType="map">
     SELECT * FROM (
 		    SELECT ROWNUM rNum, tb.* FROM (
-    SELECT vb.volunIdx, vbm.userIdx,0.clubIdx, vb.subject,vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_Type, vb.volunDays, vbm.hopeDate,vb.typeIdx1, vb.typeIdx2  
+    SELECT vb.volunIdx, vbm.userIdx,0.clubIdx, vb.subject,vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_Type, vb.volunDays, vbm.hopeDate,vb.themenum  
     FROM volun_bbs vb
      LEFT OUTER JOIN volun_bbs_memlist vbm ON vb.volunIdx=vbm.volunIdx where userIdx=#{userIdx}
          <if test="searchValue != null and searchValue != ''">
@@ -61,7 +61,7 @@
 	     <include refid="where-list"/>
 		 </if>
     UNION ALL
-    SELECT vb.volunIdx, cam.userIdx, clubIdx, vb.subject, vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_type, vb.volunDays, cam.hopeDate ,vb.typeIdx1, vb.typeIdx2 
+    SELECT vb.volunIdx, cam.userIdx, clubIdx, vb.subject, vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_type, vb.volunDays, cam.hopeDate ,vb.themenum 
     FROM club_apply ca
      LEFT OUTER JOIN club_apply_memlist cam ON ca.clubApplyIdx=cam.clubApplyIdx
      LEFT OUTER JOIN volun_bbs vb ON vb.volunIdx=ca.volunIdx where userIdx=#{userIdx}
@@ -101,7 +101,7 @@
     <select id="myClubList" resultType="com.bong.mypage.MyApply" parameterType="map">
      SELECT * FROM (
 		    SELECT ROWNUM rNum, tb.* FROM (
-    SELECT vb.volunIdx, cam.userIdx, clubIdx, vb.subject, vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_type, vb.volunDays, cam.hopeDate ,vb.typeIdx1, vb.typeIdx2 
+    SELECT vb.volunIdx, cam.userIdx, clubIdx, vb.subject, vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_type, vb.volunDays, cam.hopeDate ,vb.themenum
     FROM club_apply ca
      LEFT OUTER JOIN club_apply_memlist cam ON ca.clubApplyIdx=cam.clubApplyIdx
      LEFT OUTER JOIN volun_bbs vb ON vb.volunIdx=ca.volunIdx where userIdx=#{userIdx}
@@ -132,7 +132,7 @@
     <select id="myIndividualList" resultType="com.bong.mypage.MyApply" parameterType="map">
      SELECT * FROM (
 		    SELECT ROWNUM rNum, tb.* FROM (
-    SELECT vb.volunIdx, vbm.userIdx,0.clubIdx, vb.subject,vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_Type, vb.volunDays, vbm.hopeDate,vb.typeIdx1, vb.typeIdx2  
+    SELECT vb.volunIdx, vbm.userIdx,0.clubIdx, vb.subject,vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_Type, vb.volunDays, vbm.hopeDate,vb.themenum  
     FROM volun_bbs vb
      LEFT OUTER JOIN volun_bbs_memlist vbm ON vb.volunIdx=vbm.volunIdx where userIdx=#{userIdx}
          <if test="searchValue != null and searchValue != ''">
@@ -169,4 +169,36 @@
 	      hopeDate=#{searchValue}
 	  </if>
 	</sql>
+	<!-- 회원 정보 삭제 -->
+	<delete id="deleteMember2" parameterType="Integer">
+        DELETE FROM memberInfo WHERE userIdx=#{userIdx}	
+	</delete>
+	<!-- 동아리 장 체크 (동아리만든 아이디는 탈퇴 불가하도록)-->
+	<select id="managerCheck" parameterType="String" resultType="String">
+	     select userId from clubInfo where userId=#{userId}
+	</select>
+	<!-- 권한 테이블 -->
+		<insert id="insertAuthority" parameterType="com.bong.member.Member">
+	    INSERT INTO memAuthority(memAuthIdx, userIdx, authority)
+	        VALUES (memAuthority_seq.NEXTVAL, #{userIdx}, #{authority})
+	</insert>
+     
+	<select id="readAuthority" parameterType="Integer" resultType="com.bong.member.Member">
+	    SELECT memAuthIdx, userIdx, authority
+	        FROM memAuthority WHERE userIdx=#{userIdx}
+	</select>
+	
+	<select id="listAuthority" parameterType="String" resultType="com.bong.member.Member">
+	    SELECT memAuthIdx, userIdx, authority
+	        FROM memAuthority WHERE userIdx=#{userIdx}
+	</select>
+	
+	<update id="updateAuthority" parameterType="com.bong.member.Member">
+	     UPDATE memAuthority SET userIdx=#{userIdx}, authority=#{authority}
+	         WHERE userIdx=#{userIdx}
+	</update>
+	
+	<delete id="deleteAuthority" parameterType="map">
+	    DELETE FROM memAuthority WHERE ${field}=#{value}
+	</delete>
 </mapper>

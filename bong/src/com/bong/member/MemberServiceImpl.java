@@ -128,6 +128,8 @@ public class MemberServiceImpl implements MemberService{
 			//회원정보 저장
 			dao.insertInformation("member.insertMember", seq);
 			dao.insertInformation("member.insertMemberInfo", dto);
+			dto.setAuthority("ROLE_USER");
+			dao.insertInformation("member.insertAuthority", dto);
 			
 			result = 1;
 		} catch (Exception e) {
@@ -177,10 +179,30 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}
    
+	//회원 탈퇴/삭제
 	@Override
 	public int deleteMember2(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			//memberInfo 테이블 삭제
+			int userIdx=(Integer)map.get("userIdx");
+			result = dao.deleteInformation("member.deleteMember2", userIdx);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+	
+	@Override
+	public String managerCheck(String userId) {
+		String result=null;
+		try {
+			result=dao.getReadInformation("member.managerCheck", userId);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 	
 	@Override
@@ -206,20 +228,35 @@ public class MemberServiceImpl implements MemberService{
    
 	@Override
 	public int insertAuthority(Member dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.insertInformation("member.insertAuthority", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public int updateAuthority(Member dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.updateInformation("member.updateAuthority", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public Member readAuthority(int num) {
-		// TODO Auto-generated method stub
-		return null;
+		Member dto=null;
+		try {
+			dto=dao.getReadInformation("member.readAuthority", num);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override
@@ -240,6 +277,7 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
+
 	
 }

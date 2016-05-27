@@ -3,7 +3,7 @@ package com.bong.mypage;
 public class MyApply {
 	private int userIdx, clubIdx, clubApplyIdx, volunIdx, listNum;
     private String startDay,endDay, subject,place, progress;
-    private String volunteer_Type, volunDays, hopeDate, typeIdx1, typeIdx2;
+    private String volunteer_Type, volunDays, hopeDate, themenum;
     private String startTime, endTime;
 	public int getUserIdx() {
 		return userIdx;
@@ -83,17 +83,12 @@ public class MyApply {
 	public void setHopeDate(String hopeDate) {
 		this.hopeDate = hopeDate;
 	}
-	public String getTypeIdx1() {
-		return typeIdx1;
+	
+	public String getThemenum() {
+		return themenum;
 	}
-	public void setTypeIdx1(String typeIdx1) {
-		this.typeIdx1 = typeIdx1;
-	}
-	public String getTypeIdx2() {
-		return typeIdx2;
-	}
-	public void setTypeIdx2(String typeIdx2) {
-		this.typeIdx2 = typeIdx2;
+	public void setThemenum(String themenum) {
+		this.themenum = themenum;
 	}
 	public String getStartTime() {
 		return startTime;
