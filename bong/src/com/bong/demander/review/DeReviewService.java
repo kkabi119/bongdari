@@ -30,6 +30,8 @@ public interface DeReviewService {
 	public int DeReviewReplyCountAnswer(int answer);
 	public int deleteDeReviewReply(Map<String, Object> map);
 	
+	public int stateDeRevReplyLike(DeReviewReply dto);
 	public int insertDeReviewReplyLike(DeReviewReply dto);
+	public int deleteDeRevReplyLike(DeReviewReply dto);
 	public Map<String, Object> DeReviewReplyCountLike(int DeReviewReplyNum);
 }

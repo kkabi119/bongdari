@@ -10,7 +10,7 @@ public class DeReview {
     private int hitCount;
     private int replyCount;
     
-    private int reviewLike;
+    private int likeCount;
 	private int reviewLikeCount;
 	
     
@@ -103,12 +103,7 @@ public class DeReview {
 	public void setServiceReviewIdx(int serviceReviewIdx) {
 		this.serviceReviewIdx = serviceReviewIdx;
 	}
-	public int getReviewLike() {
-		return reviewLike;
-	}
-	public void setReviewLike(int reviewLike) {
-		this.reviewLike = reviewLike;
-	}
+
 	public int getReviewLikeCount() {
 		return reviewLikeCount;
 	}
@@ -120,6 +115,12 @@ public class DeReview {
 	}
 	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
+	}
+	public int getLikeCount() {
+		return likeCount;
+	}
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
 	}
 
 	

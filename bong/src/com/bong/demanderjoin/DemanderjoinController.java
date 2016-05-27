@@ -23,7 +23,7 @@ public class DemanderjoinController {
 	private DemanderjoinService service;
     
 	//로그인 및 로그아웃
-	@RequestMapping(value="/demander/login", method=RequestMethod.GET)
+	/*@RequestMapping(value="/demander/login", method=RequestMethod.GET)
 	public ModelAndView demanderLoginForm() throws Exception{
 		return new ModelAndView(".layout.member.login.로그인");
 	}
@@ -50,7 +50,7 @@ public class DemanderjoinController {
 		info.setServiceName(dto.getServiceName());
 		session.setAttribute("demanderjoin", info);
 		
-		return new ModelAndView("redirect:/main");
+		return new ModelAndView("redirect:/");
 	}
 	@RequestMapping(value="/demanderjoin/logout")
 	public String logout(HttpSession session) throws Exception{
@@ -58,8 +58,8 @@ public class DemanderjoinController {
 		session.removeAttribute("demanderjoin");
 		session.invalidate();
 		
-		return "redirect:/main";
-	}
+		return "redirect:/";
+	}*/
 	//수요처 회원가입
 	@RequestMapping(value="/demanderjoin/demanderRegister", method=RequestMethod.GET)
     public ModelAndView demanderjoinForm(){

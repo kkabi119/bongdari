@@ -17,11 +17,18 @@
 	<!-- ssl을 사용하지 않을경우 사용하지 않음 -->
 	        <csrf disabled="true"/>
 	        
+            <headers>
+               <frame-options policy="SAMEORIGIN" />
+               <hsts disabled="true"/>
+            </headers>
+        	        
             <!-- 모든 접근자를 항상 승인 -->
             <!-- <intercept-url pattern="/member/**" access="permitAll" />  -->
+            <intercept-url pattern="/" access="permitAll" />
             <intercept-url pattern="/index.jsp" access="permitAll" />
             <intercept-url pattern="/main" access="permitAll" />
             <intercept-url pattern="/member/login" access="permitAll" />
+            <intercept-url pattern="/demander/login" access="permitAll"/>
             <intercept-url pattern="/member/member" access="permitAll" />
 			<intercept-url pattern="/member/userIdCheck" access="permitAll" />
 			
@@ -31,8 +38,7 @@
 	         <!-- admin 페이지 -->
 		    <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 
-	         <!-- 모든 페이지 -->
-	        <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
+	        <intercept-url pattern="/member/index/myPage/**" access="hasRole('ROLE_USER')"/>
 
 	        <!--  사용자 정의 로그인 폼  -->
 	        <form-login login-page="/member/login"
@@ -63,9 +69,8 @@
      <jdbc-user-service 
          data-source-ref="dataSource"
          id="userService"
-         users-by-username-query="SELECT userIdx AS username, userPwd AS password, enabled FROM memberInfo WHERE userId=?"
+          users-by-username-query="SELECT userIdx AS username, userPwd AS password, enabled FROM checkId WHERE userId=?"
          authorities-by-username-query="SELECT userIdx AS username, authority FROM memAuthority WHERE userIdx=?"/>
-    
 	<!-- <authentication-manager>
 		<authentication-provider user-service-ref="userService">
 		     <password-encoder hash="sha-256" />

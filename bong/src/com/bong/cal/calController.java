@@ -18,6 +18,11 @@ public class calController {
 		return "admin/calendar/articleForm";
 	}
 	
+	// 대화상자에 출력 할 상세 일정 폼
+		@RequestMapping(value="/cal/eachDay")
+		public String eachDay() throws Exception {
+			return "admin/calendar/eachDay";
+		}
 	
 	
 }

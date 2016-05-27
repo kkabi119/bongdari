@@ -56,7 +56,7 @@
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
           SELECT tbrev.servicereviewidx, tbrev.useridx,userid, username, subject
-			          , created  ,hitcount,NVL(replyCount, 0) replyCount
+			          , created  ,hitcount,NVL(replyCount, 0) replyCount,NVL(likeCount, 0) likeCount
         FROM
         (
          (
@@ -77,7 +77,11 @@
 			                SELECT serviceReviewIdx, count(*) replycount
                                  FROM service_review_reply  tbreply GROUP BY serviceReviewIdx
 			        ) tbreply ON tbrev.serviceReviewIdx = tbreply.serviceReviewIdx
-	            )    
+	            ) LEFT OUTER JOIN
+			           (
+			                SELECT servicereviewidx, COUNT(*) likeCount
+                                 FROM service_review_like GROUP BY servicereviewidx
+			           ) tblike ON tbreply.servicereviewidx = tblike.servicereviewidx    
                    
 	                ORDER BY serviceReviewIdx DESC
 	<![CDATA[
@@ -89,14 +93,19 @@
 	<!-- 리뷰 글보기 -->
 	<select id="readDeReview" parameterType="Integer" resultType="com.bong.demander.review.DeReview">
 		SELECT r.servicereviewidx, m.useridx, userid, username, subject,
-		content,hitcount, r.created, f.savefilename, f.originalfilename,NVL(replyCount, 0) replyCount
+		content,hitcount, r.created, f.savefilename, f.originalfilename,NVL(replyCount, 0) replyCount,NVL(likeCount, 0) likeCount
 		FROM service_review r JOIN memberinfo m ON r.useridx=m.useridx
 		JOIN service_review_file f ON r.servicereviewidx = f.servicereviewidx
    	    LEFT OUTER JOIN
 			        ( SELECT serviceReviewIdx, count(*) replycount
                                  FROM service_review_reply  tbreply GROUP BY serviceReviewIdx
 			        ) tbreply ON r.servicereviewidx = tbreply.servicereviewidx
-		WHERE r.servicereviewidx = #{serviceReviewIdx}
+          LEFT OUTER JOIN
+			           (
+			                SELECT servicereviewidx, COUNT(*) likeCount
+                                 FROM service_review_like GROUP BY servicereviewidx
+			           ) tblike ON tbreply.servicereviewidx = tblike.servicereviewidx
+		WHERE r.servicereviewidx =#{serviceReviewIdx}
 	</select>
 	
 	<!-- 조회수 증가 -->
@@ -192,8 +201,6 @@
 	</select>
       
       
-
-    
 	<!-- 댓글 처리................. -->
 	<select id="SRRSeq" resultType="Integer">
 		SELECT service_rr_seq.NEXTVAL FROM DUAL
@@ -219,7 +226,7 @@
 		    SELECT ROWNUM rnum, tb.* FROM (
 		        SELECT tbreply.SRRIDX as replyNum, serviceReviewIdx as num, userId, userName 
 		                    ,content, created, tbreply.answer
-		                    ,NVL(answerCount, 0) answerCount
+		                    ,NVL(answerCount, 0) answerCount,NVL(likeCount, 0)likeCount
 		        FROM
 		        (
 				      (
@@ -235,6 +242,11 @@
 			                SELECT answer, COUNT(*) answerCount
                                  FROM service_review_reply GROUP BY answer
 			           ) tbanswer ON tbreply.SRRIDX = tbanswer.answer
+			             LEFT OUTER JOIN
+			           (
+			                SELECT srridx, COUNT(*) likeCount
+                                 FROM service_review_reply_like GROUP BY srridx
+			           ) tblike ON tbreply.srridx = tblike.srridx
 	           )
 	           ORDER BY replynum DESC
 	<![CDATA[
@@ -261,20 +273,46 @@
 	        FROM service_review_reply WHERE answer=#{answer}
 	</select>
 	
+	<!-- 댓글지우기 -->
 	<delete id="deleteDeRevReply" parameterType="map">
 	DELETE service_review_reply WHERE
 	    <if test="mode == 'num' ">
 			 serviceReviewIdx=#{num}
 		</if>
 	    <if test="mode == 'reply' ">
-			 replyNum IN 
-               (SELECT replyNum FROM service_review_reply START WITH  replyNum = #{replyNum}
-	            CONNECT BY PRIOR replyNum = answer)
+			 SRRIDX IN 
+               (SELECT SRRIDX FROM service_review_reply START WITH  SRRIDX = #{replyNum}
+	            CONNECT BY PRIOR SRRIDX = answer)
 		</if>
 	    <if test="mode == 'answer' ">
 			 SRRIDX=#{replyNum}
 		</if>
 	</delete>
+	
+	<!-- 댓글 좋아요 -->
+	  <!-- 좋아요상태 -->
+    <select id="stateDeRevLikeRe" parameterType="com.bong.demander.review.DeReviewReply" resultType="Integer">
+     SELECT NVL(count(*),0) FROM service_review_reply_like 
+     WHERE userIdx=#{userIdx} AND SRRIDX=#{replyNum}
+    </select>
+    
+    <!--send 좋아요-->
+	<insert id="insertDeReviewLikeRe" parameterType="com.bong.demander.review.DeReviewReply">
+	INSERT INTO service_review_reply_like(SRRIDX, userIdx)
+	   VALUES (#{replyNum}, #{userIdx})
+	</insert>
+	
+	<!-- 좋아요가 이미 눌렸을때 해제 되도록 -->
+	<delete id="deleteDeReviewLikeRe" parameterType="com.bong.demander.review.DeReviewReply">
+	DELETE FROM service_review_reply_like WHERE SRRIDX=#{replyNum} AND userIdx=#{userIdx}
+	</delete>
+	
+	<!-- 좋아요 개수 -->
+	<select id="deRevCountLikeRe" resultType="map" 
+	           parameterType="Integer">
+	   SELECT NVL(count(*),0) likeCount FROM service_review_reply_like WHERE SRRIDX=#{replyNum}
+	</select>
+      
 <!-- 	
 	(보류)댓글 좋아요/싫어요 처리.................
 	<insert id="insertDeRevReplyLike" parameterType="com.bong.demander.review.DeReviewReply">
