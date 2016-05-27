@@ -3,18 +3,20 @@ package com.bong.demanderjoin;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Demanderjoin {
-  private String serviceId, serviceName, serviceBirth, servicePwd;
+  private String serviceName, serviceBirth, servicePwd;
   private String serviceTel, tel1, tel2, tel3;
   private String serviceAddr, serviceEmail;
   private String email1, email2;
   private String serviceIntro,serviceImgname;
   private MultipartFile serviceImg;
-  private int serviceIdx, isService;
-public String getServiceId() {
-	return serviceId;
+  private int serviceIdx, isService, userIdx;
+  
+  
+public int getUserIdx() {
+	return userIdx;
 }
-public void setServiceId(String serviceId) {
-	this.serviceId = serviceId;
+public void setUserIdx(int userIdx) {
+	this.userIdx = userIdx;
 }
 public String getServiceName() {
 	return serviceName;

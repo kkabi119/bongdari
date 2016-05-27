@@ -6,11 +6,18 @@ public class SessionInfo {
 	private int userIdx;
 	private String userId;
 	private String userName;
-	private int clubIdx;
+	private int clubIdx, isService;
 	private int memberLevel;
 	private String memImgname;
 	private MultipartFile memImg;
 	
+	
+	public int getIsService() {
+		return isService;
+	}
+	public void setIsService(int isService) {
+		this.isService = isService;
+	}
 	public int getClubIdx() {
 		return clubIdx;
 	}

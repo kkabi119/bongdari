@@ -6,7 +6,7 @@ import java.util.Map;
 public interface DemanderjoinService {
    
   public Demanderjoin readDemanderjoin1(int serviceIdx);
-  public Demanderjoin readDemanderjoinLogin(String serviceId);
+  public Demanderjoin readDemanderjoinLogin(int userIdx);
   
   public int insertDemanderjoin(Demanderjoin dto, String pathname);
   
