@@ -74,11 +74,11 @@ function listPage(page) {
 	});
 } 
 
-<%-- 
+ 
 function login() {
 	location.href="<%=cp%>/member/login";
 }
- --%>
+
 //댓글 추가
 function sendReply() {
 	var uid="${sessionScope.member.userId}";

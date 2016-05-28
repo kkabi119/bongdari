@@ -31,6 +31,7 @@
             <intercept-url pattern="/demander/login" access="permitAll"/>
             <intercept-url pattern="/member/member" access="permitAll" />
 			<intercept-url pattern="/member/userIdCheck" access="permitAll" />
+			<intercept-url pattern="/member/join" access="permitAll" />
 			
             <!-- 이미지, javascript, css등 -->
 			<intercept-url pattern="/res/**" access="permitAll" />
@@ -39,6 +40,8 @@
 		    <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 
 	        <intercept-url pattern="/member/index/myPage/**" access="hasRole('ROLE_USER')"/>
+	        
+	        <intercept-url pattern="/club/**" access="hasRole('ROLE_USER')"/>
 	        
 	        <intercept-url pattern="/**" access="hasRole('ROLE_SERVICE')"/>
 

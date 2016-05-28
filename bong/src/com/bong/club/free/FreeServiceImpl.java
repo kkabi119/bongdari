@@ -67,6 +67,7 @@ public class FreeServiceImpl implements FreeService {
 	public Free readFree(Map<String, Object> map) {
 		Free dto = null;
 		try {
+			
 			dto=dao.getReadInformation("clubfree.readFree", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -203,14 +204,24 @@ public class FreeServiceImpl implements FreeService {
 
 	@Override
 	public int replyCountAnswer(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.getIntValue("clubfree.replyCountAnswer", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public int deleteReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.deleteInformation("clubfree.deleteReply", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 }
