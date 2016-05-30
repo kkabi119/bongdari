@@ -43,7 +43,17 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 		}
 		return dto;
 	}
-
+	@Override
+	public Demanderjoin readDemanderCheck(String userId) {
+	    Demanderjoin dto = null;
+	    		
+	  	try {
+		 dto = dao.getReadInformation("demanderjoin.readDemanderCheck", userId);
+		} catch (Exception e) {	
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
 	@Override
 	public Demanderjoin readDemanderjoinLogin(int userIdx) {
 		Demanderjoin dto = null;
@@ -96,6 +106,7 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 			}
 		
 			//수요처 회원 정보 저장
+			dao.insertInformation("demanderjoin.insertMember", seq);
 			dao.insertInformation("demanderjoin.insertDemanderjoin", seq);
 			dao.insertInformation("demanderjoin.insertDemanderjoinInfo", dto);
 			
@@ -141,5 +152,7 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 		}
 		return result;
 	}
+
+
 
 }
