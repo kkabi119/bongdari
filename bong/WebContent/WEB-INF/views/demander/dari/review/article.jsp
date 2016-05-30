@@ -67,7 +67,6 @@ $(function(){
 function listPage(page) {
 	var url="<%=cp%>/demander/index/review/listReply";
 	var num="${dto.serviceReviewIdx}";
-	//alert("리뷰인덱스:"+num);
 	$.post(url, {num:num, pageNo:page}, function(data){
 		$("#listReply").html(data);
 	});
@@ -183,7 +182,8 @@ function deleteReview() {
 
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
-</c:if>    
+</c:if>
+
 <c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
   alert("게시물을 삭제할 수  없습니다.");
 </c:if>
@@ -222,11 +222,21 @@ function updateReview() {
                                             <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
                                         </ul>
                                     </div>
-                               <c:if test="${not empty dto.saveFilename}">
+                                    
+                                   <%--   <c:forEach var="vo" items="${listFile}">
+                                         <div class='file-list-item'><a href="${blogUrl}/download?fileNum=${vo.fileNum}">${vo.originalFilename}</a></div>
+                                   </c:forEach>   --%>
+                                    
+                                    
+                              
+                              <c:if test="${listFile.size()>0}">
                                     <div class="post-bottom overflow" style="margin-top: 0px">
-                                  			<a href="<%=cp%>/demander/index/review/download?num=${dto.serviceReviewIdx}"><span class="fa fa-download"></span> ${dto.originalFilename}</a>
+                                    <c:forEach var="vo" items="${listFile}">
+                                  			<a href="<%=cp%>/demander/index/review/download?num=${vo.serviceReviewIdx}&fileNum=${vo.serviceFileIdx}"><span class="fa fa-download"></span> ${vo.originalFilename}</a>
+                                    </c:forEach>
                                     </div>
                                </c:if>
+                               
                                <c:if test="${not empty preReadDto }">
                                     <div class="post-bottom overflow" style="margin-top: 0px">
                                

@@ -137,9 +137,6 @@ public class DereviewController {
 			DeReview dto
 			) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		/*if(info==null) {
-			return new ModelAndView("redirect:/member/login");
-		}*/
 		
 		
 		String root=session.getServletContext().getRealPath("/");
@@ -178,19 +175,25 @@ public class DereviewController {
 		//조회수증가
 		service.updateHitCount(num);
 		
-		//해당아티클가져오기
-		DeReview dto=service.readDeReview(num);
-		if(dto==null)
-			return new ModelAndView("redirect:/");
-			//return new ModelAndView("redirect:.demander.index.review.list?page="+page);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
 		map.put("num", num);
 		DeReview preReadDto = service.preReadDeReview(map);
 		DeReview nextReadDto = service.nextReadDeReview(map);
-        
+		
+		
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("serviceReviewIdx", num);
+		//해당아티클가져오기
+		DeReview dto=service.readDeReview(map2);
+		List<DeReview> listFile=service.listFile(map2);
+		
+		if(dto==null)
+			return new ModelAndView("redirect:/");
+			//return new ModelAndView("redirect:.demander.index.review.list?page="+page);
+		
+		
 		String params = "page="+page;
 		if(searchValue.length()!=0) {
 		    params += "&searchKey=" + searchKey + 
@@ -202,6 +205,7 @@ public class DereviewController {
 		mav.addObject("dto", dto);
 		mav.addObject("preReadDto", preReadDto);
 		mav.addObject("nextReadDto", nextReadDto);
+		mav.addObject("listFile", listFile);
 		mav.addObject("page", page);
 		mav.addObject("params", params);
         return mav;
@@ -213,7 +217,8 @@ public class DereviewController {
 			HttpServletRequest req,
 			HttpServletResponse resp,
 			HttpSession session,
-			@RequestParam(value="num") int num
+			@RequestParam(value="num") int num,
+			@RequestParam(value="fileNum") int fileNum
 			) throws Exception{
 		String cp=req.getContextPath();
 		
@@ -223,11 +228,16 @@ public class DereviewController {
 			return;
 		}*/
 		
-		String root=session.getServletContext().getRealPath("/");
-		String path=root+File.separator+"uploads"+File.separator+"review";
-		DeReview dto=service.readDeReview(num);
-		boolean flag=false;
 		
+		String root=session.getServletContext().getRealPath("/");
+		String path=root+File.separator+"uploads"+File.separator+"review"+File.separator+info.getUserId();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("serviceReviewIdx", num);
+		map.put("serviceFileIdx", fileNum); //fileIndex 
+		System.out.println("**************fileNum:"+fileNum);
+		DeReview dto=service.readFile(map);
+		boolean flag=false;
 		if(dto!=null) {
 			flag=fileManager.doFileDownload(
 					     dto.getSaveFilename(), 
@@ -249,8 +259,9 @@ public class DereviewController {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
-
-		DeReview dto = service.readDeReview(num);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("serviceReviewIdx", num);
+		DeReview dto = service.readDeReview(map);
 		/*if (dto == null) {
 			return new ModelAndView("redirect:/demander/index/review/list?page="+page);
 		}*/
@@ -296,8 +307,9 @@ public class DereviewController {
 		/*if(info==null) {
 			return new ModelAndView("redirect:/member/login");
 		}*/
-		
-		DeReview dto = service.readDeReview(num);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("serviceReviewIdx", num);
+		DeReview dto = service.readDeReview(map);
 		if(dto==null) {
 			return new ModelAndView("redirect:/demander/index/review/list?page="+page);
 		}
@@ -332,8 +344,10 @@ public class DereviewController {
 			return new ModelAndView("redirect:/member/login");
 		}*/
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("serviceReviewIdx", num);
 		// 해당 레코드 가져 오기
-		DeReview dto = service.readDeReview(num);
+		DeReview dto = service.readDeReview(map);
 		if(dto==null) {
 			return new ModelAndView("redirect:/demander/index/review/list?page="+page);
 		}
@@ -413,18 +427,20 @@ public class DereviewController {
 		
 		
 		dataCount=service.DeReviewReplyDataCount(map);
+		
 		total_page=myUtil.pageCount(numPerPage, dataCount);
 		if(current_page>total_page)
 			current_page=total_page;
+		
 		
 		// 리스트에 출력할 데이터
 		int start=(current_page-1)*numPerPage+1;
 		int end=current_page*numPerPage;
 		map.put("start", start);
 		map.put("end", end);
-		map.put("serviceReviewIdx", num);
 		List<DeReviewReply> listReply=service.listDeReviewReply(map);
 		
+	
 		// 엔터를 <br>
 		Iterator<DeReviewReply> it=listReply.iterator();
 		int listNum, n=0;
@@ -435,9 +451,6 @@ public class DereviewController {
 			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 			n++;
 		}
-		
-	
-		
 		
 		// 페이징처리(인수2개 짜리 js로 처리)
 		String paging=myUtil.paging(current_page, total_page);
