@@ -85,10 +85,8 @@ function listPage(page) {
 //좋아요추가
 function sendLike(serviceReviewIdx) {
 	var uid="${sessionScope.member.userId}";
-	if(! uid) {
-		login();
-		return false;
-	}
+
+	alert("alert");
 	var params="serviceReviewIdx="+serviceReviewIdx;
 	
 	$.ajax({
@@ -109,10 +107,7 @@ function sendLike(serviceReviewIdx) {
 //댓글 추가
 function sendReply() {
 	var uid="${sessionScope.member.userId}";
-	if(! uid) {
-		login();
-		return false;
-	}
+	
 
 	var num="${dto.serviceReviewIdx}"; // 해당 게시물 번호
 	var content=$.trim($("#replyContent").val());
@@ -139,9 +134,7 @@ function sendReply() {
 				listPage(1);
 			} else if(state=="false") {
 				alert("댓글을 등록하지 못했습니다. !!!");
-			} else if(state=="loginFail") {
-				login();
-			}
+			} 
 		}
 		,error:function(e) {
 			alert(e.responseText);
@@ -154,20 +147,13 @@ function sendReply() {
  //댓글 삭제
 function deleteReply(replyNum, page) {
 	var uid="${sessionScope.member.userId}";
-	if(! uid) {
-		login();
-		return false;
-	}
+	
 	
 	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
 		var url="<%=cp%>/demander/index/review/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
 		        var state=data.state;
-				if(state=="loginFail") {
-					login();
-				} else {
 					listPage(page);
-				}
 		}, "json");
 	}
 } 
