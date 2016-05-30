@@ -29,13 +29,13 @@
 	
 	<select id="listFile" parameterType="map"
 	              resultType="com.bong.demander.review.DeReview">
-	   SELECT serviceFileIdx as fileNum,serviceReviewIdx,saveFilename,originalFilename
+	   SELECT serviceFileIdx,serviceReviewIdx,saveFilename,originalFilename
 	    FROM service_review_file WHERE serviceReviewIdx=#{serviceReviewIdx}  
 	</select>
 	
 	<select id="readFile" parameterType="map"
 	              resultType="com.bong.demander.review.DeReview">
-		SELECT serviceFileIdx as fileNum, serviceReviewIdx, saveFilename,originalFilename
+		SELECT serviceFileIdx, serviceReviewIdx, saveFilename,originalFilename
 	    FROM service_review_file WHERE serviceFileIdx=#{serviceFileIdx}    
 	</select>
 	
