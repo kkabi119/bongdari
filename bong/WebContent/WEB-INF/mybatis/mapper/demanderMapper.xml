@@ -67,8 +67,7 @@
 	<select id="dataCount" parameterType="map"
 	            resultType="Integer">
 	  SELECT NVL(COUNT(*), 0) FROM service_review s
-	        JOIN memberInfo m
-	        ON s.userIdx=m.userIdx
+	        JOIN memberInfo m  ON s.userIdx=m.userIdx
 	     <where>
 	     	<if test="searchValue!=null and searchValue!='' ">
 	     	    <include refid="where-list"/>

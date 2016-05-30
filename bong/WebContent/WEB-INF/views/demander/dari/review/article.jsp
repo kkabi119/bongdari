@@ -202,7 +202,7 @@ function updateReview() {
                                     
                                         <ul class="nav navbar-nav post-nav">
                                         
-                                         	<li onclick="sendLike('${dto.serviceReviewIdx}')"><a href="#"><i class="fa fa-thumbs-o-up"></i>좋아요 <span id="likeCount${dto.serviceReviewIdx}">${dto.likeCount}</span></a></li> 
+                                         	<li onclick="sendLike('${dto.serviceReviewIdx}')"><i class="fa fa-thumbs-o-up"></i>좋아요 <span id="likeCount${dto.serviceReviewIdx}">${dto.likeCount}</span></li> 
                                                                                         
                                             <li><a href="#"><i class="fa fa-comments"></i>댓글수  ${dto.replyCount}</a></li>
                                             <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>

@@ -37,28 +37,13 @@ padding-top: 13px;
 </style>
 	
 <script type="text/javascript">
-$(function(){
-	replyCount();
-});
+
 function searchList() {
 	var f=document.searchForm;
 	f.action="<%=cp%>/club/index/apply/list";
 	f.submit();
 }
 
-function replyCount() {
-	var num="${dto.clubApplyIdx}";// 해당 게시물 번호
-	alert(num);
-	
-	var url="<%=cp%>/club/index/apply/replyCount";
-	
-	$.post(url, {num:num}, function(data){
-		
-		var count=data.count;
-		$("#replyCountView").text(""+count+"개");
-		
-	}, "JSON");
-}
 </script>	
 	<div class="row" style="margin-left:15px;">
 		<div class="col-md-12 col-sm-12">
@@ -94,7 +79,7 @@ function replyCount() {
                         				<td class="text-center">${dto.listNum}</td>
                         				<td colspan="4">
                         					<a style="font-weight:bold; font-size:14px; "href="${urlArticle}&num=${dto.clubApplyIdx}"> ${dto.subject}
-                        						    <span id="replyCountView" class="item-title" style='color:#f0ad4e; font-size:12px; font-weight: bold;'> 개 </span>
+                        						    <span id="replyCountView" class="item-title" style='color:#f0ad4e; font-size:12px; font-weight: bold;'>(${dto.replyCount}) </span>
                         					</a>
                         				</td>
                         				<td class="text-center">${dto.startDay } ~ ${dto.endDay }</td>

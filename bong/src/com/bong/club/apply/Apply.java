@@ -11,8 +11,15 @@ public class Apply {
 	private int applyNum, maxNum; //현재 신청인원 / 수요인원수
 	private int hitCount;
 	private int userIdx;
+	private int replyCount;
 		
 	
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
 	public int getUserIdx() {
 		return userIdx;
 	}
