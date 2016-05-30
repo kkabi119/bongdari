@@ -294,6 +294,19 @@ public class MemberServiceImpl implements MemberService{
 		return 0;
 	}
 
+	@Override
+	public int readCheckId(String userId) {
+		int result=0;
+		try {
+			int userIdx=Integer.parseInt(userId);
+			System.out.println(userIdx);
+			result=dao.getIntValue("member.readCheckId", userIdx);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} 
+		return result;
+	}
+
 
 
 	

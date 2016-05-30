@@ -203,4 +203,7 @@
 	<delete id="deleteAuthority" parameterType="map">
 	    DELETE FROM memAuthority WHERE ${field}=#{value}
 	</delete>
+	<select id="readCheckId" parameterType="Integer" resultType="Integer">
+		SELECT isService FROM checkId WHERE userIdx=#{userIdx}
+	</select>
 </mapper>
