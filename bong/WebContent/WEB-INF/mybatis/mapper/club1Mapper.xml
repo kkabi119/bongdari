@@ -157,14 +157,14 @@
 	          parameterType="map">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		        SELECT tbreply.CARIDX as replyNum, clubApplyIdx as num, userId, userName 
+		        SELECT tbreply.CARIDX as replyNum, clubApplyIdx as num, tbreply.userIdx, tbreply.userName 
 		                    ,content, created, tbreply.answer, tblike.likeCount
 		                    ,NVL(answerCount, 0) answerCount
 		        FROM
 		        (
 				      (
-					     SELECT CARIDX, r.clubApplyIdx, r.userIdx, r.userId, m.userName, r.content, r.created, answer
-					        FROM club_applyR r 
+					     SELECT CARIDX, r.clubApplyIdx, r.userIdx, m.userName, r.content, r.created, answer
+					        FROM club_applyR r
 			                JOIN club_apply a ON r.clubApplyIdx=a.clubApplyIdx
 			                JOIN memberInfo m ON r.userIdx=m.userIdx
 			                WHERE r.clubApplyIdx=#{num} AND answer=0
@@ -210,9 +210,9 @@
 	
 	<!-- 대댓글 리스트 -->
 	<select id="listReplyAnswer" resultType="com.bong.club.apply.Reply" parameterType="Integer">
-     SELECT CARIDX AS replyNum, clubApplyIdx AS num, tbreply.userIdx, userName, content, created, answer
+     SELECT CARIDX AS replyNum, clubApplyIdx AS num, tbreply.userIdx, m.userName, content, created, answer
 	          FROM club_applyR tbreply 
-	          JOIN checkId m ON tbreply.userIdx=m.userIdx
+	          JOIN memberInfo m ON tbreply.userIdx=m.userIdx
               WHERE answer=#{answer}
               ORDER BY replyNum DESC
 	</select>
@@ -245,6 +245,11 @@
 	<update id="deleteApply" parameterType="Integer">
 			update club_apply set enabled=0 WHERE clubApplyIdx = #{num}
      </update>
+	
+	<!--   								봉사신청 리스트 목록 가져오기 -->
+	<select id="readApplyList" parameterType="Integer">
+	select * from memberInfo m join club_apply_memlist li on m.userIdx=li.userIdx where li.clubApplyIdx=#{clubApplyIdx};
+	</select>
 	
 	
 </mapper>

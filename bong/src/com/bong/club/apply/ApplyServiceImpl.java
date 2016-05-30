@@ -270,6 +270,23 @@ public class ApplyServiceImpl implements ApplyService {
 		return result;
 	}
 
+	@Override
+	public Apply readApplyList(int clubApplyIdx) {
+		
+		Apply dto=null;
+		
+		try {
+			//게시물 가져오기
+			System.out.println("readApplyList 들어옴");
+			dto=dao.getReadInformation("clubApply.readApplyList", clubApplyIdx);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return dto;
+	}
+
 
 
 }

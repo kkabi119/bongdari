@@ -59,34 +59,42 @@ padding-top: 13px;
 	border-bottom: 1px solid #999;'
 }
 
-.btn{
+.btn {
 	border-radius:2px;
 }
 
 .icon-wrapper:hover{
 	background-color: gray;
 }
+.modal-body{
+ background-color: #F5F5F5;
+}
 </style>
 
 <script type="text/javascript">
+$(function(){
+	$("#listBtn_apply").click(function(){
+		 
+		var num = "${dto.clubApplyIdx}";
+		var page = "${page}";
+		var params = "num="+num+"&page="+page;
+		  
+		var url = "<%=cp%>/club/index/apply/delete?" + params;
+
+		 
+		  	location.href=url;
+
+		$('#applyListModal .modal-body').load( "<%=cp%>/club/index/apply/applyList1?"+params, 	function() {
+			 
+				$('#applyListModal .modal-title').html('우리동아리 신청리스트');
+				$('#applyListModal').modal('show');
+			});		
+	});
+});
+</script>
+<script type="text/javascript">
 ///////////////////////////////////////////////////////////////		댓글관련
 /////////////////////		페이지 틀자마자 실행되는 함수들
-
-$(function(){
-	$("#listBtn").click(function(){
-		url="<%=cp%>/demander/index/admin/tab1/showList";
-		$.post(url, {}, function(data){ 	
-			$("#showList").html(data);
-		});	
-		if($("#showList").is(':visible')) {
-			$("#showList").hide("fast");
-			$("#listClosed").val("1");
-		} else {
-			$("#showList").show("fast");
-			$("#listClosed").val("0");
-		}
-	});
-
 $(function(){
 	$("#reply-open-close").click(function(){
 		  if($("#reply-content").is(':visible')) {
@@ -99,20 +107,31 @@ $(function(){
 	});
 })
 
- $(function(){
+$(function(){
+	
 	listPage(1);
 });
- 
 function listPage(page) {
 	var url="<%=cp%>/club/index/apply/listReply";
 	var num="${dto.clubApplyIdx}";
-	
-	
+		
 	$.post(url, {num:num, pageNo:page}, function(data){
 		$("#listReply").html(data);
+		replyCount(num);
 	});
 }
+//////////////////////////////////////////////////////////////////////////댓글 개수
+function replyCount() {
+	var num="${dto.clubApplyIdx}";// 해당 게시물 번호
 
+	var url="<%=cp%>/club/index/apply/replyCount";
+	$.post(url, {num:num}, function(data){
+		
+		var count=data.count;
+		
+		$("#replyCountView").text(""+count+"개");
+	}, "JSON");
+}
 /////////////////////////////////////////////////////////////////////////// 댓글 추가
 function sendReply() {
 	var uid="${sessionScope.member.userId}";
@@ -124,7 +143,7 @@ function sendReply() {
 	var num="${dto.clubApplyIdx}"; // 해당 게시물 번호
 	var content=$.trim($("#replyContent").val());
 	if(! content ) {
-		alert("내용을 입력하세요 !!! ");
+		alert("내용을 입력하세요 ! ");
 		$("#replyContent").focus();
 		return false;
 	}
@@ -145,7 +164,8 @@ function sendReply() {
 			if(state=="true") {
 				
 				listPage(1);
-				
+				 $("#reply-content").fadeIn(100);
+				  $("#reply-open-close").text("COMMENTS ▲");
 			} else if(state=="false") {
 				alert("댓글을 등록하지 못했습니다. !!!");
 			} else if(state=="loginFail") {
@@ -157,18 +177,7 @@ function sendReply() {
 		}
 	});
 }
-//////////////////////////////////////////////////////////////////////////댓글 개수
-function replyCount() {
-	var num="${dto.clubApplyIdx}";// 해당 게시물 번호
 
-	var url="<%=cp%>/club/index/apply/replyCount";
-	$.post(url, {num:num}, function(data){
-		
-		var count=data.count;
-		
-		$("#replyCountView").text(""+count+"개");
-	}, "JSON");
-}
 
 ////////////////////////////////////////////////////// 댓글 삭 제 
 function deleteReply(replyNum, page) {
@@ -371,9 +380,9 @@ function deleteApply() {
 	                          		</span>
 	                          		
                           		</a>
-                          		<span style="background-color: #7ECAF1; align:center; margin-left:50px;"class="icon-wrapper">
-                                	<a href="#" style="color:white; ">
-                                	 <img style=" width:35px; height:35px; background-size:cover; "src="<%=cp%>/res/images/myclub/list (2).png" alt="">
+                          		<span style="background-color: #7ECAF1; align:center; margin-left:50px;"class="icon-wrapper"  data-toggle="buttons">
+                                	<a style="color:white; "id="listBtn_apply" >
+                                		 <img  style=" width:35px; height:35px; background-size:cover; "src="<%=cp%>/res/images/myclub/list (2).png" alt="">
 									</a>
                           		</span>
                   		  </td>
@@ -511,3 +520,15 @@ function deleteApply() {
  	</div>
 </div>
 
+<!-- 추가 또는 보기 모달창 div -->
+	<div class="modal fade" id="applyListModal" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" style="width:800px;">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="scheduleModalLabel" style="font-family: 나눔고딕, 맑은 고딕, sans-serif; font-weight: bold;">리스트</h4>
+	      </div>
+	      <div class="modal-body"></div>
+	    </div>
+	  </div>
+	</div>
