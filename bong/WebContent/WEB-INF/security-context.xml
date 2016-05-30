@@ -39,14 +39,14 @@
 	         <!-- admin 페이지 -->
 		    <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		    
-		    <intercept-url pattern="/member/register" access="permitAll" />
+		    <!-- <intercept-url pattern="/member/register" access="permitAll" />
 
 	        <intercept-url pattern="/member/index/myPage/**" access="hasRole('ROLE_USER')"/>
 	        
-	        <intercept-url pattern="/club/**" access="hasRole('ROLE_USER')"/>
+	        <intercept-url pattern="/club/**" access="hasRole('ROLE_USER')"/> -->
 	        
 	        <intercept-url pattern="/**" access="permitAll"/>
-
+	        
 	        <!--  사용자 정의 로그인 폼  -->
 	        <form-login login-page="/member/login"
 	             login-processing-url="/member/login_check"
