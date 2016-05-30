@@ -61,18 +61,6 @@ public class DemanderController {
 		return mav;
 	}
 	
-	
-	@RequestMapping(value="/demander/index/qna/create")
-	public ModelAndView deQnaCreate() throws Exception {
-		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.create.QnA 게시판");
-		return mav;
-	}
-	@RequestMapping(value="/demander/index/qna/article")
-	public ModelAndView deQnaArticle() throws Exception {
-		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.create.QnA 게시판");
-		return mav;
-	}
-	
 	@RequestMapping(value="/demander/index/photo")
 	public ModelAndView demanderPhoto() throws Exception {
 		

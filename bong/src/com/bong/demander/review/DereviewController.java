@@ -374,6 +374,7 @@ public class DereviewController {
 	
 		SessionInfo info=(SessionInfo) session.getAttribute("member");
 		dto.setUserIdx(info.getUserIdx());
+		System.out.println("*****************userIdx:"+info.getUserIdx());
 		
 		int state=service.stateDeRevLike(dto);
 		

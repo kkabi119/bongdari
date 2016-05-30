@@ -4,5 +4,69 @@
 <mapper namespace="deQna">
 
 
+ <!-- QnA -->
+	<insert id="insertQna" parameterType="com.bong.demander.qna.Qna">
+	  INSERT INTO service_qna(sqnaIdx, userIdx, subject, content,answer) 
+	  VALUES (service_qna_seq.NEXTVAL, #{userIdx}, #{subject},#{content},#{answer})
+	</insert>
+
+	<!-- 글개수 -->
+	<select id="dataCount" parameterType="map"
+	            resultType="Integer">
+		 SELECT NVL(COUNT(*), 0) FROM service_qna
+	     <where>
+	     	<if test="searchValue!=null and searchValue!='' ">
+	     	    AND (subject LIKE '%' || #{searchValue} || '%' OR
+	     	    content LIKE '%' || #{searchValue} || '%')
+	     	</if>
+	     </where>   
+	</select>
+
+	<!-- 글리스트 -->
+	<select id="listQna" parameterType="map"
+	            resultType="com.bong.demander.qna.Qna">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			      SELECT sqnaIdx, s.useridx,userName,subject, CONTENT, hitCount
+				  FROM service_qna s join checkId c on s.userIdx=c.userIdx 
+                    <where>
+	     	           <if test="categoryNum!=0 ">
+	     	               faqBoard.categoryNum = #{categoryNum}
+	     	           </if>
+	     	           <if test="searchValue!=null and searchValue!='' ">
+	     	               AND (subject LIKE '%' || #{searchValue} || '%' OR
+	     	               content LIKE '%' || #{searchValue} || '%')
+	     	           </if>
+	                </where>
+	                ORDER BY sqnaIdx DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+	]]>
+	</select>
+	
+	<select id="readQna" resultType="com.bong.demander.qna.Qna" parameterType="Integer">
+	      SELECT sqnaIdx, s.useridx, userId,userName, subject,  CONTENT, hitCount
+				FROM service_qna s join checkId c on s.userIdx=c.userIdx
+				WHERE sqnaIdx = #{sqnaIdx}
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE service_qna SET hitCount=hitCount+1 WHERE sqnaIdx =#{sqnaIdx}
+	</update>
+
+     <!-- 수정 -->
+     <update id="updateQna" parameterType="com.bong.demander.qna.Qna">
+         UPDATE service_qna SET subject=#{subject}, content=#{content} WHERE sqnaIdx =#{sqnaIdx}
+      </update>
+      
+      <!-- 삭제 -->
+      <delete id="deleteQna" parameterType="Integer">
+             DELETE FROM service_qna WHERE sqnaIdx =#{sqnaIdx}
+      </delete>
+	
+	
+
 
 </mapper>
