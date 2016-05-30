@@ -225,28 +225,14 @@ JOIN ( SELECT themeNum, subject FROM theme WHERE parent IS NULL ) g ON c.parent 
 		    ,HITCOUNT NUMBER DEFAULT 0      
 		    ,CREATED  DATE DEFAULT SYSDATE         
 		    ,MODIFIED  DATE DEFAULT SYSDATE
+		    ,SAVEFILENAME		VARCHAR2(255)
+    		,ORIGINALFILENAME 	VARCHAR2(255)    
 		    ,CONSTRAINT pk_club_free_${value} PRIMARY KEY(clubFreeIdx)
 		    ,CONSTRAINT fk_club_Free_userIdx_${value} FOREIGN KEY(userIdx)
 		      REFERENCES memberInfo(userIdx) ON DELETE CASCADE
 		    ,CONSTRAINT fk_club_Free_clubIdx_${value} FOREIGN KEY(clubIdx) 
      	 REFERENCES clubInfo(clubIdx) ON DELETE CASCADE
 		)
-	</update>
-	
-	<update id="createClubFreeP" parameterType="Integer">	
-			CREATE TABLE club_freeP_${value} (
-			   clubFreePIdx NUMBER
-			  ,clubFreeIdx NUMBER NOT NULL
-			   
-			   ,saveFilename VARCHAR2(255)
-			   ,originalFilename VARCHAR2(255)
-			      
-			   ,CONSTRAINT pk_club_freeP_${value} PRIMARY KEY(clubFreePIdx)
-			  
-			   ,CONSTRAINT fk_club_freeP_clubFreeIdx_${value} FOREIGN KEY(clubFreeIdx)
-               REFERENCES club_free_${value}(clubFreeIdx) ON DELETE CASCADE
-			)
-			
 	</update>
 	
 	<update id="createClubFreeReply" parameterType="Integer">

@@ -31,7 +31,6 @@ public class FreeServiceImpl implements FreeService {
 			int seq=dao.getIntValue("clubfree.clubFreeSeq");
 			dto.setClubFreeIdx(seq);
 			dao.insertInformation("clubfree.insertFree", dto);
-			dao.insertInformation("clubfree.insertFreeP", dto);
 			
 			result=1;
 		} catch (Exception e) {

@@ -195,7 +195,6 @@ public class ClubServiceImpl  implements ClubService {
 			dao.updateInformation("club.createClubNotice", clubSeq);
 			dao.updateInformation("club.createClubNoticeReply", clubSeq);
 			dao.updateInformation("club.createClubFree", clubSeq);
-			dao.updateInformation("club.createClubFreeP", clubSeq);
 			dao.updateInformation("club.createClubFreeReply", clubSeq);
 			/*dao.updateInformation("club.createBoardCategoryTable", clubSeq);
 			dao.updateInformation("club.createBoardTable", clubSeq);
