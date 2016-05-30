@@ -24,8 +24,7 @@
 	<!-- 글개수 -->
 	<select id="dataCount" parameterType="map"  resultType="Integer">
 	  SELECT NVL(COUNT(*), 0) FROM volun_bbs v
-	        JOIN club_apply a
-	        ON v.volunIdx=a.volunIdx
+	        JOIN club_apply a ON v.volunIdx=a.volunIdx
 	     <where>
 	     	<if test="searchValue!=null and searchValue!='' ">
 	     	    <include refid="where-list"/>
@@ -39,26 +38,25 @@
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
 			     SELECT a.clubApplyIdx, v.volunIdx AS volunIdx, s.serviceName, subject, v.startDay, v.endDay, a.enabled,
-			     		   progress, place, volunteer_type, v.volunDays, NVL(answerCount, 0) answerCount
+			     		   progress, place, volunteer_type, v.volunDays, NVL(replyCount, 0) replyCount,
 			     		  ( (SELECT NVL(COUNT(*), 0) FROM club_apply_memlist c JOIN club_apply a ON c.clubApplyIdx=a.clubApplyIdx 
                        		 WHERE a.volunIdx = v.volunIdx)+
                        		( SELECT NVL(COUNT(*), 0) FROM volun_bbs_memlist vb
 		                      WHERE vb.volunIdx=v.volunIdx))AS applyNum,
-		                    ( select sum(maxNum) from MEMNUMPERDATE mnpd where mnpd.volunIdx=v.volunIdx ) as maxNum,
-		            	   LEFT OUTER JOIN
-			        	   (     SELECT answer, COUNT(*) AS answerCount
-                                 FROM club_applyR GROUP BY answer
-			       		    ) tbanswer ON tbreply.CARIDX = tbanswer.answer
+		                    ( select sum(maxNum) from MEMNUMPERDATE mnpd where mnpd.volunIdx=v.volunIdx ) as maxNum
 		                   
         	    FROM volun_bbs v JOIN club_apply a ON v.volunIdx=a.volunIdx
-			        					         	  JOIN serviceInfo s ON v.serviceIdx=s.serviceIdx
-                    
+			        					JOIN serviceInfo s ON v.serviceIdx=s.serviceIdx
+					                    LEFT OUTER JOIN
+								        (
+								             SELECT clubApplyIdx, count(*) replycount
+					                         FROM club_applyR tbreply GROUP BY clubApplyIdx
+								        ) tbreply ON a.clubApplyIdx = tbreply.clubApplyIdx
                     <where>
                          <if test="searchValue != null and searchValue != ''">
 			                  <include refid="where-list"/>
 			                  AND a.enabled=1
 		                 </if>
-			                 
 		                <if test="searchValue == null and searchValue ==''">
 		            	   where a.enabled=1 
 		                </if>
@@ -165,11 +163,10 @@
 		        FROM
 		        (
 				      (
-					     SELECT CARIDX, r.clubApplyIdx, r.userIdx, userid,
-               userName, r.content, r.created, answer
+					     SELECT CARIDX, r.clubApplyIdx, r.userIdx, r.userId, m.userName, r.content, r.created, answer
 					        FROM club_applyR r 
 			                JOIN club_apply a ON r.clubApplyIdx=a.clubApplyIdx
-			                JOIN memberinfo m ON r.userIdx=m.userIdx
+			                JOIN memberInfo m ON r.userIdx=m.userIdx
 			                WHERE r.clubApplyIdx=#{num} AND answer=0
 			           ) tbreply
 			           LEFT OUTER JOIN
@@ -215,7 +212,7 @@
 	<select id="listReplyAnswer" resultType="com.bong.club.apply.Reply" parameterType="Integer">
      SELECT CARIDX AS replyNum, clubApplyIdx AS num, tbreply.userIdx, userName, content, created, answer
 	          FROM club_applyR tbreply 
-	          JOIN memberInfo m ON tbreply.userIdx=m.userIdx
+	          JOIN checkId m ON tbreply.userIdx=m.userIdx
               WHERE answer=#{answer}
               ORDER BY replyNum DESC
 	</select>

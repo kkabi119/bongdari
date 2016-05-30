@@ -71,6 +71,22 @@ padding-top: 13px;
 <script type="text/javascript">
 ///////////////////////////////////////////////////////////////		댓글관련
 /////////////////////		페이지 틀자마자 실행되는 함수들
+
+$(function(){
+	$("#listBtn").click(function(){
+		url="<%=cp%>/demander/index/admin/tab1/showList";
+		$.post(url, {}, function(data){ 	
+			$("#showList").html(data);
+		});	
+		if($("#showList").is(':visible')) {
+			$("#showList").hide("fast");
+			$("#listClosed").val("1");
+		} else {
+			$("#showList").show("fast");
+			$("#listClosed").val("0");
+		}
+	});
+
 $(function(){
 	$("#reply-open-close").click(function(){
 		  if($("#reply-content").is(':visible')) {
@@ -348,8 +364,10 @@ function deleteApply() {
                       	  <td colspan="7" style="border-top:none; ">
                        
                        			  <a class="test1" href="#" style="color:white; ">
-	                       			<span style="margin-left:40%; align:center; background-color: #7ECAF1; " class="icon-wrapper">
-	                                	 	<img style=" width:35px; height:35px; background-size:cover; "src="<%=cp%>/res/images/myclub/edit.png" alt="">
+	                       			<span style="margin-left:40%; align:center; background-color: #7ECAF1; " class="icon-wrapper" data-toggle="buttons">
+	                                	 	
+	                                	 	<img Id="listBtn"style=" width:35px; height:35px; background-size:cover; "src="<%=cp%>/res/images/myclub/edit.png" alt="">
+	                                	 	
 	                          		</span>
 	                          		
                           		</a>

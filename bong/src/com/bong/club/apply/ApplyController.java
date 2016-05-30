@@ -66,6 +66,7 @@ public class ApplyController {
         map.put("searchValue", searchValue);
                 
         dataCount = service.dataCount(map);
+        System.out.println("dataCount="+dataCount);
         
         if(dataCount != 0)
             total_page = myUtil.pageCount(numPerPage,  dataCount) ;
@@ -148,7 +149,7 @@ public class ApplyController {
 		
 		// 해당 레코드 가져 오기
 		Apply dto = service.readApply(num);
-		System.out.println(dto+" dto를 가져왓다?");
+		System.out.println(dto+" dto를 가져왓다");
 		if(dto==null)
 			return new ModelAndView("redirect:.club.index.apply?page="+page);
 		
@@ -224,7 +225,7 @@ public class ApplyController {
 		int numPerPage=5;
 		int total_page=0;
 		int dataCount=0;
-		
+		System.out.println("listReply로 넘어옴 ");
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("num", num);
 		
@@ -273,7 +274,7 @@ public class ApplyController {
 
 		String state="true";
 		int count=0;
-
+		System.out.println("replyCount로 넘어옴 ");
 		//String tableName="b_"+blogSeq;
         Map<String, Object> map=new HashMap<String, Object>();
  		//map.put("tableName", tableName);
