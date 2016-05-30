@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cal">
+	
+	<select id="volunList" parameterType="map" resultType="com.bong.cal.Schedule">
+		SELECT volunIdx, subject as title, content, startDay, endDay, startTime, endTime, created 
+             FROM volun_bbs      
+             WHERE <![CDATA[
+             ((startDay>=#{start} AND startDay<=#{end})
+                OR (endDay>=#{start} AND endDay<=#{end}))
+        ]]>      
+             ORDER BY startDay ASC, volunIdx DESC
+	
+	</select>
+</mapper>
