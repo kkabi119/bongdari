@@ -46,6 +46,8 @@
 	        <intercept-url pattern="/club/**" access="hasRole('ROLE_USER')"/>
 	        
 	        <intercept-url pattern="/**" access="hasRole('ROLE_SERVICE')"/>
+	        
+	        <intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>
 
 	        <!--  사용자 정의 로그인 폼  -->
 	        <form-login login-page="/member/login"
