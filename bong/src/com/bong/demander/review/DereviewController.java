@@ -230,18 +230,18 @@ public class DereviewController {
 		
 		
 		String root=session.getServletContext().getRealPath("/");
-		String path=root+File.separator+"uploads"+File.separator+"review"+File.separator+info.getUserId();
+		String path=root+File.separator+"uploads"+File.separator+"review";
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("serviceReviewIdx", num);
+		map.put("serviceReviewIdx", num); //fileIndex 
 		map.put("serviceFileIdx", fileNum); //fileIndex 
-		System.out.println("**************fileNum:"+fileNum);
 		DeReview dto=service.readFile(map);
+		
 		boolean flag=false;
 		if(dto!=null) {
-			flag=fileManager.doFileDownload(
-					     dto.getSaveFilename(), 
-					     dto.getOriginalFilename(), path, resp);
+			String saveFilename=dto.getSaveFilename();
+			String originalFilename=dto.getOriginalFilename();
+			flag=fileManager.doFileDownload(saveFilename, originalFilename, path, resp);
 		}
 		
 		if(! flag) {
@@ -357,7 +357,7 @@ public class DereviewController {
 		}
 		
 		String root = session.getServletContext().getRealPath("/");
-		String path = root + File.separator + "uploads" + File.separator + "notice";		
+		String path = root + File.separator + "uploads" + File.separator + "review";		
  	
 		service.deleteDeReview(num, dto.getSaveFilename(), path);
 		

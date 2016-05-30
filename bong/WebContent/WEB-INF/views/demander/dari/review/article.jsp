@@ -230,9 +230,9 @@ function updateReview() {
                                     
                               
                               <c:if test="${listFile.size()>0}">
-                                    <div class="post-bottom overflow" style="margin-top: 0px">
+                                    <div class="post-bottom overflow" style="margin-top: 0px; font-size:9pt;">
                                     <c:forEach var="vo" items="${listFile}">
-                                  			<a href="<%=cp%>/demander/index/review/download?num=${vo.serviceReviewIdx}&fileNum=${vo.serviceFileIdx}"><span class="fa fa-download"></span> ${vo.originalFilename}</a>
+                                  			<a href="<%=cp%>/demander/index/review/download?num=${vo.serviceReviewIdx}&fileNum=${vo.serviceFileIdx}"><span class="fa fa-download"></span>${vo.originalFilename}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                     </c:forEach>
                                     </div>
                                </c:if>
