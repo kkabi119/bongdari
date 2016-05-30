@@ -16,7 +16,8 @@ public interface MemberService {
 	
 	public int updateMember2(Member dto, String pathname);
 	public int updateLastLogin(String userId);
-	
+
+	public Member readMemberCheck(String userId);
 	public int deleteMember2(Map<String, Object> map);
 	public String managerCheck(String userId);
 	public int deleteImage(String userId, String pathname, String filename);

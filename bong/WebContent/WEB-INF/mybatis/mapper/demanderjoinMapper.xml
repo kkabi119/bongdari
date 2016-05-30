@@ -10,19 +10,30 @@
   <insert id="insertDemanderjoin" parameterType="Integer">
     INSERT INTO service(serviceIdx) values(#{serviceIdx})
   </insert>
-  	<select id="readDemanderjoinLogin" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="Integer">
-	   SELECT serviceIdx, serviceName, serviceImgname, userIdx
-	          FROM serviceInfo
-	          WHERE userIdx=#{userIdx}
-	
-	</select>
+  <insert id="insertDemanderCheck" parameterType="com.bong.member.Member">
+    INSERT INTO checkId (userIdx, userId, userPwd, enabled, isService)
+    VALUES(#{userIdx},#{userId},#{userPwd},1,1) 
+  </insert> 
+  
   <insert id="insertDemanderjoinInfo" parameterType="com.bong.demanderjoin.Demanderjoin">
     INSERT INTO serviceInfo
-    (serviceIdx, serviceId, servicePwd, serviceName, serviceBirth, serviceTel,
+    (serviceIdx, serviceName, serviceBirth, serviceTel,
      serviceAddr, serviceEmail, serviceImgname)
-     VALUES(#{serviceIdx},#{serviceId},#{servicePwd}, #{serviceName},#{serviceBirth}
+     VALUES(#{serviceIdx},#{serviceName},#{serviceBirth}
      ,#{serviceTel},#{serviceAddr},#{serviceEmail},#{serviceImgname, jdbcType=VARCHAR})
   </insert>
+    <!-- 아이디 중복 체크 -->
+    <select id="readDemanderCheck" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="String">
+      SELECT userId FROM checkId WHERE userId=#{userId}
+    </select>  
+  
+  	<select id="readDemanderjoinLogin" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="Integer">
+	   SELECT ci.userIdx, userId, userName, userPwd, memImgname, memImg, isService FROM checkId ci
+	     LEFT OUTER JOIN serviceInfo si ON ci.userIdx=si.userIdx WHERE 
+	   SELECT serviceIdx, serviceName, serviceImgname, userIdx
+	    WHERE serviceIdx=#{serviceIdx}
+	</select>
+ 
   
   <update id="updateLastLogin" parameterType="String">
      UPDATE serviceInfo SET last_login=SYSDATE

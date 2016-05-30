@@ -3,6 +3,8 @@ package com.bong.member;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +46,17 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return dto;
 	}
-
+	@Override
+	public Member readMemberCheck(String userId) {
+		Member dto = null;
+		
+		try {
+			dto =dao.getReadInformation("member.readMemberCheck", userId);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
 	@Override
 	public Member readMemberLogin(String userIdx) {
 		Member dto=null;
@@ -114,7 +126,7 @@ public class MemberServiceImpl implements MemberService{
 					dto.getTel2() != null && dto.getTel2().length()!=0 &&
 					dto.getTel3() != null && dto.getTel3().length()!=0)
 				dto.setUserTel(dto.getTel1() + "-" + dto.getTel2() + "-" + dto.getTel3());
-			System.out.println(dto.getUserTel());
+			
 			//이메일 합쳐서 데이터 넣기
 			if(dto.getEmail1() != null && dto.getEmail1().length()!=0 &&
 					dto.getEmail2() != null && dto.getEmail2().length()!=0 )
@@ -129,8 +141,8 @@ public class MemberServiceImpl implements MemberService{
 			    
 			}
 			//회원정보 저장
-			dao.insertInformation("member.insertCheck", dto);
 			dao.insertInformation("member.insertMember", seq);
+			dao.insertInformation("member.insertCheck", dto);
 			dao.insertInformation("member.insertMemberInfo", dto);
 			dto.setAuthority("ROLE_USER");
 			dao.insertInformation("member.insertAuthority", dto);
@@ -162,7 +174,7 @@ public class MemberServiceImpl implements MemberService{
 				String memImg=fileManager.doFileUpload(dto.getUploads(), pathname);
 			    dto.setMemImg(memImg);
 			    dto.setMemImgname(dto.getUploads().getOriginalFilename());
-			    
+			    result=dao.updateInformation("member.updatePwd", dto);
 			    result=dao.updateInformation("member.updateMember2", dto);
 			}
 		} catch (Exception e) {
@@ -294,7 +306,7 @@ public class MemberServiceImpl implements MemberService{
 		return 0;
 	}
 
-	@Override
+           	@Override
 	public int readCheckId(String userId) {
 		int result=0;
 		try {
@@ -306,6 +318,8 @@ public class MemberServiceImpl implements MemberService{
 		} 
 		return result;
 	}
+
+
 
 
 
