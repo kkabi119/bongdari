@@ -1,10 +1,12 @@
 package com.bong.demander.review;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
@@ -23,26 +25,56 @@ public class DeReviewServiceImpl implements DeReviewService {
 		int result = 0;
 
 		try {
-			if (dto.getUpload() != null && !dto.getUpload().isEmpty()) {
-				String saveFilename = fileManager.doFileUpload(dto.getUpload(), path);
-				dto.setSaveFilename(saveFilename);
-				dto.setOriginalFilename(dto.getUpload().getOriginalFilename());
-
-			}
-
+			Map<String, Object> map=new HashMap<String, Object>();
+			
 			int seq = dao.getIntValue("demander.DeReviewSeq");
 			dto.setServiceReviewIdx(seq);
 			result = dao.insertInformation("demander.insertDeReview", dto);
-			dao.insertInformation("demander.insertDeReFile", dto);
-		} catch (Exception e) {
-			System.out.println(e.toString());
+		
+		// 파일 업로드
+		if(! dto.getUpload().isEmpty()) {
+			for(MultipartFile mf:dto.getUpload()) {
+				if(mf.isEmpty())
+					continue;
+				
+				String saveFilename=fileManager.doFileUpload(mf, path);
+				if(saveFilename!=null) {
+					String originalFilename=mf.getOriginalFilename();
+					long fileSize=mf.getSize();
+					
+					dto.setOriginalFilename(originalFilename);
+					dto.setSaveFilename(saveFilename);
+					dto.setFileSize(fileSize);
+					
+					
+					insertFile(dto, map);
+					
+				}
+			}
 		}
+		
+	} catch (Exception e) {
+		System.out.println(e.toString());
+	}
 		return result;
 	}
 
+	
 	@Override
-	public int insertDeReFile(DeReview dto, String path) {
-		int result = 0;
+	public List<DeReview> listDeReview(Map<String, Object> map) {
+		List<DeReview> list=null;
+		try {
+			list=dao.getListInformation("demander.listDeReview", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+
+	//파일************************
+	@Override
+	public int insertFile(DeReview dto, Map<String, Object> map) {
+	/*	int result = 0;
 
 		try {
 			if (dto.getUpload() != null && !dto.getUpload().isEmpty()) {
@@ -55,20 +87,61 @@ public class DeReviewServiceImpl implements DeReviewService {
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		return result;
-	}
-
-	@Override
-	public List<DeReview> listDeReview(Map<String, Object> map) {
-		List<DeReview> list=null;
+		return result;*/
+		
+		int result=0;
 		try {
-			list=dao.getListInformation("demander.listDeReview", map);
+			/*int maxNum=dao.getIntValue("demander.maxFileNum", map);
+			dto.setFileNum(maxNum+1);*/
+			
+			result=dao.insertInformation("demander.insertFile", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		return list;
+		return result;
 	}
 
+
+	@Override
+	public List<DeReview> listFile(Map<String, Object> map) {
+		List<DeReview> listFile=null;
+		
+		try {
+			listFile=dao.getListInformation("demander.listFile", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return listFile;
+	}
+
+	@Override
+	public DeReview readFile(Map<String, Object> map) {
+		DeReview dto=null;
+		
+		try {
+			dto=dao.getReadInformation("demander.readFile", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public int deleteFile(Map<String, Object> map) {
+		int result=0;
+
+		try {
+			result=dao.deleteInformation("demander.deleteFile", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
+	}
+	
+	//파일 끝**************************************
 	@Override
 	public int dataCount(Map<String, Object> map) {
 		int result=0;
@@ -81,10 +154,10 @@ public class DeReviewServiceImpl implements DeReviewService {
 	}
 
 	@Override
-	public DeReview readDeReview(int num) {
+	public DeReview readDeReview(Map<String, Object> map) {
 		DeReview dto=null;
 		try {
-			dto=dao.getReadInformation("demander.readDeReview", num);
+			dto=dao.getReadInformation("demander.readDeReview", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -126,7 +199,7 @@ public class DeReviewServiceImpl implements DeReviewService {
 
 	@Override
 	public int updateDeReview(DeReview dto, String path) {
-		int result=0;
+		/*int result=0;
 		try{
 			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()) {
 				// 이전파일 지우기
@@ -146,6 +219,38 @@ public class DeReviewServiceImpl implements DeReviewService {
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}
+		return result;*/
+		
+		int result=0;
+		
+		try {
+			Map<String, Object> map=new HashMap<String, Object>();
+			/*map.put("tableName", dto.getTableName());
+			
+			result=dao.updateData("demander.updateBoard", dto);*/
+			
+			if(! dto.getUpload().isEmpty()) {
+				for(MultipartFile mf:dto.getUpload()) {
+					if(mf.isEmpty())
+						continue;
+					
+					String saveFilename=fileManager.doFileUpload(mf, path);
+					if(saveFilename!=null) {
+						String originalFilename=mf.getOriginalFilename();
+						long fileSize=mf.getSize();
+						
+						dto.setOriginalFilename(originalFilename);
+						dto.setSaveFilename(saveFilename);
+						dto.setFileSize(fileSize);
+						
+						insertFile(dto, map);
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+		}
+		
 		return result;
 	}
 
@@ -172,6 +277,7 @@ public class DeReviewServiceImpl implements DeReviewService {
 		return 0;
 	}
 
+	//댓글*****************************************
 	@Override
 	public int insertDeReviewReply(DeReviewReply dto) {
 		int result = 0;
@@ -240,7 +346,9 @@ public class DeReviewServiceImpl implements DeReviewService {
 		return result;
 	}
 
+	//댓글 끝*********************************************
 	
+	//좋아요*********************************************
 	//좋아요상태
 	@Override
 	public int stateDeRevLike(DeReview dto) {
@@ -301,7 +409,7 @@ public class DeReviewServiceImpl implements DeReviewService {
 		}
 		return map;
 	}
-
+	//좋아요 끝 ***************************************************** 
 	
 	//댓글좋아요***************************************************** 
 	//좋아요상태
@@ -348,6 +456,8 @@ public class DeReviewServiceImpl implements DeReviewService {
 		}
 		return map;
 	}
+
+
 	
 	//댓글좋아요 끝*****************************************************
 	

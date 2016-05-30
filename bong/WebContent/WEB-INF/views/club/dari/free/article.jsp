@@ -62,7 +62,6 @@ $(function(){
 })
 
 
-
  $(function(){
 	listPage(1);
 });
@@ -73,13 +72,13 @@ function listPage(page) {
 	$.post(url, {num:num, pageNo:page}, function(data){
 		$("#listReply").html(data);
 	});
-}
+} 
 
-<%-- 
+ 
 function login() {
 	location.href="<%=cp%>/member/login";
 }
- --%>
+
 //댓글 추가
 function sendReply() {
 	var uid="${sessionScope.member.userId}";

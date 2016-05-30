@@ -11,6 +11,9 @@
 	  <if test="searchKey=='userId'">
 	      userId=#{userId}
 	  </if>
+	  <if test="searchKey=='clubName'">
+	      clubName=#{clubName}
+	  </if>
 	</sql>
 	
 	
@@ -30,11 +33,12 @@
 	            resultType="com.bong.admin.Member">
 		SELECT * FROM (
 		    SELECT ROWNUM rNum, tb.* FROM (
-			     SELECT userIdx, userId, userTel, userName, userGender, userLevel,
+			     SELECT ci.userIdx, userId, userTel, userName, userGender, userLevel,
            NVL(userNoshow, 0) userNoshow, userScore,
            TO_CHAR(created_date, 'YYYY-MM-DD') created_date
            ,TO_CHAR(last_Login, 'YYYY-MM-DD') last_Login
-			        FROM memberInfo
+			        FROM checkId ci
+              		JOIN memberinfo mi ON ci.userIdx=mi.userIdx
                     <where>
                          <if test="searchValue != null and searchValue != ''">
 			                  <include refid="where-list"/>
@@ -81,7 +85,7 @@
 	<select id="demanderCount" parameterType="map"
 	            resultType="Integer">
 	  SELECT COUNT(*) FROM serviceinfo si
-      JOIN service s ON si.serviceIdx = s.serviceIdx
+      JOIN checkId ci ON si.userIdx = ci.userIdx
       WHERE isService=#{switching}
 	     <where>
 	     	<if test="searchValue!=null and searchValue!='' ">
@@ -95,14 +99,14 @@
 			parameterType="map">
 		SELECT * FROM(
 			SELECT ROWNUM rnum, tb.* FROM(
-					SELECT si.serviceIdx, si.serviceId, si.serviceName, TO_CHAR(si.serviceBirth, 'YYYY-MM-DD') serviceBirth,
-				       si.serviceTel, si.serviceAddr, si.serviceEmail, s.isService,
+					SELECT si.serviceIdx, ci.userId, si.serviceName, TO_CHAR(si.serviceBirth, 'YYYY-MM-DD') serviceBirth,
+				       si.serviceTel, si.serviceAddr, si.serviceEmail, ci.isService,
 				       t2.subject lSubject, t1.subject sSubject
-				       FROM service s
-               		   JOIN serviceInfo si ON s.serviceIdx=si.serviceIdx
+				       FROM checkId ci
+               		   JOIN serviceInfo si ON ci.userIdx=si.userIdx
 				       LEFT OUTER JOIN theme t1 ON si.themeNum=t1.themeNum
 				       LEFT OUTER JOIN theme t2 ON t1.parent=t2.themeNum
-				       WHERE s.isService=#{switching}
+				       WHERE ci.isService=#{switching}
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start}

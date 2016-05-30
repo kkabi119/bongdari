@@ -2,16 +2,16 @@ package com.bong.club.notice;
 
 public class Reply {
 	private int replyNum, num, listNum, clubSeq;
+	private String userId, userName, content, created;
+	private int answer ,userIdx;
+	private int answerCount;
+	
 	public int getClubSeq() {
 		return clubSeq;
 	}
 	public void setClubSeq(int clubSeq) {
 		this.clubSeq = clubSeq;
 	}
-	private String userId, userName, content, created;
-	private int answer ,userIdx;
-	private int answerCount;
-	
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}

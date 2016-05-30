@@ -38,6 +38,6 @@ public class SecurityController{
 	//접근 Authorization이 없는 경우
 	@RequestMapping(value="/member/noAuthorized")
 	public ModelAndView noAuthorized(){
-		return new ModelAndView(".layout.member.noAuthorized.huhu");
+		return new ModelAndView(".layout.error.404.권한이없다");
 	}
 }

@@ -5,15 +5,21 @@ import java.util.Map;
 
 public interface DeReviewService {
 	public int insertDeReview(DeReview dto, String path);
-	public int insertDeReFile(DeReview dto, String path);
 	public List<DeReview> listDeReview(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
-	public DeReview readDeReview(int num);
+	public DeReview readDeReview(Map<String, Object> map);
 	public int updateHitCount(int num);
 	public DeReview preReadDeReview(Map<String, Object> map);
 	public DeReview nextReadDeReview(Map<String, Object> map);
 	public int updateDeReview(DeReview dto, String path);
 	public int deleteDeReview(int num, String saveFilename, String path);
+	
+
+	public int insertFile(DeReview dto, Map<String, Object> map);
+	public List<DeReview> listFile(Map<String, Object> map);
+	public DeReview readFile(Map<String, Object> map);
+	public int deleteFile(Map<String, Object> map);
+	
 	
 	public int stateDeRevLike(DeReview dto);
 	public int insertDeReviewLike(DeReview dto);

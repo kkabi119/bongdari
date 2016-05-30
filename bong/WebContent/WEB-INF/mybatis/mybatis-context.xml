@@ -62,12 +62,11 @@
 	        <tx:method name="insert*" rollback-for="Exception"/>
 	        <tx:method name="update*" rollback-for="Exception"/>
 	        <tx:method name="delete*" rollback-for="Exception"/>
-	        <tx:method name="create*" rollback-for="Exception"/>
 	    </tx:attributes>
 	</tx:advice>
 	
 	<aop:config proxy-target-class="false">
-	    <!-- com.sp 및 하위 패키지의 Service로 끝나는 클래스의 모든 메소드 -->
+	    <!-- com.bong 및 하위 패키지의 Service로 끝나는 클래스의 모든 메소드 -->
 	    <aop:pointcut id="serviceOperation" expression="execution(public * com.bong..*Service.*(..))" />
 	    <aop:advisor id="transactionAdvisor" pointcut-ref="serviceOperation" advice-ref="txAdvice"/>
 	</aop:config>

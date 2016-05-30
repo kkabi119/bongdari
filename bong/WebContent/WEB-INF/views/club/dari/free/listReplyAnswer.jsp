@@ -20,7 +20,7 @@
                                                             <ul class="nav navbar-nav post-nav" style="float: right;">
                                                                 <li><a href="#"><i class="fa fa-clock-o"></i>${Adto.created }</a></li>
 <c:if test="${sessionScope.member.userId==Adto.userId || sessionScope.member.userId=='admin'}">   
-		     														<li><a onclick='deleteReplyAnswer("${Adto.replyNum}", "${Adto.answer}");' style="color:#FF7218">삭제</a></li>
+		     														<li><a onclick='deleteReplyAnswer("${Adto.cfrIdx}", "${Adto.answer}");' style="color:#FF7218">삭제</a></li>
 </c:if>
                                                             </ul>
                                                         </div>

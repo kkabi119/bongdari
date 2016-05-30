@@ -7,11 +7,18 @@ public class Member {
 	private String email1, email2;
 	private String created_date, modify_date, last_login;
 	private String userTel, tel1, tel2, tel3;
-	private int userIdx, isMember, userLevel, userVolNum, userNoShow, userScore, enabled;
+	private int userIdx, isMember, userLevel, userVolNum, userNoShow, userScore, enabled, isService;
 	private MultipartFile uploads;
 	private String memImgname, memImg;
 	private String authority;
 	
+	
+	public int getIsService() {
+		return isService;
+	}
+	public void setIsService(int isService) {
+		this.isService = isService;
+	}
 	public String getAuthority() {
 		return authority;
 	}

@@ -1,23 +1,26 @@
 package com.bong.demander.review;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class DeReview {
-	private int serviceReviewIdx, listNum;
+	private int serviceReviewIdx,serviceFileIdx,listNum;
     private int userIdx,serviceIdx;
     private String demanderName;
     private String userName, userId, subject, content, created;
     private int hitCount;
     private int replyCount;
-    
     private int likeCount;
 	private int reviewLikeCount;
 	
-    
-    private MultipartFile upload;  // <input type='file' name='upload' ..
 	
+	// 스프링에서 파일 받기
+	private List<MultipartFile> upload; // <input type='file' name='upload' ..
+    private int fileNum;
 	private String saveFilename;
 	private String originalFilename;
+	private long fileSize;
 	
 	public int getListNum() {
 		return listNum;
@@ -73,12 +76,7 @@ public class DeReview {
 	public void setHitCount(int hitCount) {
 		this.hitCount = hitCount;
 	}
-	public MultipartFile getUpload() {
-		return upload;
-	}
-	public void setUpload(MultipartFile upload) {
-		this.upload = upload;
-	}
+	
 	public String getSaveFilename() {
 		return saveFilename;
 	}
@@ -121,6 +119,30 @@ public class DeReview {
 	}
 	public void setLikeCount(int likeCount) {
 		this.likeCount = likeCount;
+	}
+	public int getFileNum() {
+		return fileNum;
+	}
+	public void setFileNum(int fileNum) {
+		this.fileNum = fileNum;
+	}
+	public List<MultipartFile> getUpload() {
+		return upload;
+	}
+	public void setUpload(List<MultipartFile> upload) {
+		this.upload = upload;
+	}
+	public long getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
+	public int getServiceFileIdx() {
+		return serviceFileIdx;
+	}
+	public void setServiceFileIdx(int serviceFileIdx) {
+		this.serviceFileIdx = serviceFileIdx;
 	}
 
 	

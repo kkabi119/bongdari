@@ -24,7 +24,7 @@
 		,#{userEmail},#{userJob},#{memImgname, jdbcType=VARCHAR},#{memImg, jdbcType=VARCHAR})
 	</insert>
 	<select id="readMemberLogin" resultType="com.bong.member.Member" parameterType="String">
-	SELECT ci.userIdx, userId, userName, userPwd, memImgname, memImg FROM checkId ci
+	SELECT ci.userIdx, userId, userName, userPwd, memImgname, memImg, isService FROM checkId ci
      LEFT OUTER JOIN memberinfo mi ON ci.userIdx=mi.userIdx WHERE ci.userIdx=#{userIdx}
 	</select>
     <select id="readMemberInfo" resultType="com.bong.member.Member" parameterType="String">

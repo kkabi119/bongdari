@@ -11,14 +11,40 @@
 	<!-- 리뷰 글넣기 -->
 	<insert id="insertDeReview" parameterType="com.bong.demander.review.DeReview">
 	INSERT INTO service_review(servicereviewidx,subject,CONTENT,serviceidx,useridx)
-	VALUES(#{serviceReviewIdx},#{subject},#{content},'4',#{userIdx})
+	VALUES(#{serviceReviewIdx},#{subject},#{content},7,#{userIdx})
 	</insert>
 	
+	
+<!-- 파일 *********************** -->
 	<!-- 리뷰 파일넣기 -->
-	<insert id="insertDeReFile" parameterType="com.bong.demander.review.DeReview">
+	<insert id="insertFile" parameterType="com.bong.demander.review.DeReview">
 	INSERT INTO service_review_file(servicefileidx,savefilename,originalfilename,servicereviewidx
 	)VALUES(service_rf_seq.NEXTVAL,#{saveFilename, jdbcType=VARCHAR},#{originalFilename, jdbcType=VARCHAR},#{serviceReviewIdx})
 	</insert>
+	
+
+	<select id="maxFileNum" resultType="Integer" parameterType="map">
+		SELECT NVL(MAX(servicefileidx), 0) FROM service_review_file
+	</select>
+	
+	<select id="listFile" parameterType="map"
+	              resultType="com.bong.demander.review.DeReview">
+	   SELECT serviceFileIdx,serviceReviewIdx,saveFilename,originalFilename
+	    FROM service_review_file WHERE serviceReviewIdx=#{serviceReviewIdx}  
+	</select>
+	
+	<select id="readFile" parameterType="map"
+	              resultType="com.bong.demander.review.DeReview">
+		SELECT serviceFileIdx, serviceReviewIdx, saveFilename,originalFilename
+	    FROM service_review_file WHERE serviceFileIdx=#{serviceFileIdx}    
+	</select>
+	
+	<delete id="deleteFile" parameterType="map">
+	DELETE FROM service_review_file WHERE serviceReviewIdx =#{serviceReviewIdx}
+	</delete>
+	
+<!-- 파일  끝*********************** -->	
+	
 	
 	<!-- 리뷰 list관련 -->
 	<sql id="where-list">
@@ -55,7 +81,7 @@
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
           SELECT tbrev.servicereviewidx, tbrev.useridx,userid, username, subject
-			          , created  ,hitcount,NVL(replyCount, 0) replyCount,NVL(likeCount, 0) likeCount
+			          ,created,hitcount,NVL(replyCount, 0) replyCount,NVL(likeCount, 0) likeCount
         FROM
         (
          (
@@ -63,8 +89,8 @@
 			           ,TO_CHAR(s.created, 'YYYY-MM-DD') created
 					   ,hitCount
 			        FROM service_review s
-	       			 JOIN memberInfo m
-	       			 ON s.userIdx=m.userIdx
+	       			 JOIN memberInfo m ON s.userIdx=m.userIdx
+	       			  JOIN checkId c ON m.useridx=c.useridx
 	       			  <where>
                          <if test="searchValue != null and searchValue != ''">
 			                  <include refid="where-list"/>
@@ -90,11 +116,11 @@
 	</select>
 	
 	<!-- 리뷰 글보기 -->
-	<select id="readDeReview" parameterType="Integer" resultType="com.bong.demander.review.DeReview">
+	<select id="readDeReview" parameterType="map" resultType="com.bong.demander.review.DeReview">
 		SELECT r.servicereviewidx, m.useridx, userid, username, subject,
-		content,hitcount, r.created, f.savefilename, f.originalfilename,NVL(replyCount, 0) replyCount,NVL(likeCount, 0) likeCount
+		content,hitcount, r.created,NVL(replyCount, 0) replyCount,NVL(likeCount, 0) likeCount
 		FROM service_review r JOIN memberinfo m ON r.useridx=m.useridx
-		JOIN service_review_file f ON r.servicereviewidx = f.servicereviewidx
+		  JOIN checkId c ON m.useridx=c.useridx
    	    LEFT OUTER JOIN
 			        ( SELECT serviceReviewIdx, count(*) replycount
                                  FROM service_review_reply  tbreply GROUP BY serviceReviewIdx
@@ -104,7 +130,7 @@
 			                SELECT servicereviewidx, COUNT(*) likeCount
                                  FROM service_review_like GROUP BY servicereviewidx
 			           ) tblike ON tbreply.servicereviewidx = tblike.servicereviewidx
-		WHERE r.servicereviewidx =#{serviceReviewIdx}
+		WHERE r.servicereviewidx=#{serviceReviewIdx}
 	</select>
 	
 	<!-- 조회수 증가 -->
@@ -234,6 +260,7 @@
 					        FROM service_review_reply r 
 			                JOIN service_review s ON r.serviceReviewIdx=s.serviceReviewIdx
 			                JOIN memberinfo m ON r.useridx=m.useridx
+			                JOIN checkId c ON m.useridx=c.useridx
 			                WHERE r.serviceReviewIdx=#{serviceReviewIdx} AND answer=0
 			           ) tbreply
 			           LEFT OUTER JOIN
@@ -244,7 +271,7 @@
 			             LEFT OUTER JOIN
 			           (
 			                SELECT srridx, COUNT(*) likeCount
-                                 FROM service_review_reply_like GROUP BY srridx
+                                 FROM serv_rev_reply_like GROUP BY srridx
 			           ) tblike ON tbreply.srridx = tblike.srridx
 	           )
 	           ORDER BY replynum DESC
@@ -291,31 +318,31 @@
 	<!-- 댓글 좋아요 -->
 	  <!-- 좋아요상태 -->
     <select id="stateDeRevLikeRe" parameterType="com.bong.demander.review.DeReviewReply" resultType="Integer">
-     SELECT NVL(count(*),0) FROM service_review_reply_like 
+     SELECT NVL(count(*),0) FROM serv_rev_reply_like 
      WHERE userIdx=#{userIdx} AND SRRIDX=#{replyNum}
     </select>
     
     <!--send 좋아요-->
 	<insert id="insertDeReviewLikeRe" parameterType="com.bong.demander.review.DeReviewReply">
-	INSERT INTO service_review_reply_like(SRRIDX, userIdx)
+	INSERT INTO serv_rev_reply_like(SRRIDX, userIdx)
 	   VALUES (#{replyNum}, #{userIdx})
 	</insert>
 	
 	<!-- 좋아요가 이미 눌렸을때 해제 되도록 -->
 	<delete id="deleteDeReviewLikeRe" parameterType="com.bong.demander.review.DeReviewReply">
-	DELETE FROM service_review_reply_like WHERE SRRIDX=#{replyNum} AND userIdx=#{userIdx}
+	DELETE FROM serv_rev_reply_like WHERE SRRIDX=#{replyNum} AND userIdx=#{userIdx}
 	</delete>
 	
 	<!-- 좋아요 개수 -->
 	<select id="deRevCountLikeRe" resultType="map" 
 	           parameterType="Integer">
-	   SELECT NVL(count(*),0) likeCount FROM service_review_reply_like WHERE SRRIDX=#{replyNum}
+	   SELECT NVL(count(*),0) likeCount FROM serv_rev_reply_like WHERE SRRIDX=#{replyNum}
 	</select>
       
 <!-- 	
 	(보류)댓글 좋아요/싫어요 처리.................
 	<insert id="insertDeRevReplyLike" parameterType="com.bong.demander.review.DeReviewReply">
-	INSERT INTO service_review_reply_like(replyNum, userId, replyLike)
+	INSERT INTO serv_rev_reply_like(replyNum, userId, replyLike)
 	   VALUES (#{replyNum}, #{userId}, #{replyLike})
 	</insert>
 

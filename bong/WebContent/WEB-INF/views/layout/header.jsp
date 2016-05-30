@@ -10,18 +10,20 @@
                 <div class="col-sm-12 overflow">
                    <div class="social-icons pull-right">
                         <ul class="nav nav-pills">
-                            <c:if test="${not empty sessionScope.member}">
+                            <c:if test="${sessionScope.member.isService==0}">
                            <span style="color:blue;">${sessionScope.member.userName}</span>회원님 <i></i>
                            <li><a href="<%=cp%>/member/logout"><i class="fa fa-sign-out"> Logout</i></a></li>
                             </c:if>
-                            <c:if test="${not empty sessionScope.demanderjoin}">
-                           <span style="color:blue;">${sessionScope.demanderjoin.serviceName}</span>수요처님 <i></i>
-                           <li><a href="<%=cp%>/demanderjoin/logout"><i class="fa fa-sign-out"> Logout</i></a></li>
+                            <c:if test="${sessionScope.member.isService==1}">
+                           <span style="color:blue;">${sessionScope.member.userName}</span>수요처님 <i></i>
+                           <li><a href="<%=cp%>/member/logout"><i class="fa fa-sign-out"> Logout</i></a></li>
                             </c:if>
                             <c:if test="${empty sessionScope.member && empty sessionScope.demanderjoin}">
                             <li><a href="<%=cp%>/member/login"><i class="fa fa-sign-in"> Login</i></a></li>
-                            </c:if><li><a href="<%=cp%>/member/index/myPage"><i class="glyphicon glyphicon-user">MyPage</i></a></li>
-                            
+                            </c:if>
+                            <c:if test="${sessionScope.member.isService==0}">
+                            <li><a href="<%=cp%>/member/index/myPage"><i class="glyphicon glyphicon-user">MyPage</i></a></li>
+                            </c:if>
                             <li><a href=""><i class="fa fa-google-plus"></i></a></li>
                             
                             <li><a href=""><i class="fa fa-dribbble">My Club</i></a></li>
@@ -54,6 +56,7 @@
                         <li class="active"><a href="<%=cp%>/">Home</a></li>
                         <li class="dropdown"><a href="<%=cp%>/main/club">동아리 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
+                    <c:if test="${sessionScope.member.isService==0}">    
                             <c:if test="${sessionScope.member.clubIdx==0}">
                                 <li><a href="<%=cp%>/club/me">동아리 개설하기</a></li>
                             </c:if>
@@ -62,6 +65,7 @@
                             </c:if>
                                 <li><a href="<%=cp%>/club/index/main">클럽1</a></li>
                                 <li><a href="<%=cp%>/main/club2">클럽2</a></li>
+                    </c:if>
                                 <li><a href="<%=cp%>/main/searchClub">동아리 검색하기</a></li>
                                 
                             </ul>

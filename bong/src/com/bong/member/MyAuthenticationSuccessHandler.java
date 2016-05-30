@@ -44,21 +44,25 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 		Member member=memberService.readMemberLogin(authentication.getName());
 		
 		SessionInfo info=new SessionInfo();
-		if(member!=null){  ///일반회원일때
+		
+		info.setIsService(member.getIsService());
+		
+		if(member.getIsService()==0){  
+			//일반회원일때
 			info.setUserIdx(member.getUserIdx());
 			info.setUserId(member.getUserId());
 			info.setUserName(member.getUserName());			
 		} else {
-			Demanderjoin demanderjoin=demanderjoinService.readDemanderjoinLogin(authentication.getName());	
+			
+			Demanderjoin demanderjoin=demanderjoinService.readDemanderjoinLogin(member.getUserIdx());	
 		    //수요처 회원일경우
-			info.setUserIdx(demanderjoin.getServiceIdx());
-			info.setUserId(demanderjoin.getServiceId());
+			info.setUserIdx(demanderjoin.getUserIdx());
 			info.setUserName(demanderjoin.getServiceName());
 		}
 
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("userId",info.getUserId());
+		map.put("userId",member.getUserId());
 				
 		int clubIdx=clubService.ReadClubInfoSession(map);
 		info.setClubIdx(clubIdx);

@@ -31,15 +31,22 @@
             <intercept-url pattern="/demander/login" access="permitAll"/>
             <intercept-url pattern="/member/member" access="permitAll" />
 			<intercept-url pattern="/member/userIdCheck" access="permitAll" />
+			<intercept-url pattern="/member/join" access="permitAll" />
 			
             <!-- 이미지, javascript, css등 -->
 			<intercept-url pattern="/res/**" access="permitAll" />
 	        
 	         <!-- admin 페이지 -->
 		    <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		    
+		    <!-- <intercept-url pattern="/member/register" access="permitAll" />
 
 	        <intercept-url pattern="/member/index/myPage/**" access="hasRole('ROLE_USER')"/>
-
+	        
+	        <intercept-url pattern="/club/**" access="hasRole('ROLE_USER')"/> -->
+	        
+	        <intercept-url pattern="/**" access="permitAll"/>
+	        
 	        <!--  사용자 정의 로그인 폼  -->
 	        <form-login login-page="/member/login"
 	             login-processing-url="/member/login_check"

@@ -59,6 +59,24 @@
 
 <script type="text/javascript" src="<%=cp%>/res/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
+//첨부파일 칸 동적생성
+$(function(){
+	$("body").on("change", "form[name='boardForm'] input[name='upload']", function(){
+		if(! $(this).val())
+			return;
+	
+		var s;
+		s="<tr align='left' height='40' >";
+		s+="<td>첨부</td>";
+		s+="<td style='padding-left:10px;' width='600'>";
+		s+="<input type='file' name='upload' class='form-control input-sm'>";
+		s+="</td>";
+		s+="</tr>";
+		
+		$("#tb").append(s);
+	});
+});
+
   function check() {
         var f = document.boardForm;
 
@@ -100,7 +118,7 @@
 		onsubmit="return submitContents(this);" enctype="multipart/form-data">
 		<div class="bs-write">
 			<table class="table">
-				<tbody>
+				<tbody id="tb">
 					<tr>
 						<td class="td1">작성자명</td>
 						<td class="td2 col-md-5 col-sm-5">
@@ -127,23 +145,25 @@
 								style="max-width: 99%;">${dto.content}</textarea></td>
 					</tr>
 
-					<tr>
-						<td class="td1">첨부</td>
-						<td colspan="3" class="td3"><input type="file" name="upload"
-							class="form-control input-sm"></td>
-					</tr>
-
 					<c:if test="${mode=='update'}">
 						<tr>
 							<td class="td1">등록파일</td>
 							<td colspan="3" class="td3">${dto.originalFilename} <c:if
 									test="${not empty dto.originalFilename}">
-                                    | <a
-										href="<%=cp%>/demander/index/review/deleteFile?num=${dto.serviceReviewIdx}&page=${page}">삭제</a>
+                                    | <a href="<%=cp%>/demander/index/review/deleteFile?num=${dto.serviceReviewIdx}&page=${page}">삭제</a>
 								</c:if>
 							</td>
 						</tr>
 					</c:if>
+					
+					<tr>
+						<td class="td1">첨부</td>
+						<td colspan="3" class="td3">
+						<input type="file" name="upload" class="form-control input-sm">
+						</td>
+					</tr>
+
+					
 				</tbody>
 				<tfoot>
 					<tr>
