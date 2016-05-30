@@ -45,10 +45,10 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 	}
 
 	@Override
-	public Demanderjoin readDemanderjoinLogin(String serviceId) {
+	public Demanderjoin readDemanderjoinLogin(int userIdx) {
 		Demanderjoin dto = null;
 		try {
-			dto=dao.getReadInformation("demanderjoin.readDemanderjoinLogin", serviceId);
+			dto=dao.getReadInformation("demanderjoin.readDemanderjoinLogin", userIdx);
 			//전화번호 나누기
 			if(dto!=null){
 				if(dto.getServiceTel()!=null){

@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
 <mapper namespace="clubApply">
 	
 	<sql id="where-list">
-	  <if test="searchKey=='userName'">
-	      userName=#{searchValue}
+	  <if test="searchKey=='serviceName'">
+	      s.serviceName=#{searchValue}
 	  </if>
 	  <if test="searchKey=='subject'">
-	      INSTR(subject, #{searchValue}) &gt; 0
+	      INSTR(v.subject, #{searchValue}) &gt; 0
 	  </if>
 	  <if test="searchKey=='content'">
 	      DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0 
 	  </if>
 	  <if test="searchKey=='created'">
-	      TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
-	      OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue}
+	      TO_CHAR(v.created, 'YYYY-MM-DD') = #{searchValue}
+	      OR TO_CHAR(v.created, 'YYYYMMDD') = #{searchValue}
 	  </if>
 	</sql>
 	
@@ -37,20 +39,31 @@
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
 			     SELECT a.clubApplyIdx, v.volunIdx AS volunIdx, s.serviceName, subject, v.startDay, v.endDay, a.enabled,
-			     		   progress, place, volunteer_type, v.volunDays, v.typeIdx1, v.typeIdx2,
+			     		   progress, place, volunteer_type, v.volunDays, NVL(answerCount, 0) answerCount
 			     		  ( (SELECT NVL(COUNT(*), 0) FROM club_apply_memlist c JOIN club_apply a ON c.clubApplyIdx=a.clubApplyIdx 
                        		 WHERE a.volunIdx = v.volunIdx)+
                        		( SELECT NVL(COUNT(*), 0) FROM volun_bbs_memlist vb
 		                      WHERE vb.volunIdx=v.volunIdx))AS applyNum,
-		                    ( select sum(maxNum) from MEMNUMPERDATE mnpd where mnpd.volunIdx=v.volunIdx ) as maxNum
+		                    ( select sum(maxNum) from MEMNUMPERDATE mnpd where mnpd.volunIdx=v.volunIdx ) as maxNum,
+		            	   LEFT OUTER JOIN
+			        	   (     SELECT answer, COUNT(*) AS answerCount
+                                 FROM club_applyR GROUP BY answer
+			       		    ) tbanswer ON tbreply.CARIDX = tbanswer.answer
+		                   
         	    FROM volun_bbs v JOIN club_apply a ON v.volunIdx=a.volunIdx
 			        					         	  JOIN serviceInfo s ON v.serviceIdx=s.serviceIdx
+                    
                     <where>
                          <if test="searchValue != null and searchValue != ''">
 			                  <include refid="where-list"/>
+			                  AND a.enabled=1
 		                 </if>
-	                </where>
-	                WHERE a.enabled=1 
+			                 
+		                <if test="searchValue == null and searchValue ==''">
+		            	   where a.enabled=1 
+		                </if>
+	               </where>
+	              
 	                ORDER BY volunIdx DESC
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
@@ -60,20 +73,30 @@
 	
 	<!-- 글보기 -->
 	<select id="readApply" resultType="com.bong.club.apply.Apply" parameterType="Integer">
-		SELECT a.CLUBAPPLYIDX,v.volunIdx AS volunIdx, s.serviceName, subject, v.startDay, v.endDay, a.enabled, progress, place, volunteer_type, v.volunDays, v.typeIdx1, v.typeIdx2,
-				startTime, endTime, content,v.created,v.modified,
+		SELECT a.CLUBAPPLYIDX,v.volunIdx AS volunIdx, s.serviceName, v.subject, v.startDay, v.endDay, a.enabled, progress, place, volunteer_type, v.volunDays, 
+				startTime, endTime, content,v.created,v.modified, t.subject as tsubject, a.hitCount, v.serviceIdx,
+				 ( SELECT subject FROM theme th WHERE th.themenum=t.parent) AS tsubject_parent,
 			     ( (SELECT NVL(COUNT(*), 0) FROM club_apply_memlist c JOIN club_apply a ON c.clubApplyIdx=a.clubApplyIdx 
                     WHERE a.volunIdx = v.volunIdx)+
                    ( SELECT NVL(COUNT(*), 0) FROM volun_bbs_memlist vb
 		             WHERE vb.volunIdx=v.volunIdx))AS applyNum,
-		           (select sum(maxNum) from MEMNUMPERDATE mnpd where mnpd.volunIdx=v.volunIdx ) as maxNum
-        	    FROM volun_bbs v JOIN club_apply a ON v.volunIdx=a.volunIdx JOIN serviceInfo s ON v.serviceIdx=s.serviceIdx
+		         ( select sum(maxNum) from MEMNUMPERDATE mnpd where mnpd.volunIdx=v.volunIdx ) as maxNum
+        	    
+       FROM volun_bbs v 
+       			JOIN club_apply a ON v.volunIdx=a.volunIdx
+       			JOIN serviceInfo s ON v.serviceIdx=s.serviceIdx
+        	  JOIN theme t ON v.themenum=t.themenum
 		WHERE clubApplyIdx = #{num}
 	</select>
 	
 	<!-- 조회수 증가 -->
 	<update id="updateHitCount" parameterType="Integer">
 		UPDATE volun_bbs SET hitCount=hitCount+1 WHERE volunIdx= #{num}
+	</update>
+	
+	<!-- 클럽게시판 조회수 증가 -->
+	<update id="updateHitCount_club" parameterType="Integer">
+		UPDATE club_apply SET hitCount=hitCount+1 WHERE clubApplyIdx= #{clubApplyIdx}
 	</update>
 	
 	<!-- AND 가 필요 없는 경우 자동으로 제거 됨 -->
@@ -137,7 +160,7 @@
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
 		        SELECT tbreply.CARIDX as replyNum, clubApplyIdx as num, userId, userName 
-		                    ,content, created, tbreply.answer
+		                    ,content, created, tbreply.answer, tblike.likeCount
 		                    ,NVL(answerCount, 0) answerCount
 		        FROM
 		        (
@@ -150,10 +173,14 @@
 			                WHERE r.clubApplyIdx=#{num} AND answer=0
 			           ) tbreply
 			           LEFT OUTER JOIN
-			           (
-			                SELECT answer, COUNT(*) answerCount
+			           (         SELECT answer, COUNT(*) AS answerCount
                                  FROM club_applyR GROUP BY answer
 			           ) tbanswer ON tbreply.CARIDX = tbanswer.answer
+	           		   LEFT OUTER JOIN
+	           		   (
+	           			  SELECT COUNT(*) likeCount, carIdx
+             		      FROM club_applyR_like GROUP BY carIdx
+	           		 )tblike ON tbreply.CARIDX = tblike.CARIDX
 	           )
 	           ORDER BY replyNum DESC
 	<![CDATA[
@@ -204,4 +231,23 @@
 	    FROM club_applyR_like
 	    WHERE CARIdx=#{replyNum}
 	</select>
+	
+	<!-- 									댓글 좋아요 취소											 -->
+	
+	 <select id="stateReplyLike" parameterType="com.bong.club.apply.Reply" resultType="Integer">
+     SELECT NVL(COUNT(*),0) FROM club_applyR_like 
+     WHERE userIdx=#{userIdx} AND CARIdx=#{replyNum}
+    </select>
+	
+	<!-- 좋아요가 이미 눌렸을때 해제 되도록 -->
+	<delete id="deleteReplyLike" parameterType="com.bong.club.apply.Reply">
+	DELETE FROM club_applyR_like WHERE CARIdx=#{replyNum} AND userIdx=#{userIdx}
+	</delete>
+	
+	<!-- 								게시물삭제															 -->
+	<update id="deleteApply" parameterType="Integer">
+			update club_apply set enabled=0 WHERE clubApplyIdx = #{num}
+     </update>
+	
+	
 </mapper>

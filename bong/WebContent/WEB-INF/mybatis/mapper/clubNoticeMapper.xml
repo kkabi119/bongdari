@@ -44,7 +44,7 @@
 	            resultType="com.bong.club.notice.Notice">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-			     SELECT clubnoticeIdx, m.userIdx, userId, m.userName, subject
+			     SELECT clubnoticeIdx, m.userIdx, m.userName, subject
 			           ,TO_CHAR(n.created, 'YYYY-MM-DD') created
 					   ,hitCount, n.saveFilename
 			        FROM club_notice_${clubSeq} n JOIN memberInfo m ON n.userIdx=m.userIdx
@@ -62,7 +62,7 @@
 	
 	<!-- 글보기 -->
 	<select id="readNotice" resultType="com.bong.club.notice.Notice" parameterType="map">
-		SELECT n.clubNoticeIdx, m.userIdx, userId, userName, subject, content
+		SELECT n.clubNoticeIdx, m.userIdx, userName, subject, content
 				   ,hitCount, n.created,  n.saveFilename, n.originalFilename
 		FROM club_notice_${clubSeq} n JOIN memberInfo m ON n.userIdx=m.userIdx
 		WHERE clubNoticeIdx = #{num}
@@ -139,6 +139,7 @@
 	<select id="CNRSeq" resultType="Integer">
 		SELECT club_notice_reply_seq.NEXTVAL FROM DUAL
 	</select>
+	
 	<!-- 댓글 처리................. -->
 	<insert id="insertNoticeReply" parameterType="com.bong.club.notice.Reply">
 	INSERT INTO club_notice_reply_${clubSeq}(CNRIDX , CLUBNOTICEIDX, userIdx, content, answer)
@@ -156,13 +157,13 @@
 	          parameterType="map">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		        SELECT tbreply.CNRIDX as replyNum, clubNoticeIdx as num, userId, userName 
+		        SELECT tbreply.CNRIDX as replyNum, clubNoticeIdx as num, userName 
 		                    ,content, created, tbreply.answer
 		                    ,NVL(answerCount, 0) answerCount
 		        FROM
 		        (
 				      (
-					     SELECT cnridx, r.clubNoticeIdx, r.userIdx, userid,
+					     SELECT cnridx, r.clubNoticeIdx, r.userIdx,
                userName, r.content, r.created, answer
 					        FROM club_notice_reply_${clubSeq} r 
 			                JOIN club_notice_${clubSeq} n ON r.clubNoticeIdx=n.clubNoticeIdx

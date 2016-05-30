@@ -62,6 +62,10 @@ padding-top: 13px;
 .btn{
 	border-radius:2px;
 }
+
+.icon-wrapper:hover{
+	background-color: gray;
+}
 </style>
 
 <script type="text/javascript">
@@ -86,7 +90,8 @@ $(function(){
 function listPage(page) {
 	var url="<%=cp%>/club/index/apply/listReply";
 	var num="${dto.clubApplyIdx}";
-	replyCount();
+	
+	
 	$.post(url, {num:num, pageNo:page}, function(data){
 		$("#listReply").html(data);
 	});
@@ -122,7 +127,9 @@ function sendReply() {
 			
 			var state=data.state;
 			if(state=="true") {
+				
 				listPage(1);
+				
 			} else if(state=="false") {
 				alert("댓글을 등록하지 못했습니다. !!!");
 			} else if(state=="loginFail") {
@@ -142,12 +149,10 @@ function replyCount() {
 	$.post(url, {num:num}, function(data){
 		
 		var count=data.count;
+		
 		$("#replyCountView").text(""+count+"개");
 	}, "JSON");
 }
-
-
-
 
 ////////////////////////////////////////////////////// 댓글 삭 제 
 function deleteReply(replyNum, page) {
@@ -170,28 +175,26 @@ function deleteReply(replyNum, page) {
 		}, "json");
 	}
 }
-
-
 //////////////////////////////////////// 댓글 좋 아 요 
 //좋아요/싫어요 개수
 function countLike(replyNum) {
+		
 	var url="<%=cp%>/apply/countLike";
 	
 	$.post(url, {replyNum:replyNum}, function(data){
 		
 		var likeCountId="#likeCount"+replyNum;
-		var disLikeCountId="#disLikeCount"+replyNum;
-		var likeCount=data.likeCount;
-		var disLikeCount=data.disLikeCount;
 		
-		$(likeCountId).html(likeCount);
-		$(disLikeCountId).html(disLikeCount);
+		var likeCount=data.likeCount;
+		
+		$(likeCountId).html("&nbsp; "+likeCount);
 		
 	}, "JSON");
 }
 
-//좋아요/싫어요 추가
+/////////////////////////////////////////////////////////////////////////////////	좋아요/싫어요 추가
 function sendLike(replyNum) {
+	
 	var uid="${sessionScope.member.userId}";
 	if(! uid) {
 		login();
@@ -207,19 +210,37 @@ function sendLike(replyNum) {
 		,success:function(data) {
 			
 			var state=data.state;
-			if(state=="true") {
-				countLike(replyNum);
-			} else if(state=="false") {
-				
-			} 
+			countLike(replyNum);
 		}
 		,error:function(e) {
 			alert(e.responseText);
 		}
 	});
 }
-</script>
 
+//////////////////////////////////////////////////////////////////// 게시물 삭제(관리자와 매니저만 가능..)
+function deleteApply() {
+<c:if test="${sessionScope.member.userId=='admin'}">
+  
+  var num = "${dto.clubApplyIdx}";
+  var page = "${page}";
+  var params = "num="+num+"&page="+page;
+  
+  var url = "<%=cp%>/club/index/apply/delete?" + params;
+
+  if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
+	  
+  	location.href=url;
+  }
+  
+</c:if>
+
+<c:if test="${sessionScope.member.userId!='admin'}">
+  alert("게시물을 삭제할 수  없습니다.");
+</c:if>
+}
+
+</script>
 
 	<div class="row" style="margin-left:15px;">
 		<div class="col-md-12 col-sm-12">
@@ -243,13 +264,14 @@ function sendLike(replyNum) {
                     <thead >
                         <tr height="50">
                             <th style="color:#555;"colspan="7" class="bbs-subject" >
-                                 ${dto.subject } <span style="color:#E0844F;">
-                                 <c:if test="${dto.progress.equals('모집마감')}">
-                              	   <span class="label label-default" style="padding:8px 10px; border-radius:2px;">${dto.progress}</span>
-                                 </c:if>
-                                 <c:if test="${dto.progress.equals('모집중')}">
-                              	    <span class="label label-warning" style="padding:8px 10px; border-radius:2px;">${dto.progress}</span>
-                                 </c:if>
+                                 ${dto.subject } &nbsp;
+                                 <span style="color:#E0844F; margin-top:-10px;">
+	                                 <c:if test="${dto.progress.equals('모집마감')}">
+	                              	   <span class="label label-default" style="padding:8px 10px; border-radius:2px;">${dto.progress}</span>
+	                                 </c:if>
+	                                 <c:if test="${dto.progress.equals('모집중')}">
+	                              	    <span class="label label-warning" style="padding:8px 10px; border-radius:2px;">${dto.progress}</span>
+	                                 </c:if>
                                  </span>
                             </th>
                         </tr>
@@ -259,7 +281,7 @@ function sendLike(replyNum) {
                         	<td bgcolor="#DFE6E8" style="color:black; border-top:none;text-align: left; height:45px; width:14%; ">
                         	 	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;	봉사일정
                         	</td>
-                            <td style="text-align: left;height:45px; width:230px; ">${dto.startDay } ~ ${dto.endDay }</td>
+                            <td style="text-align: left;height:45px; width:200px; ">${dto.startDay } ~ ${dto.endDay }</td>
                             
                             <td  bgcolor="#DFE6E8" style="color:black; border-top:none; text-align: left; width:14%;  ">
                             	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉사시간
@@ -295,7 +317,7 @@ function sendLike(replyNum) {
                         <td  bgcolor="#DFE6E8" style="color:black;; border-top:none;border-top:none; text-align: left; height:45px; ">
                          		  	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉사분야
                            	</td>
-                            <td style="text-align: left; height:45px; ">문화체육 > 행사보조</td>
+                            <td style="text-align: left; height:45px; ">${dto.tsubject_parent} > ${dto.tsubject} </td>
                             
                              <td  bgcolor="#DFE6E8" style="color:black;;border-top:none; text-align: left; height:45px; ">
                          		  	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉사자 유형
@@ -323,41 +345,41 @@ function sendLike(replyNum) {
                             </td>
                         </tr>
                         <tr>
-                      	  <td colspan="7" style="border-top:none; padding-bottom:30px;">
-                       			 <a href="#" style="color:white; ">
-	                       			 <span style="margin-left:41%;align:center; background-color: #3897f0; border: 1px solid g" class="icon-wrapper">
-	                                	<i class="fa fa-2x fa-heart-o" ></i>
+                      	  <td colspan="7" style="border-top:none; ">
+                       
+                       			  <a class="test1" href="#" style="color:white; ">
+	                       			<span style="margin-left:40%; align:center; background-color: #7ECAF1; " class="icon-wrapper">
+	                                	 	<img style=" width:35px; height:35px; background-size:cover; "src="<%=cp%>/res/images/myclub/edit.png" alt="">
 	                          		</span>
+	                          		
                           		</a>
-                          		
-                          		<a href="#" style="color:white; ">
-                          			<span style="background-color: #3897f0; align:center; margin-left:50px;"class="icon-wrapper">
-                                	<i class="fa fa-2x fa-comments-o"></i>
-                          		</span></a>
-                          		<br>
-                          		<div style="">
-	                          		<span style="font-size:18px; margin-left:42%; margin-top:-2px; text-align: center; color:#00AFF0; ">
-	                          				<a style="font-weight:bold;" href="#"> 신청 </a>
-	                          		</span>
-	                          		<span style="font-size:18px;text-align: center; color:#00AFF0; ">
-	                          				<a style="font-weight:bold; margin-left:83px; "  href="#">  리스트 </a>
-	                          		</span>
-                          		</div><br>
-                          		</td>
-                        </tr>        
-                         
-                           <tr style=" border-top: 2px solid #6D6D6D;  border-bottom: 2px solid #6D6D6D; ">
-                     		 <td colspan="1" bgcolor="#DFE6E8" style="width:15%;color:black; text-align: left; " >
-                                     <i class="fa fa-clock-o"></i> &nbsp;작성일 
+                          		<span style="background-color: #7ECAF1; align:center; margin-left:50px;"class="icon-wrapper">
+                                	<a href="#" style="color:white; ">
+                                	 <img style=" width:35px; height:35px; background-size:cover; "src="<%=cp%>/res/images/myclub/list (2).png" alt="">
+									</a>
+                          		</span>
+                  		  </td>
+                        </tr>   
+                          <tr height="40" style="border:none;">
+                	    </tr>
+                           <tr height="45" style=" border-top: 2px solid #6D6D6D;  border-bottom: 2px solid #6D6D6D; ">
+                     		 <td colspan="1" bgcolor="#DFE6E8" style=" color:black; text-align: left; " >
+                                   &nbsp;&nbsp; <i class="fa fa-clock-o"></i> &nbsp;작성일 
                          	 </td>
                          	 <td  style="">
                          	         &nbsp;${dto.created}
                          	 </td>
                          	 <td colspan="1" bgcolor="#DFE6E8" style=" color:black; text-align: left; ">
-                                      <i class="fa fa-clock-o"></i> &nbsp;수정일 
+                                      &nbsp;&nbsp;<i class="fa fa-clock-o"></i> &nbsp;수정일 
                          	 </td>
-                         	 <td style="width:160px;">
+                         	 <td width="180" style="">
                          		  &nbsp; ${dto.modified}
+                         	 </td>
+                         	  <td colspan="" bgcolor="#DFE6E8" style=" color:black; text-align: left; ">
+                                     &nbsp;&nbsp; <i class="fa fa-clock-o"></i> &nbsp;조회수 
+                         	 </td>
+                         	 <td colspan="" style="">
+                         		  &nbsp; ${dto.hitCount }
                          	 </td>
                          </tr>
                          <c:if test="${not empty dto.saveFileName}">
@@ -370,66 +392,11 @@ function sendLike(replyNum) {
                                  </tr>
                          </c:if>              
                                                 
-                        <c:if test="${not empty preReadDto }">
-						 	<tr height="35">
-						 	   <td colspan="1"bgcolor="#EEEEEE" align="center">이전글</td>
-						    
-							    <td colspan="6" align="left" style="padding-left:10px;" colspan="3">
-									<a href="<%=cp%>/club/index/apply/article?${params}&num=${preReadDto.clubApplyIdx}">
-											${preReadDto.subject} 
-									</a>
-									<c:if test="${preReadDto.progress.equals('모집마감')}">
-	                       				 	<span class="text-center" style="font-weight:bold; color:white; font-size:16px;"> 
-	                       				 		<span class="label label-default" style="padding:5px;">${preReadDto.progress}</span>
-	                       				 	</span>
-	                       			</c:if>
-	                       			<c:if test="${preReadDto.progress.equals('모집중')}">
-	                       				 		<span class="text-center" style="font-weight:bold; color:white; font-size:16px;">
-	                       				 			<span class="label label-warning" style="padding:5px;">${preReadDto.progress}</span>
-	                       				 		</span>
-	                       			</c:if>
-									
-								</td>
-							</tr>
-					 	</c:if>
-					 <c:if test="${not empty nextReadDto }">    
-                      <tr height="35">
-					    <td colspan="1"bgcolor="#EEEEEE" align="center">다음글</td>
-					    <td colspan="6" align="left" style="padding-left:10px;" colspan="3">
-							<a href="<%=cp%>/club/index/apply/article?${params}&num=${nextReadDto.clubApplyIdx}">
-								 ${nextReadDto.subject}
-							</a>							
-							<c:if test="${nextReadDto.progress.equals('모집마감')}">
-	                       				 	<span class="text-center" style="font-weight:bold; color:white; font-size:16px;"> 
-	                       				 		<span class="label label-default" style="padding:5px;">${nextReadDto.progress}</span>
-	                       				 	</span>
-	                       	</c:if>
-	                       	<c:if test="${nextReadDto.progress.equals('모집중')}">
-	                       		<span class="text-center" style="font-weight:bold; color:white; font-size:16px;">
-	                       			<span class="label label-warning" style="padding:5px;">${nextReadDto.progress}</span>
-	                       		</span>
-	                       	</c:if>
-															
-					   	 	</td>
-						</tr>
-						</c:if>
-                   </tbody>
-                   <tfoot>
-                    <tr>
-					    <td colspan="6" align="left">
-   						 	<button type="button" class="btn btn-default" onclick="deleteApply();">삭제</button>
-   						</td>
-   						
-   						<td align="right" colspan="2" style="margin-bottom:30px; ">
-					           <button type="button" class="btn btn-default"  onclick="javascript:location.href='<%=cp%>/club/index/apply/list?${params}';">목록으로</button>
-
-					    </td>
-					    </tr>
-                   </tfoot>
+                      
                </table>
           </div>
            
-           <div style="clear: both;  margin-bottom:30px; border-top: 2px solid #6D6D6D; border-bottom:2px solid #6D6D6D;">
+           <div style="clear: both;  margin-bottom:30px; border-bottom:2px solid #6D6D6D;">
                    <div style="float: left; margin-bottom:20px;margin-top:20px;">
                     <span class="item-click" id="reply-open-close" style="cursor:pointer; font-size:20px; color:#6D6D6D;" >COMMENTS ▼</span>&nbsp;
                 	    <span id="replyCountView" class="item-title" style='color:#f0ad4e; font-size:20px; font-weight: bold;'> </span>
@@ -457,6 +424,71 @@ function sendLike(replyNum) {
           </div>
                          
           </div>
+           
+   	   <div class="table-responsive" style="clear: both;">
+           <div >
+               <table class="table">
+            <c:if test="${not empty preReadDto }">
+						 	<tr height="35">
+						 	   <td colspan="1"bgcolor="#EEEEEE" align="center">이전글</td>
+						    
+							    <td colspan="6" align="left" style="border-bottom:1px solid #ddd; padding-left:10px;" colspan="3">
+									<a href="<%=cp%>/club/index/apply/article?${params}&num=${preReadDto.clubApplyIdx}">
+											${preReadDto.subject} 
+									</a>
+									<c:if test="${preReadDto.progress.equals('모집마감')}">
+	                       				 	<span class="text-center" style="font-weight:bold; color:white; font-size:16px;"> 
+	                       				 		<span class="label label-default" style="padding:5px;">${preReadDto.progress}</span>
+	                       				 	</span>
+	                       			</c:if>
+	                       			<c:if test="${preReadDto.progress.equals('모집중')}">
+	                       				 		<span class="text-center" style="font-weight:bold; color:white; font-size:16px;">
+	                       				 			<span class="label label-warning" style="padding:5px;">${preReadDto.progress}</span>
+	                       				 		</span>
+	                       			</c:if>
+									
+								</td>
+							</tr>
+					 	</c:if>
+					 <c:if test="${not empty nextReadDto }">    
+                      <tr height="35" style="border-bottom:1px solid #ddd; ">
+					    <td colspan="1"bgcolor="#EEEEEE" align="center">다음글</td>
+					    <td colspan="6" align="left" style="padding-left:10px;" colspan="3">
+							<a href="<%=cp%>/club/index/apply/article?${params}&num=${nextReadDto.clubApplyIdx}">
+								 ${nextReadDto.subject}
+							</a>							
+							<c:if test="${nextReadDto.progress.equals('모집마감')}">
+	                       				 	<span class="text-center" style="font-weight:bold; color:white; font-size:16px;"> 
+	                       				 		<span class="label label-default" style="padding:5px;">${nextReadDto.progress}</span>
+	                       				 	</span>
+	                       	</c:if>
+	                       	<c:if test="${nextReadDto.progress.equals('모집중')}">
+	                       		<span class="text-center" style="font-weight:bold; color:white; font-size:16px;">
+	                       			<span class="label label-warning" style="padding:5px;">${nextReadDto.progress}</span>
+	                       		</span>
+	                       	</c:if>
+															
+					   	 	</td>
+						</tr>
+						</c:if>
+                   </tbody>
+                   <tfoot  >
+                    <tr height="10" style="border:none;">
+                    </tr>
+                    <tr >
+                    <c:if test="${sessionScope.member.userId=='admin'}">   
+					    <td style="padding-left:0px; border-top:none;"colspan="6" align="left">
+   						 	<button type="button" class="btn btn-default" onclick="deleteApply();">삭제</button>
+   						</td>
+   					</c:if>
+   						<td align="right" colspan="2" style="padding-right:0px; border-top:none;margin-bottom:30px; ">
+					           <button style=""type="button" class="btn btn-default"  onclick="javascript:location.href='<%=cp%>/club/index/apply/list?${params}';">목록으로</button>
+
+					    </td>
+					    </tr>
+                   </tfoot>
+              </table>
+          </div></div>
       </div>
  	</div>
 </div>

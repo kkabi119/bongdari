@@ -10,10 +10,10 @@
   <insert id="insertDemanderjoin" parameterType="Integer">
     INSERT INTO service(serviceIdx) values(#{serviceIdx})
   </insert>
-  	<select id="readDemanderjoinLogin" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="String">
-	   SELECT serviceIdx, serviceId, serviceName, servicePwd, serviceImgname
+  	<select id="readDemanderjoinLogin" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="Integer">
+	   SELECT serviceIdx, serviceName, serviceImgname, userIdx
 	          FROM serviceInfo
-	          WHERE serviceId=#{serviceId} 
+	          WHERE userIdx=#{userIdx}
 	
 	</select>
   <insert id="insertDemanderjoinInfo" parameterType="com.bong.demanderjoin.Demanderjoin">
