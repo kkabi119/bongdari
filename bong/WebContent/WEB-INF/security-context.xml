@@ -38,6 +38,8 @@
 	        
 	         <!-- admin 페이지 -->
 		    <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		    
+		    <intercept-url pattern="/member/register" access="permitAll" />
 
 	        <intercept-url pattern="/member/index/myPage/**" access="hasRole('ROLE_USER')"/>
 	        
