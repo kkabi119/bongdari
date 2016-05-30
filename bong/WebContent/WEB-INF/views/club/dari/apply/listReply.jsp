@@ -14,7 +14,7 @@
 		color:black;
 	}
 	
-	.btn{
+	post-comment .btn{
 		border-radius:0px;
 		padding:9px 12px;
 	}

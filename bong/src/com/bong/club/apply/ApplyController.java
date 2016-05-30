@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -271,10 +272,13 @@ public class ApplyController {
 	@RequestMapping(value="/club/index/apply/replyCount",  method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> replyCount(	@RequestParam(value="num") int num) throws Exception {
-
+		
 		String state="true";
 		int count=0;
+		
 		System.out.println("replyCount로 넘어옴 ");
+		
+		
 		//String tableName="b_"+blogSeq;
         Map<String, Object> map=new HashMap<String, Object>();
  		//map.put("tableName", tableName);
@@ -436,11 +440,35 @@ public class ApplyController {
 			}
 			
 			
-			@RequestMapping(value="/club/index/apply/applyList")
-			public ModelAndView applyList( HttpSession session) {
+			@RequestMapping(value="/club/index/apply/applyList2")
+			public ModelAndView applyList2( HttpSession session) {
 				//   /club/index/apply/applyList
 				ModelAndView mav = new ModelAndView(".four.club.dari.apply.applyList.봉다리 개인페이지");
 				
+				return mav;
+			}
+			
+			// 봉사신청한 회원리스트 모달창 
+			@RequestMapping(value="/club/index/apply/applyList1")
+			public ModelAndView applyList1(HttpSession session, @RequestParam(value="num") int clubApplyIdx,	@RequestParam(value="page") String page	) throws Exception {
+				
+				// 봉사신청한 같은 동아리의 회원을 dto에 담아와야함 
+				SessionInfo info=(SessionInfo)session.getAttribute("member");
+				
+				if(info==null) {
+					return new ModelAndView("redirect:/member/login");
+				}
+
+				ModelAndView mav = new ModelAndView("club/dari/apply/applyList");
+
+				// 해당 레코드 가져 오기
+				Apply dto = service.readApplyList(clubApplyIdx);
+				
+				if(dto==null) {
+					System.out.println("dto 가 널입니다 ");
+				}			
+				
+				mav.addObject("dto", dto);
 				return mav;
 			}
 }

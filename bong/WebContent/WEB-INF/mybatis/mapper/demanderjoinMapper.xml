@@ -6,7 +6,9 @@
   <select id="demanderjoinSeq" resultType="Integer">
     SELECT service_seq.NEXTVAL FROM DUAL
   </select>
-  
+  	<insert id="insertMember" parameterType="Integer">
+		INSERT INTO member(userIdx) values(#{userIdx})
+	</insert>
   <insert id="insertDemanderjoin" parameterType="Integer">
     INSERT INTO service(serviceIdx) values(#{serviceIdx})
   </insert>
@@ -28,13 +30,10 @@
     </select>  
   
   	<select id="readDemanderjoinLogin" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="Integer">
-	   SELECT ci.userIdx, userId, userName, userPwd, memImgname, memImg, isService FROM checkId ci
-	     LEFT OUTER JOIN serviceInfo si ON ci.userIdx=si.userIdx WHERE 
-	   SELECT serviceIdx, serviceName, serviceImgname, userIdx
-	    WHERE serviceIdx=#{serviceIdx}
+	   SELECT ci.userIdx, userId, serviceName, userPwd, serviceImgname, serviceImg, isService FROM checkId ci
+	     LEFT OUTER JOIN serviceInfo si ON ci.userIdx=si.userIdx WHERE  ci.userIdx=#{userIdx}
 	</select>
  
-  
   <update id="updateLastLogin" parameterType="String">
      UPDATE serviceInfo SET last_login=SYSDATE
       WHERE serviceIdx=#{serviceIdx}

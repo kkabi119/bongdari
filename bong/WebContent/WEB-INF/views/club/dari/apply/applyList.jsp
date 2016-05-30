@@ -32,7 +32,7 @@ text-align: center;
 width: 10em;                   
 
 padding: 1em;
-color: #8C96A0;       }      
+color: #60666D;       }      
 
  
 
@@ -86,9 +86,9 @@ width:300px;
 }
 </style>
 
-<div class="container" style="width:85%">
+<div class="container" style="width:100%">
 
- 	<div class="well well-sm text-center" >
+
 
 <table class="table table-bordered table-striped table-hover" style="background-color:white; border-radius:3px;">
 
@@ -148,4 +148,4 @@ width:300px;
       <td> <button class="btn btn-info btn-xs">▼</button>
   </tr>
 </table>
-</div></div><br /><br />
+</div><br /><br />

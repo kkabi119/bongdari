@@ -7,9 +7,9 @@ public interface DemanderjoinService {
    
   public Demanderjoin readDemanderjoin1(int serviceIdx);
   public Demanderjoin readDemanderjoinLogin(int userIdx);
+  public Demanderjoin readDemanderCheck(String userId);
   
   public int insertDemanderjoin(Demanderjoin dto, String pathname);
-  
   public int Demanderjoin2(Demanderjoin dto);
   
   public int updateLastLogin(String serviceId);
