@@ -32,7 +32,7 @@
      LEFT OUTER JOIN memberinfo mi ON ci.userIdx=mi.userIdx WHERE ci.userIdx=#{userIdx}
 	</select>
     <select id="readMemberInfo" resultType="com.bong.member.Member" parameterType="String">
-	   SELECT ci.userIdx, userId, userName, userPwd,TO_CHAR(userBirth, 'YYYY-MM-DD') userBirth, userAddr, userGender,
+	   SELECT ci.userIdx, userId, ci.userName, userPwd,TO_CHAR(userBirth, 'YYYY-MM-DD') userBirth, userAddr, userGender,
 	          userTel, userEmail, userJob, memImgname, memImg, userLevel
 	          FROM checkId ci 
             LEFT OUTER JOIN memberInfo mi ON ci.userIdx=mi.userIdx  
