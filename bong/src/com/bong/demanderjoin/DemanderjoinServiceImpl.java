@@ -96,9 +96,12 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 					dto.getEmail2() != null && dto.getEmail2().length()!=0 )
 				dto.setServiceEmail(dto.getEmail1() + "@" + dto.getEmail2());
 			
-			System.out.println(dto.getServiceTel());
-			int seq = dao.getIntValue("demanderjoin.demanderjoinSeq");
-			dto.setServiceIdx(seq);
+			
+			
+			int memSeq = dao.getIntValue("member.memberSeq");
+			dto.setUserIdx(memSeq);			
+			int serviceSeq = dao.getIntValue("demanderjoin.demanderjoinSeq");
+			dto.setServiceIdx(serviceSeq);
 			
 			if(dto.getServiceImg()!=null && !dto.getServiceImg().isEmpty()){
 			  String filename=fileManager.doFileUpload(dto.getServiceImg(), pathname);	
@@ -106,11 +109,13 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 			}
 		
 			//수요처 회원 정보 저장
-			dao.insertInformation("demanderjoin.insertMember", seq);
-			dao.insertInformation("demanderjoin.insertDemanderjoin", seq);
+			dao.insertInformation("demanderjoin.insertMember", memSeq);
+			dao.insertInformation("demanderjoin.insertDemanderCheck", dto);
+			dao.insertInformation("demanderjoin.insertDemanderjoin", serviceSeq);
 			dao.insertInformation("demanderjoin.insertDemanderjoinInfo", dto);
+			dto.setAuthority("ROLE_SERVICE");
+			dao.insertInformation("demanderjoin.insertAuthority", dto);
 			
-			result = 1;
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -142,11 +147,11 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 	}
 
 	@Override
-	public int updateLastLogin(String serviceId) {
+	public int updateLastLogin(String userId) {
 		int result = 0;
 		
 		try {
-			result=dao.updateInformation("demanderjoin.updateLastLogin", serviceId);	
+			result=dao.updateInformation("demanderjoin.updateLastLogin", userId);	
 		} catch (Exception e) {	
 			System.out.println(e.toString());
 		}
