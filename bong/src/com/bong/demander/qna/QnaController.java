@@ -1,7 +1,7 @@
 package com.bong.demander.qna;
 
-import java.io.File;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bong.common.FileManager;
 import com.bong.common.MyUtil;
-import com.bong.demander.review.DeReview;
 import com.bong.member.SessionInfo;
 
 @Controller("bong.deQnaController")
@@ -28,16 +27,19 @@ public class QnaController {
 	private QnaService service;
 	@Autowired
 	private MyUtil myUtil;
-	@Autowired
-	private FileManager fileManager;
+
 	
 	@RequestMapping(value="/demander/index/qna/list")
 	public ModelAndView deQnaList(
 			HttpServletRequest req,
 			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue
 			) throws Exception {
 		
+		
+		String cp = req.getContextPath();
+		  
 		int numPerPage = 10;  // 한 화면에 보여주는 게시물 수
 		int total_page = 0;
 		int dataCount = 0;
@@ -65,15 +67,34 @@ public class QnaController {
         map.put("end", end);
 
         List<Qna> list = service.listQna(map);
+        int listNum,n=0;
         Iterator<Qna> it=list.iterator();
+        
         while(it.hasNext()) {
         	Qna dto=it.next();
+        	listNum=dataCount-(start+n-1);
+        	dto.setListNum(listNum);
         	dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+        	n++;
+        }
+        
+        String params = "";
+        String urlList = cp+"/demander/index/qna/list";
+        String urlArticle = cp+"/demander/index/qna/article?page=" + current_page;
+        if(searchValue.length()!=0) {
+        	params = "searchKey=" +searchKey + 
+        	             "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");	
+        }
+        
+        if(params.length()!=0) {
+            urlList = cp+"/demander/index/qna/list?" + params;
+            urlArticle = cp+"/demander/index/qna/article?page=" + current_page + "&"+ params;
         }
         
 		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.list.QnA 게시판");
         mav.addObject("list", list);
         mav.addObject("pageNo", current_page);
+        mav.addObject("urlArticle", urlArticle);
         mav.addObject("dataCount", dataCount);
         mav.addObject("paging", myUtil.paging(current_page, total_page));
 		return mav;
@@ -101,12 +122,99 @@ public class QnaController {
 		return new ModelAndView("redirect:/demander/index/qna/list");
 		
 	}
+	
 	@RequestMapping(value="/demander/index/qna/article")
-	public ModelAndView deQnaArticle() throws Exception {
+	public ModelAndView deQnaArticle(HttpSession session,
+			@RequestParam(value="num") int num,
+			@RequestParam(value="page") int page,
+			@RequestParam(value="searchKey",defaultValue="subject") String searchKey,
+			@RequestParam(value="searchValue",defaultValue="") String searchValue
+			) throws Exception {
+		
+	
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		//검색값 decode
+		searchValue= URLDecoder.decode(searchValue,"utf-8");
+		
+		//조회수증가
+		service.updateHitCount(num);
 		
 		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.create.QnA 게시판");
+		//해당아티클가져오기
+		Qna dto=service.readQna(num);
+	
+		if(dto==null)
+			return new ModelAndView("redirect:/demander/index/qna/list");
+			
+		String params = "page="+page;
+		if(searchValue.length()!=0) {
+		    params += "&searchKey=" + searchKey + 
+		                    "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
+		}
+		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.article.QnA 게시판");
+		mav.addObject("dto", dto);
+		mav.addObject("page", page);
+		mav.addObject("params", params);
 		return mav;
 	}
 
+	
+	@RequestMapping(value = "demander/index/qna/update", method=RequestMethod.GET)
+	public ModelAndView deRevUpdateForm(HttpSession session,
+			@RequestParam(value = "num") int num,
+			@RequestParam(value = "page") String page
+			) throws Exception {
+
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		
+		Qna dto = service.readQna(num);
+		
+		if (info.getUserIdx()!=dto.getUserIdx())
+			return new ModelAndView("redirect:/demander/index/qna/list?page="+page);
+
+		ModelAndView mav=new ModelAndView(".four.demander.dari.qna.create.후기게시판");
+		mav.addObject("mode", "update");
+		mav.addObject("page", page);
+		mav.addObject("dto", dto);
+		return mav;
+	}
+
+	@RequestMapping(value = "demander/index/qna/update", method=RequestMethod.POST)
+	public String deRevUpdateSubmit(Qna dto,
+			@RequestParam(value = "page") String page) throws Exception {
+			
+		// 수정 하기
+		service.updateQna(dto);
+		
+		return "redirect:/demander/index/qna/list?page="+page;
+	}
+
+
+	@RequestMapping(value="/demander/index/qna/delete")
+	public ModelAndView delete(
+			HttpSession session,
+			@RequestParam(value="num") int num,
+			@RequestParam(value="page") String page
+			) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		/*if(info==null) {
+			return new ModelAndView("redirect:/member/login");
+		}*/
+		
+		
+		// 해당 레코드 가져 오기
+		Qna dto = service.readQna(num);
+		if(dto==null) {
+			return new ModelAndView("redirect:/demander/index/qna/list?page="+page);
+		}
+		
+		if(! info.getUserId().equals(dto.getUserId()) && ! info.getUserId().equals("admin")) {
+			return new ModelAndView("redirect:/demander/index/qna/list?page="+page);
+		}
+		
+		service.deleteQna(num);
+		
+		return new ModelAndView("redirect:/demander/index/qna/list?page="+page);
+	}
 }

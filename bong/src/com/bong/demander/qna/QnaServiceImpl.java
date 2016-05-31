@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bong.common.dao.bongDAO;
+import com.bong.demander.review.DeReview;
 
 @Service("demander.qnaService")
 public class QnaServiceImpl implements QnaService {
@@ -59,6 +60,19 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
+	public int updateHitCount(int num) {
+		int result=0;
+		try {
+			result=dao.updateInformation("deQna.updateHitCount", num);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+	
+	
+	
+	@Override
 	public int updateQna(Qna qna) {
 		int result=0;
 		try {
@@ -79,5 +93,7 @@ public class QnaServiceImpl implements QnaService {
 		}
 		return result;
 	}
+
+	
 
 }

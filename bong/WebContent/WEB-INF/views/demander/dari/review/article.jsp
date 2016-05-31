@@ -202,7 +202,7 @@ function updateReview() {
                                     
                                         <ul class="nav navbar-nav post-nav">
                                         
-                                         	<li onclick="sendLike('${dto.serviceReviewIdx}')"><i class="fa fa-thumbs-o-up"></i>좋아요 <span id="likeCount${dto.serviceReviewIdx}">${dto.likeCount}</span></li> 
+                                         	<li onclick="sendLike('${dto.serviceReviewIdx}')"><a href="#"><i class="fa fa-thumbs-o-up"></i>좋아요 <span id="likeCount${dto.serviceReviewIdx}">${dto.likeCount}</span></a></li> 
                                                                                         
                                             <li><a href="#"><i class="fa fa-comments"></i>댓글수  ${dto.replyCount}</a></li>
                                             <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
@@ -241,13 +241,13 @@ function updateReview() {
                                		<div style="float:left; padding-top: 20px; padding-right: 10px">
                               				<span class="item-click" id="reply-open-close">댓글 ▼</span>&nbsp;<span id="postReplyCountView" class="item-title" style="color:#424951">(${dto.replyCount})</span>
                      				</div>
-                                  	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
+                                  	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px; ">
                       					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/demander/index/review/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
                   					</div>
                                       
                   					
                                     <div style="float:right; padding-top: 10px;padding-bottom: 10px;">
-                      					<button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="updateReview();"> 수정 <span class="fa fa-pencil"></span></button>
+                      					<button type="button" class="btn btn-warning" style="padding:10px 15px ; color:white; border:none;" onclick="updateReview();"> 수정 <span class="fa fa-pencil"></span></button>
                   					</div>
                   					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
                       					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="deleteReview();"> 삭제 <span class="fa fa-times"></span></button>
@@ -271,7 +271,7 @@ function updateReview() {
                   </div>
                   
                   <div style="text-align: right; padding-top: 10px;">
-                      <button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="fa fa-pencil"></span></button>
+                      <button type="button" class="btn btn-warning" style="padding:10px 15px ; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="fa fa-pencil"></span></button>
                   </div>           
               
               </div>

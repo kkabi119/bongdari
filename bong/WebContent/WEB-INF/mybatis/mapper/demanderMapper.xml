@@ -58,8 +58,8 @@
 	      DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0 
 	  </if>
 	  <if test="searchKey=='created'">
-	      TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
-	      OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue}
+	      TO_CHAR(s.created, 'YYYY-MM-DD') = #{searchValue}
+	      OR TO_CHAR(s.created, 'YYYYMMDD') = #{searchValue}
 	  </if>
 	</sql>
 	

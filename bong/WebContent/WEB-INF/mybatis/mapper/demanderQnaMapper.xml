@@ -4,6 +4,24 @@
 <mapper namespace="deQna">
 
 
+<!-- 검색 list관련 -->
+	<sql id="where-list">
+	  <if test="searchKey=='userName'">
+	      userName=#{searchValue}
+	  </if>
+	  <if test="searchKey=='subject'">
+	      INSTR(subject, #{searchValue}) &gt; 0
+	  </if>
+	  <if test="searchKey=='content'">
+	      DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0 
+	  </if>
+	  <if test="searchKey=='created'">
+	      TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
+	      OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue}
+	  </if>
+	</sql>
+	
+	
  <!-- QnA -->
 	<insert id="insertQna" parameterType="com.bong.demander.qna.Qna">
 	  INSERT INTO service_qna(sqnaIdx, userIdx, subject, content,answer) 
@@ -27,12 +45,9 @@
 	            resultType="com.bong.demander.qna.Qna">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-			      SELECT sqnaIdx, s.useridx,userName,subject, CONTENT, hitCount
+			      SELECT sqnaIdx, s.useridx,userName,subject, CONTENT, hitCount,to_char(created,'YYYY-MM-DD') created
 				  FROM service_qna s join checkId c on s.userIdx=c.userIdx 
                     <where>
-	     	           <if test="categoryNum!=0 ">
-	     	               faqBoard.categoryNum = #{categoryNum}
-	     	           </if>
 	     	           <if test="searchValue!=null and searchValue!='' ">
 	     	               AND (subject LIKE '%' || #{searchValue} || '%' OR
 	     	               content LIKE '%' || #{searchValue} || '%')
@@ -45,8 +60,9 @@
 	]]>
 	</select>
 	
+	<!-- 글읽기 -->
 	<select id="readQna" resultType="com.bong.demander.qna.Qna" parameterType="Integer">
-	      SELECT sqnaIdx, s.useridx, userId,userName, subject,  CONTENT, hitCount
+	      SELECT sqnaIdx, s.useridx,userId,userName, subject,created,CONTENT, hitCount
 				FROM service_qna s join checkId c on s.userIdx=c.userIdx
 				WHERE sqnaIdx = #{sqnaIdx}
 	</select>
@@ -55,6 +71,7 @@
 	<update id="updateHitCount" parameterType="Integer">
 		UPDATE service_qna SET hitCount=hitCount+1 WHERE sqnaIdx =#{sqnaIdx}
 	</update>
+
 
      <!-- 수정 -->
      <update id="updateQna" parameterType="com.bong.demander.qna.Qna">
