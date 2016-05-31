@@ -65,7 +65,7 @@ function QnasearchList() {
 	                   				</c:otherwise>
 	                   			</c:choose>
 	                        </td>
-	                        <td class="text-center">${dto.userName}</td>
+	                        <td class="text-center">${dto.userName} | ${sessionScope.member.userId}</td>
 	                        <td class="text-center">${dto.created}</td>
 	                        <td class="text-center">${dto.hitCount}</td> 
 	                    </tr>
