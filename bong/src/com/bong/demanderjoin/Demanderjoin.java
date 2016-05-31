@@ -9,9 +9,24 @@ public class Demanderjoin {
   private String email1, email2;
   private String serviceIntro,serviceImgname;
   private MultipartFile serviceImg;
-  private int serviceIdx, isService, userIdx;
+  private int serviceIdx, isService, userIdx,enabled;
+  private String authority;
+  private String userId, userPwd;
   
   
+  
+public String getUserId() {
+	return userId;
+}
+public void setUserId(String userId) {
+	this.userId = userId;
+}
+public String getUserPwd() {
+	return userPwd;
+}
+public void setUserPwd(String userPwd) {
+	this.userPwd = userPwd;
+}
 public int getUserIdx() {
 	return userIdx;
 }
@@ -113,6 +128,18 @@ public int getIsService() {
 }
 public void setIsService(int isService) {
 	this.isService = isService;
+}
+public int getEnabled() {
+	return enabled;
+}
+public void setEnabled(int enabled) {
+	this.enabled = enabled;
+}
+public String getAuthority() {
+	return authority;
+}
+public void setAuthority(String authority) {
+	this.authority = authority;
 }
   
   

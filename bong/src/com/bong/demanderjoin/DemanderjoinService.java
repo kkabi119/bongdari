@@ -12,7 +12,7 @@ public interface DemanderjoinService {
   public int insertDemanderjoin(Demanderjoin dto, String pathname);
   public int Demanderjoin2(Demanderjoin dto);
   
-  public int updateLastLogin(String serviceId);
+  public int updateLastLogin(String userId);
   
   public int deleteDemanderjoin2(Map<String, Object> map);
   

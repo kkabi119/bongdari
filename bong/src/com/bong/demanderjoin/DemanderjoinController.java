@@ -74,7 +74,7 @@ public class DemanderjoinController {
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+File.separator+"uploads"+File.separator+"serviceImg";
 		
-		int result=service.insertDemanderjoin(dto,pathname);
+		service.insertDemanderjoin(dto,pathname);
 		
 		ModelAndView mav = new ModelAndView(".layout.member.login.·Î±×ÀÎ");
 		
@@ -85,7 +85,7 @@ public class DemanderjoinController {
 	@RequestMapping(value="/demanderjoin/serviceIdCheck")
 	@ResponseBody
 	public Map<String, Object> serviceIdCheck(
-			@RequestParam String serviceId
+			@RequestParam String userId
 			) throws Exception{
 		String passed="false";
 		/*
