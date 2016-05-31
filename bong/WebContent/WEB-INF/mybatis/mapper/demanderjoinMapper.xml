@@ -20,9 +20,9 @@
   <insert id="insertDemanderjoinInfo" parameterType="com.bong.demanderjoin.Demanderjoin">
     INSERT INTO serviceInfo
     (serviceIdx, serviceName, serviceBirth, serviceTel,
-     serviceAddr, serviceEmail, serviceImgname, userIdx, enabled)
+     serviceAddr, serviceEmail, serviceImg, serviceImgname, userIdx, enabled)
      VALUES(#{serviceIdx},#{serviceName},#{serviceBirth}
-     ,#{serviceTel},#{serviceAddr},#{serviceEmail},#{serviceImgname, jdbcType=VARCHAR}, #{userIdx},0)
+     ,#{serviceTel},#{serviceAddr},#{serviceEmail},#{serviceImg, jdbcType=VARCHAR},#{serviceImgname, jdbcType=VARCHAR}, #{userIdx},0)
   </insert>
     <!-- 아이디 중복 체크 -->
     <select id="readDemanderCheck" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="String">
@@ -33,12 +33,30 @@
 	   SELECT ci.userIdx, userId, serviceName, userPwd, serviceImgname, serviceImg, isService FROM checkId ci
 	     LEFT OUTER JOIN serviceInfo si ON ci.userIdx=si.userIdx WHERE  ci.userIdx=#{userIdx}
 	</select>
- 
+	
+    <select id="readDemanderjoinInfo" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="String">
+	   SELECT ci.userIdx, userId, serviceName, userPwd,TO_CHAR(serviceBirth, 'YYYY-MM-DD') serviceBirth, serviceAddr, 
+	          serviceTel, serviceEmail, serviceImgname, serviceImg
+	          FROM checkId ci 
+            LEFT OUTER JOIN serviceInfo mi ON ci.userIdx=mi.userIdx  
+	          WHERE ci.userIdx=#{userIdx}
+	</select>
   <update id="updateLastLogin" parameterType="String">
      UPDATE serviceInfo SET last_login=SYSDATE
       WHERE serviceIdx=#{serviceIdx}
   </update>
-  
+  	<update id="updatePwd" parameterType="com.bong.demanderjoin.Demanderjoin">
+	   UPDATE checkId SET userPwd=#{userPwd} WHERE userIdx=#{userIdx}
+	</update>
+	<update id="updateMember2" parameterType="com.bong.demanderjoin.Demanderjoin">
+        UPDATE serviceInfo SET 
+               serviceEmail=#{serviceEmail}, serviceTel=#{serviceTel}, serviceBirth=#{serviceBirth},
+               serviceAddr=#{serviceAddr}
+               ,serviceImg=#{serviceImg, jdbcType=VARCHAR},serviceImgname=#{serviceImgname, jdbcType=VARCHAR},
+               modify_date=SYSDATE 
+               WHERE userIdx=#{userIdx}
+    </update>
+    
   <!-- 수요처 권한 테이블 -->
   
   <insert id="insertAuthority" parameterType="com.bong.demanderjoin.Demanderjoin">

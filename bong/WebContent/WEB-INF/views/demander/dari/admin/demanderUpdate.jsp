@@ -15,42 +15,8 @@ $(function(){
 	$('.fileinput').fileinput();
 });
 
-
-//아이디 중복 검사
-function serviceIdCheck() {
-	var userId=$("#userId").val();
-	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(userId)) { 
-		var str="아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.";
-		$("#userId").focus();
-		$("#userId + .help-block").html(str);
-		return false;
-	}
-	
-	var url="<%=cp%>/demanderjoin/serviceIdCheck";
-	var params="userId="+userId;
-	$.ajax({
-		type:"POST"
-		,url:url
-		,data:params
-		,dataType:"JSON"
-		,success:function(data) {
-			var passed=data.passed;
-			if(passed=="true") {
-				var str="<span style='color:blue;font-weight: bold;'>"+userId+"</span> 아이디는 사용가능 합니다.";
-				$("#userId + .help-block").html(str);
-			} else {
-				var str="<span style='color:red;font-weight: bold;'>"+userId+"</span> 이미 존재하는 아이디입니다.";
-				$("#userId + .help-block").html(str);
-				$("#userId").val("");
-				$("#userId").focus();
-			}
-		}
-	});
-}
-
-
-function demanderRegister() {
-   var f = document.demanderjoinForm;;
+function demanderUpdate() {
+   var f = document.demanderUpdateForm;
    var str;
 
    str=f.userId.value;
@@ -63,39 +29,39 @@ function demanderRegister() {
    }
    
    str = f.userPwd.value;
-/*    if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
-      $("#servicePwd + .help-block").html("<span style='color:red;'>비밀번호 형식을 확인해주세요! <span>");
-      f.servicePwd.focus();
+  /*  if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
+      $("#userPwd + .help-block").html("<span style='color:red;'>비밀번호 형식을 확인해주세요! <span>");
+      f.userPwd.focus();
       return false;
    }else {
-      $("#servicePwd + .help-block").html("패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.");
+      $("#userPwd + .help-block").html("패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.");
    }
    
-   if(f.servicePwdCheck.value != str) {
-      $("#servicePwdCheck + .help-block").html("<span style='color:red;'>비밀번호가 일치하지 않습니다! <span>");
-      f.servicePwdCheck.focus();
+   if(f.userPwdCheck.value != str) {
+      $("#userPwdCheck + .help-block").html("<span style='color:red;'>비밀번호가 일치하지 않습니다! <span>");
+      f.userPwdCheck.focus();
       return false;
    } else {
-      $("#servicePwdCheck + .help-block").html("비밀번호를 한번 더 입력해주세요");
-   } */
-   
-    str = f.serviceName.value;
-   str = $.trim(str);
+      $("#userPwdCheck + .help-block").html("비밀번호를 한번 더 입력해주세요");
+   }
+    */
+    str = f.userName.value;
+    str = $.trim(str);
 
-    if(!/^[\uac00-\ud7a3a-zA-Z]{2,10}$/g.test(str)) {
-       $("#serviceName + .help-block").html("<span style='color:red;'>이름을 확인해주세요! <span>");
-        f.serviceName.focus();
+    if(!/^[\uac00-\ud7a3]{2,4}$/g.test(str)) {
+       $("#userName + .help-block").html("<span style='color:red;'>이름을 확인해주세요! <span>");
+        f.userName.focus();
         return false;
     } 
     else {
-      $("#serviceName + .help-block").html("이름은 한글로 2자이상 4자 이하입니다.");
+      $("#userName + .help-block").html("이름은 한글로 2자이상 4자 이하입니다.");
    }   
-    str=f.serviceImg.value;
-    if(str) {
-    	if(! isImageFile(f.serviceImg.value)) {
-    		alert("이미지 파일만 가능합니다.")
-    		f.serviceImg.focus();
-            return false;
+    str=f.uploads.value;
+    if(str){
+    	if(! isImageFile(f.uploads.value)){
+    		alert("이미지파일만 가능합니다.")
+    		f.uploads.focus();
+    		return false;
     	}
     }
     str = f.serviceBirth.value;
@@ -106,7 +72,7 @@ function demanderRegister() {
     } else {
       $("#serviceBirth + .help-block").html("  생년월일은 2000-01-01 형식으로 입력 합니다.");
    }
- 
+   
     str = f.email2.value;
     if(!/[0-9a-zA-Z]([0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(str)) {
        $("#serviceEmail + .help-block").html("<span style='color:red;'> 이메일 형식을 확인해주세요!<span>");
@@ -132,24 +98,30 @@ function demanderRegister() {
     if(!/^(\d+)$/.test(str)) {
         f.tel3.focus();
         return false;
+    } 
+    if(!str) {
+        $("#serviceTel + .help-block").html("<span style='color:red;'>번호만 입력해주세요<span>");
+         f.tel1.focus();
+         return false;
+     } else {
+       $("#serviceTel + .help-block").html("  전화번호는 번호만 입력해주세요");
     }
     var failed="${failed}";
    if(failed=="true"){
       alert("회원가입에 실패했습니다!");
-   }
+   } 
    
     var mode="${mode}"
     if(mode=="created") {
-          f.action = "<%=cp%>/demanderjoin/demanderRegister";
+          f.action = "<%=cp%>/member/register";
     } else if(mode=="update") {
-       f.action = "<%=cp%>/member/update_ok.sst";
+       f.action = "<%=cp%>/demander/index/admin/tab3/demanderUpdate";
     }
 
     return true;
 }
-
 function changeEmail() {
-    var f = document.demanderjoinForm;
+    var f = document.demanderUpdateForm;
     
     var str = f.selectEmail.value;
     if(str!="direct") {
@@ -164,14 +136,13 @@ function changeEmail() {
     }
 }
 
-
-function imageDelete() {
-	if(confirm("등록된 사진을 삭제 하시겠습니까 ?")) {
-		var url="<%=cp%>/demanderjoin/imageDelete";
-		var filename="${dto.serviceImgname}";
+function imageDelete(){
+	if(confirm("등록된 사진을 삭제 하시겠습니까?")){
+		var url="<%=cp%>/member/index/imageDelete";
+		var filename="${dto.serviceImg}";
 		$.post(url, {filename:filename}, function(data){
 			var isLogin=data.isLogin;
-			if(isLogin==false) {
+			if(isLogin==false){
 				location.href="<%=cp%>/member/login";
 				return;
 			}
@@ -179,23 +150,25 @@ function imageDelete() {
 			$("#imgPhoto").attr("src", "<%=cp%>/res/images/noimage.png");
 			$("#btnDeletePhoto").hide();
 			
+			var f = document.demanderUpdateForm;
+			f.serviceImgname.value="";
+			f.serviceImg.value="";
+			
 		},"json");
 	}
 }
 </script>
 
-
 <div class="container" role="main" style="margin-top:50px;">
 
   <div class="bodyFrame">
-  <form class="form-horizontal" name="demanderjoinForm" method="post" onsubmit="return demanderRegister();" enctype="multipart/form-data">
+  <form class="form-horizontal" name="demanderUpdateForm" method="post" onsubmit="return demanderUpdate();" enctype="multipart/form-data">
     <div class="form-group" style="margin-bottom:0px;">
         <label class="col-sm-2 control-label" for="userId">아이디</label>
         <div class="col-sm-7">
             <input style="width:200px;"class="form-control" id="userId" name="userId" type="text" 
-                  placeholder="아이디"  onchange="serviceIdCheck()" value="${dto.userId}"
-              ${mode=="update" ? "readonly='readonly' style='border:none;'":""}>
-            <p class="help-block"> 아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.</p>
+                  placeholder="아이디" onchange="userIdCheck();" value="${dto.userId}" readonly="readonly">
+
         </div>
     </div>
  
@@ -208,37 +181,35 @@ function imageDelete() {
     </div>
     
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="servicePwdCheck">패스워드 확인</label>
+        <label class="col-sm-2 control-label" for="userPwdCheck">패스워드 확인</label>
         <div class="col-sm-7">
-            <input style="width:200px; "class="form-control" id="servicePwdCheck" name="servicePwdCheck" type="password" placeholder="비밀번호 확인">
+            <input style="width:200px; "class="form-control" id="userPwdCheck" name="userPwdCheck" type="password" placeholder="비밀번호 확인">
             <p class="help-block">패스워드를 한번 더 입력해주세요.</p>
         </div>
     </div>
  
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="serviceName">기관명</label>
+        <label class="col-sm-2 control-label" for="serviceName">이름</label>
         <div class="col-sm-7">
-            <input style="width:200px; " class="form-control" id="serviceName" name="serviceName" 
-                  type="text" placeholder="기관명"   value="${dto.serviceName}" ${mode=="update" ? "readonly='readonly'
-                  style='border:none;' ":""}>
-        <p class="help-block">기관명은 한글이나 영어로 2자이상 4자 이하입니다.</p>
+            <input style="width:200px; " class="form-control" id="userName" name="serviceName" 
+                  type="text" placeholder="이름"   value="${dto.serviceName}" readonly="readonly">
+        <p class="help-block">이름은 한글로 2자이상 4자 이하입니다.</p>
      </div>
     </div>
-    
-        <div class="form-group">
+  <div class="form-group">
         <label class="col-sm-2 control-label" for="serviceImgname">사진</label>
         <div class="col-sm-7">
             <div class="fileinput fileinput-new" data-provides="fileinput" style="float: left;">
                 <div class="fileinput-preview thumbnail" style="width: 130px; height: 150px;"></div>
                 <div>
-                     <span class="btn btn-default wbtn btn-file"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="uploads" id="serviceImgname" accept="image/png, image/jpeg, image/gif"></span>
+                     <span class="btn btn-default wbtn btn-file"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="uploads" accept="image/png, image/jpeg, image/gif"></span>
                      <a href="#" class="btn btn-default wbtn fileinput-exists" data-dismiss="fileinput">삭제</a>
                 </div>
             </div>
-<c:if test="${mode=='update'}">
+
             <div style="float: left; margin-left: 10px;">
                <c:if test="${not empty dto.serviceImgname}">
-                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img id="imgPhoto" src="<%=cp%>/uploads/serviceImg/${dto.serviceImgname}" style="width: 100%; height: 100%;"></div>
+                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img id="imgPhoto" src="<%=cp%>/uploads/serviceImg/${dto.serviceImg}" style="width: 100%; height: 100%;"></div>
                     <div style="padding-left: 15px;">
                          <span>등록 이미지</span>
                          <a id="btnDeletePhoto" href="javascript:imageDelete();" class="close" style="float: none">&times;</a>
@@ -251,19 +222,19 @@ function imageDelete() {
                    </div>
                 </c:if>
             </div>
-</c:if>
+
         </div>
     </div>
     <div style=""class="form-group">
         <label class="col-sm-2 control-label" for="serviceBirth">설립일</label>
         <div class="col-sm-7">
-            <input style="width:200px; " class="form-control" id="serviceBirth" name="serviceBirth" type="text" placeholder="설립일" value="${dto.serviceBirth}">
+            <input style="width:200px; " class="form-control" id="serviceBirth" name="serviceBirth" type="text" placeholder="생년월일" value="${dto.serviceBirth}">
             <p class="help-block">설립일은 2000-01-01 형식으로 입력 합니다.</p>
         </div>
     </div>
 
 <div class="form-group">
-        <label class="col-sm-2 control-label" for="userEmail">이메일</label>
+        <label class="col-sm-2 control-label" for="servicerEmail">이메일</label>
         <div class="col-sm-10" style="margin-top:0px;">
         <table>
         <tr>
@@ -288,7 +259,7 @@ function imageDelete() {
          </tr>
          </table>
          </div>
-    </div>
+    </div> 
     
     <div class="form-group" >
         <label class="col-sm-2 control-label" for="tel1">기관번호</label>
@@ -341,25 +312,18 @@ function imageDelete() {
             </label>
         </div>
     </div>
-
-    
-<div class="form-group">
-  <div class="col-sm-offset-2 col-sm-10">
-      <c:if test="${mode=='created'}">
-            <button type="submit" name="sendButton" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;">
-                  회원가입<span class="glyphicon glyphicon-ok"></span></button>
-            <button type="button" class="btn btn-default btn-sm wbtn"  onclick="javascript:location.href='<%=cp%>/member/login';" style="margin-right:20px; height:40px; width:130px;">
-                  가입취소 <span class="glyphicon glyphicon-remove"></span></button>
-       </c:if>
-   <c:if test="${mode=='update'}">
-            <button type="submit" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;" >
+    <button type="submit" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;" >
                   정보수정 <span class="glyphicon glyphicon-ok"></span></button>
+    <button type="reset" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;" >
+                  다시입력 <span class="glyphicon glyphicon-ok"></span></button>
             <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/';" style="margin-right:20px; height:40px; width:130px;">
                   수정취소 <span class="glyphicon glyphicon-remove"></span></button>
-   </c:if>            
-    </div>
-</div>
-
+		
+		<input type="hidden" name="serviceImgname" value="${dto.serviceImgname}">	
+		<input type="hidden" name="serviceImg" value="${dto.serviceImg}">	
+		
+	
+			
   <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
                 <p style=" text-align:center; color:tomato; font-weight:bold; font-size:13px; "class="form-control-static">${message}</p>
@@ -370,15 +334,5 @@ function imageDelete() {
   </div>
  </div>
 
- <div class="container">
-<!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12"  style="margin-left: 50px;">
-                    <p>Copyright &copy; SIST Comm 2016</p>
-                </div>
-            </div>
-        </footer>
-
-    </div>
     <!-- /.container -->
+

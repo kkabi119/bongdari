@@ -7,14 +7,23 @@ public class Demanderjoin {
   private String serviceTel, tel1, tel2, tel3;
   private String serviceAddr, serviceEmail;
   private String email1, email2;
-  private String serviceIntro,serviceImgname;
-  private MultipartFile serviceImg;
+  private String serviceIntro,serviceImgname,serviceImg;
+  private MultipartFile uploads;
   private int serviceIdx, isService, userIdx,enabled;
   private String authority;
   private String userId, userPwd;
   
   
   
+public MultipartFile getUploads() {
+	return uploads;
+}
+public void setUploads(MultipartFile uploads) {
+	this.uploads = uploads;
+}
+public void setServiceImg(String serviceImg) {
+	this.serviceImg = serviceImg;
+}
 public String getUserId() {
 	return userId;
 }
@@ -104,12 +113,6 @@ public String getServiceIntro() {
 }
 public void setServiceIntro(String serviceIntro) {
 	this.serviceIntro = serviceIntro;
-}
-public MultipartFile getServiceImg() {
-	return serviceImg;
-}
-public void setServiceImg(MultipartFile serviceImg) {
-	this.serviceImg = serviceImg;
 }
 public String getServiceImgname() {
 	return serviceImgname;

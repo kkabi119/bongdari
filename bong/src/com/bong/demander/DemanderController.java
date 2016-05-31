@@ -1,12 +1,28 @@
 package com.bong.demander;
 
+import java.io.File;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.bong.common.MyUtil;
+import com.bong.demanderjoin.Demanderjoin;
+import com.bong.demanderjoin.DemanderjoinService;
+import com.bong.demanderjoin.SessionInfo;
 
 @Controller("bong.demanderController")
 public class DemanderController {
 	
+	@Autowired
+	private DemanderjoinService service;
+	@Autowired
+	private MyUtil myUtil;
 	@RequestMapping(value="/main/demander")
 	public ModelAndView demanderMain() throws Exception {
 		
@@ -151,4 +167,46 @@ public class DemanderController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/demander/index/admin/tab3", method=RequestMethod.GET)
+	public ModelAndView tab3(
+			) throws Exception {
+		/*String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"serviceImg";
+		//세션에 있는 수요처 정보 가져오기
+		SessionInfo info=(SessionInfo)session.getAttribute("demanderjoin");
+		if(info==null){
+			return new ModelAndView("redirect:/member/login");
+		}
+		
+		Demanderjoin dto=service.readDemanderjoinInfo(Integer.toString(info.getUserIdx()));
+		if(dto==null){
+			session.invalidate();
+			return new ModelAndView("redirect:/");
+		}
+		
+		service.updateDemander2(dto, pathname);*/
+		
+		//수정폼
+		ModelAndView mav = new ModelAndView("/demander/dari/admin/demanderUpdate");
+		/*mav.addObject("mode", "update");
+		mav.addObject("dto", dto);*/
+		return mav;
+	}
+	
+	@RequestMapping(value="/demander/index/admin/tab3", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView demanderUpdateSubmit(
+			HttpSession session
+		   ,Demanderjoin dto){
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"serviceImg";
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("demanderjoin");
+		dto.setUserIdx(info.getUserIdx());
+		service.updateDemander2(dto, pathname);
+		
+		ModelAndView mav=new ModelAndView("redirect:/demander/dari/admin/demanderUpdate");
+	    
+		return mav;
+	}
 }
