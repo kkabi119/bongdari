@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,14 +20,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bong.club.notice.Notice;
+import com.bong.club.notice.NoticeService;
 import com.bong.common.MyUtil;
+import com.bong.common.dao.bongDAO;
 import com.bong.member.SessionInfo;
 
 @Controller("club.clubContoller")
 public class ClubController {
 	
 	@Autowired
-	private ClubService service;
+	private ClubService clubService;
+	
+	@Autowired
+	private NoticeService noticeService;
+	
+	@Autowired
+	private bongDAO dao;
 	
 	@Autowired
 	private MyUtil util;
@@ -38,15 +48,38 @@ public class ClubController {
 			@PathVariable int clubSeq
 			) throws Exception {
 		
-		//String cp=req.getContextPath();
-		
+		String cp=req.getContextPath();
+	
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		if (info == null) {
 			return new ModelAndView("redirect:/member/login");
 		}
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("start", 1);
+		map.put("end", 5);
+		map.put("clubSeq", clubSeq);
+		List<Notice> listN=noticeService.listNoticeSmall(map);
+		
+		 // 리스트의 번호
+        int listNum, n = 0;
+        Iterator<Notice> it=listN.iterator();
+        while(it.hasNext()) {
+            Notice data = it.next();
+            listNum = 5 - (1 + n - 1);
+            data.setListNum(listNum);
+            n++;
+        }
+           
+        String urlList = cp+"/club/"+clubSeq+"/notice/list";
+        String urlArticle = cp+"/club/"+clubSeq+"/notice/article?page="+ 1;
+                
 		ModelAndView mav = new ModelAndView(".four.club.dari.main.내 동아리 메인");
 		mav.addObject("clubSeq", clubSeq);
+		mav.addObject("listN", listN);
+		mav.addObject("urlList", urlList);
+		mav.addObject("urlArticle", urlArticle);
+		
 		return mav;
 	}
 	
@@ -73,7 +106,7 @@ public class ClubController {
 		map.put("user", "general"); // "general": 일반 사용자, "admin":관리자
 		map.put("themeNum", themeNum);
 
-		dataCount = service.dataCountClub(map);
+		dataCount = clubService.dataCountClub(map);
 		if (dataCount != 0)
 			total_page = util.pageCount(numPerPage, dataCount);
 
@@ -85,7 +118,7 @@ public class ClubController {
 		map.put("start", start);
 		map.put("end", end);
 
-		List<ClubInfo> listBlog=service.listClub(map);
+		List<ClubInfo> listBlog=clubService.listClub(map);
 		
 		String params = "";
 		if (themeNum != 0) {
@@ -119,13 +152,13 @@ public class ClubController {
 		Map<String, Object> map=new HashMap<>();
 		map.put("field", "userId");
 		map.put("field_value", info.getUserId());
-		ClubInfo clubInfo=service.readClubInfo(map);
+		ClubInfo clubInfo=clubService.readClubInfo(map);
 		if(clubInfo!=null){
 			ModelAndView mav = new ModelAndView(".layout.club.manage.message.메세지");
 			mav.addObject("message", "동아리는 계정당 하나만 만들수 있습니다.");
 			return mav;
 		}
-		List<ClubTheme> listGroup=service.listClubThemeGroup();
+		List<ClubTheme> listGroup=clubService.listClubThemeGroup();
 
 		ModelAndView mav = new ModelAndView(".layout.club.manage.clubCreated.동아리 만들기");
 		ClubInfo dto = new ClubInfo();
@@ -154,11 +187,11 @@ public class ClubController {
 
 		dto.setUserId(info.getUserId());
 		dto.setUserIdx(info.getUserIdx());
-		int result=service.insertClub(dto, pathname);
+		int result=clubService.insertClub(dto, pathname);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userId",info.getUserId());
-		int clubIdx=service.ReadClubInfoSession(map);
+		int clubIdx=clubService.ReadClubInfoSession(map);
 		info.setClubIdx(clubIdx);
 		
 		session.setAttribute("member", info);
@@ -177,7 +210,7 @@ public class ClubController {
 	public Map<String, Object> themeList(@RequestParam int groupNum) throws Exception {
 		// AJAX(JSON)-동아리 생성 및 수정할 때 그룹별 주제(중분류)
 		
-		List<ClubTheme> listTheme = service.listClubTheme(groupNum);
+		List<ClubTheme> listTheme = clubService.listClubTheme(groupNum);
 
 		Map<String, Object> model = new HashMap<>();
 		model.put("listTheme", listTheme);
@@ -197,7 +230,7 @@ public class ClubController {
 		Map<String, Object> map=new HashMap<>();
 		map.put("field", "userId");
 		map.put("field_value", info.getUserId());
-		ClubInfo clubInfo=service.readClubInfo(map);
+		ClubInfo clubInfo=clubService.readClubInfo(map);
 		
 		// 동아리가 없으면 생성
 		if(clubInfo==null)

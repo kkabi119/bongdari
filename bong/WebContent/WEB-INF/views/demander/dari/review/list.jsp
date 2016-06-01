@@ -7,6 +7,14 @@
    String cp = request.getContextPath();
    // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
+
+<script type="text/javascript">
+function searchList() {
+		var f=document.searchForm;
+		f.action="<%=cp%>/demander/index/review/list";
+		f.submit();
+}
+</script>
 <style type="text/css">
 /* 후기게시판 리스트row */
  .row2 {

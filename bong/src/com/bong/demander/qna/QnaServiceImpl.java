@@ -3,42 +3,97 @@ package com.bong.demander.qna;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bong.common.dao.bongDAO;
+import com.bong.demander.review.DeReview;
+
+@Service("demander.qnaService")
 public class QnaServiceImpl implements QnaService {
 
+	@Autowired
+	private bongDAO dao;
+	
 	@Override
-	public int insertFaq(Qna faq) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertQna(Qna qna) {
+		int result=0;
+		try {
+			result=dao.insertInformation("deQna.insertQna", qna);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.getIntValue("deQna.dataCount",map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
-	public List<Qna> listFaq(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Qna> listQna(Map<String, Object> map) {
+		List<Qna> list=null;
+		try {
+			list=dao.getListInformation("deQna.listQna", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
 	}
 
 	@Override
-	public Qna readFaq(int num) {
-		// TODO Auto-generated method stub
-		return null;
+	public Qna readQna(int num) {
+		Qna qna=null;
+		try {
+			qna=dao.getReadInformation("deQna.readQna",num);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return qna;
 	}
 
 	@Override
-	public int updateFaq(Qna faq) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateHitCount(int num) {
+		int result=0;
+		try {
+			result=dao.updateInformation("deQna.updateHitCount", num);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+	
+	
+	
+	@Override
+	public int updateQna(Qna qna) {
+		int result=0;
+		try {
+			result=dao.updateInformation("deQna.updateQna", qna);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
-	public int deleteFaq(int num) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteQna(int num) {
+		int result=0;
+		try{
+			result=dao.deleteInformation("deQna.deleteQna", num);
+		} catch(Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
+
+	
 
 }

@@ -249,11 +249,11 @@ function updateFree() {
                                             <li><i class="fa fa-clock-o"></i> ${dto.created}</li>
                                         </ul>
                                     </div>
-                               <%-- <c:if test="${not empty dto.saveFilename}">
+                               <c:if test="${not empty dto.saveFilename}">
                                     <div class="post-bottom overflow" style="margin-top: 0px">
-                                  			<a href="<%=cp%>/club/${clubSeq}/Free/download?num=${dto.clubFreeIdx}"><span class="fa fa-download"></span> ${dto.originalFilename}</a>
+                                  			<a href="<%=cp%>/club/${clubSeq}/free/download?num=${dto.clubFreeIdx}"><span class="fa fa-download"></span> ${dto.originalFilename}</a>
                                     </div>
-                               </c:if> --%>
+                               </c:if> 
                                <c:if test="${not empty preReadDto}">
                                     <div class="post-bottom overflow" style="margin-top: 0px">
                                

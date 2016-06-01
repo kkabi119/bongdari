@@ -12,13 +12,10 @@
 <script type="text/javascript">
 function QnasearchList() {
 		var f=document.searchForm;
-		f.action="<%=cp%>/infoQna/qna.fit";
+		f.action="<%=cp%>/demander/index/qna/list";
 		f.submit();
 }
 </script>
-
-
-
 
 
         
@@ -39,10 +36,10 @@ function QnasearchList() {
 	            <table class="table table-hover">
 	                <thead>
 	                    <tr>
-	                        <th class="text-center" style="width: 70px;">번호</th>
+	                        <th class="text-center" style="width: 100px;">번호</th>
 	                        <th class="text-center">제목</th>
 	                        <th class="text-center" style="width: 100px;">글쓴이</th>
-	                        <th class="text-center" style="width: 100px;">날짜</th>
+	                        <th class="text-center" style="width: 100px;">작성일</th>
 	                        <th class="text-center" style="width: 70px;">조회수</th> 
 	                    </tr>
 	                </thead>
@@ -52,23 +49,23 @@ function QnasearchList() {
 	                        <td class="text-center">${dto.listNum}</td>
 	                        <td style="text-align:left;">
 	                   			<c:choose>
-	                   				<c:when test="${dto.secret==1&&dto.userId!=sessionScope.member.userId&&sessionScope.member.userId!='admin'}">
+	                   				<c:when test="${dto.userId!=sessionScope.member.userId&&sessionScope.member.userId!='admin'}">
 	                   					<i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;비밀글 입니다.
-	                   					<c:if test="${dto.replycnt!=0}">
+	                   				<%-- 	<c:if test="${dto.replycnt!=0}">
 	                   						[${dto.replycnt}]
 	                   						<img src="<%=cp%>/res/img/reply.gif">
-	                   					</c:if>
+	                   					</c:if> --%>
 	                   				</c:when>
 	                   				<c:otherwise>
-	                   					<a href='${articleUrl}&num=${dto.num}'>${dto.subject}</a>
-	                   					<c:if test="${dto.replycnt!=0}">
+	                   					<a href='${urlArticle}&num=${dto.sqnaIdx}'>${dto.subject}</a>
+	                   					<%-- <c:if test="${dto.replycnt!=0}">
 	                   						[${dto.replycnt}]
 	                   						<img src="<%=cp%>/res/img/reply.gif">
-	                   					</c:if>
+	                   					</c:if> --%>
 	                   				</c:otherwise>
 	                   			</c:choose>
 	                        </td>
-	                        <td class="text-center">${dto.nickname}</td>
+	                        <td class="text-center">${dto.userName} | ${sessionScope.member.userId}</td>
 	                        <td class="text-center">${dto.created}</td>
 	                        <td class="text-center">${dto.hitCount}</td> 
 	                    </tr>
@@ -76,16 +73,19 @@ function QnasearchList() {
 	                </tbody>
 	            </table>
 	        </div>
-	
-	        <div class="paging" style="float: left; padding-left:180px; center; width: 80%; min-height: 50px; line-height: 50px;">
-			        <c:if test="${dataCount==0 }">
-			                   등록된 질문이 없습니다.
-			         </c:if>
-			        <c:if test="${dataCount!=0 }">
-			               ${paging}
-			         </c:if>
-	        </div>        
-	        <!-- 검색 -->
+
+
+	<div class="paging"
+		style="text-align: center; min-height: 50px; line-height: 50px;">
+		<c:if test="${dataCount==0 }">
+	                  등록된 게시물이 없습니다.
+	</c:if>
+		<c:if test="${dataCount!=0 }">
+	                ${paging}
+	</c:if>
+	</div>
+
+	<!-- 검색 -->
 	
 		<div style="clear: both;">
 		<div style="float: left; width: 20%; min-width: 85px;">

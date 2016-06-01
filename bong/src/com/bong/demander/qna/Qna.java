@@ -1,17 +1,13 @@
 package com.bong.demander.qna;
 
 public class Qna {
-	private int num,userIdx;
+	private int listNum,sqnaIdx,userIdx;
     private String userId,userName;
-	private String subject;
+	private String subject,created;
     private String content;
     private int hitCount;
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
-	}
+    private int answer;
+	
 	public int getUserIdx() {
 		return userIdx;
 	}
@@ -47,6 +43,30 @@ public class Qna {
 	}
 	public void setHitCount(int hitCount) {
 		this.hitCount = hitCount;
+	}
+	public int getSqnaIdx() {
+		return sqnaIdx;
+	}
+	public void setSqnaIdx(int sqnaIdx) {
+		this.sqnaIdx = sqnaIdx;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
+	public String getCreated() {
+		return created;
+	}
+	public void setCreated(String created) {
+		this.created = created;
+	}
+	public int getAnswer() {
+		return answer;
+	}
+	public void setAnswer(int answer) {
+		this.answer = answer;
 	}
     
     

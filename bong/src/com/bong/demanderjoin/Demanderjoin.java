@@ -7,11 +7,35 @@ public class Demanderjoin {
   private String serviceTel, tel1, tel2, tel3;
   private String serviceAddr, serviceEmail;
   private String email1, email2;
-  private String serviceIntro,serviceImgname;
-  private MultipartFile serviceImg;
-  private int serviceIdx, isService, userIdx;
+  private String serviceIntro,serviceImgname,serviceImg;
+  private MultipartFile uploads;
+  private int serviceIdx, isService, userIdx,enabled;
+  private String authority;
+  private String userId, userPwd;
   
   
+  
+public MultipartFile getUploads() {
+	return uploads;
+}
+public void setUploads(MultipartFile uploads) {
+	this.uploads = uploads;
+}
+public void setServiceImg(String serviceImg) {
+	this.serviceImg = serviceImg;
+}
+public String getUserId() {
+	return userId;
+}
+public void setUserId(String userId) {
+	this.userId = userId;
+}
+public String getUserPwd() {
+	return userPwd;
+}
+public void setUserPwd(String userPwd) {
+	this.userPwd = userPwd;
+}
 public int getUserIdx() {
 	return userIdx;
 }
@@ -90,12 +114,6 @@ public String getServiceIntro() {
 public void setServiceIntro(String serviceIntro) {
 	this.serviceIntro = serviceIntro;
 }
-public MultipartFile getServiceImg() {
-	return serviceImg;
-}
-public void setServiceImg(MultipartFile serviceImg) {
-	this.serviceImg = serviceImg;
-}
 public String getServiceImgname() {
 	return serviceImgname;
 }
@@ -113,6 +131,18 @@ public int getIsService() {
 }
 public void setIsService(int isService) {
 	this.isService = isService;
+}
+public int getEnabled() {
+	return enabled;
+}
+public void setEnabled(int enabled) {
+	this.enabled = enabled;
+}
+public String getAuthority() {
+	return authority;
+}
+public void setAuthority(String authority) {
+	this.authority = authority;
 }
   
   

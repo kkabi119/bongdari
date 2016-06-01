@@ -11,6 +11,7 @@
 $(function(){
 	tab1();
 	tab2();
+	tab3();
 });
 
 function tab1(){
@@ -29,12 +30,23 @@ function tab1(){
 function tab2(){
 	
 	var url="<%=cp%>/demander/index/admin/tab2";
-	
+
 	var num="${dto.num}";
 	
 	$.post(url, {}, function(data){ //ajax 써도됨 //url, {pageNo:page}는 보낼 때 쓰는거 function(data)는 받을 때 쓰는 함수
 	
 		$("#deBong").html(data); //이번예제는 json을 쓰는것이 아니라 html로 넣어줌 > 편한 장점이 있음
+	
+	});		
+}	
+function tab3(){
+	
+	var url="<%=cp%>/demander/index/admin/tab3";
+	
+	var num="${dto.num}";
+	$.get(url, {}, function(data){ //ajax 써도됨 //url, {pageNo:page}는 보낼 때 쓰는거 function(data)는 받을 때 쓰는 함수
+	
+		$("#deUpdate").html(data); //이번예제는 json을 쓰는것이 아니라 html로 넣어줌 > 편한 장점이 있음
 	
 	});		
 }	
@@ -53,6 +65,7 @@ function tab2(){
                         <ul id="tab1" class="nav nav-tabs">
                             <li class="active"><a href="#tab1-item1" data-toggle="tab">나의 활동</a></li>
                             <li><a href="#tab1-item2" data-toggle="tab">나를 등록한 동아리</a></li>
+                            <li><a href="#tab1-item3" data-toggle="tab">내 정보 수정</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade active in" id="tab1-item1">
@@ -62,6 +75,9 @@ function tab2(){
                             </div>
                             <div class="tab-pane fade" id="tab1-item2">
                                 <div id="deBong"> </div>
+                            </div>
+                            <div class="tab-pane fade" id="tab1-item3">
+                                <div id="deUpdate"> </div>
                             </div>
                         </div>
                 </div>

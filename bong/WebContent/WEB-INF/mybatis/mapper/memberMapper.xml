@@ -11,8 +11,8 @@
 		INSERT INTO member(userIdx) values(#{userIdx})
 	</insert>
 	<insert id="insertCheck" parameterType="com.bong.member.Member">
-	    INSERT INTO checkId (userId, userPwd,enabled,isService) 
-	    VALUES(#{userId},#{userPwd},1, 0)
+	    INSERT INTO checkId (userId, userPwd,userName,enabled,isService) 
+	    VALUES(#{userId},#{userPwd},#{userName},1, 0)
 	</insert>
 	<insert id="insertMemberInfo" parameterType="com.bong.member.Member">
 		INSERT INTO memberInfo
@@ -32,7 +32,7 @@
      LEFT OUTER JOIN memberinfo mi ON ci.userIdx=mi.userIdx WHERE ci.userIdx=#{userIdx}
 	</select>
     <select id="readMemberInfo" resultType="com.bong.member.Member" parameterType="String">
-	   SELECT ci.userIdx, userId, userName, userPwd,TO_CHAR(userBirth, 'YYYY-MM-DD') userBirth, userAddr, userGender,
+	   SELECT ci.userIdx, userId, ci.userName, userPwd,TO_CHAR(userBirth, 'YYYY-MM-DD') userBirth, userAddr, userGender,
 	          userTel, userEmail, userJob, memImgname, memImg, userLevel
 	          FROM checkId ci 
             LEFT OUTER JOIN memberInfo mi ON ci.userIdx=mi.userIdx  

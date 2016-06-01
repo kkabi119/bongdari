@@ -18,16 +18,16 @@ $(function(){
 
 //아이디 중복 검사
 function serviceIdCheck() {
-	var serviceId=$("#serviceId").val();
-	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(serviceId)) { 
+	var userId=$("#userId").val();
+	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(userId)) { 
 		var str="아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.";
-		$("#serviceId").focus();
-		$("#serviceId + .help-block").html(str);
+		$("#userId").focus();
+		$("#userId + .help-block").html(str);
 		return false;
 	}
 	
 	var url="<%=cp%>/demanderjoin/serviceIdCheck";
-	var params="serviceId="+serviceId;
+	var params="userId="+userId;
 	$.ajax({
 		type:"POST"
 		,url:url
@@ -36,13 +36,13 @@ function serviceIdCheck() {
 		,success:function(data) {
 			var passed=data.passed;
 			if(passed=="true") {
-				var str="<span style='color:blue;font-weight: bold;'>"+serviceId+"</span> 아이디는 사용가능 합니다.";
-				$("#serviceId + .help-block").html(str);
+				var str="<span style='color:blue;font-weight: bold;'>"+userId+"</span> 아이디는 사용가능 합니다.";
+				$("#userId + .help-block").html(str);
 			} else {
-				var str="<span style='color:red;font-weight: bold;'>"+serviceId+"</span> 이미 존재하는 아이디입니다.";
-				$("#serviceId + .help-block").html(str);
-				$("#serviceId").val("");
-				$("#serviceId").focus();
+				var str="<span style='color:red;font-weight: bold;'>"+userId+"</span> 이미 존재하는 아이디입니다.";
+				$("#userId + .help-block").html(str);
+				$("#userId").val("");
+				$("#userId").focus();
 			}
 		}
 	});
@@ -53,16 +53,16 @@ function demanderRegister() {
    var f = document.demanderjoinForm;;
    var str;
 
-   str=f.serviceId.value;
+   str=f.userId.value;
    if(!/^[a-z][a-z0-9_]{4,9}$/i.test(str)) { 
-      $("#serviceId + .help-block").html("<span style='color:red;'>아이디를 확인해주세요! <span>");
-      f.serviceId.focus();
+      $("#userId + .help-block").html("<span style='color:red;'>아이디를 확인해주세요! <span>");
+      f.userId.focus();
       return false;
    }else {
-      $("#serviceId + .help-block").html("아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.");
+      $("#userId + .help-block").html("아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.");
    }
    
-   str = f.servicePwd.value;
+   str = f.userPwd.value;
 /*    if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
       $("#servicePwd + .help-block").html("<span style='color:red;'>비밀번호 형식을 확인해주세요! <span>");
       f.servicePwd.focus();
@@ -190,19 +190,19 @@ function imageDelete() {
   <div class="bodyFrame">
   <form class="form-horizontal" name="demanderjoinForm" method="post" onsubmit="return demanderRegister();" enctype="multipart/form-data">
     <div class="form-group" style="margin-bottom:0px;">
-        <label class="col-sm-2 control-label" for="serviceId">아이디</label>
+        <label class="col-sm-2 control-label" for="userId">아이디</label>
         <div class="col-sm-7">
-            <input style="width:200px;"class="form-control" id="serviceId" name="serviceId" type="text" 
-                  placeholder="아이디"  onchange="serviceIdCheck()" value="${dto.serviceId}"
+            <input style="width:200px;"class="form-control" id="userId" name="userId" type="text" 
+                  placeholder="아이디"  onchange="serviceIdCheck()" value="${dto.userId}"
               ${mode=="update" ? "readonly='readonly' style='border:none;'":""}>
             <p class="help-block"> 아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.</p>
         </div>
     </div>
  
     <div class="form-group" style="margin-bottom:0px;">
-        <label class="col-sm-2 control-label" for="servicePwd">패스워드</label>
+        <label class="col-sm-2 control-label" for="userPwd">패스워드</label>
         <div class="col-sm-7">
-            <input style="width:200px;  " class="form-control" id="servicePwd" name="servicePwd" type="password" placeholder="비밀번호">
+            <input style="width:200px;  " class="form-control" id="userPwd" name="userPwd" type="password" placeholder="비밀번호">
             <p class="help-block">패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.</p>
         </div>
     </div>
@@ -231,7 +231,7 @@ function imageDelete() {
             <div class="fileinput fileinput-new" data-provides="fileinput" style="float: left;">
                 <div class="fileinput-preview thumbnail" style="width: 130px; height: 150px;"></div>
                 <div>
-                     <span class="btn btn-default wbtn btn-file"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="serviceImg" id="serviceImgname" accept="image/png, image/jpeg, image/gif"></span>
+                     <span class="btn btn-default wbtn btn-file"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="uploads" id="serviceImgname" accept="image/png, image/jpeg, image/gif"></span>
                      <a href="#" class="btn btn-default wbtn fileinput-exists" data-dismiss="fileinput">삭제</a>
                 </div>
             </div>

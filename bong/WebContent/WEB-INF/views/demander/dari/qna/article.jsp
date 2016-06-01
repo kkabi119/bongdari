@@ -5,98 +5,112 @@
 <%
 	String cp=request.getContextPath();
 %>
+<style type="text/css">
+.item-click {
+   color: #424951; display: inline-block; cursor: pointer;
+}
+.item-click:hover {
+   color:#000000;
+}
+.item-title {
+   color: #aaa; display: inline-block;
+}
+
+.file-list-content {
+   position: relative;
+   display: none;
+}
+.file-list{
+  border:1px solid #2f3741;
+  width: 250px;
+  position: absolute;
+  z-index:1000;
+  padding:10px;
+  background: #fefefe;
+  
+  top: 10px;
+  left: 120px;
+}
+.file-list-item{
+    width: 240px;
+    text-overflow:ellipsis;
+    white-space: nowrap;overflow:hidden;
+    text-align: left;
+}
+
+.reply-write {
+    border: #d5d5d5 solid 1px;
+    padding: 10px;
+    min-height: 50px;
+}
+</style>
+<script type="text/javascript">
+
+function deleteQna() {
+<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
+  var num = "${dto.sqnaIdx}";
+  var page = "${page}";
+  var params = "num="+num+"&page="+page;
+  var url = "<%=cp%>/demander/index/qna/delete?" + params;
+
+  if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
+  	location.href=url;
+</c:if>
+
+<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
+  alert("게시물을 삭제할 수  없습니다.");
+</c:if>
+}
+
+function updateQna() {
+<c:if test="${sessionScope.member.userId==dto.userId}">
+  var num = "${dto.sqnaIdx}";
+  var page = "${page}";
+  var params = "num="+num+"&page="+page;
+  var url = "<%=cp%>/demander/index/qna/update?" + params;
+
+  location.href=url;
+</c:if>
+
+<c:if test="${sessionScope.member.userId!=dto.userId}">
+ alert("게시물을 수정할 수  없습니다.");
+</c:if> 
+}
+</script>
     <section id="blog-details" class="padding-top">
-            <div class="row">
-                <div class="col-md-9 col-sm-7">
-                    <div class="row">
-                         <div class="col-md-12 col-sm-12">
+               <div class="col-md-12 col-sm-12">
                             <div class="single-blog blog-details two-column">
                                 <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="#">여긴 제목이야</a></h2>
-                                    <h3 class="post-author"><a href="#">글쓴사람이름</a></h3>
-                                    <p>글 내용 들어와 여기(사진 있으면 함께)</p>
+                                    <h2 class="post-title bold"><a href="#">${dto.subject}|${dto.sqnaIdx}</a></h2>
+                                    <h3 class="post-author"><a href="#">${dto.userName} | ${dto.userId} |${sessionScope.member.userId}</a></h3>
+                                    <p>${dto.content}</p>
                                     <div class="post-bottom overflow">
-                                        <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-tag"></i>creative</a></li>
-                                            <li><a href="#"><i class="fa fa-heart"></i>32 좋아요</a></li>
-                                            <li><a href="#"><i class="fa fa-comments"></i>3 댓글수</a></li>
+                                        <ul class="nav navbar-nav post-nav">                       
+                                            <li><a href="#"><i class="glyphicon glyphicon-eye-open"></i>조회수  ${dto.hitCount}</a></li>
+                                            <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
                                         </ul>
                                     </div>
-                                    <div class="blog-share">
-                                        <span class='st_facebook_hcount'></span>
-                                        <span class='st_twitter_hcount'></span>
-                                        <span class='st_linkedin_hcount'></span>
-                                        <span class='st_pinterest_hcount'></span>
-                                        <span class='st_email_hcount'></span>
-                                    </div>
-                                    <div class="author-profile padding">
-                                        <div class="row">
-                                            <div class="col-sm-2">
-                                                <img src="images/blogdetails/1.png" alt="">
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <h3>Rodrix Hasel</h3>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliq Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi</p>
-                                                <span>Website:<a href="www.jooomshaper.com"> www.jooomshaper.com</a></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="response-area">
-                                    <h2 class="bold">Comments</h2>
-                                    <ul class="media-list">
-                                        <li class="media">
-                                            <div class="post-comment">
-                                                <a class="pull-left" href="#">
-                                                    <img class="media-object" src="images/blogdetails/2.png" alt="">
-                                                </a>
-                                                <div class="media-body">
-                                                    <span><i class="fa fa-user"></i>Posted by <a href="#">Endure</a></span>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliq Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
-                                                    <ul class="nav navbar-nav post-nav">
-                                                        <li><a href="#"><i class="fa fa-clock-o"></i>February 11,2014</a></li>
-                                                        <li><a href="#"><i class="fa fa-reply"></i>Reply</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="parrent">
-                                                <ul class="media-list">
-                                                    <li class="post-comment reply">
-                                                        <a class="pull-left" href="#">
-                                                            <img class="media-object" src="images/blogdetails/3.png" alt="">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <span><i class="fa fa-user"></i>Posted by <a href="#">Endure</a></span>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut </p>
-                                                            <ul class="nav navbar-nav post-nav">
-                                                                <li><a href="#"><i class="fa fa-clock-o"></i>February 11,2014</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <div class="post-comment">
-                                                <a class="pull-left" href="#">
-                                                    <img class="media-object" src="images/blogdetails/4.png" alt="">
-                                                </a>
-                                                <div class="media-body">
-                                                    <span><i class="fa fa-user"></i>Posted by <a href="#">Endure</a></span>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliq Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
-                                                    <ul class="nav navbar-nav post-nav">
-                                                        <li><a href="#"><i class="fa fa-clock-o"></i>February 11,2014</a></li>
-                                                        <li><a href="#"><i class="fa fa-reply"></i>Reply</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        
-                                    </ul>                   
-                                </div><!--/Response-area-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                 </div>
-            </div>
+                                    
+                                   <div>
+                                  	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/demander/index/qna/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
+                  					</div>
+     
+                                    <div style="float:right; padding-top: 10px;padding-bottom: 10px;">
+                      					<button type="button" class="btn btn-warning" style="padding:10px 15px ; color:white; border:none;" onclick="updateQna();"> 수정 <span class="fa fa-pencil"></span></button>
+                  					</div>
+                  					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="deleteQna();"> 삭제 <span class="fa fa-times"></span></button>
+                  					</div>
+                  					
+                  				<c:if test="${sessionScope.member.userId=='admin'}">
+        		   					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
+        		   					 <button type="button" style="color:#F0AD4E; padding:10px 15px ;" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/demander/index/qna/create';">답변 </button>
+									</div>
+								</c:if> 
+                  				</div>
+                                  
+                                   </div>
+                                   </div>
+                                   </div>
     </section>

@@ -1,21 +1,22 @@
 package com.bong.demanderjoin;
 
 public class SessionInfo {
-   private int serviceIdx;
-   private String serviceId;
+   private int userIdx;
+   private String userId;
    private String serviceName;
    
-public int getServiceIdx() {
-	return serviceIdx;
+
+public int getUserIdx() {
+	return userIdx;
 }
-public void setServiceIdx(int serviceIdx) {
-	this.serviceIdx = serviceIdx;
+public void setUserIdx(int userIdx) {
+	this.userIdx = userIdx;
 }
-public String getServiceId() {
-	return serviceId;
+public String getUserId() {
+	return userId;
 }
-public void setServiceId(String serviceId) {
-	this.serviceId = serviceId;
+public void setUserId(String userId) {
+	this.userId = userId;
 }
 public String getServiceName() {
 	return serviceName;

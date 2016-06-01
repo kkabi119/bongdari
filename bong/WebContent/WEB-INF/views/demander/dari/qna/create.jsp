@@ -57,9 +57,26 @@
 }
 </style>
 
-<script type="text/javascript" src="<%=cp%>/res/se/js/HuskyEZCreator.js"
-	charset="utf-8"></script>
+<script type="text/javascript" src="<%=cp%>/res/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
+//첨부파일 칸 동적생성
+$(function(){
+	$("body").on("change", "form[name='boardForm'] input[name='upload']", function(){
+		if(! $(this).val())
+			return;
+	
+		var s;
+		s="<tr align='left' height='40' >";
+		s+="<td>첨부</td>";
+		s+="<td style='padding-left:10px;' width='600'>";
+		s+="<input type='file' name='upload' class='form-control input-sm'>";
+		s+="</td>";
+		s+="</tr>";
+		
+		$("#tb").append(s);
+	});
+});
+
   function check() {
         var f = document.boardForm;
 
@@ -77,9 +94,9 @@
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/bbs/created";
+    		f.action="<%=cp%>/demander/index/qna/create";
     	else if(mode=="update")
-    		f.action="<%=cp%>/bbs/update";
+    		f.action="<%=cp%>/demander/index/qna/update";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;
@@ -101,7 +118,7 @@
 		onsubmit="return submitContents(this);" enctype="multipart/form-data">
 		<div class="bs-write">
 			<table class="table">
-				<tbody>
+				<tbody id="tb">
 					<tr>
 						<td class="td1">작성자명</td>
 						<td class="td2 col-md-5 col-sm-5">
@@ -109,6 +126,7 @@
 						</td>
 						<td class="td1" align="center"></td>
 						<td class="td2 col-md-5 col-sm-5"></td>
+					
 					</tr>
 
 					<tr>
@@ -127,23 +145,10 @@
 								style="max-width: 99%;">${dto.content}</textarea></td>
 					</tr>
 
-					<tr>
-						<td class="td1">첨부</td>
-						<td colspan="3" class="td3"><input type="file" name="upload"
-							class="form-control input-sm"></td>
-					</tr>
+					
+				
 
-					<c:if test="${mode=='update'}">
-						<tr>
-							<td class="td1">등록파일</td>
-							<td colspan="3" class="td3">${dto.originalFilename} <c:if
-									test="${not empty dto.originalFilename}">
-                                    | <a
-										href="<%=cp%>/bbs/deleteFile?num=${dto.num}&page=${page}">삭제</a>
-								</c:if>
-							</td>
-						</tr>
-					</c:if>
+					
 				</tbody>
 				<tfoot>
 					<tr>
@@ -155,7 +160,9 @@
 								style="color: #F0AD4E;"
 								onclick="javascript:location.href='<%=cp%>/demander/index/qna/list';">
 								취소</button> <c:if test="${mode=='update'}">
-								<input type="hidden" name="num" value="${dto.num}">
+								
+								
+								<input type="hidden" name="sqnaIdx" value="${dto.serviceReviewIdx}">
 								<input type="hidden" name="saveFilename"
 									value="${dto.saveFilename}">
 								<input type="hidden" name="originalFilename"

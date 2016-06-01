@@ -7,13 +7,8 @@
 	</select>
 	
 	<insert id="insertFree" parameterType="com.bong.club.free.Free">
-		INSERT INTO club_free_${clubIdx}(clubFreeIdx, userIdx, clubIdx, subject, content)
-					VALUES(#{clubFreeIdx}, #{userIdx}, #{clubIdx}, #{subject}, #{content})
-	</insert>
-	
-	<insert id="insertFreeP" parameterType="com.bong.club.free.Free">
-		INSERT INTO club_freeP_${clubIdx}(clubFreePIdx, saveFilename, originalFilename, clubFreeIdx)
-					VALUES(club_freeP_seq.NEXTVAL, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename, jdbcType=VARCHAR}, #{clubFreeIdx})
+		INSERT INTO club_free_${clubIdx}(clubFreeIdx, userIdx, clubIdx, subject, content, saveFilename, originalFilename)
+					VALUES(#{clubFreeIdx}, #{userIdx}, #{clubIdx}, #{subject}, #{content}, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename, jdbcType=VARCHAR})
 	</insert>
 	
 	<!-- 동아리 자유게시판 리스트 -->
@@ -72,7 +67,7 @@
 	<!-- 글보기 -->
 	<select id="readFree" resultType="com.bong.club.free.Free" parameterType="map">
 		SELECT clubFreeIdx, m.userIdx, userName, subject, content
-				   ,hitCount, f.created
+				   ,hitCount, f.created, saveFilename, originalFilename
 		FROM club_free_${clubSeq} f JOIN memberInfo m ON f.userIdx=m.userIdx
 		WHERE clubFreeIdx = #{num}
 	</select>
@@ -146,12 +141,12 @@
 				    SELECT ROWNUM rnum, tb.* FROM (
 				        SELECT tbreply.cfrIdx , clubFreeIdx, userName 
 				                    ,content, created, tbreply.answer
-				                    ,NVL(answerCount, 0) answerCount
+				                    ,NVL(answerCount, 0) answerCount, memImg AS saveFilename
 				        FROM
 				        (
 						      (
 							     SELECT cfrIdx, r.clubFreeIdx, r.userIdx,
-		               userName, r.content, r.created, answer
+		               userName, r.content, r.created, answer, memImg 
 							        FROM club_free_reply_${clubSeq} r 
 					                JOIN club_free_${clubSeq} n ON r.clubFreeIdx=n.clubFreeIdx
 					                JOIN memberinfo m ON r.userIdx=m.userIdx

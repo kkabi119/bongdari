@@ -4,13 +4,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Free {
 	private int clubFreeIdx, userIdx, clubIdx,hitCount, listNum, replyDataCount, rnum;
-	private String subject, content, created, modified, userId, userName;
+	private String subject, content, created, modified, userId, userName, listImageName;
 	private MultipartFile upload; 
 	
 	private int clubFreePIdx;
-	private String saveFilename, OriginalFilename;
+	private String saveFilename, originalFilename;
 	
-	
+	public String getListImageName() {
+		return listImageName;
+	}
+	public void setListImageName(String listImageName) {
+		this.listImageName = listImageName;
+	}
 	public int getRnum() {
 		return rnum;
 	}
@@ -54,10 +59,10 @@ public class Free {
 		this.saveFilename = saveFilename;
 	}
 	public String getOriginalFilename() {
-		return OriginalFilename;
+		return originalFilename;
 	}
 	public void setOriginalFilename(String originalFilename) {
-		OriginalFilename = originalFilename;
+		this.originalFilename = originalFilename;
 	}
 	public MultipartFile getUpload() {
 		return upload;

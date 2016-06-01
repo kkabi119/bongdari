@@ -47,6 +47,17 @@ public class NoticeServiceImpl implements NoticeService {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<Notice> listNoticeSmall(Map<String, Object> map) {
+		List<Notice> list=null;
+		try {
+			list=dao.getListInformation("clubnotice.listNoticeSmall", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
 
 	@Override
 	public int dataCount(Map<String, Object> map) {

@@ -15,8 +15,8 @@ $(function(){
 	$('.fileinput').fileinput();
 });
 
-function updateInfo() {
-   var f = document.memberUpdateForm;
+function demanderUpdate() {
+   var f = document.demanderUpdateForm;
    var str;
 
    str=f.userId.value;
@@ -64,22 +64,22 @@ function updateInfo() {
     		return false;
     	}
     }
-    str = f.userBirth.value;
+    str = f.serviceBirth.value;
     if(!str) {
-       $("#userBirth + .help-block").html("<span style='color:red;'>생일 형식을 확인해주세요!<span>");
-        f.userBirth.focus();
+       $("#serviceBirth + .help-block").html("<span style='color:red;'>생일 형식을 확인해주세요!<span>");
+        f.serviceBirth.focus();
         return false;
     } else {
-      $("#userBirth + .help-block").html("  생년월일은 2000-01-01 형식으로 입력 합니다.");
+      $("#serviceBirth + .help-block").html("  생년월일은 2000-01-01 형식으로 입력 합니다.");
    }
    
     str = f.email2.value;
     if(!/[0-9a-zA-Z]([0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(str)) {
-       $("#userEmail + .help-block").html("<span style='color:red;'> 이메일 형식을 확인해주세요!<span>");
+       $("#serviceEmail + .help-block").html("<span style='color:red;'> 이메일 형식을 확인해주세요!<span>");
         f.email2.focus();
         return false;
     }else {
-      $("#userEmail + .help-block").html("");
+      $("#serviceEmail + .help-block").html("");
    }
     
     str = f.tel1.value;
@@ -100,14 +100,12 @@ function updateInfo() {
         return false;
     } 
     if(!str) {
-        $("#userTel + .help-block").html("<span style='color:red;'>번호만 입력해주세요<span>");
+        $("#serviceTel + .help-block").html("<span style='color:red;'>번호만 입력해주세요<span>");
          f.tel1.focus();
          return false;
      } else {
-       $("#userTel + .help-block").html("  전화번호는 번호만 입력해주세요");
+       $("#serviceTel + .help-block").html("  전화번호는 번호만 입력해주세요");
     }
-    str = f.userGender.value;  
-    
     var failed="${failed}";
    if(failed=="true"){
       alert("회원가입에 실패했습니다!");
@@ -117,13 +115,13 @@ function updateInfo() {
     if(mode=="created") {
           f.action = "<%=cp%>/member/register";
     } else if(mode=="update") {
-       f.action = "<%=cp%>/member/index/updateInfo";
+       f.action = "<%=cp%>/demander/index/admin/tab3/demanderUpdate";
     }
 
     return true;
 }
 function changeEmail() {
-    var f = document.memberUpdateForm;
+    var f = document.demanderUpdateForm;
     
     var str = f.selectEmail.value;
     if(str!="direct") {
@@ -141,7 +139,7 @@ function changeEmail() {
 function imageDelete(){
 	if(confirm("등록된 사진을 삭제 하시겠습니까?")){
 		var url="<%=cp%>/member/index/imageDelete";
-		var filename="${dto.memImg}";
+		var filename="${dto.serviceImg}";
 		$.post(url, {filename:filename}, function(data){
 			var isLogin=data.isLogin;
 			if(isLogin==false){
@@ -152,9 +150,9 @@ function imageDelete(){
 			$("#imgPhoto").attr("src", "<%=cp%>/res/images/noimage.png");
 			$("#btnDeletePhoto").hide();
 			
-			var f = document.memberUpdateForm;
-			f.memImgname.value="";
-			f.memImg.value="";
+			var f = document.demanderUpdateForm;
+			f.serviceImgname.value="";
+			f.serviceImg.value="";
 			
 		},"json");
 	}
@@ -164,7 +162,7 @@ function imageDelete(){
 <div class="container" role="main" style="margin-top:50px;">
 
   <div class="bodyFrame">
-  <form class="form-horizontal" name="memberUpdateForm" method="post" onsubmit="return updateInfo();" enctype="multipart/form-data">
+  <form class="form-horizontal" name="demanderUpdateForm" method="post" onsubmit="return demanderUpdate();" enctype="multipart/form-data">
     <div class="form-group" style="margin-bottom:0px;">
         <label class="col-sm-2 control-label" for="userId">아이디</label>
         <div class="col-sm-7">
@@ -191,15 +189,15 @@ function imageDelete(){
     </div>
  
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="userName">이름</label>
+        <label class="col-sm-2 control-label" for="serviceName">이름</label>
         <div class="col-sm-7">
-            <input style="width:200px; " class="form-control" id="userName" name="userName" 
-                  type="text" placeholder="이름"   value="${dto.userName}" readonly="readonly">
+            <input style="width:200px; " class="form-control" id="userName" name="serviceName" 
+                  type="text" placeholder="이름"   value="${dto.serviceName}" readonly="readonly">
         <p class="help-block">이름은 한글로 2자이상 4자 이하입니다.</p>
      </div>
     </div>
   <div class="form-group">
-        <label class="col-sm-2 control-label" for="memImgname">사진</label>
+        <label class="col-sm-2 control-label" for="serviceImgname">사진</label>
         <div class="col-sm-7">
             <div class="fileinput fileinput-new" data-provides="fileinput" style="float: left;">
                 <div class="fileinput-preview thumbnail" style="width: 130px; height: 150px;"></div>
@@ -210,14 +208,14 @@ function imageDelete(){
             </div>
 
             <div style="float: left; margin-left: 10px;">
-               <c:if test="${not empty dto.memImgname}">
-                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img id="imgPhoto" src="<%=cp%>/uploads/memImg/${dto.memImg}" style="width: 100%; height: 100%;"></div>
+               <c:if test="${not empty dto.serviceImgname}">
+                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img id="imgPhoto" src="<%=cp%>/uploads/serviceImg/${dto.serviceImg}" style="width: 100%; height: 100%;"></div>
                     <div style="padding-left: 15px;">
                          <span>등록 이미지</span>
                          <a id="btnDeletePhoto" href="javascript:imageDelete();" class="close" style="float: none">&times;</a>
                     </div>
                 </c:if>
-               <c:if test="${empty dto.memImgname}">
+               <c:if test="${empty dto.serviceImgname}">
                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img src="<%=cp%>/res/images/noimage.png" style="width: 100%; height: 100%;"></div>
                    <div style="padding-left: 15px;">
                          <span>등록 이미지</span>
@@ -228,15 +226,15 @@ function imageDelete(){
         </div>
     </div>
     <div style=""class="form-group">
-        <label class="col-sm-2 control-label" for="userBirth">생년월일</label>
+        <label class="col-sm-2 control-label" for="serviceBirth">설립일</label>
         <div class="col-sm-7">
-            <input style="width:200px; " class="form-control" id="userBirth" name="userBirth" type="text" placeholder="생년월일" value="${dto.userBirth}">
-            <p class="help-block">생년월일은 2000-01-01 형식으로 입력 합니다.</p>
+            <input style="width:200px; " class="form-control" id="serviceBirth" name="serviceBirth" type="text" placeholder="생년월일" value="${dto.serviceBirth}">
+            <p class="help-block">설립일은 2000-01-01 형식으로 입력 합니다.</p>
         </div>
     </div>
 
 <div class="form-group">
-        <label class="col-sm-2 control-label" for="userEmail">이메일</label>
+        <label class="col-sm-2 control-label" for="servicerEmail">이메일</label>
         <div class="col-sm-10" style="margin-top:0px;">
         <table>
         <tr>
@@ -264,18 +262,18 @@ function imageDelete(){
     </div> 
     
     <div class="form-group" >
-        <label class="col-sm-2 control-label" for="tel1">전화번호</label>
+        <label class="col-sm-2 control-label" for="tel1">기관번호</label>
         <div class="col-sm-7">
              <div class="row" >
-                  <div class="col-sm-2" style="padding-left: 13px;">
-                    <select class="form-control" id="tel1" name="tel1" style="width:100px;">
+                  <div class="col-sm-3" style="padding-right: 5px;">
+                    <select class="form-control" style="width:130px; float: left; margin:0px; padding:0px;"id="tel1" name="tel1" >
                         <option value="">선 택</option>
-                        <option value="010" ${dto.tel1=="010" ? "selected='selected'" : ""}>010</option>
-                        <option value="011" ${dto.tel1=="011" ? "selected='selected'" : ""}>011</option>
-                        <option value="016" ${dto.tel1=="016" ? "selected='selected'" : ""}>016</option>
-                        <option value="017" ${dto.tel1=="017" ? "selected='selected'" : ""}>017</option>
-                        <option value="018" ${dto.tel1=="018" ? "selected='selected'" : ""}>018</option>
-                        <option value="019" ${dto.tel1=="019" ? "selected='selected'" : ""}>019</option>
+                        <option value="010" ${dto.tel1=="02" ? "selected='selected'" : ""}>02</option>
+                        <option value="011" ${dto.tel1=="031" ? "selected='selected'" : ""}>031</option>
+                        <option value="016" ${dto.tel1=="032" ? "selected='selected'" : ""}>032</option>
+                        <option value="017" ${dto.tel1=="033" ? "selected='selected'" : ""}>033</option>
+                        <option value="018" ${dto.tel1=="041" ? "selected='selected'" : ""}>041</option>
+                        <option value="019" ${dto.tel1=="051" ? "selected='selected'" : ""}>051</option>
                     </select>
                   </div>
 
@@ -296,27 +294,15 @@ function imageDelete(){
                   </div>
              </div>
         </div>
-    </div>   
+    </div>  
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="userAddr">주소</label>
+        <label class="col-sm-2 control-label" for="serviceAddr">주소</label>
         <div class="col-sm-7">
-            <input class="form-control" id="userAddr" name="userAddr" type="text" placeholder="기본주소" value="${dto.userAddr}">
+            <input class="form-control" id="serviceAddr" name="serviceAddr" type="text" placeholder="기본주소" value="${dto.serviceAddr}">
             
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="userJob">직업</label>
-        <div class="col-sm-2">
-            <input class="form-control" id="userJob" name="userJob" type="text" placeholder="직업" value="${dto.userJob}">
-        </div>
-    </div>
-    <div class="form-group">
-       <label class="col-sm-2 control-label" for="userGender">성별</label>
-       <div class="col-sm-2">
-        <input type="radio" name="userGender" value="남자" id="male" checked>남자
-        <input type="radio" name="userGender" value="여자" id="female" >여자 			
-       </div>		
-    </div>
+
     <div class="form-group">
         <label class="col-sm-2 control-label" for="agree">약관 동의</label>
         <div class="col-sm-7 checkbox">
@@ -333,8 +319,8 @@ function imageDelete(){
             <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/';" style="margin-right:20px; height:40px; width:130px;">
                   수정취소 <span class="glyphicon glyphicon-remove"></span></button>
 		
-		<input type="hidden" name="memImgname" value="${dto.memImgname}">	
-		<input type="hidden" name="memImg" value="${dto.memImg}">	
+		<input type="hidden" name="serviceImgname" value="${dto.serviceImgname}">	
+		<input type="hidden" name="serviceImg" value="${dto.serviceImg}">	
 		
 	
 			

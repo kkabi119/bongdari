@@ -12,7 +12,7 @@
                                                     <li class="post-comment reply">
                                                     
                                                         <a class="pull-left" href="#">
-                                                            <img class="media-object" src="images/blogdetails/3.png" alt="">
+                                                            <img class="media-object" src="<%=cp%>/uploads/photo/${Adto.saveFilename}" alt="">
                                                         </a>
                                                         <div class="media-body" style="padding-bottom: 10px">
                                                             <span><i class="fa fa-user"></i>Posted by <a href="#">${Adto.userName }</a></span>

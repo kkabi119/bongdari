@@ -20,7 +20,7 @@
 			<div class="single-blog two-column">
                                 
 			<!-- Header Carousel -->
-    		<header id="myCarousel" class="carousel slide">
+    		<header id="myCarousel" class="carousel slide" style="height:400px">
         		<!-- Indicators -->
         			<ol class="carousel-indicators">
             			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -263,7 +263,7 @@
 <div class="col-md-6" >
                 <div class="panel panel-default">
                     <div class="panel-heading" >
-                        <h5 style="font-size:18px;"><i class="fa fa-fw fa-paperclip"></i> 이달의 후기<a href="#"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
+                        <h5 style="font-size:18px;"><i class="fa fa-sun-o"></i> 이달의 후기<a href="#"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
                     </div>
                     <div class="panel-body">
                         <ul type="disc">
@@ -285,42 +285,24 @@
             <div class="col-md-6" >
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5 style="font-size:18px;"><i class="fa fa-fw fa-paperclip"></i> 이달의 봉다리 <a href="#"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
+                        <h5 style="font-size:18px;"><i class="fa fa-lightbulb-o"></i> 공지사항 <a href="#"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
                     </div>
                     <div class="panel-body">
                         <ul type="disc">
-                        <%--   <c:forEach var="dtoDocu" items="${listDocu}">
-                        	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
-                          </c:forEach> --%>
+                         <c:forEach var="dtoN" items="${listN}">
+                        	<%-- <li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li> --%>
+                         
                         
-                       		 <li><a href="#" >[충주] 따뜻했던 연~</a></li>
-                     	  	 <li><a href="#" >[서울] 벌써 보고 함께</a></li>
-                       		 <li><a href="#" >[부산] 집에 가고 람 손~</a></li>
-                       		 <li><a href="#" >[강원] 저녁 뭐 먹지?</a></li>
-                       		  <li><a href="#" >[전주] 힘들었던만큼  날</a></li>
-                        	<li>	<a href="#" class="btn btn-default" style="text-align: right">더보기</a></li>
+                       		 <li><a href="${urlArticle}+&num=${dtoN.clubNoticeIdx}" >${dtoN.subject}</a></li>
+                       	 </c:forEach> 
+                     	  	 
+                        	<li><a href="${urlList}" class="btn btn-default" style="text-align: right">더보기</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             </div>
-            
-            <div class="blog-pagination">
-                        <ul class="pagination">
-                          <li><a href="#">left</a></li>
-                          <li><a href="#">1</a></li>
-                          <li><a href="#">2</a></li>
-                          <li class="active"><a href="#">3</a></li>
-                          <li><a href="#">4</a></li>
-                          <li><a href="#">5</a></li>
-                          <li><a href="#">6</a></li>
-                          <li><a href="#">7</a></li>
-                          <li><a href="#">8</a></li>
-                          <li><a href="#">9</a></li>
-                          <li><a href="#">right</a></li>
-                        </ul>
-                    </div>
                  </div>
      <script>
     $('.carousel').carousel({

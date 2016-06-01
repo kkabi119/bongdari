@@ -6,21 +6,23 @@
   <select id="demanderjoinSeq" resultType="Integer">
     SELECT service_seq.NEXTVAL FROM DUAL
   </select>
-  
+  	<insert id="insertMember" parameterType="Integer">
+		INSERT INTO member(userIdx) values(#{userIdx})
+	</insert>
   <insert id="insertDemanderjoin" parameterType="Integer">
     INSERT INTO service(serviceIdx) values(#{serviceIdx})
   </insert>
-  <insert id="insertDemanderCheck" parameterType="com.bong.member.Member">
-    INSERT INTO checkId (userIdx, userId, userPwd, enabled, isService)
-    VALUES(#{userIdx},#{userId},#{userPwd},1,1) 
+  <insert id="insertDemanderCheck" parameterType="com.bong.demanderjoin.Demanderjoin">
+    INSERT INTO checkId (userIdx, userId,userName, userPwd, enabled, isService)
+    VALUES(#{userIdx},#{userId},#{serviceName},#{userPwd},1,1) 
   </insert> 
   
   <insert id="insertDemanderjoinInfo" parameterType="com.bong.demanderjoin.Demanderjoin">
     INSERT INTO serviceInfo
     (serviceIdx, serviceName, serviceBirth, serviceTel,
-     serviceAddr, serviceEmail, serviceImgname)
+     serviceAddr, serviceEmail, serviceImg, serviceImgname, userIdx, enabled)
      VALUES(#{serviceIdx},#{serviceName},#{serviceBirth}
-     ,#{serviceTel},#{serviceAddr},#{serviceEmail},#{serviceImgname, jdbcType=VARCHAR})
+     ,#{serviceTel},#{serviceAddr},#{serviceEmail},#{serviceImg, jdbcType=VARCHAR},#{serviceImgname, jdbcType=VARCHAR}, #{userIdx},0)
   </insert>
     <!-- 아이디 중복 체크 -->
     <select id="readDemanderCheck" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="String">
@@ -28,33 +30,48 @@
     </select>  
   
   	<select id="readDemanderjoinLogin" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="Integer">
-	   SELECT ci.userIdx, userId, userName, userPwd, memImgname, memImg, isService FROM checkId ci
-	     LEFT OUTER JOIN serviceInfo si ON ci.userIdx=si.userIdx WHERE 
-	   SELECT serviceIdx, serviceName, serviceImgname, userIdx
-	    WHERE serviceIdx=#{serviceIdx}
+	   SELECT ci.userIdx, userId, serviceName, userPwd, serviceImgname, serviceImg, isService FROM checkId ci
+	     LEFT OUTER JOIN serviceInfo si ON ci.userIdx=si.userIdx WHERE  ci.userIdx=#{userIdx}
 	</select>
- 
-  
+	
+    <select id="readDemanderjoinInfo" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="String">
+	   SELECT ci.userIdx, userId, serviceName, userPwd,TO_CHAR(serviceBirth, 'YYYY-MM-DD') serviceBirth, serviceAddr, 
+	          serviceTel, serviceEmail, serviceImgname, serviceImg
+	          FROM checkId ci 
+            LEFT OUTER JOIN serviceInfo mi ON ci.userIdx=mi.userIdx  
+	          WHERE ci.userIdx=#{userIdx}
+	</select>
   <update id="updateLastLogin" parameterType="String">
      UPDATE serviceInfo SET last_login=SYSDATE
       WHERE serviceIdx=#{serviceIdx}
   </update>
-  
+  	<update id="updatePwd" parameterType="com.bong.demanderjoin.Demanderjoin">
+	   UPDATE checkId SET userPwd=#{userPwd} WHERE userIdx=#{userIdx}
+	</update>
+	<update id="updateMember2" parameterType="com.bong.demanderjoin.Demanderjoin">
+        UPDATE serviceInfo SET 
+               serviceEmail=#{serviceEmail}, serviceTel=#{serviceTel}, serviceBirth=#{serviceBirth},
+               serviceAddr=#{serviceAddr}
+               ,serviceImg=#{serviceImg, jdbcType=VARCHAR},serviceImgname=#{serviceImgname, jdbcType=VARCHAR},
+               modify_date=SYSDATE 
+               WHERE userIdx=#{userIdx}
+    </update>
+    
   <!-- 수요처 권한 테이블 -->
   
   <insert id="insertAuthority" parameterType="com.bong.demanderjoin.Demanderjoin">
      INSERT INTO memAuthority(memAuthIdx, userIdx, authority)
-       VALUES (memAuthority_seq.NEXTVAL, #{serviceIdx}, #{authority})
+       VALUES (memAuthority_seq.NEXTVAL, #{userIdx}, #{authority})
   </insert>
   
   <select id="readAuthority" parameterType="Integer" resultType="com.bong.demanderjoin.Demanderjoin">
       SELECT memAuthoIdx, userIdx, authority
-        FROM memAuthority WHERE serviceIdx=#{serviceIdx}
+        FROM memAuthority WHERE serviceIdx=#{userIdx}
   </select>
   
   <select id="listAuthority" parameterType="String" resultType="com.bong.demanderjoin.Demanderjoin">
      SELECT memAuthIdx, userIdx, authority
-       FROM memAuthority WHERE serviceIdx=#{serviceIdx}
+       FROM memAuthority WHERE serviceIdx=#{userIdx}
   </select>
   
   <update id="updateAuthority" parameterType="com.bong.demanderjoin.Demanderjoin">

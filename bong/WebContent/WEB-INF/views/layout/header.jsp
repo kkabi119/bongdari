@@ -24,7 +24,9 @@
                             <c:if test="${sessionScope.member.isService==0}">
                             <li><a href="<%=cp%>/member/index/myPage"><i class="glyphicon glyphicon-user">MyPage</i></a></li>
                             </c:if>
-                            <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+                            <c:if test="${sessionScope.member.isService==1}">
+                            <li><a href="<%=cp%>/demander/index/main"><i class="glyphicon glyphicon-user">수요처페이지</i></a></li>
+                            </c:if>
                             
                             <li><a href=""><i class="fa fa-dribbble">My Club</i></a></li>
                             

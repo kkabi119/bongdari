@@ -85,10 +85,8 @@ function listPage(page) {
 //좋아요추가
 function sendLike(serviceReviewIdx) {
 	var uid="${sessionScope.member.userId}";
-	if(! uid) {
-		login();
-		return false;
-	}
+
+	alert("alert");
 	var params="serviceReviewIdx="+serviceReviewIdx;
 	
 	$.ajax({
@@ -109,10 +107,7 @@ function sendLike(serviceReviewIdx) {
 //댓글 추가
 function sendReply() {
 	var uid="${sessionScope.member.userId}";
-	if(! uid) {
-		login();
-		return false;
-	}
+	
 
 	var num="${dto.serviceReviewIdx}"; // 해당 게시물 번호
 	var content=$.trim($("#replyContent").val());
@@ -139,9 +134,7 @@ function sendReply() {
 				listPage(1);
 			} else if(state=="false") {
 				alert("댓글을 등록하지 못했습니다. !!!");
-			} else if(state=="loginFail") {
-				login();
-			}
+			} 
 		}
 		,error:function(e) {
 			alert(e.responseText);
@@ -154,20 +147,13 @@ function sendReply() {
  //댓글 삭제
 function deleteReply(replyNum, page) {
 	var uid="${sessionScope.member.userId}";
-	if(! uid) {
-		login();
-		return false;
-	}
+	
 	
 	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
 		var url="<%=cp%>/demander/index/review/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
 		        var state=data.state;
-				if(state=="loginFail") {
-					login();
-				} else {
 					listPage(page);
-				}
 		}, "json");
 	}
 } 
@@ -216,7 +202,7 @@ function updateReview() {
                                     
                                         <ul class="nav navbar-nav post-nav">
                                         
-                                         	<li onclick="sendLike('${dto.serviceReviewIdx}')"><i class="fa fa-thumbs-o-up"></i>좋아요 <span id="likeCount${dto.serviceReviewIdx}">${dto.likeCount}</span></li> 
+                                         	<li onclick="sendLike('${dto.serviceReviewIdx}')"><a href="#"><i class="fa fa-thumbs-o-up"></i>좋아요 <span id="likeCount${dto.serviceReviewIdx}">${dto.likeCount}</span></a></li> 
                                                                                         
                                             <li><a href="#"><i class="fa fa-comments"></i>댓글수  ${dto.replyCount}</a></li>
                                             <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
@@ -255,13 +241,13 @@ function updateReview() {
                                		<div style="float:left; padding-top: 20px; padding-right: 10px">
                               				<span class="item-click" id="reply-open-close">댓글 ▼</span>&nbsp;<span id="postReplyCountView" class="item-title" style="color:#424951">(${dto.replyCount})</span>
                      				</div>
-                                  	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
+                                  	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px; ">
                       					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/demander/index/review/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
                   					</div>
                                       
                   					
                                     <div style="float:right; padding-top: 10px;padding-bottom: 10px;">
-                      					<button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="updateReview();"> 수정 <span class="fa fa-pencil"></span></button>
+                      					<button type="button" class="btn btn-warning" style="padding:10px 15px ; color:white; border:none;" onclick="updateReview();"> 수정 <span class="fa fa-pencil"></span></button>
                   					</div>
                   					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
                       					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="deleteReview();"> 삭제 <span class="fa fa-times"></span></button>
@@ -285,7 +271,7 @@ function updateReview() {
                   </div>
                   
                   <div style="text-align: right; padding-top: 10px;">
-                      <button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="fa fa-pencil"></span></button>
+                      <button type="button" class="btn btn-warning" style="padding:10px 15px ; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="fa fa-pencil"></span></button>
                   </div>           
               
               </div>
