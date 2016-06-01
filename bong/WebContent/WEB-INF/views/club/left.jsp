@@ -55,7 +55,7 @@
                                 <li><a href="<%=cp%>/club/${clubSeq}/free/list">자유게시판<span class="pull-right">(3)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/review">후기/포토게시판<span class="pull-right">(4)</span></a></li>
                                 <li><a href="<%=cp%>/club/index/vapply">봉사신청게시판<span class="pull-right">(2)</span></a></li>
-                                <li><a href="<%=cp%>/club/index/calendar">우리동아리 달력<span class="pull-right">(8)</span></a></li>
+                                <li><a href="<%=cp%>/club/${clubSeq}/calendar/main">우리동아리 달력<span class="pull-right">(8)</span></a></li>
                                 <li><a href="<%=cp%>/club/${clubSeq}/admin">관리자모드<span class="pull-right">(8)</span></a></li>
                             </ul>
                         </div>
