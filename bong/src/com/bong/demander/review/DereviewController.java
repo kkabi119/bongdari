@@ -547,6 +547,7 @@ public class DereviewController {
 					state="loginFail";
 				} else {
 					dto.setUserIdx(info.getUserIdx());
+					
 					int result=service.insertDeReviewReply(dto);
 					if(result==0)
 						state="false";

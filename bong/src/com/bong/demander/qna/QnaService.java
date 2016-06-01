@@ -6,7 +6,8 @@ import java.util.Map;
 import com.bong.demander.review.DeReview;
 
 public interface QnaService {
-	public int insertQna(Qna qna);
+	public int insertQna(Qna qna,String mode);
+	public int insertQnaReply(Qna dto,int sqnaIdx);
 	public int dataCount(Map<String, Object> map);
 	public List<Qna> listQna(Map<String, Object> map);
 	public int updateHitCount(int num);

@@ -16,26 +16,37 @@
 	      DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0 
 	  </if>
 	  <if test="searchKey=='created'">
-	      TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
-	      OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue}
+	      TO_CHAR(s.created, 'YYYY-MM-DD') = #{searchValue}
+	      OR TO_CHAR(s.created, 'YYYYMMDD') = #{searchValue}
 	  </if>
 	</sql>
 	
+	<!-- Qna인덱스시퀀스 -->
+	<select id="DeQnaSeq" resultType="Integer">
+		SELECT service_qna_seq.NEXTVAL FROM DUAL
+	</select>
 	
- <!-- QnA -->
+ 	<!-- QnA -->
 	<insert id="insertQna" parameterType="com.bong.demander.qna.Qna">
-	  INSERT INTO service_qna(sqnaIdx, userIdx, subject, content,answer) 
-	  VALUES (service_qna_seq.NEXTVAL, #{userIdx}, #{subject},#{content},#{answer})
+	  INSERT INTO service_qna(sqnaIdx, userIdx, subject, content,answer,groupNum) 
+	  VALUES (#{sqnaIdx}, #{userIdx}, #{subject},#{content},#{answer},#{sqnaIdx})
 	</insert>
+	
+	<insert id="insertQnaReply" parameterType="com.bong.demander.qna.Qna">
+	  INSERT INTO service_qna(sqnaIdx, userIdx, subject, content,answer,groupNum) 
+	  VALUES (service_qna_seq.NEXTVAL, #{userIdx}, #{subject},#{content},#{answer},#{answer})
+	</insert>
+	
+	
 
 	<!-- 글개수 -->
 	<select id="dataCount" parameterType="map"
 	            resultType="Integer">
-		 SELECT NVL(COUNT(*), 0) FROM service_qna
+		 SELECT NVL(COUNT(*), 0) FROM service_qna s
+		 JOIN checkId c ON s.userIdx=c.userIdx
 	     <where>
 	     	<if test="searchValue!=null and searchValue!='' ">
-	     	    AND (subject LIKE '%' || #{searchValue} || '%' OR
-	     	    content LIKE '%' || #{searchValue} || '%')
+	     	   <include refid="where-list"/>
 	     	</if>
 	     </where>   
 	</select>
@@ -45,15 +56,15 @@
 	            resultType="com.bong.demander.qna.Qna">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-			      SELECT sqnaIdx, s.useridx,userName,subject, CONTENT, hitCount,to_char(created,'YYYY-MM-DD') created
+			      SELECT sqnaIdx, s.useridx,c.userId,userName,subject, CONTENT, hitCount,to_char(created,'YYYY-MM-DD') created
+			      ,answer,groupNum
 				  FROM service_qna s join checkId c on s.userIdx=c.userIdx 
                     <where>
 	     	           <if test="searchValue!=null and searchValue!='' ">
-	     	               AND (subject LIKE '%' || #{searchValue} || '%' OR
-	     	               content LIKE '%' || #{searchValue} || '%')
+	     	               <include refid="where-list"/>
 	     	           </if>
 	                </where>
-	                ORDER BY sqnaIdx DESC
+	                 ORDER BY groupNum DESC,sqnaIdx ASC
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
 		) WHERE rnum >= #{start}

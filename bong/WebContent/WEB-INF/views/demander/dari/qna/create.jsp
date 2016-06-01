@@ -97,6 +97,8 @@ $(function(){
     		f.action="<%=cp%>/demander/index/qna/create";
     	else if(mode=="update")
     		f.action="<%=cp%>/demander/index/qna/update";
+    	else if(mode=="reply")
+        	f.action="<%=cp%>/demander/index/qna/reply?num=${dto.sqnaIdx}&page=${page}";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;

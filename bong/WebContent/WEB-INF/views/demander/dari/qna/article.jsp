@@ -105,7 +105,7 @@ function updateQna() {
                   					
                   				<c:if test="${sessionScope.member.userId=='admin'}">
         		   					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
-        		   					 <button type="button" style="color:#F0AD4E; padding:10px 15px ;" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/demander/index/qna/create';">답변 </button>
+        		   					 <button type="button" style="color:#F0AD4E; padding:10px 15px ;" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/demander/index/qna/reply?num=${dto.sqnaIdx}&page=${page}';">답변 </button>
 									</div>
 								</c:if> 
                   				</div>

@@ -17,8 +17,6 @@ function QnasearchList() {
 }
 </script>
 
-
-        
 	   <div class="col-lg-12">
 			<h1 class="page-header" style="color:#F0AD4E;">QnA</h1>
 			<ol class="breadcrumb">
@@ -51,39 +49,37 @@ function QnasearchList() {
 	                   			<c:choose>
 	                   				<c:when test="${dto.userId!=sessionScope.member.userId&&sessionScope.member.userId!='admin'}">
 	                   					<i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;비밀글 입니다.
-	                   				<%-- 	<c:if test="${dto.replycnt!=0}">
-	                   						[${dto.replycnt}]
-	                   						<img src="<%=cp%>/res/img/reply.gif">
-	                   					</c:if> --%>
 	                   				</c:when>
 	                   				<c:otherwise>
+	                   					<c:if test="${dto.answer!=0}">
+	                   						<img src="<%=cp%>/res/images/demander/re.gif">
+	                   					</c:if>
 	                   					<a href='${urlArticle}&num=${dto.sqnaIdx}'>${dto.subject}</a>
-	                   					<%-- <c:if test="${dto.replycnt!=0}">
-	                   						[${dto.replycnt}]
-	                   						<img src="<%=cp%>/res/img/reply.gif">
-	                   					</c:if> --%>
 	                   				</c:otherwise>
 	                   			</c:choose>
 	                        </td>
-	                        <td class="text-center">${dto.userName} | ${sessionScope.member.userId}</td>
+	                        <td class="text-center">${dto.userName}</td>
 	                        <td class="text-center">${dto.created}</td>
 	                        <td class="text-center">${dto.hitCount}</td> 
+	                   
 	                    </tr>
 	                   </c:forEach>
 	                </tbody>
 	            </table>
 	        </div>
+	        
 
-
-	<div class="paging"
-		style="text-align: center; min-height: 50px; line-height: 50px;">
-		<c:if test="${dataCount==0 }">
-	                  등록된 게시물이 없습니다.
-	</c:if>
-		<c:if test="${dataCount!=0 }">
-	                ${paging}
-	</c:if>
 	</div>
+		<div class="paging"
+			style="text-align: center; min-height: 50px; line-height: 50px;">
+			<c:if test="${dataCount==0 }">
+		                  등록된 게시물이 없습니다.
+		</c:if>
+			<c:if test="${dataCount!=0 }">
+		                ${paging}
+		</c:if>
+		</div>
+	
 
 	<!-- 검색 -->
 	
@@ -99,10 +95,10 @@ function QnasearchList() {
 					<option value="userName">작성자</option>
 					<option value="content">내용</option>
 					<option value="created">등록일</option>
-				</select> <input type="text" class="form-control input-sm input-search"
-					name="searchValue">
+				</select> 
+				<input type="text" class="form-control input-sm input-search" name="searchValue">
 				<button type="button" class="btn btn-default btn-sm wbtn" style="color:#F0AD4E;" 
-					onclick="searchList();">
+					onclick="QnasearchList();">
 					<span class="glyphicon glyphicon-search"></span> 검색
 				</button>
 			</form>

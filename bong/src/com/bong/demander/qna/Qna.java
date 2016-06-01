@@ -1,12 +1,13 @@
 package com.bong.demander.qna;
 
 public class Qna {
-	private int listNum,sqnaIdx,userIdx;
+	private int listNum,sqnaIdx,userIdx; //sqnaIdx °¡ boardNum
     private String userId,userName;
 	private String subject,created;
     private String content;
     private int hitCount;
     private int answer;
+    private int groupNum;
 	
 	public int getUserIdx() {
 		return userIdx;
@@ -68,6 +69,12 @@ public class Qna {
 	public void setAnswer(int answer) {
 		this.answer = answer;
 	}
-    
+	public int getGroupNum() {
+		return groupNum;
+	}
+	public void setGroupNum(int groupNum) {
+		this.groupNum = groupNum;
+	}
+	
     
 }

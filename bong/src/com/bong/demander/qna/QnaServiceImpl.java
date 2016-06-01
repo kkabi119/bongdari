@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bong.common.dao.bongDAO;
-import com.bong.demander.review.DeReview;
 
 @Service("demander.qnaService")
 public class QnaServiceImpl implements QnaService {
@@ -16,15 +15,30 @@ public class QnaServiceImpl implements QnaService {
 	private bongDAO dao;
 	
 	@Override
-	public int insertQna(Qna qna) {
+	public int insertQna(Qna dto,String mode) {
 		int result=0;
 		try {
-			result=dao.insertInformation("deQna.insertQna", qna);
+			int seq = dao.getIntValue("deQna.DeQnaSeq");
+			dto.setSqnaIdx(seq);
+			result=dao.insertInformation("deQna.insertQna", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		return result;
 	}
+	
+	@Override
+	public int insertQnaReply(Qna dto,int sqnaIdx) {
+		int result=0;
+		try {
+			dto.setAnswer(sqnaIdx);
+			result=dao.insertInformation("deQna.insertQnaReply",dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
