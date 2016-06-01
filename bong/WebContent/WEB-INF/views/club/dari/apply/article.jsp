@@ -7,7 +7,8 @@
 %>
 
 <style type="text/css">
-
+.modal-body{
+}
 .col-md-9{
 			margin-top:-25px;
 		}
@@ -78,13 +79,8 @@ $(function(){
 		var num = "${dto.clubApplyIdx}";
 		var page = "${page}";
 		var params = "num="+num+"&page="+page;
-		  
-		var url = "<%=cp%>/club/index/apply/delete?" + params;
-
-		 
-		  	location.href=url;
-
-		$('#applyListModal .modal-body').load( "<%=cp%>/club/index/apply/applyList1?"+params, 	function() {
+	
+		$('#applyListModal .modal-body').load( "<%=cp%>/club/index/apply/applyList1?"+params, function() {
 			 
 				$('#applyListModal .modal-title').html('우리동아리 신청리스트');
 				$('#applyListModal').modal('show');

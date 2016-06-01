@@ -6,6 +6,7 @@ import java.util.Map;
 import com.bong.club.apply.Reply;
 import com.bong.club.notice.Notice;
 import com.bong.demander.review.DeReview;
+import com.bong.member.Member;
 
 public interface ApplyService {
 	public List<Apply> listApply(Map<String, Object> map);
@@ -33,7 +34,8 @@ public interface ApplyService {
 	int deleteReplyLike(Reply dto);//v
 	public int updateHitCount_club(int clubApplyIdx);//v
 	
-	public Apply readApplyList(int clubApplyIdx);
+	public List<Member> readApplyList(int clubApplyIdx);
+	public List<Member> readApplyList_date(int clubApplyIdx);
 	
 	
 	

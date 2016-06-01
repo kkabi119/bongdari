@@ -1,5 +1,8 @@
 package com.bong.member;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class Member {
@@ -11,7 +14,29 @@ public class Member {
 	private MultipartFile uploads;
 	private String memImgname, memImg;
 	private String authority;
+	private String age;
+	private int  listNum;
+	private String hopeDate;
 	
+
+	public String getHopeDate() {
+		return hopeDate;
+	}
+	public void setHopeDate(String hopeDate) {
+		this.hopeDate = hopeDate;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
+	public String getAge() {
+		return age;
+	}
+	public void setAge(String age) {
+		this.age = age;
+	}
 	
 	public int getIsService() {
 		return isService;

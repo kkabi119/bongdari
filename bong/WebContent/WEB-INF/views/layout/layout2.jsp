@@ -43,12 +43,15 @@
 
 <style type="text/css">
 		.container{
-			width:66%;
+			width:68%;
 		}
 		
-		
+		.col-md-9{
+			width:75%;
+		}	
 	</style>
-
+	
+	
 </head><!--/head-->
 
 <body>

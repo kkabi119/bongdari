@@ -247,9 +247,21 @@
      </update>
 	
 	<!--   								봉사신청 리스트 목록 가져오기 -->
-	<select id="readApplyList" parameterType="Integer">
-	select * from memberInfo m join club_apply_memlist li on m.userIdx=li.userIdx where li.clubApplyIdx=#{clubApplyIdx};
+	<select id="readApplyList" parameterType="Integer" resultType="com.bong.member.Member">
+
+	SELECT userName, userBirth, userGender, userAddr, m.userIdx, userTel, userEmail, hopeDate, memImg, MEMIMGNAME,
+			TRUNC( MONTHS_BETWEEN( SYSDATE, userbirth)/12) as age
+	FROM memberInfo m JOIN club_apply_memlist li ON m.userIdx=li.userIdx	
+	WHERE li.clubApplyIdx=#{clubApplyIdx}
+	ORDER BY userIdx, hopeDate
 	</select>
 	
+	<!--   								봉사신청 리스트 희망날짜 가져오기 -->
+	<select id="readApplyList_date" parameterType="Integer" resultType="com.bong.member.Member">
+
+		SELECT userIdx , LISTAGG(hopeDate,',')WITHIN GROUP (ORDER BY userIdx) hopedate
+		FROM club_apply_memlist WHERE clubApplyIdx=#{clubApplyIdx}
+		GROUP BY userIdx; 
+	</select>
 	
 </mapper>

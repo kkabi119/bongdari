@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bong.common.FileManager;
 import com.bong.common.MyUtil;
+import com.bong.member.Member;
 import com.bong.member.SessionInfo;
 
 
@@ -226,6 +228,7 @@ public class ApplyController {
 		int numPerPage=5;
 		int total_page=0;
 		int dataCount=0;
+		
 		System.out.println("listReply로 넘어옴 ");
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("num", num);
@@ -245,6 +248,7 @@ public class ApplyController {
 		// 엔터를 <br>
 		Iterator<Reply> it=listReply.iterator();
 		int listNum, n=0;
+		
 		while(it.hasNext()) {
 			Reply dto=it.next();
 			listNum=dataCount-(start+n-1);
@@ -450,25 +454,47 @@ public class ApplyController {
 			
 			// 봉사신청한 회원리스트 모달창 
 			@RequestMapping(value="/club/index/apply/applyList1")
-			public ModelAndView applyList1(HttpSession session, @RequestParam(value="num") int clubApplyIdx,	@RequestParam(value="page") String page	) throws Exception {
+			public ModelAndView applyList1(HttpSession session, 
+					@RequestParam(value="num") int clubApplyIdx,
+					@RequestParam(value="page") String page	) throws Exception {
 				
 				// 봉사신청한 같은 동아리의 회원을 dto에 담아와야함 
 				SessionInfo info=(SessionInfo)session.getAttribute("member");
-				
+							
 				if(info==null) {
 					return new ModelAndView("redirect:/member/login");
 				}
 
-				ModelAndView mav = new ModelAndView("club/dari/apply/applyList");
+				ModelAndView mav = new ModelAndView("/club/dari/apply/applyList");
 
 				// 해당 레코드 가져 오기
-				Apply dto = service.readApplyList(clubApplyIdx);
+				List<Member> list = service.readApplyList(clubApplyIdx);
+				List<Member> date_list = new ArrayList<>();
+								
+				int n=0; //listnum 
+				for(int i=0; i<list.size(); i++) {
+					
+					if(i>0) {
+						if(list.get(i).getUserIdx()==date_list.get(date_list.size()-1).getUserIdx()) {
+							
+							date_list.get(date_list.size()-1).setHopeDate(
+												date_list.get(date_list.size()-1).getHopeDate()+"/ "+ list.get(i).getHopeDate().substring(5));
+							
+						}
+						else {							
+							n++;
+							list.get(i).setListNum(n);
+							date_list.add(list.get(i));
+						}
+					} else {
+						n++;
+						list.get(i).setListNum(n);
+						date_list.add(list.get(i));
+					}
+				}
 				
-				if(dto==null) {
-					System.out.println("dto 가 널입니다 ");
-				}			
-				
-				mav.addObject("dto", dto);
+				mav.addObject("list", date_list);
+				mav.addObject("n",n);
 				return mav;
 			}
 }

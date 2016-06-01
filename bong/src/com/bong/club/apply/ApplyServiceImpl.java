@@ -11,6 +11,7 @@ import com.bong.club.notice.Notice;
 import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
 import com.bong.demander.review.DeReview;
+import com.bong.member.Member;
 
 @Service("clubApply.applyService")
 public class ApplyServiceImpl implements ApplyService {
@@ -271,23 +272,39 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 
 	@Override
-	public Apply readApplyList(int clubApplyIdx) {
+	public List<Member> readApplyList(int clubApplyIdx) {
 		
-		Apply dto=null;
-		
+		List<Member> list=null;
 		try {
 			//게시물 가져오기
 			System.out.println("readApplyList 들어옴");
-			dto=dao.getReadInformation("clubApply.readApplyList", clubApplyIdx);
 			
+			list=dao.getListInformation("clubApply.readApplyList", clubApplyIdx);
+		
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		
-		return dto;
+		return list;
 	}
 
-
+	@Override
+	public List<Member> readApplyList_date(int clubApplyIdx) {
+		
+		List<Member> list=null;
+		
+		try {
+			//게시물 가져오기
+			System.out.println("readApplyList_date 들어옴");
+			
+			list=dao.getListInformation("clubApply.readApplyList_date", clubApplyIdx);
+		
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return list;
+	}
 
 }
 
