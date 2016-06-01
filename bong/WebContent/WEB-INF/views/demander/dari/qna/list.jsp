@@ -77,7 +77,7 @@ function QnasearchList() {
 	                        <td class="text-center">${dto.listNum}</td>
 	                        <td style="text-align:left;">
 	                   			<c:choose>
-	                   				<c:when test="${dto.userId!=sessionScope.member.userId&&sessionScope.member.userId!='admin'}">
+	                   				 <c:when test="${dto.userId!=sessionScope.member.userId&&sessionScope.member.userId!='admin'&&dto.quserIdx!=sessionScope.member.userIdx}">
 	                   					<i class="glyphicon glyphicon-lock" style="color:#F0AD4E;"></i>&nbsp;&nbsp;<span style="color: #807F7F;">비밀글 입니다.</span>
 	                   				</c:when>
 	                   				<c:otherwise>
@@ -85,7 +85,7 @@ function QnasearchList() {
 	                   						&nbsp;&nbsp;<img src="<%=cp%>/res/images/demander/re.gif">
 	                   					</c:if>
 	                   					<a href='${urlArticle}&num=${dto.sqnaIdx}'>&nbsp;&nbsp;${dto.subject}</a>
-	                   				</c:otherwise>
+	                   				</c:otherwise> 
 	                   			</c:choose>
 	                        </td>
 	                        <td class="text-center" style="font-weight: bold; color:#807F7F; ">${dto.userName}</td>

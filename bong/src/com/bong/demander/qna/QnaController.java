@@ -74,7 +74,7 @@ public class QnaController {
 			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 			n++;
 		}
-
+		
 		String params = "";
 		String urlList = cp + "/demander/index/qna/list";
 		String urlArticle = cp + "/demander/index/qna/article?page="+current_page;
@@ -86,6 +86,15 @@ public class QnaController {
 			urlList = cp + "/demander/index/qna/list?" + params;
 			urlArticle = cp + "/demander/index/qna/article?page=" + current_page + "&" + params;
 		}
+		
+		//int secret=0;
+		/*int quserIdx=0;
+		int groupNum=dto.getGroupNum();
+		if(dto.getAnswer()!=0){ //답변article이라면 
+			quserIdx=service.quserIdx(groupNum);
+		}
+		System.out.println("********quserIdx:"+quserIdx);
+		*/
 
 		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.list.QnA 게시판");
 		mav.addObject("list", list);
@@ -110,7 +119,7 @@ public class QnaController {
 
 		dto.setUserId(info.getUserId());
 		dto.setUserIdx(info.getUserIdx());
-
+		dto.setQuserIdx(dto.getUserIdx());
 		service.insertQna(dto, "created");
 		return new ModelAndView("redirect:/demander/index/qna/list");
 
@@ -131,21 +140,29 @@ public class QnaController {
 		// 조회수증가
 		service.updateHitCount(num);
 		
-		
-		
 		// 해당아티클가져오기
 		Qna dto = service.readQna(num);
-
+		
+		
 		if (dto == null)
 			return new ModelAndView("redirect:/demander/index/qna/list");
 
+		
 		String params = "page=" + page;
 		if (searchValue.length() != 0) {
 			params += "&searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
 		}
+		
+		String amode="article";
+		if(dto.getAnswer()!=0){ //답변article이라면 
+			amode="reply";
+		}
+		
+		
 		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.article.QnA 게시판");
 		mav.addObject("dto", dto);
 		mav.addObject("page", page);
+		mav.addObject("amode",amode);
 		mav.addObject("params", params);
 		return mav;
 	}
@@ -231,7 +248,13 @@ public class QnaController {
 		
 		dto.setUserIdx(info.getUserIdx());
 		dto.setAnswer(num);
-
+		int quserIdx=0;
+	
+		if(dto.getAnswer()!=0){ //답변article이라면 
+			quserIdx=service.quserIdx(num);
+		}
+		dto.setQuserIdx(quserIdx);
+		service.insertQnaReply(dto, num);
 
 		return "redirect:/demander/index/qna/list?page=" + page;
 	}

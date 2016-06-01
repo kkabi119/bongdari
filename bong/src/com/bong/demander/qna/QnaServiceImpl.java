@@ -107,6 +107,17 @@ public class QnaServiceImpl implements QnaService {
 		}
 		return result;
 	}
+
+	@Override
+	public int quserIdx(int groupNum) {
+		int result=0;
+		try{
+			result=dao.getIntValue("deQna.quserIdx",groupNum);
+		} catch(Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
 	
 	/*@Override
 	public Qna deQnaReply(Map<String, Object> map) {

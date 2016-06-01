@@ -9,6 +9,7 @@ public interface QnaService {
 	public int dataCount(Map<String, Object> map);
 	public List<Qna> listQna(Map<String, Object> map);
 	public int updateHitCount(int num);
+	public int quserIdx(int groupNum);
 	//public Qna deQnaReply(Map<String, Object> map);
 	public Qna readQna(int num);
 	public int updateQna(Qna qna);

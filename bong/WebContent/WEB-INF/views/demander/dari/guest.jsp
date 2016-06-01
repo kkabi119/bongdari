@@ -181,8 +181,6 @@ function printGuest(data) {
         
         <div id="listGuest"></div>
 
-	
-
 </body>
               
     <!--/#blog-->

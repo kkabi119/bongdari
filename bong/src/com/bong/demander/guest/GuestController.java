@@ -88,18 +88,10 @@ public class GuestController {
 			HttpSession session, Guest dto
 			) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		if(info==null) {
-			// 로그인 상태가 아닌것을 json으로 전송
-			Map<String, Object> model = new HashMap<>(); 
-			model.put("isLogin", "false");
-			return model;
-		}
-		
+
 		// 글을 쓴사람(로그인한 아이디)
 		dto.setUserIdx(info.getUserIdx());
-		
 		service.insertGuest(dto);
-		
 		return list(session, 1);
 	}
 	

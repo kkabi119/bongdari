@@ -4,8 +4,8 @@
 <mapper namespace="deGuest">
 
 <insert id="insertGuest" parameterType="com.bong.demander.guest.Guest">
-	  INSERT INTO service_guest (sguestIdx, userIdx, content,serviceIdx)  
-	  VALUES (service_guest_seq.NEXTVAL, #{userIdx}, #{content},4)
+	  INSERT INTO service_guest (sguestIdx, userIdx, content)  
+	  VALUES (service_guest_seq.NEXTVAL, #{userIdx}, #{content})
 	</insert>
 	
 	<select id="dataCount" resultType="Integer">
@@ -17,9 +17,8 @@
 		 SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
 		       SELECT sguestIdx, g.useridx, CONTENT, created,userName
-		               FROM service_guest g JOIN memberInfo m
-                   ON g.useridx=m.useridx
-		               ORDER BY sguestIdx DESC
+		           FROM service_guest g JOIN checkId c ON g.useridx=c.useridx
+		           ORDER BY sguestIdx DESC
 <![CDATA[		               
 		    ) tb WHERE ROWNUM <= #{end}
 		) WHERE rnum >= #{start}

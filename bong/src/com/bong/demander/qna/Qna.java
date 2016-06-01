@@ -8,6 +8,7 @@ public class Qna {
     private int hitCount;
     private int answer;
     private int groupNum;
+    private int quserIdx;
 	
 	public int getUserIdx() {
 		return userIdx;
@@ -75,6 +76,13 @@ public class Qna {
 	public void setGroupNum(int groupNum) {
 		this.groupNum = groupNum;
 	}
+	public int getQuserIdx() {
+		return quserIdx;
+	}
+	public void setQuserIdx(int quserIdx) {
+		this.quserIdx = quserIdx;
+	}
+	
 	
     
 }

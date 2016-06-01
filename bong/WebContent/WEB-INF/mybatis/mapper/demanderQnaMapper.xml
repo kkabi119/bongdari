@@ -28,13 +28,13 @@
 	
  	<!-- QnA -->
 	<insert id="insertQna" parameterType="com.bong.demander.qna.Qna">
-	  INSERT INTO service_qna(sqnaIdx, userIdx, subject, content,answer,groupNum) 
-	  VALUES (#{sqnaIdx}, #{userIdx}, #{subject},#{content},#{answer},#{sqnaIdx})
+	  INSERT INTO service_qna(sqnaIdx, userIdx, subject, content,answer,groupNum,quserIdx) 
+	  VALUES (#{sqnaIdx}, #{userIdx}, #{subject},#{content},#{answer},#{sqnaIdx},#{quserIdx})
 	</insert>
 	
 	<insert id="insertQnaReply" parameterType="com.bong.demander.qna.Qna">
-	  INSERT INTO service_qna(sqnaIdx, userIdx, subject, content,answer,groupNum) 
-	  VALUES (service_qna_seq.NEXTVAL, #{userIdx}, #{subject},#{content},#{answer},#{answer})
+	  INSERT INTO service_qna(sqnaIdx, userIdx, subject, content,answer,groupNum,quserIdx) 
+	  VALUES (service_qna_seq.NEXTVAL, #{userIdx}, #{subject},#{content},#{answer},#{answer},#{quserIdx})
 	</insert>
 	
 	
@@ -57,7 +57,7 @@
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
 			      SELECT sqnaIdx, s.useridx,c.userId,userName,subject, CONTENT, hitCount,to_char(created,'YYYY-MM-DD') created
-			      ,answer,groupNum
+			      ,answer,groupNum,quserIdx
 				  FROM service_qna s join checkId c on s.userIdx=c.userIdx 
                     <where>
 	     	           <if test="searchValue!=null and searchValue!='' ">
@@ -93,6 +93,12 @@
       <delete id="deleteQna" parameterType="Integer">
              DELETE FROM service_qna WHERE sqnaIdx =#{sqnaIdx}
       </delete>
+      
+     <!--질문의 답변 읽기-->
+	<select id="quserIdx" resultType="Integer" parameterType="Integer">
+	       SELECT c.userIdx FROM service_qna q JOIN checkId c ON q.useridx=c.useridx
+				WHERE groupNum=#{groupNum} and answer=0 
+	</select>
 	
 	<!-- 답변보기-->
 	
