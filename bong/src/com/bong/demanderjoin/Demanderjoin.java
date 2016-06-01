@@ -15,6 +15,9 @@ public class Demanderjoin {
   
   
   
+public String getServiceImg() {
+	return serviceImg;
+}
 public MultipartFile getUploads() {
 	return uploads;
 }

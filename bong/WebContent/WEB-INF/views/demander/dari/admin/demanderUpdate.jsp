@@ -159,7 +159,7 @@ function imageDelete(){
 }
 </script>
 
-<div class="container" role="main" style="margin-top:50px;">
+
 
   <div class="bodyFrame">
   <form class="form-horizontal" name="demanderUpdateForm" method="post" onsubmit="return demanderUpdate();" enctype="multipart/form-data">
@@ -332,7 +332,6 @@ function imageDelete(){
      
   </form>
   </div>
- </div>
 
     <!-- /.container -->
 

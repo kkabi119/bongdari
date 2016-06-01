@@ -14,7 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bong.common.MyUtil;
 import com.bong.demanderjoin.Demanderjoin;
 import com.bong.demanderjoin.DemanderjoinService;
-import com.bong.demanderjoin.SessionInfo;
+import com.bong.member.SessionInfo;
+
 
 @Controller("bong.demanderController")
 public class DemanderController {
@@ -169,11 +170,13 @@ public class DemanderController {
 	
 	@RequestMapping(value="/demander/index/admin/tab3", method=RequestMethod.GET)
 	public ModelAndView tab3(
+			HttpSession session
 			) throws Exception {
-		/*String root=session.getServletContext().getRealPath("/");
+		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+File.separator+"uploads"+File.separator+"serviceImg";
 		//세션에 있는 수요처 정보 가져오기
-		SessionInfo info=(SessionInfo)session.getAttribute("demanderjoin");
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+
 		if(info==null){
 			return new ModelAndView("redirect:/member/login");
 		}
@@ -183,13 +186,11 @@ public class DemanderController {
 			session.invalidate();
 			return new ModelAndView("redirect:/");
 		}
-		
-		service.updateDemander2(dto, pathname);*/
-		
+	
 		//수정폼
-		ModelAndView mav = new ModelAndView("/demander/dari/admin/demanderUpdate");
-		/*mav.addObject("mode", "update");
-		mav.addObject("dto", dto);*/
+	ModelAndView mav = new ModelAndView("/demander/dari/admin/demanderUpdate");
+	    mav.addObject("mode", "update");
+		mav.addObject("dto", dto);
 		return mav;
 	}
 	

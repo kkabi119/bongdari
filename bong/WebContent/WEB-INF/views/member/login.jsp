@@ -54,6 +54,14 @@ li,ul,body,input{margin:0; padding:0; list-style:none}
 #login:checked~div .form-header li:nth-child(1),#demander:checked~div .form-header li:nth-child(2){background:#e8e8e8}
 </style>
 <script type="text/javascript">
+function enter(where){
+	if(event.keyCode == 13){
+		where.focus();
+	}
+}
+function onclick_confirm(){
+	alert("로그인");
+}
 function memberLogin() {
 	var f = document.memberLoginForm;
 	
@@ -123,14 +131,14 @@ function demanderJoin(){
 <div class="login">
 <form  name="memberLoginForm" method="post">
 <ul class="ul-list">
-<li><input type="text" required class="input" placeholder="아이디" name="userId" id="userId"/><span class="icon"><i class="fa fa-user"></i></span></li>
-<li><input type="password" required class="input" placeholder="비밀번호" name="userPwd" id="userPwd"/><span class="icon"><i class="fa fa-lock"></i></span></li>
-<li><span class="remember"><input type="checkbox" id="check"> <label for="check">Remember Me</label></span><span class="remember"><a href="">Forget Password</a></span></li>
-<li><input type="button" onclick="memberLogin()" value="LOGIN" class="btn">&nbsp;<input type="button" onclick="join()" value="JOIN" class="btn"></li>
+<li><input type="text" required class="input" placeholder="아이디" name="userId" id="userId" onkeydown="enter(userPwd)"/><span class="icon"><i class="fa fa-user"></i></span></li>
+<li><input type="password" required class="input" placeholder="비밀번호" name="userPwd" id="userPwd"  onkeydown="enter(login)"/><span class="icon"><i class="fa fa-lock"></i></span></li>
+<li><input type="button" onclick="memberLogin()" name="login" value="LOGIN" class="btn">&nbsp;<input type="button" onclick="join()" value="JOIN" class="btn"></li>
 </ul>
 </form>
 </div>
 
+<!-- <li><span class="remember"><input type="checkbox" id="check"> <label for="check">Remember Me</label></span><span class="remember"><a href="">Forget Password</a></span></li> -->
 
 </section>
 
