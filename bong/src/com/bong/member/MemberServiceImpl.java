@@ -164,7 +164,6 @@ public class MemberServiceImpl implements MemberService{
 					dto.getTel2() != null && dto.getTel2().length()!=0 &&
 					dto.getTel3() != null && dto.getTel3().length()!=0)
 				dto.setUserTel(dto.getTel1() + "-" + dto.getTel2() + "-" + dto.getTel3());
-			System.out.println(dto.getUserTel());
 			//이메일 합쳐서 데이터 넣기
 			if(dto.getEmail1() != null && dto.getEmail1().length()!=0 &&
 					dto.getEmail2() != null && dto.getEmail2().length()!=0 )

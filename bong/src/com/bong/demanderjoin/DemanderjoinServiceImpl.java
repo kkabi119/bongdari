@@ -56,7 +56,7 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 		return dto;
 	}
 	@Override
-	public Demanderjoin readDemanderjoinLogin(int userIdx) {
+	public Demanderjoin readDemanderjoinLogin(String userIdx) {
 		Demanderjoin dto = null;
 		try {
 			dto=dao.getReadInformation("demanderjoin.readDemanderjoinLogin", userIdx);
@@ -164,13 +164,13 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 					dto.getEmail2() != null && dto.getEmail2().length()!=0 )
 				dto.setServiceEmail(dto.getEmail1() + "@" + dto.getEmail2());
            // 이미지 파일 넣기
-/*			if(dto.getUploads()!=null && !dto.getUploads().isEmpty()){
+		    if(dto.getUploads()!=null && !dto.getUploads().isEmpty()){
 				String serviceImg=fileManager.doFileUpload(dto.getUploads(), pathname);
-			    dto.setServiceImg(memImg);
+			    dto.setServiceImg(serviceImg);
 			    dto.setServiceImgname(dto.getUploads().getOriginalFilename());
-			}*/
+			}
 			result=dao.updateInformation("demanderjoin.updatePwd", dto);
-			result=dao.updateInformation("demanderjoin.updateMember2", dto);
+			result=dao.updateInformation("demanderjoin.updateDemander2", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

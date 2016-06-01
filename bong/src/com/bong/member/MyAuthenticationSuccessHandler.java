@@ -54,7 +54,7 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 			info.setUserName(member.getUserName());			
 		} else {
 			
-			Demanderjoin demanderjoin=demanderjoinService.readDemanderjoinLogin(member.getUserIdx());	
+			Demanderjoin demanderjoin=demanderjoinService.readDemanderjoinLogin(Integer.toString(member.getUserIdx()));	
 		    //수요처 회원일경우
 			info.setUserIdx(demanderjoin.getUserIdx());
 			info.setUserId(demanderjoin.getUserId());

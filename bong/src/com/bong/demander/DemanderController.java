@@ -186,7 +186,7 @@ public class DemanderController {
 			session.invalidate();
 			return new ModelAndView("redirect:/");
 		}
-	
+
 		//¼öÁ¤Æû
 	ModelAndView mav = new ModelAndView("/demander/dari/admin/demanderUpdate");
 	    mav.addObject("mode", "update");
@@ -202,11 +202,11 @@ public class DemanderController {
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+File.separator+"uploads"+File.separator+"serviceImg";
 		
-		SessionInfo info=(SessionInfo)session.getAttribute("demanderjoin");
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		dto.setUserIdx(info.getUserIdx());
 		service.updateDemander2(dto, pathname);
 		
-		ModelAndView mav=new ModelAndView("redirect:/demander/dari/admin/demanderUpdate");
+		ModelAndView mav=new ModelAndView("redirect:/demander/index/admin/admin");
 	    
 		return mav;
 	}
