@@ -8,6 +8,35 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 
+<style type="text/css">
+.list-page li a{
+	
+	border-color:#3897f0;
+	color:#3897f0;
+}
+
+tr:last-of-type{
+
+	border-bottom: 2px solid #807F7F; 
+}
+
+tr:first-of-type{
+
+	border-top: 2px solid #807F7F; 
+	
+}
+
+.table>thead>tr>th{
+padding:10px 0 10px 0 ; 
+}
+
+.table>tbody>tr>td{
+
+padding-top: 13px;
+}
+
+</style>
+	
 	
 <script type="text/javascript">
 function QnasearchList() {
@@ -25,15 +54,16 @@ function QnasearchList() {
 			</ol>
 		</div>
 	    <div>
-	        <div style="clear: both; height: 30px; line-height: 30px;">
+	        <div style="clear: both; height: 30px; line-height: 30px; color:#807F7F;">
 	            <div style="float: left;">${dataCount}개(${page}/${total_page} 페이지)</div>
 	            <div style="float: right;">&nbsp;</div>
 	        </div>
 	        
 	        <div class="table-responsive" style="clear: both;"> <!-- 테이블 반응형 -->
 	            <table class="table table-hover">
-	                <thead>
-	                    <tr>
+	                <thead style="min-width:100%; font-size:15px; background-color:#FBF7EB; color:#555;">
+	                <!-- style="border-top: 2px solid black; height: 40px; font-size: 12pt;font-weight: normal;" -->
+	                    <tr >
 	                        <th class="text-center" style="width: 100px;">번호</th>
 	                        <th class="text-center">제목</th>
 	                        <th class="text-center" style="width: 100px;">글쓴이</th>
@@ -48,17 +78,17 @@ function QnasearchList() {
 	                        <td style="text-align:left;">
 	                   			<c:choose>
 	                   				<c:when test="${dto.userId!=sessionScope.member.userId&&sessionScope.member.userId!='admin'}">
-	                   					<i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;비밀글 입니다.
+	                   					<i class="glyphicon glyphicon-lock" style="color:#F0AD4E;"></i>&nbsp;&nbsp;<span style="color: #807F7F;">비밀글 입니다.</span>
 	                   				</c:when>
 	                   				<c:otherwise>
 	                   					<c:if test="${dto.answer!=0}">
-	                   						<img src="<%=cp%>/res/images/demander/re.gif">
+	                   						&nbsp;&nbsp;<img src="<%=cp%>/res/images/demander/re.gif">
 	                   					</c:if>
-	                   					<a href='${urlArticle}&num=${dto.sqnaIdx}'>${dto.subject}</a>
+	                   					<a href='${urlArticle}&num=${dto.sqnaIdx}'>&nbsp;&nbsp;${dto.subject}</a>
 	                   				</c:otherwise>
 	                   			</c:choose>
 	                        </td>
-	                        <td class="text-center">${dto.userName}</td>
+	                        <td class="text-center" style="font-weight: bold; color:#807F7F; ">${dto.userName}</td>
 	                        <td class="text-center">${dto.created}</td>
 	                        <td class="text-center">${dto.hitCount}</td> 
 	                   
@@ -70,13 +100,12 @@ function QnasearchList() {
 	        
 
 	</div>
-		<div class="paging"
-			style="text-align: center; min-height: 50px; line-height: 50px;">
-			<c:if test="${dataCount==0 }">
+		<div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
+			<c:if test="${dataCount==0}">
 		                  등록된 게시물이 없습니다.
 		</c:if>
-			<c:if test="${dataCount!=0 }">
-		                ${paging}
+			<c:if test="${dataCount!=0}">
+		            ${paging}
 		</c:if>
 		</div>
 	

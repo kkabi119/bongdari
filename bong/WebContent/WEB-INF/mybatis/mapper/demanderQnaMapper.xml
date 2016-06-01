@@ -73,7 +73,7 @@
 	
 	<!-- 글읽기 -->
 	<select id="readQna" resultType="com.bong.demander.qna.Qna" parameterType="Integer">
-	      SELECT sqnaIdx, s.useridx,userId,userName, subject,created,CONTENT, hitCount
+	      SELECT sqnaIdx, s.useridx,userId,userName, subject,created,CONTENT, hitCount,answer,groupNum
 				FROM service_qna s join checkId c on s.userIdx=c.userIdx
 				WHERE sqnaIdx = #{sqnaIdx}
 	</select>
@@ -94,7 +94,25 @@
              DELETE FROM service_qna WHERE sqnaIdx =#{sqnaIdx}
       </delete>
 	
+	<!-- 답변보기-->
 	
+	<!-- <select id="deQnaReply" resultType="com.bong.demander.qna.Qna" 
+				parameterType="map">
+		SELECT tb.* FROM (
+			SELECT sqnaIdx, subject,groupNum
+				FROM service_qna s
+					JOIN checkid c ON s.useridx=c.useridx
+					<where>
+						<if test="searchValue != null and searchValue != '' ">
+							<include refid="where-list" />
+						</if>
+						      <![CDATA[
+						           AND (groupNum=#{groupNum} and sqnaIdx>#{sqnaIdx})
+						      ]]>
+				</where>
+			ORDER BY sqnaIdx ASC
+		)tb WHERE ROWNUM=1
+	</select> -->
 
 
 </mapper>

@@ -107,6 +107,18 @@ public class QnaServiceImpl implements QnaService {
 		}
 		return result;
 	}
+	
+	/*@Override
+	public Qna deQnaReply(Map<String, Object> map) {
+		Qna dto=null;
+		try {
+			dto=dao.getReadInformation("deQna.deQnaReply", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}*/
+
 
 	
 

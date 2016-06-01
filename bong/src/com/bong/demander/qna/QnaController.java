@@ -29,12 +29,12 @@ public class QnaController {
 
 	@RequestMapping(value = "/demander/index/qna/list")
 	public ModelAndView deQnaList(HttpServletRequest req,
-			@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
+			@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(value = "searchKey", defaultValue = "subject") String searchKey,
 			@RequestParam(value = "searchValue", defaultValue = "") String searchValue) throws Exception {
 
 		String cp = req.getContextPath();
-
+		
 		int numPerPage = 10; // 한 화면에 보여주는 게시물 수
 		int total_page = 0;
 		int dataCount = 0;
@@ -49,6 +49,7 @@ public class QnaController {
 		map.put("searchValue", searchValue);
 
 		dataCount = service.dataCount(map);
+		
 		if (dataCount != 0)
 			total_page = myUtil.pageCount(numPerPage, dataCount);
 
@@ -76,9 +77,9 @@ public class QnaController {
 
 		String params = "";
 		String urlList = cp + "/demander/index/qna/list";
-		String urlArticle = cp + "/demander/index/qna/article?page=" + current_page;
+		String urlArticle = cp + "/demander/index/qna/article?page="+current_page;
 		if(searchValue.length() != 0) {
-			params = "searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
+			params = "searchKey=" + searchKey + "&searchValue="+URLEncoder.encode(searchValue, "utf-8");
 		}
 
 		if(params.length() != 0) {
@@ -116,7 +117,9 @@ public class QnaController {
 	}
 
 	@RequestMapping(value = "/demander/index/qna/article")
-	public ModelAndView deQnaArticle(HttpSession session, @RequestParam(value = "num") int num,
+	public ModelAndView deQnaArticle(
+			HttpSession session, 
+			@RequestParam(value = "num") int num,
 			@RequestParam(value = "page") int page,
 			@RequestParam(value = "searchKey", defaultValue = "subject") String searchKey,
 			@RequestParam(value = "searchValue", defaultValue = "") String searchValue) throws Exception {
@@ -127,7 +130,9 @@ public class QnaController {
 
 		// 조회수증가
 		service.updateHitCount(num);
-
+		
+		
+		
 		// 해당아티클가져오기
 		Qna dto = service.readQna(num);
 
@@ -176,9 +181,7 @@ public class QnaController {
 	public ModelAndView delete(HttpSession session, @RequestParam(value = "num") int num,
 			@RequestParam(value = "page") String page) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		/*
-		 * if(info==null) { return new ModelAndView("redirect:/member/login"); }
-		 */
+	
 
 		// 해당 레코드 가져 오기
 		Qna dto = service.readQna(num);
@@ -208,11 +211,11 @@ public class QnaController {
 		if (dto == null) {
 			return new ModelAndView("redirect:/board/list?page=" + page);
 		}
-		// System.out.println("****************sqnaidx:"+dto.getSqnaIdx());
+	
 		String str = "[" + dto.getSubject() + "] 에 대한 답변입니다.\n";
 		dto.setContent(str);
 		dto.setAnswer(dto.getSqnaIdx());
-		// System.out.println("****************getAnswer:"+dto.getAnswer());
+	
 		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.create.후기게시판");
 		mav.addObject("dto", dto);
 		mav.addObject("page", page);
@@ -225,14 +228,11 @@ public class QnaController {
 			@RequestParam(value = "page") String page) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
-		// System.out.println("****************num:"+num);
-		// System.out.println("****************getUserIdx:"+info.getUserIdx());
+		
 		dto.setUserIdx(info.getUserIdx());
 		dto.setAnswer(num);
 
-		service.insertQnaReply(dto, num);
-		// System.out.println("****************getUserIdx22:"+dto.getUserIdx());
-		// System.out.println("****************getAnswer22:"+dto.getAnswer());
+
 		return "redirect:/demander/index/qna/list?page=" + page;
 	}
 }

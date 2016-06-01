@@ -91,6 +91,8 @@ function updateQna() {
                                         </ul>
                                     </div>
                                     
+                                  
+                                
                                    <div>
                                   	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
                       					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/demander/index/qna/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
@@ -102,12 +104,15 @@ function updateQna() {
                   					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
                       					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="deleteQna();"> 삭제 <span class="fa fa-times"></span></button>
                   					</div>
+                  				
                   					
                   				<c:if test="${sessionScope.member.userId=='admin'}">
         		   					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
         		   					 <button type="button" style="color:#F0AD4E; padding:10px 15px ;" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/demander/index/qna/reply?num=${dto.sqnaIdx}&page=${page}';">답변 </button>
 									</div>
 								</c:if> 
+								
+								
                   				</div>
                                   
                                    </div>
