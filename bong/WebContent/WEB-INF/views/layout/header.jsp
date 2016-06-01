@@ -5,6 +5,35 @@
 <%
    String cp=request.getContextPath();
 %>
+<style type="text/css">
+.fixed {
+    position: fixed;
+    top:0; left:0;
+    width: 100%;
+    background-color: white; 
+    z-index: 100;
+    border-top: 0;
+    }
+
+</style>
+<script type="text/javascript">
+$(document).ready(function($) {
+	  
+    var navbar = $('#header'),
+    		distance = navbar.offset().top,
+        $window = $(window);
+
+    $window.scroll(function() {
+        if ($window.scrollTop() >= distance) {
+            navbar.removeClass('fixed').addClass('fixed');
+          	$("#mainContent").css("padding-top", "145px");
+        } else {
+            navbar.removeClass('navbar-fixed-top');
+            $("#mainContent").css("padding-top", "0px");
+        }
+    });
+});
+</script>
 	<div class="container">
             <div class="row">
                 <div class="col-sm-12 overflow">
