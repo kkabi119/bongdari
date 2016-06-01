@@ -12,9 +12,13 @@ $(function(){
 	nextPage(0);
 });
 function nextPage(page){
+	var total_page="${total_page}";
+	if(total_page==page){
+		return;
+	}
 	var url="<%=cp%>/club/${clubSeq}/free/list2";
 	var pageNo=page;
-	alert(pageNo);
+	
 	$.post(url, {pageNo:pageNo}, function(data){
 		$("#listFree${page}").append(data);
 	});
@@ -27,8 +31,8 @@ function nextPage(page){
                     </div>
              
                 <div class="timeline-date text-center">
-                       	<div id="listFree${page}">
-                        
-                       	</div>
-                    </div>
+                       	<div id="listFree${page}"></div>
+    
+                <div  id="seeMore${page}"><a onclick="nextPage();" class='btn btn-common'>See More</a></div>
+                </div>
     </section>
