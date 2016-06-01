@@ -2,10 +2,17 @@ package com.bong.club.free;
 
 public class Reply {
 	private int cfrIdx, clubFreeIdx, listNum, clubSeq;
-	private String userId, userName, content, created;
+	private String userId, userName, content, created, saveFilename;
 	private int answer ,userIdx;
 	private int answerCount;
-
+	
+	
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
 	public int getCfrIdx() {
 		return cfrIdx;
 	}

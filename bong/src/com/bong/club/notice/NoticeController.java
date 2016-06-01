@@ -82,7 +82,7 @@ public class NoticeController {
         // 글 리스트
         List<Notice> list = service.listNotice(map);
         
-     // 리스트의 번호
+        // 리스트의 번호
         int listNum, n = 0;
         Iterator<Notice> it=list.iterator();
         while(it.hasNext()) {

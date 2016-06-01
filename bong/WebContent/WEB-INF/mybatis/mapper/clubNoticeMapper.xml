@@ -60,6 +60,20 @@
 	]]>
 	</select>
 	
+	<!-- 메인용 글리스트 -->
+	<select id="listNoticeSmall" parameterType="map"
+	            resultType="com.bong.club.notice.Notice">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			     SELECT clubNoticeIdx, subject
+			        FROM club_notice_${clubSeq}
+	                ORDER BY clubnoticeIdx DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	</select>
+	
 	<!-- 글보기 -->
 	<select id="readNotice" resultType="com.bong.club.notice.Notice" parameterType="map">
 		SELECT n.clubNoticeIdx, m.userIdx, userName, subject, content

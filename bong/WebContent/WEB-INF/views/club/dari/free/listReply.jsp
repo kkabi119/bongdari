@@ -137,7 +137,7 @@ function deleteReplyAnswer(replyNum, answer) {
    						<li class="media">
                                             <div class="post-comment">
                                                 <a class="pull-left" href="#">
-                                                    <img class="media-object" src="images/blogdetails/2.png" alt="">
+                                                    <img class="media-object" src="<%=cp%>/uploads/photo/${Rdto.saveFilename}" alt="">
                                                 </a>
                                                 <div class="media-body" style="padding-bottom: 10px">
                                                     <span><i class="fa fa-user"></i>Posted by <a href="#">${Rdto.userName}</a></span>
@@ -166,7 +166,7 @@ function deleteReplyAnswer(replyNum, answer) {
 </c:forEach>
 </c:if>              
 
-              
+             
 <div style="clear: both; padding-top: 10px; text-align: center;">
     ${paging}
 </div>
