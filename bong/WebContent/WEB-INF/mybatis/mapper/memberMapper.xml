@@ -11,8 +11,8 @@
 		INSERT INTO member(userIdx) values(#{userIdx})
 	</insert>
 	<insert id="insertCheck" parameterType="com.bong.member.Member">
-	    INSERT INTO checkId (userId, userPwd,userName,enabled,isService) 
-	    VALUES(#{userId},#{userPwd},#{userName},1, 0)
+	    INSERT INTO checkId (userIdx,userId, userPwd,userName,enabled,isService) 
+	    VALUES(#{userIdx},#{userId},#{userPwd},#{userName},1, 0)
 	</insert>
 	<insert id="insertMemberInfo" parameterType="com.bong.member.Member">
 		INSERT INTO memberInfo

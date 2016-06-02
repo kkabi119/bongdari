@@ -46,7 +46,7 @@ function updateInfo() {
    }
     */
     str = f.userName.value;
-    str = $.trim(str);
+ /*    str = $.trim(str);
 
     if(!/^[\uac00-\ud7a3]{2,4}$/g.test(str)) {
        $("#userName + .help-block").html("<span style='color:red;'>이름을 확인해주세요! <span>");
@@ -55,7 +55,7 @@ function updateInfo() {
     } 
     else {
       $("#userName + .help-block").html("이름은 한글로 2자이상 4자 이하입니다.");
-   }   
+   }    */
     str=f.uploads.value;
     if(str){
     	if(! isImageFile(f.uploads.value)){
