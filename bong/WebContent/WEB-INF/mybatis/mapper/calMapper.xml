@@ -4,13 +4,25 @@
 <mapper namespace="cal">
 	
 	<select id="volunList" parameterType="map" resultType="com.bong.cal.Schedule">
-		SELECT volunIdx, subject as title, content, startDay, endDay, startTime, endTime, created 
-             FROM volun_bbs      
+		SELECT vb.volunIdx as id, subject as title, TO_CHAR(volDate, 'YYYY-MM-DD') as startDay, TO_CHAR(volDate, 'YYYY-MM-DD') as endDay, startTime, endTime  FROM volun_bbs vb
+			 JOIN memnumperdate mn ON vb.volunIdx=mn.volunIdx      
              WHERE <![CDATA[
              ((startDay>=#{start} AND startDay<=#{end})
                 OR (endDay>=#{start} AND endDay<=#{end}))
         ]]>      
-             ORDER BY startDay ASC, volunIdx DESC
+             ORDER BY startDay ASC, id DESC
 	
 	</select>
+	
+	<insert id="volunInsert" parameterType="com.bong.cal.Schedule">
+		INSERT INTO volun_bbs(volunIdx, subject, content, savefileName, originalFileName, 
+		serviceIdx, startDay, endDay, startTime, endTime, place, progress, volunteer_type,
+		volunDays, themeNum) VALUES(volun_bbs_seq.NEXTVAL, #{title}, #{content}, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename, jdbcType=VARCHAR},
+		#{serviceIdx}, #{startDay}, #{endDay}, #{startTime}, #{endTime}, #{place}, '모집중', #{volunteer_type}, '금 토', #{themeNum})
+	</insert>
+	
+	<insert id="volunInsertEach" parameterType="com.bong.cal.Schedule">
+		INSERT INTO memNumPerDate(volDate, maxNum, volunIdx, volDateIdx)
+		VALUES(#{eachDay}, #{eachDayValue}, volun_bbs_seq.CURRVAL, MEMNUMPERDATE_SEQ.NEXTVAL)
+	</insert>
 </mapper>

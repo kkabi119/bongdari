@@ -3,7 +3,7 @@ package com.bong.cal;
 public class Schedule {
 	private int num;
 
-	private int userIdx;
+	private int userIdx, serviceIdx;
 	private String userId, userName;
 	private String title;
 	private String content;
@@ -16,6 +16,116 @@ public class Schedule {
 	private String color;
 	
 	private String created;
+	
+	private int themeNum;
+	private String volunteer_type, saveFilename, originalFilename, place, eachDayArray, eachDayValueArray, maxAll;
+	private String eachDay, eachDayValue, dow, id;
+
+	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getDow() {
+		return dow;
+	}
+
+	public void setDow(String dow) {
+		this.dow = dow;
+	}
+
+	public String getEachDay() {
+		return eachDay;
+	}
+
+	public void setEachDay(String eachDay) {
+		this.eachDay = eachDay;
+	}
+
+	public String getEachDayValue() {
+		return eachDayValue;
+	}
+
+	public void setEachDayValue(String eachDayValue) {
+		this.eachDayValue = eachDayValue;
+	}
+
+	public String getMaxAll() {
+		return maxAll;
+	}
+
+	public void setMaxAll(String maxAll) {
+		this.maxAll = maxAll;
+	}
+
+	public String getEachDayArray() {
+		return eachDayArray;
+	}
+
+	public void setEachDayArray(String eachDayArray) {
+		this.eachDayArray = eachDayArray;
+	}
+
+	public String getEachDayValueArray() {
+		return eachDayValueArray;
+	}
+
+	public void setEachDayValueArray(String eachDayValueArray) {
+		this.eachDayValueArray = eachDayValueArray;
+	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
+
+	public String getOriginalFilename() {
+		return originalFilename;
+	}
+
+	public void setOriginalFilename(String originalFilename) {
+		this.originalFilename = originalFilename;
+	}
+
+	public int getServiceIdx() {
+		return serviceIdx;
+	}
+
+	public void setServiceIdx(int serviceIdx) {
+		this.serviceIdx = serviceIdx;
+	}
+
+	public int getThemeNum() {
+		return themeNum;
+	}
+
+	public void setThemeNum(int themeNum) {
+		this.themeNum = themeNum;
+	}
+
+	public String getVolunteer_type() {
+		return volunteer_type;
+	}
+
+	public void setVolunteer_type(String volunteer_type) {
+		this.volunteer_type = volunteer_type;
+	}
 
 	public int getNum() {
 		return num;

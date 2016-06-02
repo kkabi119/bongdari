@@ -17,7 +17,14 @@
 
 <script>
 
-	$(document).ready(function() {
+
+	$(function(){
+		initcal();
+	});
+	
+	
+	
+	function initcal() {
 
 		$('#calendar').fullCalendar({
 			lang: 'ko',
@@ -31,7 +38,8 @@
 			eventClick : function(){
 				articleForm();
 			},
-			events: function(start, end, timezone, callback){
+			events:
+			function(start, end, timezone, callback){
 				// 캘린더가 처음 실행되거나 월이 변경되면
 				var startDay=start.format("YYYY-MM-DD");
 				var endDay=end.format("YYYY-MM-DD");
@@ -44,8 +52,10 @@
 				    dataType: 'json',
 				    success: function(data, text, request) {
 				    	
+				    	
+				    	
 				    	/* 세션은 지금 필요없으니 주석처리 */
-			        	 <%-- var isLogin=data.isLogin;
+			        	<%--  var isLogin=data.isLogin;
 			        	 if(isLogin=="false") {
 			        		   location.href="<%=cp%>/member/login";
 			        		   return;
@@ -59,7 +69,7 @@
 			}
 		});
 		
-	});
+	}
 	
 	
 	// 일정 등록 폼
@@ -99,6 +109,7 @@
 			$('#scheduleModal').modal('show');
 		});	
 	}
+	
 	
 	
 </script>

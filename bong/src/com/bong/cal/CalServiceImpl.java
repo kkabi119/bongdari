@@ -38,6 +38,29 @@ public class CalServiceImpl implements CalService{
 		return result;
 	}
 
+	@Override
+	public int insertVolunbbs(Schedule dto) {
+		int result=0;
+		
+		try {
+			result=dao.insertInformation("cal.volunInsert", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public int insertVolunbbsEach(Schedule dto) {
+		int result=0;
+		try {
+			result=dao.insertInformation("cal.volunInsertEach", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
 
 	
 }
