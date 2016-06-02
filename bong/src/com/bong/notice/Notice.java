@@ -3,10 +3,18 @@ package com.bong.notice;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Notice {
-	private int userIdx, hitCount, noticeIdx, listNum;
+	private int userIdx, clubIdx, hitCount, noticeIdx, listNum;
 	private String saveFilename, originalFilename;
 	private String userId, userName, subject, content, created, modified;
 	private MultipartFile upload;
+	
+	
+	public int getClubIdx() {
+		return clubIdx;
+	}
+	public void setClubIdx(int clubIdx) {
+		this.clubIdx = clubIdx;
+	}
 	public int getUserIdx() {
 		return userIdx;
 	}

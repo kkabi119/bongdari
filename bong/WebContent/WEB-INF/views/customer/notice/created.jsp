@@ -57,9 +57,9 @@
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/customer/notice/created";
+    		f.action="<%=cp%>/notice/created";
     	else if(mode=="update")
-    		f.action="<%=cp%>/customer/notice/update";
+    		f.action="<%=cp%>/notice/update";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;

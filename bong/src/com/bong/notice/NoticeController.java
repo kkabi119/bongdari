@@ -42,7 +42,7 @@ public class NoticeController {
 		if(info==null){
 			return new ModelAndView("redirect:/member/login");
 		}
-		ModelAndView mav = new ModelAndView("/customer/notice/created");
+		ModelAndView mav = new ModelAndView(".layout.customer.notice.created.글쓰기");
 		mav.addObject("mode", "created");
 		return mav;
 	}
@@ -78,7 +78,7 @@ public class NoticeController {
 		String cp=req.getContextPath();
 		
 	
-		/*//페이징 
+		//페이징 
 		int numPerPage = 10; //한 화면에 보여줄 게시물 개수
 		int total_page = 0;
 		int dataCount = 0;
@@ -133,16 +133,16 @@ public class NoticeController {
         	urlList = cp+"/notice/list?"+params;
         	urlArticle = cp+"/notice/article?page="+current_page+"&"+params;
         }
+        ModelAndView mav = new ModelAndView(".layout.customer.notice.list.공지사항");
 		
 		mav.addObject("list", list);
 		mav.addObject("urlArticle", urlArticle);
 		mav.addObject("page", current_page);
 		mav.addObject("dataCount", dataCount);
 		mav.addObject("total_page", total_page);
-		mav.addObject("paging", myUtil.paging(current_page, total_page, urlList));*/
+		mav.addObject("paging", myUtil.paging(current_page, total_page, urlList));
 		
 		
-		ModelAndView mav = new ModelAndView("/customer/notice/list");
 		return mav;
 	}
 	

@@ -70,7 +70,7 @@ function searchList() {
         
         				<div style="clear: both;">
         					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/customer/notice/list';">새로고침</button>
+        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/notice/list';">새로고침</button>
         					</div>
         					<div style="float: left; width: 60%; text-align: center;">
         		     			<form name="searchForm" method="post" class="form-inline">
@@ -85,7 +85,9 @@ function searchList() {
         		     			</form>
         					</div>
         					<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    			<button type="button" class="btn btn-info" onclick="javascript:location.href='<%=cp%>/customer/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+        					<c:if test="${sessionScope.member.userId=='admin'}">        				
+        		    			<button type="button" class="btn btn-info" onclick="javascript:location.href='<%=cp%>/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+        		    		</c:if>
         					</div>
         				</div>
         			</div>
