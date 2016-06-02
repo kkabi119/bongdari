@@ -36,7 +36,8 @@
 	<!-- 글리스트 -->
 	<select id="listApply" parameterType="map" resultType="com.bong.club.apply.Apply">
 		SELECT * FROM (
-		    SELECT ROWNUM rnum, tb.* FROM (
+		    SELECT ROWNUM rnum, tb.* 
+		    FROM (
 			     SELECT a.clubApplyIdx, v.volunIdx AS volunIdx, s.serviceName, subject, v.startDay, v.endDay, a.enabled,
 			     		   progress, place, volunteer_type, v.volunDays, NVL(replyCount, 0) replyCount,
 			     		  ( (SELECT NVL(COUNT(*), 0) FROM club_apply_memlist c JOIN club_apply a ON c.clubApplyIdx=a.clubApplyIdx 
