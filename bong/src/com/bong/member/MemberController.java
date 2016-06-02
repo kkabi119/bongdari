@@ -100,13 +100,13 @@ public class MemberController {
 	@RequestMapping(value="/member/userIdCheck")
 	@ResponseBody
 	public Map<String, Object> userIdCheck(
-			@RequestParam String userIdx
+			@RequestParam String userId
 			) throws Exception{
 		String passed="false";
-		Member dto=service.readMemberLogin(userIdx);
-		if(dto==null)
+	     Member dto=service.readMemberCheck(userId);
+		if(dto==null){
 			passed="true";
-		
+		}
 		Map<String, Object> model=new HashMap<String, Object>();
 		model.put("passed", passed);
 		return model;

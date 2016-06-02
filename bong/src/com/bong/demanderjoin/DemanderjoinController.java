@@ -88,12 +88,11 @@ public class DemanderjoinController {
 			@RequestParam String userId
 			) throws Exception{
 		String passed="false";
-		/*
-		 Demanderjoin dto=service.readDemanderjoinLogin(serviceId);
-		if(dto==null)
 		
-		*/
-			passed="true";
+		 Demanderjoin dto=service.readDemanderCheck(userId);
+		if(dto==null){
+			passed="true";			
+		}
 		
 		Map<String, Object> model=new HashMap<String, Object>();
 		model.put("passed", passed);

@@ -297,12 +297,12 @@ function imageDelete() {
                   <div class="col-sm-3" style="padding-right: 5px;">
                     <select class="form-control" style="width:130px; float: left; margin:0px; padding:0px;"id="tel1" name="tel1" >
                         <option value="">선 택</option>
-                        <option value="010" ${dto.tel1=="02" ? "selected='selected'" : ""}>02</option>
-                        <option value="011" ${dto.tel1=="031" ? "selected='selected'" : ""}>031</option>
-                        <option value="016" ${dto.tel1=="032" ? "selected='selected'" : ""}>032</option>
-                        <option value="017" ${dto.tel1=="033" ? "selected='selected'" : ""}>033</option>
-                        <option value="018" ${dto.tel1=="041" ? "selected='selected'" : ""}>041</option>
-                        <option value="019" ${dto.tel1=="051" ? "selected='selected'" : ""}>051</option>
+                        <option value="02" ${dto.tel1=="02" ? "selected='selected'" : ""}>02</option>
+                        <option value="031" ${dto.tel1=="031" ? "selected='selected'" : ""}>031</option>
+                        <option value="032" ${dto.tel1=="032" ? "selected='selected'" : ""}>032</option>
+                        <option value="033" ${dto.tel1=="033" ? "selected='selected'" : ""}>033</option>
+                        <option value="041" ${dto.tel1=="041" ? "selected='selected'" : ""}>041</option>
+                        <option value="051" ${dto.tel1=="051" ? "selected='selected'" : ""}>051</option>
                     </select>
                   </div>
 
@@ -331,7 +331,12 @@ function imageDelete() {
             
         </div>
     </div>
-
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="serviceIntro">수요처 소개</label>
+        <div class="col-sm-7">
+        <textarea class="form-control" rows="5" cols="80" id="serviceIntro" name="serviceIntro" placeholder="수요처소개">${dto.serviceIntro}</textarea>
+        </div>
+    </div>
     <div class="form-group">
         <label class="col-sm-2 control-label" for="agree">약관 동의</label>
         <div class="col-sm-7 checkbox">

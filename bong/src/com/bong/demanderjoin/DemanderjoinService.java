@@ -8,7 +8,7 @@ import com.bong.member.Member;
 public interface DemanderjoinService {
    
   public Demanderjoin readDemanderjoin1(int serviceIdx);
-  public Demanderjoin readDemanderjoinLogin(int userIdx);
+  public Demanderjoin readDemanderjoinLogin(String userIdx);
   public Demanderjoin readDemanderCheck(String userId);
   public Demanderjoin readDemanderjoinInfo(String userIdx);
   public int insertDemanderjoin(Demanderjoin dto, String pathname);

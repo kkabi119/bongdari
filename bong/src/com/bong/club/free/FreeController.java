@@ -44,97 +44,36 @@ public class FreeController {
 	@RequestMapping(value="/club/{clubSeq}/free/list")
 	public ModelAndView ListClubFree(
 			HttpServletRequest req,
-			@PathVariable int clubSeq,
 			@RequestParam(value="pageNo", defaultValue="1") int current_page,
-			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
-			@RequestParam(value="searchValue", defaultValue="") String searchValue
+			@PathVariable int clubSeq
 			) throws Exception {
-		
-		
-		String cp=req.getContextPath();
 		
 		int numPerPage   = 8;  // 한 화면에 보여주는 게시물 수
 		int total_page = 0;
 		int dataCount = 0;
 		
-		if(req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
-			searchValue = URLDecoder.decode(searchValue, "utf-8");
-		}
-		
-		 // 전체 페이지 수
+		// 전체 페이지 수
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("searchKey", searchKey);
-        map.put("searchValue", searchValue);
         map.put("clubSeq", clubSeq);
         
         dataCount = service.dataCount(map);
-        if(dataCount != 0)
-            total_page = myUtil.pageCount(numPerPage,  dataCount) ;
-		
+        if(dataCount != 0){
+        	if(dataCount > 0) {
+    			if(dataCount % numPerPage == 0)
+    				total_page=dataCount/numPerPage;
+    			else
+    				total_page=dataCount/numPerPage+1;
+    		}
+        }
+        
         // 다른 사람이 자료를 삭제하여 전체 페이지수가 변화 된 경우
         if(total_page < current_page) 
             current_page = total_page;
-
-        // 리스트에 출력할 데이터를 가져오기
-        int start = (current_page - 1) * numPerPage + 1;
-        int end = current_page * numPerPage;
-        map.put("start", start);
-        map.put("end", end);
-        
-        // 글 리스트
-        List<Free> list = service.listFree(map);
-        
-        // 리스트의 번호, 리스트상의 콘텐츠에서 이미지 없애기, 첫번째사진 썸내일로 올리기
-        Pattern pattern=Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
-        Matcher match;
-        String content=null;
-        int listNum, n = 0;
-        Iterator<Free> it=list.iterator();
-        while(it.hasNext()) {
-            Free data = it.next();
-            listNum = dataCount - (start + n - 1);
-            
-            data.setListNum(listNum);
-            match=pattern.matcher(data.getContent());
-            
-            if(match.find())
-            	data.setListImageName(match.group(0));
-            
-            content=data.getContent().replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>","");
-           
-            if(content.length()<50){
-            	 data.setContent(content);
-                 n++;
-            }
-            else {
-            content=content.substring(0, 50);
-            data.setContent(content);
-            n++;
-            }
-        } 
-        String params = "";
-        String urlList = cp+"/club/"+clubSeq+"/free/list";
-        String urlArticle = cp+"/club/"+clubSeq+"/free/article?page=" + current_page;
-        if(searchValue.length()!=0) {
-        	params = "searchKey=" +searchKey + 
-        	             "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");	
-        }
-        
-        if(params.length()!=0) {
-            urlList = cp+"/club/"+clubSeq+"/free/list?" + params;
-            urlArticle = cp+"/club/"+clubSeq+"/free/article?page=" + current_page + "&"+ params;
-        }
         
         ModelAndView mav = new ModelAndView(".four.club.dari.free.list.자유게시판");
-		
-        mav.addObject("list", list);
         mav.addObject("clubSeq",clubSeq);
-        mav.addObject("urlArticle", urlArticle);
-        mav.addObject("page", current_page);
-        mav.addObject("dataCount", dataCount);
         mav.addObject("total_page", total_page);
-        mav.addObject("paging", myUtil.paging(current_page, total_page, urlList));
-        
+             
 		return mav;
 	}
 	
@@ -148,7 +87,6 @@ public class FreeController {
 			@RequestParam(value="searchValue", defaultValue="") String searchValue
 			) throws Exception {
 		current_page++;
-		System.out.println(current_page);
 		String cp=req.getContextPath();
 		
 		int numPerPage   = 8;  // 한 화면에 보여주는 게시물 수
@@ -166,9 +104,14 @@ public class FreeController {
         map.put("clubSeq", clubSeq);
         
         dataCount = service.dataCount(map);
-        if(dataCount != 0)
-            total_page = myUtil.pageCount(numPerPage,  dataCount) ;
-		
+        if(dataCount != 0){
+        	if(dataCount > 0) {
+    			if(dataCount % numPerPage == 0)
+    				total_page=dataCount/numPerPage;
+    			else
+    				total_page=dataCount/numPerPage+1;
+    		}
+        }
         // 다른 사람이 자료를 삭제하여 전체 페이지수가 변화 된 경우
         if(total_page < current_page) 
             current_page = total_page;
@@ -211,7 +154,6 @@ public class FreeController {
             }
         } 
         String params = "";
-        String urlList = cp+"/club/"+clubSeq+"/free/list";
         String urlArticle = cp+"/club/"+clubSeq+"/free/article?page=" + current_page;
         if(searchValue.length()!=0) {
         	params = "searchKey=" +searchKey + 
@@ -219,7 +161,6 @@ public class FreeController {
         }
         
         if(params.length()!=0) {
-            urlList = cp+"/club/"+clubSeq+"/free/list?" + params;
             urlArticle = cp+"/club/"+clubSeq+"/free/article?page=" + current_page + "&"+ params;
         }
         
@@ -231,7 +172,6 @@ public class FreeController {
         mav.addObject("page", current_page);
         mav.addObject("dataCount", dataCount);
         mav.addObject("total_page", total_page);
-        mav.addObject("paging", myUtil.paging(current_page, total_page, urlList));
         
 		return mav;
 	}

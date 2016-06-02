@@ -36,10 +36,9 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 		
 		// System.out.println(authentication.getName()); // 로그인 아이디
 		
-		// 로그인 날짜 변경
-		memberService.updateLastLogin(authentication.getName());
 		
-	    demanderjoinService.updateLastLogin(authentication.getName());
+		
+	    
 	    
 		Member member=memberService.readMemberLogin(authentication.getName());
 		
@@ -49,13 +48,18 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 		
 		if(member.getIsService()==0){  
 			//일반회원일때
+
+			// 로그인 날짜 변경
+			memberService.updateLastLogin(authentication.getName());
 			info.setUserIdx(member.getUserIdx());
 			info.setUserId(member.getUserId());
 			info.setUserName(member.getUserName());			
 		} else {
-			
-			Demanderjoin demanderjoin=demanderjoinService.readDemanderjoinLogin(member.getUserIdx());	
-		    //수요처 회원일경우
+			//수요처 회원일경우
+
+			// 로그인 날짜 변경
+			demanderjoinService.updateLastLogin(authentication.getName());
+			Demanderjoin demanderjoin=demanderjoinService.readDemanderjoinLogin(Integer.toString(member.getUserIdx()));	
 			info.setUserIdx(demanderjoin.getUserIdx());
 			info.setUserId(demanderjoin.getUserId());
 			info.setUserName(demanderjoin.getServiceName());

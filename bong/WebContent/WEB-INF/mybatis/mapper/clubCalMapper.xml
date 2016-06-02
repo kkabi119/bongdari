@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="clubsch">
+
+    <insert id="insertSchedule" parameterType="com.bong.club.cal.Schedule">
+       INSERT INTO club_sch_${clubSeq} (num, userIdx, title, color, content, allDay, startDay, endDay, startTime, endTime)
+          VALUES (club_sch_seq_${clubSeq}.NEXTVAL, #{userIdx}, #{title} 
+                ,#{color, jdbcType=VARCHAR}
+                ,#{content, jdbcType=VARCHAR}
+                ,#{allDay, jdbcType=VARCHAR}
+                ,#{startDay, jdbcType=VARCHAR}
+                ,#{endDay, jdbcType=VARCHAR}
+                ,#{startTime, jdbcType=VARCHAR}
+                ,#{endTime, jdbcType=VARCHAR}
+           )
+    </insert>
+
+    <!-- 월별 일정 -->
+    <select id="listMonthSchedule" resultType="com.bong.club.cal.Schedule" parameterType="map">
+        SELECT num, m.userIdx, userName, title, color, content, allDay, startDay, endDay, startTime, endTime, created 
+             FROM club_sch_${clubSeq} s JOIN memberInfo m ON s.userIdx=m.userIdx
+     <where>
+        s.userIdx = #{userIdx}
+		<if test="group !='all' ">
+		    AND color=#{group}
+		</if>
+        <![CDATA[
+             AND ((startDay>=#{start} AND startDay<=#{end})
+                OR (endDay>=#{start} AND endDay<=#{end}))
+        ]]>             
+   	  </where>
+             ORDER BY startDay ASC, num DESC
+    </select>
+
+    <!-- 일정 상세 정보 -->
+    <select id="readSchedule" resultType="com.bong.club.cal.Schedule" parameterType="Integer">
+        SELECT num, m.userIdx,  userName, title, color, content, allDay, startDay, endDay, startTime, endTime, created
+            FROM club_sch_${clubSeq} s JOIN memberInfo m ON s.userIdx=m.userIdx
+            WHERE num=#{num}
+    </select>
+
+    <!-- 일정 수정 -->
+    <update id="updateSchedule" parameterType="com.bong.club.cal.Schedule">
+       UPDATE club_sch_${clubSeq} SET 
+            title=#{title}
+            ,color=#{color, jdbcType=VARCHAR}
+            ,content=#{content, jdbcType=VARCHAR}
+            ,allDay=#{allDay, jdbcType=VARCHAR}
+            ,startDay=#{startDay, jdbcType=VARCHAR}
+            ,endDay=#{endDay, jdbcType=VARCHAR}
+            ,startTime=#{startTime, jdbcType=VARCHAR}
+            ,endTime=#{endTime, jdbcType=VARCHAR}
+            WHERE num=#{num}
+    </update>
+    
+    <!-- 일정 삭제 -->
+    <delete id="deleteSchedule" parameterType="map">
+       DELETE FROM club_sch_${clubSeq} WHERE num=#{num}
+    </delete>
+</mapper>
