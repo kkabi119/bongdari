@@ -765,10 +765,8 @@ ul.sub-menu {
 }
 
 #page-breadcrumb {
-  background-image: url(../images/home/tour-bg.png);
-  background-color: #fbfafa;
-  background-repeat: repeat-x;
-  height: 130px;
+  background-color: #9DDD9F;
+  height: 100px;
   background-position: center;
   display: table;
   position: static;

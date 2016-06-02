@@ -65,11 +65,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public int deleteSchedule(int num) {
+	public int deleteSchedule(Map<String, Object> map) {
 		int result=0;
 
 		try{
-			result=dao.deleteInformation("clubsch.deleteSchedule", num);
+			result=dao.deleteInformation("clubsch.deleteSchedule", map);
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}

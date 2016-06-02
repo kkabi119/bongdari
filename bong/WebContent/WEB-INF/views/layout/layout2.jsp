@@ -96,7 +96,8 @@
         <tiles:insertAttribute name="footer"/>
     </footer>
     <!--/#footer-->
-	
+	<script type="text/javascript" src="<%=cp%>/res/calendar/jquery.ui.datepicker-ko.js"></script>
+	<script type="text/javascript" src="<%=cp%>/res/calendar/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/lightbox.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/wow.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/main.js"></script> 

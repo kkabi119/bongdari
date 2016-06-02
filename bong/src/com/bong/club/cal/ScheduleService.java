@@ -9,5 +9,5 @@ public interface ScheduleService {
 	
 	public Schedule readSchedule(int num);
 	public int updateSchedule(Schedule sch);
-	public int deleteSchedule(int num);
+	public int deleteSchedule(Map<String, Object> map);
 }

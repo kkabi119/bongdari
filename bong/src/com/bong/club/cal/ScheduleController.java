@@ -49,7 +49,7 @@ public class ScheduleController {
 	public String articleForm(
 			@PathVariable int clubSeq
 			) throws Exception {
-		return "menu5/sch/articleForm";
+		return "club/dari/cal/articleForm";
 	}
 	
 	@RequestMapping(value="/club/{clubSeq}/calendar/created", method=RequestMethod.POST)
@@ -147,18 +147,20 @@ public class ScheduleController {
 			@PathVariable int clubSeq
 			) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		Map<String, Object> model = new HashMap<>(); 
 		if(info==null) {
-			Map<String, Object> model = new HashMap<>(); 
 			model.put("isLogin", "false");
 			return model;
 		}
 		
 		String state="false";
-		int result=service.deleteSchedule(num);
+		
+		model.put("clubSeq", clubSeq);
+		model.put("num", num);
+		int result=service.deleteSchedule(model);
 		if(result==1)
 			state="true";
 
-		Map<String, Object> model = new HashMap<>(); 
 		model.put("isLogin", "true");
 		model.put("state", state);
 		return model;

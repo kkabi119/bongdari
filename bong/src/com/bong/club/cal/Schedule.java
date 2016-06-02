@@ -3,7 +3,7 @@ package com.bong.club.cal;
 public class Schedule {
 	private int num;
 
-	private int userIdx;
+	private int userIdx, clubSeq;
 	private String userName;
 	private String title;
 	private String content;
@@ -16,6 +16,15 @@ public class Schedule {
 	private String color;
 	
 	private String created;
+	
+	
+	public int getClubSeq() {
+		return clubSeq;
+	}
+
+	public void setClubSeq(int clubSeq) {
+		this.clubSeq = clubSeq;
+	}
 
 	public int getNum() {
 		return num;

@@ -55,7 +55,7 @@
     </update>
     
     <!-- 일정 삭제 -->
-    <delete id="deleteSchedule" parameterType="Integer">
+    <delete id="deleteSchedule" parameterType="map">
        DELETE FROM club_sch_${clubSeq} WHERE num=#{num}
     </delete>
 </mapper>

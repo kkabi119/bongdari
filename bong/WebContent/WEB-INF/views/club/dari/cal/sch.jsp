@@ -100,6 +100,7 @@
 <script type="text/javascript" src="<%=cp%>/res/calendar/fullcalendar.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/res/calendar/lib/lang-all.js"></script>
 
+
 <script type="text/javascript">
 //-------------------------------------------------------
 //달력
@@ -695,13 +696,13 @@ $(function(){
                  <a class="hbtn hbtn-bottom" style="background: white; color:#2f3741;"
                        href="javascript:classification('all', 0);">전체일정</a>
                  <a class="hbtn" style="background: blue;"
-                       href="javascript:classification('blue', 1);">개인일정</a>
+                       href="javascript:classification('blue', 1);">봉사일정</a>
                  <a class="hbtn" style="background: black;"
-                       href="javascript:classification('black', 2);">가족일정</a>
-                 <a class="hbtn" style="background: green;"
+                       href="javascript:classification('black', 2);">동아리일정</a>
+                 <!-- <a class="hbtn" style="background: green;"
                        href="javascript:classification('green', 3);">회사일정</a>
                  <a class="hbtn" style="background: red;"
-                       href="javascript:classification('red', 4);">부서일정</a>
+                       href="javascript:classification('red', 4);">부서일정</a> -->
              </div>      
         </div>
     </div>
