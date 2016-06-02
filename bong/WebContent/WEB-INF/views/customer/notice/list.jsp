@@ -10,7 +10,7 @@
 <script type="text/javascript">
 function searchList() {
 	var f=document.searchForm;
-	f.action="<%=cp%>/notice";
+	f.action="<%=cp%>/notice/list";
 	f.submit();
 }
 
