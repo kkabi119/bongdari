@@ -56,7 +56,10 @@ function updateInfo() {
     else {
       $("#userName + .help-block").html("이름은 한글로 2자이상 4자 이하입니다.");
    }    */
-    str=f.uploads.value;
+
+   
+   str=f.uploads.value;
+   
     if(str){
     	if(! isImageFile(f.uploads.value)){
     		alert("이미지파일만 가능합니다.")
@@ -64,6 +67,7 @@ function updateInfo() {
     		return false;
     	}
     }
+   
     str = f.userBirth.value;
     if(!str) {
        $("#userBirth + .help-block").html("<span style='color:red;'>생일 형식을 확인해주세요!<span>");
@@ -72,7 +76,7 @@ function updateInfo() {
     } else {
       $("#userBirth + .help-block").html("  생년월일은 2000-01-01 형식으로 입력 합니다.");
    }
-   
+    
     str = f.email2.value;
     if(!/[0-9a-zA-Z]([0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(str)) {
        $("#userEmail + .help-block").html("<span style='color:red;'> 이메일 형식을 확인해주세요!<span>");
@@ -81,7 +85,7 @@ function updateInfo() {
     }else {
       $("#userEmail + .help-block").html("");
    }
-    
+
     str = f.tel1.value;
     if(!str) {
         f.tel1.focus();
@@ -114,8 +118,9 @@ function updateInfo() {
    } 
    
     var mode="${mode}"
+    	
     if(mode=="created") {
-          f.action = "<%=cp%>/member/register";
+       f.action = "<%=cp%>/member/register";
     } else if(mode=="update") {
        f.action = "<%=cp%>/member/index/updateInfo";
     }

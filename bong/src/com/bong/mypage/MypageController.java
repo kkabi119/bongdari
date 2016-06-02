@@ -71,13 +71,11 @@ public class MypageController {
 		}
 		//db에 있는 데이터 가져오기(userIdx를 통해서) mapper에 있는 쿼리 실행
 		Member dto=service.readMemberInfo(Integer.toString(info.getUserIdx()));
-		if(dto==null) {
+	/*	if(dto==null) {
 			session.invalidate();
 			return new ModelAndView("redirect:/");
-		}
-
-		service.updateMember2(dto,pathname); //serviceImpl불르기
-		
+		}*/
+		//service.updateMember2(dto,pathname); //serviceImpl불르기	
 		// 회원정보수정폼
 	    ModelAndView mav=new ModelAndView("/mypage/updateInfo");
 	    mav.addObject("mode", "update");

@@ -101,21 +101,17 @@ $(document).ready(function($) {
                                 
                             </ul>
                         </li>                    
-                        <li class="dropdown"><a href="blog.html">수요처 <i class="fa fa-angle-down"></i></a>
+                        <li class="dropdown"><a href="">수요처 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li><a href="<%=cp%>/main/demander">수요처 전체 메인</a></li>
                                 <li><a href="<%=cp%>/main/searchDemander">수요처 검색</a></li>
                             </ul>
                         </li>
                         
-                        <li class="dropdown"><a href="portfolio.html">Portfolio <i class="fa fa-angle-down"></i></a>
+                        <li class="dropdown"><a href="">고객센터 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
-                                <li><a href="portfolio.html">Portfolio Default</a></li>
-                                <li><a href="portfoliofour.html">Isotope 3 Columns + Right Sidebar</a></li>
-                                <li><a href="portfolioone.html">3 Columns + Right Sidebar</a></li>
-                                <li><a href="portfoliotwo.html">3 Columns + Left Sidebar</a></li>
-                                <li><a href="portfoliothree.html">2 Columns</a></li>
-                                <li><a href="portfolio-details.html">Portfolio Details</a></li>
+                                <li><a href="<%=cp%>/notice">공지사항</a></li>
+                                <li><a href="<%=cp%>/qna">질문하기</a></li>                 
                             </ul>
                         </li>                         
                         <li><a href="shortcodes.html ">Shortcodes</a></li>                    

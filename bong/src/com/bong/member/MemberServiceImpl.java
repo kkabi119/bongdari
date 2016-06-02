@@ -173,9 +173,12 @@ public class MemberServiceImpl implements MemberService{
 				String memImg=fileManager.doFileUpload(dto.getUploads(), pathname);
 			    dto.setMemImg(memImg);
 			    dto.setMemImgname(dto.getUploads().getOriginalFilename());
-			    result=dao.updateInformation("member.updatePwd", dto);
-			    result=dao.updateInformation("member.updateMember2", dto);
 			}
+			
+		    result=dao.updateInformation("member.updatePwd", dto);
+		    result=dao.updateInformation("member.updateMember2", dto);
+			
+			
 		} catch (Exception e) {
 			
 		}
