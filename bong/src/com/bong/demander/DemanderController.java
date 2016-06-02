@@ -27,6 +27,8 @@ public class DemanderController {
 	@RequestMapping(value="/main/demander")
 	public ModelAndView demanderMain() throws Exception {
 		
+		
+		
 		ModelAndView mav = new ModelAndView(".layout.demander.main.수요처 전체 메인페이지");
 		return mav;
 	}

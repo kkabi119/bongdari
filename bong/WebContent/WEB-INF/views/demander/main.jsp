@@ -152,7 +152,7 @@ function result() {
                 				<tbody>
 									<tr>
                         				<td class="text-center">1</td>
-                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/main/articleDemander">희망 복지관</a></td>
+                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/demander/index/main">희망 복지관</a></td>
                        				 	<td class="text-center" >보육</td>
                        				 	<td class="text-center">중랑구 산천역</td>
                        				 	<td class="text-center" style="">010-1111-1111</a></td>
@@ -162,7 +162,7 @@ function result() {
             						
             						<tr>
                         				<td class="text-center">2</td>
-                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/main/articleDemander">소망 복지관</a></td>
+                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/demander/index/main">소망 복지관</a></td>
                        				 	<td class="text-center" >보육</td>
                        				 	<td class="text-center">덕양구 삼송역</td>
                        				 	<td class="text-center" style="">010-2222-2222</td>

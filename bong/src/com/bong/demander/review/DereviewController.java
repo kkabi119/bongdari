@@ -148,8 +148,6 @@ public class DereviewController {
 		
 		service.insertDeReview(dto, path);
 		
-		
-		
 		return new ModelAndView("redirect:/demander/index/review/list");
 		
 	}

@@ -1,5 +1,7 @@
 package com.bong.demander;
 
-public interface DemanderService {
+import java.util.Map;
 
+public interface DemanderService {
+	public Demander deMainProfile(Map<String, Object> map);
 }

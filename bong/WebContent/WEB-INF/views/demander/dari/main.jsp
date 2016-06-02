@@ -7,59 +7,162 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
+
+<style type="text/css">
+.modal-body{
+}
+.col-md-9{
+			margin-top:-25px;
+		}
+/* 수정삭제는 관리자만 보이도록한다 
+ */
+.bbs-reply {
+    border-top: #3897f0 solid 2px; 
+    border-bottom: #3897f0 solid 2px; padding:15px;
+    margin-bottom:70px;
+}
+
+.bbs-reply-write {   
+   border-bottom: #ddd solid 2px; 
+    padding: 10px;
+    min-height: 50px;
+}
+
+.table{
+	 margin-top: 10px;
+	 border-top: 3px solid #FFBB00;
+	 border-bottom: 3px solid #FFBB00;
+}
+
+
+.table>tbody>tr>td{
+ padding-top: 13px;
+ border-bottom: 1px solid #969494;
+}
+
+.table>tr{
+	font-size:20px; text-align: center;
+	 padding:14px; 
+}
+
+#td1{
+border-right: 1px solid #969494;
+}
+.icon-wrapper{
+box-shadow:none;
+background-color: #4FCCCD;
+}
+.icon-wrapper:hover{
+	background-color:#4FCCCD;
+}
+
+
+.form-control{
+	border-radius:0px;
+	height:120px;
+	font-weight:lighter;
+	font-size:15px;
+	border:none;
+	border-bottom: 1px solid #ddd;
+	resize:none;
+}
+.form-control:hover, .form-control:focus{
+
+	border-bottom: 1px solid #999;'
+}
+
+.btn {
+	border-radius:2px;
+}
+
+.icon-wrapper:hover{
+	background-color: gray;
+}
+.modal-body{
+ background-color: #F5F5F5;
+}
+</style>
+
+
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">
-                                
-			<!-- Header Carousel -->
-    		<header id="myCarousel" class="carousel slide">
-        		<!-- Indicators -->
-        			<ol class="carousel-indicators">
-            			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            			<li data-target="#myCarousel" data-slide-to="1"></li>
-            			<li data-target="#myCarousel" data-slide-to="2"></li>
-        			</ol>
-
-        	<!-- Wrapper for slides -->
-        	<div class="carousel-inner">
-           		<div class="item active">
-            
-            	<div class="fill" style="background-image:url('<%=cp%>/res/images/myclub/111.jpg');"></div>
-                <div class="carousel-caption">
-                    <h2></h2>
-                </div>
-            </div>
-            <div class="item">	
-                <div class="fill" style="background-image:url('<%=cp%>/res/images/myclub/222.jpg');"></div>
-                <div class="carousel-caption">
-                    <h2></h2>
-                </div>
-            </div>
-            <div class="item">
-                <div class="fill" style="background-image:url('<%=cp%>/res/images/myclub/333.jpg');"></div>
-                <div class="carousel-caption">
-                    <h2></h2>
-                </div>
-            </div>
+         
+    
+    <!-- 프로필 -->
+    <header>
+		 <div style="float: right; margin-top:70px; font-weight: bold; color:#969494; font-size: 35pt;">
+           Profile
+           </div>
+		<div class="table-responsive" style="clear: both;">
+           <div >
           
-        </div>
-
-        <!-- Controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="icon-prev"></span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="icon-next"></span>
-        </a>
-        
-        <br><br>
-		<br><br>
-     
-    </header>
-	<hr>
-      	
-       <!--  이달의 우수 후기 끝-->                                    
+               <table class="table">
+                        <tr>
+                       		<td id="imgtd" style=" width:47%;" rowspan="6">
+                        	 	<img style="width: 350px; height: 350px; background-size: cover; margin-left: 16px;"
+										class="media-object" 
+										src="<%=cp%>/res/images/demander/봉사활동2.jpg" alt="">
+							</td>
+                        	<td id="td1" style="color:black; border-top:none;text-align: left; height:45px; width:14%; ">
+                        	 	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
+                        	 	<span style="color:#969494; font-weight: bold;">수요처 이름</span>	
+                        	</td>
+                        	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px; ">
+                        	</td>
+                        </tr>
+                        <tr >
+                        	<td id="td1" style="color:black; border-top:none;text-align: left; height:130px; width:14%; ">
+                        	 	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
+                        	 	<span style="color:#969494; font-weight: bold;">소개</span>	
+                        	</td>
+                        	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
+                   
+                        	</td>
+                        </tr>
+                          <tr >
+                        	<td id="td1" style="color:black; border-top:none;text-align: left; height:45px; width:14%; ">
+                        	 	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
+                        	 	<span style="color:#969494; font-weight: bold;">봉사유형</span>	
+                        	</td>
+                        	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
+                   
+                        	</td>
+                        </tr>
+                         <tr >
+                        	<td id="td1" style="color:black; border-top:none;text-align: left; height:45px; width:14%; ">
+                        	 	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
+                        	 	<span style="color:#969494; font-weight: bold;">전화번호</span>	
+                        	</td>
+                        	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
+                   
+                        	</td>
+                        </tr>
+                         <tr >
+                        	<td id="td1" style="color:black; border-top:none;text-align: left; height:45px; width:14%; ">
+                        	 	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
+                        	 	<span style="color:#969494; font-weight: bold;">이메일</span>	
+                        	</td>
+                        	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
+                   
+                        	</td>
+                        </tr>
+                         <tr >
+                        	<td id="td1" style="color:black; border-top:none;text-align: left; height:45px; width:14%; ">
+                        	 	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
+                        	 	<span style="color:#969494; font-weight: bold;">주소</span>	
+                        	</td>
+                        	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
+                   
+                        	</td>
+                        </tr>
+               </table>
+          </div>
+          </div>
+          </header>
+          <!-- 프로필 끝-->             
     </div>
+    
     
     </div>
 
@@ -252,10 +355,10 @@
          
     
 <div class="row" style="margin-top:50px;">
-<div class="col-md-6" >
+<div class="col-md-5" style="margin-left:30px; margin-right:40px;" >
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 style="color:#687ead; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 후기</h5>
+                    <div class="panel-heading"  style="background:#FFCD44;">
+                        <h5 style="color:white; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 후기</h5>
                     </div>
                     <div class="panel-body">
                         <ul type="disc">
@@ -274,10 +377,10 @@
                 </div>
             </div>
             
-            <div class="col-md-6" >
+            <div class="col-md-5" style="margin-left:30px; margin-right:0px;" >
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 style="color:#687ead; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 봉다리</h5>
+                    <div class="panel-heading" style="background:#FFCD44;">
+                        <h5 style="color:white; font-weight: bold;"><i class="fa fa-fw fa-paperclip"></i> 이달의 봉다리</h5>
                     </div>
                     <div class="panel-body">
                         <ul type="disc">

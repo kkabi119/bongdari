@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="deMain">
+
+
+<select id="deMainProfile" parameterType="map" resultType="com.bong.demander.Demander">
+		SELECT serviceIdx,serviceName,serviceBirth,serviceTel,serviceIntro,serviceAddr,serviceEmail,serviceImg,serviceImgName,subject as themeName
+		FROM serviceInfo s JOIN theme t ON s.themenum=t.themenum
+		WHERE serviceIdx=7
+</select>
+	
+</mapper>
