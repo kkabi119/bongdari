@@ -110,7 +110,7 @@ $(document).ready(function($) {
                         
                         <li class="dropdown"><a href="">고객센터 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
-                                <li><a href="<%=cp%>/notice">공지사항</a></li>
+                                <li><a href="<%=cp%>/notice/list">공지사항</a></li>
                                 <li><a href="<%=cp%>/qna">질문하기</a></li>                 
                             </ul>
                         </li>                         
