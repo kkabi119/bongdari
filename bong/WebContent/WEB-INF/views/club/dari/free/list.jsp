@@ -27,7 +27,7 @@ function nextPage(page){
 
   <section id="blog" class="padding-bottom" style="text-align: center">
   <div style="float: right; clear:both">
-        		    	<button type="button" class="btn btn-lg btn-info" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/free/create';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+        		    	<button type="button" class="btn btn-lg btn-info" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/free/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
         			</div>
                     <div class="timeline-date text-center" style="clear:both">
                         <a href="#" class="btn btn-common uppercase">May 2016</a>
