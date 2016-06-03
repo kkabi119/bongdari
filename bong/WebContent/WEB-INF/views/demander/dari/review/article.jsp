@@ -86,7 +86,7 @@ function listPage(page) {
 function sendLike(serviceReviewIdx) {
 	var uid="${sessionScope.member.userId}";
 
-	alert("alert");
+	
 	var params="serviceReviewIdx="+serviceReviewIdx;
 	
 	$.ajax({
