@@ -64,7 +64,7 @@ public class NoticeController {
 		
 		service.insertNotice(dto, pathname);
 		
-		return new ModelAndView(".layout.customer.notice.list.공지사항");
+		return new ModelAndView("redirect:/notice/list");
 		
 	}
 	//공지 게시판
@@ -210,13 +210,13 @@ public class NoticeController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("num", num);
-		
 		Notice dto = (Notice)service.readNotice(map);
+		
 		
 		if(dto==null){
 			return new ModelAndView("redirect:/notice/list?page="+page);
 		}
-	    if(! info.getUserId().equals(dto.getUserId())){
+	    if(! info.getUserName().equals(dto.getUserName()) || ! info.getUserName().equals("관리자")){
 	    	return new ModelAndView("redirect:/notice/list?page="+page);
 	    }
 	    
@@ -274,5 +274,41 @@ public class NoticeController {
 		service.deleteNotice(map, dto.getSaveFilename(), path);
 		 return new ModelAndView("redirect:/notice/list");
 	  
+	}
+	@RequestMapping(value="/notice/deleteFile", method=RequestMethod.GET)
+	public ModelAndView deleteFile(
+			HttpSession session
+		   ,@RequestParam(value="num") int num
+		   ,@RequestParam(value="page") String page
+			) throws Exception{
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null){
+			return new ModelAndView("redirect:/member/login");
+		}
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("num", num);
+		Notice dto = service.readNotice(map);
+		
+		if(dto==null){
+			return new ModelAndView("redirect:/notice/list?page="+page);
+		}
+		
+		if(! info.getUserName().equals(dto.getUserName()) || ! info.getUserName().equals("관리자")){
+			return new ModelAndView("redirect:.layout.customer.notice.list?page="+page);
+		}
+		
+		String root = session.getServletContext().getRealPath("/");
+		String path = root + File.separator+"uploads"+File.separator+"notice";
+		
+		if(dto.getSaveFilename()!=null && dto.getSaveFilename().length()!=0){
+			fileManager.doFileDelete(dto.getSaveFilename(), path);
+			
+			dto.setSaveFilename("");
+			dto.setOriginalFilename("");
+			service.updateNotice(dto, path);
+		}
+		
+		return new ModelAndView("redirect:.layout.customer.notice.update?num="+num+"&page"+page);
+		 
 	}
 }

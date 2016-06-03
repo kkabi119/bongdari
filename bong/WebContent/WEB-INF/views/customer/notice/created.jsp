@@ -125,7 +125,7 @@
                         <tr>
                             <td colspan="4" style="text-align: center; padding-top: 15px;">
                                   <button type="submit" class="btn btn-info">확인 <span class="glyphicon glyphicon-ok"></span></button>
-                                  <button type="button" class="btn btn-default" style="color:#5bc0de;" onclick="javascript:location.href='<%=cp%>/customer/notice/list';"> 취소 </button>
+                                  <button type="button" class="btn btn-default" style="color:#5bc0de;" onclick="javascript:location.href='<%=cp%>/notice/list';"> 취소 </button>
                                   
                                   <c:if test="${mode=='update'}">
                                       <input type="hidden" name="noticeIdx" value="${dto.noticeIdx}">
