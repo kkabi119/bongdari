@@ -100,13 +100,6 @@ function themeList() {
     			return false;
     		}
     	} */
-    	
-    	str = f.prologue.value;
-        if(!str) {
-            alert("프롤로그를 입력하세요. ");
-            f.prologue.focus();
-            return false;
-        } 
 
         var mode="${mode}";
         if(mode=="created")
@@ -219,13 +212,7 @@ function themeList() {
             </div>
 </c:if>
         </div>
-    </div>
-    <div style=""class="form-group">
-        <label class="col-sm-2 control-label">프롤로그</label>
-        <div class="col-sm-7">
-            <textarea name="prologue" cols="75" rows="7" class="form-control" style="height: 100px;">${dto.prologue}</textarea>
-        </div>
-    </div>    
+    </div> 
     <div class="form-group">
         <label class="col-sm-2 control-label" for="agree">약관 동의</label>
         <div class="col-sm-7 checkbox">
