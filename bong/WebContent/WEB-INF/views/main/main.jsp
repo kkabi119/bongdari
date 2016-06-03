@@ -5,6 +5,19 @@
 <%
 	String cp=request.getContextPath();
 %>
+<style>
+.btn-common{
+ 	font-size: 18px;
+    color: white;
+   
+    font-weight: bold;
+    padding: 20px 40px;
+    background-color: #32BEF3;
+
+}
+ 
+
+</style>
     <section id="home-slider">
         <div class="container">
             <div class="row">
