@@ -167,6 +167,17 @@ public class ClubServiceImpl  implements ClubService {
 	}
 
 	@Override
+	public ClubInfo readClubInfoSmall(Map<String, Object> map) {
+		ClubInfo dto=null;
+		try {
+			dto=dao.getReadInformation("club.readClubInfoSmall", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+	
+	@Override
 	public ClubInfo readClubInfoHome(int clubSeq) {
 		ClubInfo dto=null;
 		try {
@@ -255,5 +266,6 @@ public class ClubServiceImpl  implements ClubService {
 		
 		return result;
 	}
+
 	
 }

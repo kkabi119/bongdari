@@ -23,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bong.club.notice.Notice;
 import com.bong.club.notice.NoticeService;
 import com.bong.common.MyUtil;
-import com.bong.common.dao.bongDAO;
 import com.bong.member.SessionInfo;
 
 @Controller("club.clubContoller")
@@ -34,9 +33,6 @@ public class ClubController {
 	
 	@Autowired
 	private NoticeService noticeService;
-	
-	@Autowired
-	private bongDAO dao;
 	
 	@Autowired
 	private MyUtil util;
@@ -60,7 +56,8 @@ public class ClubController {
 		map.put("end", 5);
 		map.put("clubSeq", clubSeq);
 		List<Notice> listN=noticeService.listNoticeSmall(map);
-		
+		ClubInfo dto=clubService.readClubInfoSmall(map);
+			
 		 // 리스트의 번호
         int listNum, n = 0;
         Iterator<Notice> it=listN.iterator();
@@ -73,12 +70,16 @@ public class ClubController {
            
         String urlList = cp+"/club/"+clubSeq+"/notice/list";
         String urlArticle = cp+"/club/"+clubSeq+"/notice/article?page="+ 1;
-                
-		ModelAndView mav = new ModelAndView(".four.club.dari.main.내 동아리 메인");
+        Map<String, Object> clubMin = new HashMap<String, Object>();
+        clubMin.put("clubName", dto.getClubname());
+        clubMin.put("clubIntro", dto.getIntroduce());
+        clubMin.put("clubCity",dto.getCity());
+		ModelAndView mav = new ModelAndView(".four.club.dari.main."+dto.getClubname());
 		mav.addObject("clubSeq", clubSeq);
 		mav.addObject("listN", listN);
 		mav.addObject("urlList", urlList);
 		mav.addObject("urlArticle", urlArticle);
+		mav.addObject("clubMin",clubMin);
 		
 		return mav;
 	}
