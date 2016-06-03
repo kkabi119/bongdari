@@ -26,10 +26,13 @@ function nextPage(page){
 </script>
 
   <section id="blog" class="padding-bottom" style="text-align: center">
+  <div style="float: right; clear:both">
+        		    	<button type="button" class="btn btn-lg btn-info" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/free/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+        			</div>
                     <div class="timeline-date text-center" style="clear:both">
                         <a href="#" class="btn btn-common uppercase">May 2016</a>
                     </div>
-             
+             		
                 <div class="timeline-date text-center">
                        	<div id="listFree${page}"></div>
     
