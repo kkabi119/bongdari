@@ -19,53 +19,26 @@
 } 
 </style>
 <script type="text/javascript">
-function cityList() {
-	var snum=$("#sido").val();
-	if(snum=="") {
-		$("#city option").each(function() {
-			$("#city option:eq(0)").remove();
-		});
-
-		$("#city").append("<option value=''>::도시선택::</option>");
-		return false;
+	function detail(serviceIdx){
+		$.get("<%=cp%>/admin/approvalDetail",{serviceIdx:serviceIdx}, function(data) {
+		    $('#scheduleModal .modal-title').html('수요처 정보');
+		    $('#scheduleModal .modal-body').html(data);
+			$('#scheduleModal').modal('show');
+		});	
 	}
-	var url="<%=cp%>/main/demander";
-	var params="snum="+snum;
 	
-	$.ajax({
-		type:"post"
-		,url:url
-		,data:params
-		,dataType:"json"
-		,success:function(data){
-			$("#city option").each(function() {
-				$("#city option:eq(0)").remove();
-			});
-
-			 $("#city").append("<option value=''>::도시선택::</option>");
-			 
-			 for(var idx=0; idx<data.list.length; idx++) {
-				 $("#city").append("<option value='"+data.list[idx].cnum+"'>"+data.list[idx].city+"</option>");
-			 }
-		}
-	    ,error:function(e) {
-	    	alert(e.responseText);
-	    }
-	});
-}
-
-function result() {
-	var snum=$("#sido").val();
-	var cnum=$("#city").val();
-	var sido=$("#sido :selected").text();
-	var city=$("#city :selected").text();
-
-	if(! snum || !cnum)
-		return false;
+	function approvalOk(serviceIdx){
+		$.post("<%=cp%>/admin/approvalDetailOk", {serviceIdx:serviceIdx}, function(data){
+			if(data=="OK"){
+				alert("수요처가 승인되었습니다.");
+				$('#scheduleModal').modal('hide');
+				window.location.reload();
+			}
+			else
+				alert("실패");
+		});
+	}
 	
-	var s=sido+":"+snum+", "+city+":"+cnum;
-	alert(s);
-}
 </script>
 <!-- 관리자 수요처 승인 페이지 -->
 <div class="row" style="margin-left:15px;">
@@ -99,7 +72,7 @@ function result() {
                 					<c:forEach var="dto" items="${list}">
 									<tr>
                         				<td class="text-center">${dto.rNum}</td>
-                        				<td class="text-center"><a href="<%=cp%>/main/articleDemander">${dto.serviceName}</a></td>
+                        				<td class="text-center"><a href="#" onclick="detail('${dto.serviceIdx}')">${dto.serviceName}</a></td>
                        				 	<td class="text-center" >${dto.lSubject}>${dto.sSubject}</td>
                        				 	<td class="text-center">${dto.serviceAddr}</td>
                        				 	<td class="text-center" style="">${dto.serviceTel}</a></td>
@@ -147,3 +120,14 @@ function result() {
 	</div>
 	
 
+<div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" style="width:600px;">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="scheduleModalLabel" style="font-family: 나눔고딕, 맑은 고딕, sans-serif; font-weight: bold;">일정</h4>
+	      </div>
+	      <div class="modal-body"></div>
+	    </div>
+	  </div>
+	</div>

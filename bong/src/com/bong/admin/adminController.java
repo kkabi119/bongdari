@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bong.common.MyUtil;
@@ -165,6 +166,7 @@ public class adminController {
 		return mav;
 	}
 	
+	// 수요처 목록 및 승인페이지
 	@RequestMapping(value="/admin/demander")
 	public ModelAndView adminDemander(
 			HttpServletRequest req,
@@ -230,6 +232,28 @@ public class adminController {
 		mav.addObject("total_page", total_page);
 		mav.addObject("paging", myutil.paging(current_page, total_page, urlList));
 		return mav;
+	}
+	
+	@RequestMapping(value="/admin/approvalDetail")
+	@ResponseBody
+	public ModelAndView approvalDetail(
+			@RequestParam(value="serviceIdx") String serviceIdx
+			) throws Exception {
+		Demander dto = aService.demanderArticle(serviceIdx);
+		ModelAndView mav = new ModelAndView("/admin/main/approvalDetail");
+		mav.addObject("dto", dto);
+		return mav;
+	}
+	
+	// 수요처 승인하기를 눌렀을 때
+	@RequestMapping(value="/admin/approvalDetailOk")
+	@ResponseBody
+	public String approvalDetailOk(
+			@RequestParam(value="serviceIdx") String serviceIdx
+			) throws Exception {
+		String flag="OK";
+		aService.createDemanderTable(serviceIdx);
+		return flag;
 	}
 	
 	@RequestMapping(value="/admin/appDetail")

@@ -13,4 +13,8 @@ public interface AdminService {
 	public List<Demander> listDemander(Map<String, Object> map);
 	public int demanderCount(Map<String, Object> map);
 	
+	public Demander demanderArticle(String serviceIdx);
+	
+	public int createDemanderTable(String serviceIdx);
+	
 }
