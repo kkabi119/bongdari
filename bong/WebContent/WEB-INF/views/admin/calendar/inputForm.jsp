@@ -72,27 +72,30 @@
 	 }
 	 
 	 // 날짜별 선택 안할때 총 날짜 수에 인원을 곱해 총 인원수를 구한다.
+	 $("#maxMember").focus(function() {
+		 checkDay();
+		 var startDay = $("#startDay").val();
+		 var endDay = $("#endDay").val();
+		 $.post("<%=cp%>/cal/eachDayCount", {startDay:startDay, endDay:endDay, checkDay:rowid}, function(data){
+				rowid = data[data.length-1];
+				eachDaySelector();
+		});
+	 });
+	 
 	 $("#maxMember").blur(function() {
 		 checkDay();
 		 var startDay = $("#startDay").val();
 		 var endDay = $("#endDay").val();
-		 var start = new Date(startDay);
-		 var end = new Date(endDay);
 		 var maxAll=0;
-		 
-		 $.post("<%=cp%>/cal/eachDayCount", {startDay:startDay, endDay:endDay, checkDay:rowid}, function(data){
-			eachDaySelector();
-					maxAll = $("#maxMember").val()*(data.length-1);	
-					$("#maxAll").val("총 "+maxAll+"명");
-					rowid = data[data.length-1];
+		 url="<%=cp%>/cal/eachDayOk";
+		 $.get(url, {start:startDay, end:endDay, checkDay:rowid}, function(data){
+		 maxAll = $("#maxMember").val()*(data.length-1);
+			$("#maxAll").val("총 "+maxAll+"명");
 					
-					url="<%=cp%>/cal/eachDayOk";
-					$.get(url, {start:startDay, end:endDay, checkDay:rowid}, function(data){
-						for(var i=0; i<data.length-1;i++){
-							$("#eachMember_"+data[i]).val($("#maxMember").val());
-						}
-					});
-			});
+		 	for(var i=0; i<data.length-1;i++){
+		 		$("#eachMember_"+data[i]).val($("#maxMember").val());
+		 	}
+		 });
 		 rowid="";
 	 });
 	 
