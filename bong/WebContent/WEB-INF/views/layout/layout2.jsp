@@ -7,8 +7,6 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

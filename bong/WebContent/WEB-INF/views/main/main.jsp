@@ -9,7 +9,7 @@
 .btn-common{
  	font-size: 18px;
     color: white;
-   
+   border-radius:0px;
     font-weight: bold;
     padding: 20px 40px;
     background-color: #32BEF3;

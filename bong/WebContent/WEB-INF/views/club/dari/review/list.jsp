@@ -18,12 +18,12 @@ function searchList() {
 <style type="text/css">
 
 .col-md-9{
-	margin-top:-25px;
+	margin-top:-30px; width:78%;
 
 }
 .col-md-7{
 
-	width: 44%;
+	width: 46%;
 }
 /* 후기게시판 리스트row */
  .row2 {
@@ -35,7 +35,7 @@ function searchList() {
 } 
 /* 후기게시판 타이틀 */
  .row3 {
-   margin-top: 10px;
+   margin-top: 5px;
  
    height: 100px;
    width: 100%;
