@@ -50,7 +50,8 @@ public class calController {
 		
 		String[] eachDayArray = dto.getEachDayArray().split(",");
 		String[] eachDayValueArray = dto.getEachDayValueArray().split(",");
-		for(int i=0;i<eachDayArray.length-1;i++){
+		int a = eachDayValueArray.length;
+		for(int i=0;i<(eachDayValueArray.length-2);i++){
 			dto.setEachDay(eachDayArray[i]);
 			dto.setEachDayValue(eachDayValueArray[i]);
 			calService.insertVolunbbsEach(dto);
