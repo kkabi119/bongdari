@@ -4,8 +4,8 @@
 <mapper namespace="notice">
 	
 	<insert id="insertNotice" parameterType="com.bong.notice.Notice">
-		INSERT INTO notice (noticeIdx, userIdx, subject, content, saveFilename, originalFilename)
-			VALUES(notice_seq.NEXTVAL, #{userIdx}, #{subject}
+		INSERT INTO notice (noticeIdx, userIdx, userId,subject, content, saveFilename, originalFilename)
+			VALUES(notice_seq.NEXTVAL, #{userIdx}, #{userId}, #{subject}
 						,#{content}, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename,jdbcType=VARCHAR})
 	</insert>
 	

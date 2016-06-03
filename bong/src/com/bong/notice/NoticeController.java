@@ -64,7 +64,7 @@ public class NoticeController {
 		
 		service.insertNotice(dto, pathname);
 		
-		return new ModelAndView("/customer/notice/list");
+		return new ModelAndView(".layout.customer.notice.list.공지사항");
 		
 	}
 	//공지 게시판
@@ -145,5 +145,134 @@ public class NoticeController {
 		
 		return mav;
 	}
-	
+	//글보기
+	@RequestMapping(value="/notice/article")
+	public ModelAndView readNotice(
+			HttpSession session
+		   ,@RequestParam(value="num") int num
+		   ,@RequestParam(value="page") String page
+		   ,@RequestParam(value="searchKey", defaultValue="subject") String searchKey
+		   ,@RequestParam(value="searchValue", defaultValue="") String searchValue
+			) throws Exception{
+		
+		SessionInfo info= (SessionInfo)session.getAttribute("member");
+		if(info==null){
+			return new ModelAndView("redirect:/member/login");
+		}
+		searchValue = URLDecoder.decode(searchValue,"utf-8");
+		
+		//조회수 증가
+		Map<String, Object> map = new HashMap<String, Object>();		
+		map.put("num", num);
+		service.updateHitCount(map);
+		
+		//해당 레코드 가져오기
+		Notice dto = service.readNotice(map);
+		
+		if(dto==null)
+			return new ModelAndView("redirect:.notice.list?page="+page);
+		
+		//이전글, 다음글
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		
+		Notice preReadDto = service.preReadNotice(map);
+		Notice nextReadDto = service.nextReadNotice(map);
+		
+		String params = "page="+page;
+		if(searchValue.length()!=0){
+			params += "&searchKey=" +searchKey+
+					"&searchValue="+URLEncoder.encode(searchValue,"utf-8");
+		}
+		
+		int replyCount=service.replyDataCount(map);
+		
+		ModelAndView mav = new ModelAndView(".layout.customer.notice.article.공지글 보기");
+		mav.addObject("dto", dto);
+		mav.addObject("preReadDto", preReadDto);
+		mav.addObject("nextReadDto", nextReadDto);
+		
+		mav.addObject("page", page);
+		mav.addObject("params", params);
+		mav.addObject("replyCount", replyCount);
+		return mav;
+	}
+	@RequestMapping(value="/notice/update", method=RequestMethod.GET)
+	public ModelAndView updateNotice(
+			HttpSession session
+		   ,@RequestParam(value="num") int num
+		   ,@RequestParam(value="page") String page
+			) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null){
+			return new ModelAndView("redirect:/member/login");
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		
+		Notice dto = (Notice)service.readNotice(map);
+		
+		if(dto==null){
+			return new ModelAndView("redirect:/notice/list?page="+page);
+		}
+	    if(! info.getUserId().equals(dto.getUserId())){
+	    	return new ModelAndView("redirect:/notice/list?page="+page);
+	    }
+	    
+		ModelAndView mav = new ModelAndView(".layout.customer.notice.created.공지글수정");
+		mav.addObject("dto", dto);
+		mav.addObject("mode", "update");
+		mav.addObject("page", page);
+		return mav;
+	}
+	@RequestMapping(value="/notice/update", method=RequestMethod.POST)
+	public ModelAndView updateSubmit(
+			HttpSession session
+		   ,Notice dto
+		   ,@RequestParam(value="page") String page
+			) throws Exception{
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		if(info==null){
+			return new ModelAndView("redirect:/member/login");
+		}
+		String root=session.getServletContext().getRealPath("/");
+		String path=root+File.separator+"uploads"+File.separator+"notice";
+		
+		//수정하기
+		service.updateNotice(dto, path);
+		
+		return new ModelAndView("redirect:/notice/list?page="+page);
+	   
+	}
+	@RequestMapping(value="/notice/delete")
+	public ModelAndView delete(
+			HttpSession session
+		   ,@RequestParam(value="num") int num
+		   ,@RequestParam(value="page") String page
+			) throws Exception{
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		if(info==null){
+			return new ModelAndView("redirect:/member/login");
+		}
+		
+		//해당 레코드 가져오기
+		Map<String, Object> map= new HashMap<String, Object>();
+		map.put("num", num);
+		
+		Notice dto = service.readNotice(map);
+		if(dto==null){
+			return new ModelAndView("redirect:/notice/list?page="+page);
+		}
+		if(! info.getUserId().equals(dto.getUserId()) && ! info.getUserId().equals("admin")){
+			return new ModelAndView("redirect:/notice/list?page="+page);
+		}
+		
+		String root = session.getServletContext().getRealPath("/");
+		String path = root + File.separator +"uploads"+File.separator+"notice";
+		
+		service.deleteNotice(map, dto.getSaveFilename(), path);
+		 return new ModelAndView("redirect:/notice/list");
+	  
+	}
 }

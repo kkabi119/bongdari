@@ -72,38 +72,88 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public Notice readNotice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto = null;
+		try {
+			//게시물 가져오기
+			dto=dao.getReadInformation("notice.readNotice", map);
+		} catch (Exception e) {
+		 System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override
 	public int updateHitCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			//조회수증가
+			result = dao.updateInformation("notice.updateHitCount", map);
+		} catch (Exception e) {
+		  System.out.println(e.toString());
+		}
+		return result;
 	}
-
+    //이전글
 	@Override
 	public Notice preReadNotice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto = null;
+		try {
+			dto=dao.getReadInformation("notice.preReadNotice", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
-
+    //다음글
 	@Override
 	public Notice nextReadNotice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto = null;
+		try {
+			dto = dao.getReadInformation("notice.nextReadNotice", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override
 	public int updateNotice(Notice dto, String path) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()){
+				//이전 파일 지우기
+				if(dto.getSaveFilename().length()!=0)
+					fileManager.doFileDelete(dto.getSaveFilename(), path);
+				
+				String newFilename = fileManager.doFileUpload(dto.getUpload(), path);
+				if(newFilename != null){
+					dto.setOriginalFilename(dto.getUpload().getOriginalFilename());
+					dto.setSaveFilename(newFilename);
+				}
+			}
+			
+			dao.updateInformation("notice.updateNotice", dto);
+			result = 1;
+		} catch (Exception e) {
+		  System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public int deleteNotice(Map<String, Object> map, String saveFilename, String path) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		
+		try {
+			if(saveFilename !=null){
+				fileManager.doFileDelete(saveFilename, path);
+			}
+			dao.deleteInformation("notice.deleteNotice", map);
+			result=1;
+		} catch (Exception e) {
+		   System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override

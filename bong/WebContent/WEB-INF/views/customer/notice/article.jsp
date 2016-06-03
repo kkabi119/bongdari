@@ -68,7 +68,7 @@ $(function(){
 });
  
 function listPage(page) {
-	var url="<%=cp%>/customer/notice/listReply";
+	var url="<%=cp%>/notice/listReply";
 	var num="${dto.noticeIdx}";
 	$.post(url, {num:num, pageNo:page}, function(data){
 		$("#listReply").html(data);
@@ -102,7 +102,7 @@ function sendReply() {
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/customer/notice/createdReply"
+		,url:"<%=cp%>/notice/createdReply"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
@@ -126,7 +126,7 @@ function sendReply() {
 //댓글 개수
 function replyCount() {
 	var num="${dto.noticeIdx}";// 해당 게시물 번호
-	var url="<%=cp%>/customer/notice/replyCount";
+	var url="<%=cp%>/notice/replyCount";
 	$.post(url, {num:num}, function(data){
 		var count=data.count;
 		$("#replyCountView").text("("+count+")");
@@ -194,7 +194,7 @@ function deleteReply(replyNum, page) {
 	}
 	
 	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/customer/notice/deleteReply";
+		var url="<%=cp%>/notice/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
 		        var state=data.state;
 				if(state=="loginFail") {
@@ -213,7 +213,7 @@ function deleteNotice() {
   var num = "${dto.noticeIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/club/${clubSeq}/notice/delete?" + params;
+  var url = "<%=cp%>/notice/delete?" + params;
 
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
@@ -224,16 +224,16 @@ function deleteNotice() {
 }
 
 function updateNotice() {
-<c:if test="${sessionScope.member.userId==dto.userId}">
+<c:if test="${sessionScope.member.userName==dto.userName || sessionScope.member.userName=='관리자'}">
   var num = "${dto.noticeIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/customer/notice/update?" + params;
-
+  var url = "<%=cp%>/notice/update?" + params;
   location.href=url;
+ 
 </c:if>
 
-<c:if test="${sessionScope.member.userId!=dto.userId}">
+<c:if test="${sessionScope.member.userId!=dto.userId || sessionScope.member.userName!='관리자'}}">
  alert("게시물을 수정할 수  없습니다.");
 </c:if> 
 }
@@ -252,20 +252,20 @@ function updateNotice() {
                                     </div>
                                <c:if test="${not empty dto.saveFilename}">
                                     <div class="post-bottom overflow" style="margin-top: 0px">
-                                  			<a href="<%=cp%>/customer/notice/download?num=${dto.noticeIdx}"><span class="fa fa-download"></span> ${dto.originalFilename}</a>
+                                  			<a href="<%=cp%>/notice/download?num=${dto.noticeIdx}"><span class="fa fa-download"></span> ${dto.originalFilename}</a>
                                     </div>
                                </c:if>
                                <c:if test="${not empty preReadDto }">
                                     <div class="post-bottom overflow" style="margin-top: 0px">
                                
-                                  			<a href="<%=cp%>/customer/notice/article?${params}&num=${preReadDto.noticeIdx}">이전글 : ${preReadDto.subject}</a>
+                                  			<a href="<%=cp%>/notice/article?${params}&num=${preReadDto.noticeIdx}">이전글 : ${preReadDto.subject}</a>
                               
                                     </div>
                                 </c:if>
                                 <c:if test="${not empty nextReadDto }">    
                                     <div class="post-bottom overflow" style="margin-top: 0px">
                               
-                                  			<a href="<%=cp%>/customer/notice/article?${params}&num=${nextReadDto.noticeIdx}">다음글 : ${nextReadDto.subject}</a>
+                                  			<a href="<%=cp%>/notice/article?${params}&num=${nextReadDto.noticeIdx}">다음글 : ${nextReadDto.subject}</a>
                                 
                                     </div>
                                </c:if>
@@ -274,7 +274,7 @@ function updateNotice() {
                               				<span class="item-click" id="reply-open-close">댓글 ▼</span>&nbsp;<span id="replyCountView" class="item-title" style="color:#424951">(${replyCount})</span>
                      				</div>
                                   	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
-                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/customer/notice/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/notice/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
                   					</div>
                                      
                                     <div style="float:right; padding-top: 10px;padding-bottom: 10px;">
