@@ -81,13 +81,13 @@
 		 var maxAll=0;
 		 
 		 $.post("<%=cp%>/cal/eachDayCount", {startDay:startDay, endDay:endDay, checkDay:rowid}, function(data){
-			$("#eachDay").html(data);
+			eachDaySelector();
 					maxAll = $("#maxMember").val()*(data.length-1);	
 					$("#maxAll").val("총 "+maxAll+"명");
 					rowid = data[data.length-1];
 					
 					url="<%=cp%>/cal/eachDayOk";
-					$.get(url, {start:startDay, end:endDay, checkDay:rowid}, function(data){ 	
+					$.get(url, {start:startDay, end:endDay, checkDay:rowid}, function(data){
 						for(var i=0; i<data.length-1;i++){
 							$("#eachMember_"+data[i]).val($("#maxMember").val());
 						}
