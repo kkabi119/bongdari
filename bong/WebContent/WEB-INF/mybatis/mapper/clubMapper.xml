@@ -42,9 +42,9 @@
 	</insert>
 	
 	<insert id="insertClubInfo" parameterType="com.bong.club.ClubInfo">
-	    INSERT INTO clubInfo(clubIdx, userId, themeNum, clubname, introduce, prologue, closed)
+	    INSERT INTO clubInfo(clubIdx, userId, themeNum, clubname, introduce, closed, city)
 	      VALUES (#{clubSeq}, #{userId}, #{themeNum}, 
-	                #{clubname}, #{introduce}, #{prologue}, #{closed})
+	                #{clubname}, #{introduce}, #{closed},#{city})
 	</insert>
 	
 	<insert id="insertJoinClub" parameterType="com.bong.club.ClubInfo">
@@ -56,7 +56,7 @@
 	<update id="updateClubInfo" parameterType="com.bong.club.ClubInfo">
 	    UPDATE ClubInfo SET nickName=#{nickName},
 	           themeNum=#{themeNum},
-	           title=#{title}, introduce=#{introduce}, prologue=#{prologue}, closed=#{closed}
+	           title=#{title}, introduce=#{introduce}, closed=#{closed}
 	           WHERE ClubSeq=#{ClubSeq}
 	</update>
 
@@ -70,7 +70,7 @@
 	</update>
 	
     <update id="deleteClubProfileImage" parameterType="Long">
-        UPDATE ClubProfile SET photoFilename=''
+        UPDATE ClubProfile SET photoFilename=
                     WHERE ClubSeq=#{ClubSeq}
     </update>
 	
@@ -148,12 +148,21 @@
 	
 	<!-- 내 동아리의 전체 정보 -->
 	<select id="readClubInfo" parameterType="map" resultType="com.bong.club.ClubInfo">
-	    SELECT clubidx AS clubSeq, userId, c.parent groupNum ,clubname, introduce, prologue, clubBirth, 
-closed, c.subject, g.subject groupSubject 
-FROM ClubInfo b 
-JOIN theme c ON b.themeNum=c.themeNum 
-JOIN ( SELECT themeNum, subject FROM theme WHERE parent IS NULL ) g ON c.parent = g.themeNum  
-				WHERE ${field}=#{field_value}
+	    SELECT clubidx AS clubSeq, userId, c.parent groupNum ,clubname, introduce, clubBirth, 
+			closed, c.subject, g.subject groupSubject 
+			FROM ClubInfo b 
+			JOIN theme c ON b.themeNum=c.themeNum 
+			JOIN ( SELECT themeNum, subject FROM theme WHERE parent IS NULL ) g ON c.parent = g.themeNum  
+		WHERE ${field}=#{field_value}
+	</select>
+	
+	<select id="readClubInfoSmall" parameterType="map" resultType="com.bong.club.ClubInfo">
+		SELECT clubidx AS clubSeq, userId, c.parent groupNum ,clubname, introduce, clubBirth, city,
+			closed, c.subject, g.subject groupSubject 
+			FROM ClubInfo b 
+			JOIN theme c ON b.themeNum=c.themeNum 
+			JOIN ( SELECT themeNum, subject FROM theme WHERE parent IS NULL ) g ON c.parent = g.themeNum
+			WHERE clubIdx=${clubSeq}  
 	</select>
 	
 	<select id="readClubInfoSession" parameterType="map" resultType="String">

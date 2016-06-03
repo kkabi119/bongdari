@@ -33,7 +33,7 @@
 	            resultType="com.bong.admin.Member">
 		SELECT * FROM (
 		    SELECT ROWNUM rNum, tb.* FROM (
-			     SELECT ci.userIdx, userId, userTel, userName, userGender, userLevel,
+			     SELECT ci.userIdx, userId, userTel, ci.userName, userGender, userLevel,
            NVL(userNoshow, 0) userNoshow, userScore,
            TO_CHAR(created_date, 'YYYY-MM-DD') created_date
            ,TO_CHAR(last_Login, 'YYYY-MM-DD') last_Login
@@ -68,7 +68,7 @@
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
 		        SELECT tot.*, ct2.subject as lSubject, ct1.subject as sSubject  FROM
-     					 (SELECT clubName, TO_CHAR(clubBirth, 'YYYY-MM-DD') clubBirth, clubAddr, userId, closed, prologue, introduce, themeNum,                  
+     					 (SELECT clubName, TO_CHAR(clubBirth, 'YYYY-MM-DD') clubBirth, clubAddr, userId, closed, introduce, themeNum,                  
 			          	NVL(cvl.total_hours, 0) total_hours, NVL(cvl.total_NoShow, 0) total_NoShow, NVL(jc.member, 0) member FROM clubinfo ci
 			         	LEFT OUTER JOIN (SELECT SUM(clubhours) total_hours, SUM(clubnoshow) total_noshow, clubIdx FROM clubVolList
 						GROUP BY clubIdx) cvl ON ci.clubIdx=cvl.clubIdx
@@ -86,7 +86,7 @@
 	            resultType="Integer">
 	  SELECT COUNT(*) FROM serviceinfo si
       JOIN checkId ci ON si.userIdx = ci.userIdx
-      WHERE isService=#{switching}
+      WHERE si.enabled=#{switching}
 	     <where>
 	     	<if test="searchValue!=null and searchValue!='' ">
 	     	    <include refid="where-list"/>
@@ -106,12 +106,164 @@
                		   JOIN serviceInfo si ON ci.userIdx=si.userIdx
 				       LEFT OUTER JOIN theme t1 ON si.themeNum=t1.themeNum
 				       LEFT OUTER JOIN theme t2 ON t1.parent=t2.themeNum
-				       WHERE ci.isService=#{switching}
+				       WHERE si.enabled=#{switching}
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start}
 	]]>		
 	</select>
 	
+	<!-- 수요처 승인요청 상세 리스트-->
+	<select id="demanderArticle" resultType="com.bong.admin.Demander"
+			parameterType="Integer">
+					SELECT serviceIdx, userId as serviceId, serviceName, serviceEmail, TO_CHAR(serviceBirth, 'YYYY-MM-DD') serviceBirth, serviceTel, serviceIntro, serviceAddr,
+			        serviceImg, tt.lSubject, tt.sSubject, TO_CHAR(created_date, 'YYYY-MM-DD') created_date FROM serviceInfo si
+					LEFT OUTER JOIN checkId ci ON ci.userIdx=si.userIdx
+					LEFT OUTER JOIN (SELECT t1.themeNum, t2.subject as lSubject, t1.subject as sSubject FROM theme t1
+			        LEFT OUTER JOIN theme t2 ON t1.parent=t2.themeNum) tt ON si.themeNum=tt.themeNum
+			        WHERE serviceIdx = #{serviceIdx}
+	
+	</select>
+	
+	<!-- 수요처 동적쿼리로 테이블 생성해주기 -->
+	
+	<!-- 수요처 승인시 enabled를 1로 바꿔준다. -->
+	<update id="approvalUpdate" parameterType="Integer">
+		UPDATE serviceInfo SET enabled=1 WHERE serviceIdx=#{serviceIdx}
+	</update>
+	
+	<update id="createServiceNotice" parameterType="Integer">
+	CREATE TABLE service_NOTICE_${value} (
+		serviceNoticeIdx	NUMBER
+		,userIdx 	       	NUMBER    	NOT NULL
+		,serviceIdx       	NUMBER    	NOT NULL
+		,subject 	       	VARCHAR2(255) NOT NULL
+		,content           	CLOB         	NOT NULL
+		,hitCount          	NUMBER   	DEFAULT 0
+		,created 	       	DATE          	DEFAULT SYSDATE
+		,modified          	DATE         	DEFAULT SYSDATE
+		,saveFilename   	VARCHAR2(255)
+		,originalFilename   VARCHAR2(255)
+		,CONSTRAINT pk_service_notice_${value} PRIMARY KEY(serviceNoticeIdx)
+		,CONSTRAINT fk_servicenoti_urIdx_${value} FOREIGN KEY(userIdx)
+             REFERENCES checkId(userIdx)
+		,CONSTRAINT fk_servicenoti_srIdx_${value} FOREIGN KEY(serviceIdx)
+             REFERENCES serviceInfo(serviceIdx)
+		)
+	</update>
+	
+	<update id="createServiceNoticeReply" parameterType="Integer">
+	CREATE TABLE service_notice_reply_${value}(
+  	SNRIdx NUMBER
+  	,serviceIdx  NUMBER NOT NULL
+  	,serviceNoticeIdx  NUMBER NOT NULL
+  	,content  CLOB NOT NULL
+  	,created  DATE DEFAULT SYSDATE
+  	,answer  NUMBER NOT NULL  
+  	,CONSTRAINT pk_sNoticeR_${value} PRIMARY KEY(SNRIdx)
+  	,CONSTRAINT fk_sNoticeR_serviceIdx_${value} FOREIGN KEY(serviceIdx)
+              REFERENCES serviceInfo(serviceIdx)
+  	,CONSTRAINT fk_sNoticeR_srNoti_${value} FOREIGN KEY(serviceNoticeIdx)
+              REFERENCES service_notice_${value}(serviceNoticeIdx)
+	)
+	</update>
+	
+	<update id="createServiceReview" parameterType="Integer">
+	CREATE TABLE service_review_${value}(
+  	servicereviewidx NUMBER NOT NULL
+  	, subject VARCHAR2(100) NOT NULL
+  	,CONTENT CLOB NOT NULL
+  	,created DATE DEFAULT SYSDATE
+  	,hitcount NUMBER DEFAULT 0
+  	,serviceidx NUMBER NOT NULL
+  	,useridx NUMBER NOT NULL
+  	,PRIMARY KEY(servicereviewidx)
+  	,CONSTRAINT fk_serv_rev_sidx_${value} FOREIGN KEY(serviceidx)
+  	REFERENCES serviceinfo(serviceidx) ON DELETE CASCADE
+  	,CONSTRAINT fk_serv_rev_useridx_${value} FOREIGN KEY(useridx)
+  	REFERENCES memberinfo(useridx) ON DELETE CASCADE
+	)
+	</update>
+	
+	<update id="createServiceReviewLike" parameterType="Integer">
+	CREATE TABLE service_review_like_${value}(
+  	serviceReviewIdx NUMBER NOT NULL
+  	,useridx NUMBER NOT NULL
+  	,PRIMARY KEY(servicereviewidx,useridx)
+  	,CONSTRAINT fk_ser_rl_srlidx_${value} FOREIGN KEY(servicereviewidx)
+  	REFERENCES service_review_${value}(servicereviewidx) ON DELETE CASCADE
+  	,CONSTRAINT fk_ser_rl_useridx_${value} FOREIGN KEY(useridx)
+  	REFERENCES checkId(useridx) ON DELETE CASCADE
+	)
+	</update>
+	
+	<update id="createServiceReviewReply" parameterType="Integer">
+	CREATE TABLE service_review_reply_${value}(
+  	SRRIdx NUMBER NOT NULL
+  	,CONTENT CLOB NOT NULL
+  	,created DATE DEFAULT SYSDATE
+  	,answer     	NUMBER NOT NULL  
+  	,servicereviewidx NUMBER NOT NULL
+  	,useridx NUMBER NOT NULL
+  	,PRIMARY KEY(srridx)
+  	,CONSTRAINT fk_serv_rr_sridx_${value} FOREIGN KEY(servicereviewidx)
+  	REFERENCES service_review_${value}(servicereviewidx) ON DELETE CASCADE
+  	,CONSTRAINT fk_serv_rr_useridx_${value} FOREIGN KEY(useridx)
+  	REFERENCES checkId(useridx) ON DELETE CASCADE
+	)
+	</update>
+	
+	<update id="createServiceReviewFile" parameterType="Integer">
+	CREATE TABLE service_review_file_${value}(
+	serviceFileidx NUMBER NOT NULL
+	,savefilename  VARCHAR2(255)
+	,originalfilename VARCHAR2(255)
+	,servicereviewidx NUMBER NOT NULL
+ 	,PRIMARY KEY(servicefileidx)
+ 	,CONSTRAINT fk_serv_rf_revidx_${value} FOREIGN KEY(servicereviewidx)
+  	REFERENCES service_review_${value}(servicereviewidx) ON DELETE CASCADE
+	)
+	</update>
+	
+	<update id="createServiceReviewReplyLike" parameterType="Integer">
+	CREATE TABLE serv_rev_reply_like_${value}(
+  	SRRIdx NUMBER NOT NULL
+  	,useridx NUMBER NOT NULL
+  	, PRIMARY KEY(srridx,useridx)
+  	,CONSTRAINT fk_ser_rrl_srridx_${value} FOREIGN KEY(srridx)
+  	REFERENCES service_review_reply_${value}(srridx) ON DELETE CASCADE
+  	,CONSTRAINT fk_ser_rrl_useridx_${value} FOREIGN KEY(useridx)
+  	REFERENCES memberinfo(useridx) ON DELETE CASCADE
+	)
+	</update>
+	
+	<update id="createServiceGuest" parameterType="Integer">
+	CREATE TABLE service_guest_${value}(
+  	sguestidx NUMBER NOT NULL
+  	,CONTENT CLOB NOT NULL
+  	,created DATE DEFAULT SYSDATE
+  	,useridx NUMBER NOT NULL
+	,PRIMARY KEY(sguestidx)
+  	,CONSTRAINT fk_serv_guest_useridx_${value} FOREIGN KEY(useridx)
+    REFERENCES checkId(useridx) ON DELETE CASCADE
+	)
+	</update>
+	
+	<update id="createServiceQnA" parameterType="Integer">
+	CREATE TABLE service_qna_${value}(
+  	sqnaidx NUMBER NOT NULL
+  	,subject VARCHAR2(100) NOT NULL
+  	,CONTENT CLOB NOT NULL
+  	,created DATE DEFAULT SYSDATE
+  	,answer number not null
+  	,useridx NUMBER NOT NULL
+  	,hitcount NUMBER DEFAULT 0
+	,groupNum NUMBER NOT NULL
+	,quserIdx NUMBER
+  	,PRIMARY KEY(sqnaidx)
+  	,CONSTRAINT fk_serv_qna_useridx_${value} FOREIGN KEY(useridx)
+  	REFERENCES checkId(useridx) ON DELETE CASCADE
+	)
+	</update>
 	
 </mapper>

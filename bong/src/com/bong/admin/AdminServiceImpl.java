@@ -82,5 +82,36 @@ public class AdminServiceImpl implements AdminService{
 		}
 		return result;
 	}
+
+	@Override
+	public Demander demanderArticle(String serviceIdx) {
+		Demander dto=null;
+		try {
+			dto=dao.getReadInformation("admin.demanderArticle", Integer.parseInt(serviceIdx));
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+
+	@Override
+	public int createDemanderTable(String serviceIdx) {
+		int num = Integer.parseInt(serviceIdx);
+		try {
+			dao.insertInformation("admin.approvalUpdate", num);
+			dao.insertInformation("admin.createServiceNotice", num);
+			dao.insertInformation("admin.createServiceNoticeReply", num);
+			dao.insertInformation("admin.createServiceReview", num);
+			dao.insertInformation("admin.createServiceReviewLike", num);
+			dao.insertInformation("admin.createServiceReviewReply", num);
+			dao.insertInformation("admin.createServiceReviewFile", num);
+			dao.insertInformation("admin.createServiceReviewReplyLike", num);
+			dao.insertInformation("admin.createServiceGuest", num);
+			dao.insertInformation("admin.createServiceQnA", num);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return 1;
+	}
 	
 }

@@ -31,6 +31,27 @@
 	
 	<script type="text/javascript" src="<%=cp%>/res/js/jquery-1.12.3.min.js"></script>
 	<script type="text/javascript" src="<%=cp%>/res/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+	/* $(function() {
+	    $( document ).tooltip();
+	  }); */
+	  $(function () {
+	      $(document).tooltip({
+	          items: ".entry",
+	          position: {
+	              my: "right bottom+50"
+	          },
+	          tooltipClass: "entry-tooltip-positioner",
+	          track: true,
+	          content: function () {
+	              var element = $(this);
+	              if ((element.is(".entry"))) {
+	                  return "<div class='hi'>This is a very nice entry! It's    so pretty and I feel like I can touch it. This is just random filler text.</div>";
+	              }
+	          }
+	      });
+	  });
+	</script>
     <!--[if lt IE 9]>
 	    <script src="<%=cp%>/res/js/html5shiv.js"></script>
 	    <script src="<%=cp%>/res/js/respond.min.js"></script>
@@ -41,17 +62,6 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<%=cp%>/res/images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="<%=cp%>/res/images/ico/apple-touch-icon-57-precomposed.png">
 
-<style type="text/css">
-		.container{
-			width:68%;
-		}
-		
-		.col-md-9{
-			width:75%;
-		}	
-	</style>
-	
-	
 </head><!--/head-->
 
 <body>
@@ -69,7 +79,6 @@
                             <h1>
                             <tiles:insertAttribute name="title"/>
                             </h1>
-                            <p>Blog with right sidebar</p>
                         </div>
                     </div>
                 </div>

@@ -2,9 +2,30 @@ package com.bong.admin;
 
 public class Demander {
 	private int rNum, serviceIdx;
-	private String serviceId, serviceName, serviceTel, serviceEmail, lSubject, sSubject, serviceAddr, serviceBirth;
+	private String serviceId, serviceName, serviceTel, serviceEmail, lSubject, sSubject, serviceAddr, serviceBirth, created_date;
+	private String serviceIntro, serviceImg;
 	
 	
+	
+	public String getCreated_date() {
+		return created_date;
+	}
+	public void setCreated_date(String created_date) {
+		this.created_date = created_date;
+	}
+	public String getServiceImg() {
+		return serviceImg;
+	}
+	public void setServiceImg(String serviceImg) {
+		this.serviceImg = serviceImg;
+	}
+	
+	public String getServiceIntro() {
+		return serviceIntro;
+	}
+	public void setServiceIntro(String serviceIntro) {
+		this.serviceIntro = serviceIntro;
+	}
 	public String getServiceBirth() {
 		return serviceBirth;
 	}

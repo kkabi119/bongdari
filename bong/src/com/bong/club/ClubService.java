@@ -21,6 +21,7 @@ public interface ClubService {
 	public List<ClubInfo> listClub(Map<String, Object> map);
 
 	public ClubInfo readClubInfo(Map<String, Object> map);
+	public ClubInfo readClubInfoSmall(Map<String, Object> map);
 	public ClubInfo readClubInfoHome(int clubSeq);
 	
 	public int updateClubVisitorCount(int clubSeq);

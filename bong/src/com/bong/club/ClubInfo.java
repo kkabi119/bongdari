@@ -6,7 +6,7 @@ public class ClubInfo {
 	private int clubSeq;
 	private String userId, nickName, userName;
 	private int groupNum, themeNum, userIdx;
-	private String introduce, clubname, prologue, city,  clubBirth;
+	private String introduce, clubname, city,  clubBirth;
 	private String groupSubject, subject;
 	private int  closed;
 	private MultipartFile upload;
@@ -85,12 +85,6 @@ public class ClubInfo {
 	}
 	public void setClubname(String clubname) {
 		this.clubname = clubname;
-	}
-	public String getPrologue() {
-		return prologue;
-	}
-	public void setPrologue(String prologue) {
-		this.prologue = prologue;
 	}
 	public String getCity() {
 		return city;
