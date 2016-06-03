@@ -9,16 +9,18 @@
         <div class="container">
             <div class="row">
                 <div class="main-slider">
-                    <div class="slide-text">
-                        <h1>We Are Creative Nerds</h1>
-                        <p>Boudin doner frankfurter pig. Cow shank bresaola pork loin tri-tip tongue venison pork belly meatloaf short loin landjaeger biltong beef ribs shankle chicken andouille.</p>
-                        <a href="#" class="btn btn-common">SIGN UP</a>
+                    <div class="slide-text" style="margin-top:13%"><!-- 
+                     <p  style="font-size:25px;">봉사에 친목을 더하다 따뜻함을 더하다 </p> -->
+                        <h1 style="font-size:40px; font-weight:bolder; margin-bottom:5px;">우리를 이어주는 다리 </h1>
+                        <h1 style="margin-top:3px;font-size:60px; font-weight:900; color:white;">봉 다 리 </h1>
+                        <p  style="font-size:23px; margin-bottom:-10px"></p>
+                        <a href="#" class="btn btn-common">시작하기</a>
                     </div>
-                    <img src="<%=cp%>/res/images/home/slider/hill.png" class="slider-hill" alt="slider image">
+                 <%--    <img src="<%=cp%>/res/images/home/slider/hill.png" class="slider-hill" alt="slider image">
                     <img src="<%=cp%>/res/images/home/slider/house.png" class="slider-house" alt="slider image">
                     <img src="<%=cp%>/res/images/home/slider/sun.png" class="slider-sun" alt="slider image">
                     <img src="<%=cp%>/res/images/home/slider/birds1.png" class="slider-birds1" alt="slider image">
-                    <img src="<%=cp%>/res/images/home/slider/birds2.png" class="slider-birds2" alt="slider image">
+                    <img src="<%=cp%>/res/images/home/slider/birds2.png" class="slider-birds2" alt="slider image"> --%>
                 </div>
             </div>
         </div>

@@ -36,7 +36,7 @@ $(document).ready(function($) {
 </script>
 	<div class="container">
             <div class="row">
-                <div class="col-sm-12 overflow">
+            <div class="col-sm-12 overflow">
                    <div class="social-icons pull-right">
                         <ul class="nav nav-pills">
                             <c:if test="${sessionScope.member.isService==0}">
@@ -64,7 +64,8 @@ $(document).ready(function($) {
                             </c:if>
                         </ul>
                     </div> 
-                </div>
+            
+            
              </div>
         </div>
         <div class="navbar navbar-inverse" role="banner">

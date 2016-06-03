@@ -80,12 +80,12 @@
   }
 
   .btn-common {
-    font-size: 14px;
-    color: #0099ae;
-    border: 1px solid #0099ae;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    padding: 10px 25px;
+    font-size: 18px;
+    color: white;
+   
+    font-weight: bold;
+    padding: 15px 35px;
+    background-color: #00AEEF;
   }
 
   #action .col-sm-5{
@@ -169,7 +169,7 @@
 #header{
   margin-bottom: 0;
  /* padding: 10px 0 10px 0; 에서 밑으로 변경 - 양히 - */
-   padding: 30px 0 30px 0;
+   padding: 15px 0 20px 0;
 }
 
 #header .navbar-inverse .container{
@@ -548,31 +548,35 @@ ul.sub-menu {
 *******Home Page******
 **************************/
 #home-slider {
-  background: url(../images/home/slider-bg.png) 0 100% repeat-x;
+  background: url(../images/mainslide/child1.jpg)  ;
   position: relative;
+  background-size:100% 125%;
+  color:white;
 }
 
 #home-slider .main-slider {
   position: relative;
-  height: 450px;
+  height: 600px;
+  color:white;
 }
 
 #home-slider .slide-text{
   position: absolute;
   top: 50px;
   left: 0;
-  width: 450px;
+  width: 550px;
+  color:white;
 }
 
 .animate-in .slide-text {
   -webkit-animation: fadeInLeftBig 700ms cubic-bezier(0.190,1.000,0.220,1.000) 200ms both;
-  animation: fadeInLeftBig 700ms cubic-bezier(0.190,1.000,0.220,1.000) 200ms both;
+  animation: fadeInLeftBig 700ms cubic-bezier(0.190,1.000,0.220,1.000) 200ms both; 
 }
 
 #home-slider .slider-hill {
   position: absolute;
   right: 0;
-  bottom: 0;
+  bottom: 0; 
 }
 
 .animate-in .slider-hill {
@@ -626,8 +630,9 @@ ul.sub-menu {
 
 
 #home-slider h1{
-  margin-top: 100px;
+  margin-top: 0px;
   margin-bottom: 25px;
+  color:white;
 }
 
 #home-slider .btn-common {
