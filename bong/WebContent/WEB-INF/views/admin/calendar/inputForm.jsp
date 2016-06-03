@@ -98,20 +98,20 @@
 	 
 	 // 날짜별 선택 불러오기
 	 $(function(){
-		 
-		 
 		 $("#eachDay").hide();
 		 $("#eachDayBtn").click(function(){
 			 
 				 
 				if($("#eachDay").is(':visible')) {
 					f.maxMember.readOnly=false;
+					$("input[type='checkbox']").attr("disabled", false);
 					$("#maxAll").val("총 0명");
 					$("#maxMember").val("");
 					$("#eachDay").hide();
 					$("#listClosed").val("1");
 				} else {
 					eachDaySelector()
+					$("input[type='checkbox']").attr("disabled", true);
 					f.maxMember.readOnly=true;
 					$("#maxMember").val("날짜별 인원 선택");
 					$("#maxAll").val("총 0명");
