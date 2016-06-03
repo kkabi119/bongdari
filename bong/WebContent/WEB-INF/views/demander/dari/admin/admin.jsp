@@ -53,12 +53,14 @@ function tab3(){
 </script>
 <style type="text/css">
 
-	.col-md-9{
-		
-		margin-top:-15px;
-		margin-left:2%;
-		width:73%;
-	}
+.col-md-9{
+	margin-top:-30px; width:78%;
+
+}
+.col-md-7{
+
+	width: 46%;
+}
 		
 </style>
  <div id="tab-container">

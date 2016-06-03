@@ -18,7 +18,7 @@ function searchList() {
 <style type="text/css">
 
 .col-md-9{
-	margin-top:-30px; width:78%;
+	margin-top:-30px; width:7%;
 
 }
 .col-md-7{
