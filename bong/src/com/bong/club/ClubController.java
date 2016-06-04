@@ -71,9 +71,6 @@ public class ClubController {
         String urlList = cp+"/club/"+clubSeq+"/notice/list";
         String urlArticle = cp+"/club/"+clubSeq+"/notice/article?page="+ 1;
         Map<String, Object> clubMin = new HashMap<String, Object>();
-        clubMin.put("clubName", dto.getClubname());
-        clubMin.put("clubIntro", dto.getIntroduce());
-        clubMin.put("clubCity",dto.getCity());
 		ModelAndView mav = new ModelAndView(".four.club.dari.main."+dto.getClubname());
 		mav.addObject("clubSeq", clubSeq);
 		mav.addObject("listN", listN);
@@ -82,6 +79,18 @@ public class ClubController {
 		mav.addObject("clubMin",clubMin);
 		
 		return mav;
+	}
+	@RequestMapping(value="/club/{clubSeq}/left")
+	@ResponseBody
+	public Map<String, Object> clubLeft(
+			@PathVariable int clubSeq
+			) throws Exception {
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("clubSeq", clubSeq);
+		ClubInfo dto=clubService.readClubInfoSmall(map);
+		map.put("dto", dto);
+		return map;
 	}
 	
 	@RequestMapping(value = "/club")

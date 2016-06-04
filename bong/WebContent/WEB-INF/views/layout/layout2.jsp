@@ -28,6 +28,7 @@
 	<link href="<%=cp%>/res/css/responsive.css" rel="stylesheet">
 	
 	<script type="text/javascript" src="<%=cp%>/res/js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" src="<%=cp%>/res/calendar/jquery.ui.datepicker-ko.js"></script>
 	<script type="text/javascript" src="<%=cp%>/res/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	/* $(function() {

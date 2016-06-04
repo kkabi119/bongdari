@@ -710,8 +710,6 @@ $(function(){
     <div id="calendar"></div>
 	<div id='schLoading'>loading...</div>
 </div>
-
-
 <div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -723,3 +721,4 @@ $(function(){
     </div>
   </div>
 </div>
+
