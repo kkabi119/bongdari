@@ -24,7 +24,7 @@
   border:1px solid #2f3741;
   width: 250px;
   position: absolute;
-  z-index:1000;
+  z-${demander_seq}:1000;
   padding:10px;
   background: #fefefe;
   
@@ -51,7 +51,7 @@ function deleteQna() {
   var num = "${dto.sqnaIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/demander/index/qna/delete?" + params;
+  var url = "<%=cp%>/demander/${demander_seq}/qna/delete?" + params;
 
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
@@ -67,7 +67,7 @@ function updateQna() {
   var num = "${dto.sqnaIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/demander/index/qna/update?" + params;
+  var url = "<%=cp%>/demander/${demander_seq}/qna/update?" + params;
 
   location.href=url;
 </c:if>
@@ -95,7 +95,7 @@ function updateQna() {
                                 
                                    <div>
                                   	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
-                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/demander/index/qna/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/qna/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
                   					</div>
      
                                     <div style="float:right; padding-top: 10px;padding-bottom: 10px;">
@@ -109,7 +109,7 @@ function updateQna() {
                   				<c:if test="${sessionScope.member.userId=='admin'}">
                   					<c:if test="${amode!='reply'}">
 	        		   					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
-	        		   					 <button type="button" style="color:#F0AD4E; padding:10px 15px ;" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/demander/index/qna/reply?num=${dto.sqnaIdx}&page=${page}';"><span class='glyphicon glyphicon-ok'>&nbsp;답변 </span></button>
+	        		   					 <button type="button" style="color:#F0AD4E; padding:10px 15px ;" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/qna/reply?num=${dto.sqnaIdx}&page=${page}';"><span class='glyphicon glyphicon-ok'>&nbsp;답변 </span></button>
 										</div>
 									</c:if>
 								</c:if> 

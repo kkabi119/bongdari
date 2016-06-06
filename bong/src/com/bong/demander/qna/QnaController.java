@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,11 +28,13 @@ public class QnaController {
 	@Autowired
 	private MyUtil myUtil;
 
-	@RequestMapping(value = "/demander/index/qna/list")
+	@RequestMapping(value = "/demander/{demander_seq}/qna/list")
 	public ModelAndView deQnaList(HttpServletRequest req,
 			@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(value = "searchKey", defaultValue = "subject") String searchKey,
-			@RequestParam(value = "searchValue", defaultValue = "") String searchValue) throws Exception {
+			@RequestParam(value = "searchValue", defaultValue = "") String searchValue,
+			@PathVariable int demander_seq
+			) throws Exception {
 
 		String cp = req.getContextPath();
 		
@@ -47,6 +50,7 @@ public class QnaController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
+		map.put("demander_seq", demander_seq);
 
 		dataCount = service.dataCount(map);
 		
@@ -76,15 +80,15 @@ public class QnaController {
 		}
 		
 		String params = "";
-		String urlList = cp + "/demander/index/qna/list";
-		String urlArticle = cp + "/demander/index/qna/article?page="+current_page;
+		String urlList = cp + "/demander/"+demander_seq+"/qna/list";
+		String urlArticle = cp + "/demander/"+demander_seq+"/qna/article?page="+current_page;
 		if(searchValue.length() != 0) {
 			params = "searchKey=" + searchKey + "&searchValue="+URLEncoder.encode(searchValue, "utf-8");
 		}
 
 		if(params.length() != 0) {
-			urlList = cp + "/demander/index/qna/list?" + params;
-			urlArticle = cp + "/demander/index/qna/article?page=" + current_page + "&" + params;
+			urlList = cp + "/demander/"+demander_seq+"/qna/list?" + params;
+			urlArticle = cp + "/demander/"+demander_seq+"/qna/article?page=" + current_page + "&" + params;
 		}
 		
 		//int secret=0;
@@ -106,46 +110,56 @@ public class QnaController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/demander/index/qna/create", method = RequestMethod.GET)
-	public ModelAndView deRevCreateForm() throws Exception {
+	@RequestMapping(value = "/demander/{demander_seq}/qna/create", method = RequestMethod.GET)
+	public ModelAndView deRevCreateForm(
+			@PathVariable int demander_seq
+			) throws Exception {
 		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.create.qna게시판");
 		mav.addObject("mode", "created");
+		mav.addObject("demander_seq", demander_seq);
 		return mav;
 	}
 
-	@RequestMapping(value = "/demander/index/qna/create", method = RequestMethod.POST)
-	public ModelAndView deRevCreateSubmit(HttpSession session, Qna dto) throws Exception {
+	@RequestMapping(value = "/demander/{demander_seq}/qna/create", method = RequestMethod.POST)
+	public ModelAndView deRevCreateSubmit(HttpSession session, Qna dto,
+			@PathVariable int demander_seq) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
 		dto.setUserId(info.getUserId());
 		dto.setUserIdx(info.getUserIdx());
 		dto.setQuserIdx(dto.getUserIdx());
+		dto.setDemander_seq(demander_seq);
+		
 		service.insertQna(dto, "created");
-		return new ModelAndView("redirect:/demander/index/qna/list");
+		return new ModelAndView("redirect:/demander/{demander_seq}/qna/list");
 
 	}
 
-	@RequestMapping(value = "/demander/index/qna/article")
+	@RequestMapping(value = "/demander/{demander_seq}/qna/article")
 	public ModelAndView deQnaArticle(
-			HttpSession session, 
+			HttpSession session,
 			@RequestParam(value = "num") int num,
 			@RequestParam(value = "page") int page,
 			@RequestParam(value = "searchKey", defaultValue = "subject") String searchKey,
-			@RequestParam(value = "searchValue", defaultValue = "") String searchValue) throws Exception {
+			@RequestParam(value = "searchValue", defaultValue = "") String searchValue,
+			@PathVariable int demander_seq) throws Exception {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		// 검색값 decode
 		searchValue = URLDecoder.decode(searchValue, "utf-8");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("sqnaIdx", num);
+		map.put("demander_seq", demander_seq);
 
 		// 조회수증가
-		service.updateHitCount(num);
+		service.updateHitCount(map);
 		
 		// 해당아티클가져오기
-		Qna dto = service.readQna(num);
+		Qna dto = service.readQna(map);
 		
 		
 		if (dto == null)
-			return new ModelAndView("redirect:/demander/index/qna/list");
+			return new ModelAndView("redirect:/demander/{demander_seq}/qna/list");
 
 		
 		String params = "page=" + page;
@@ -167,64 +181,78 @@ public class QnaController {
 		return mav;
 	}
 
-	@RequestMapping(value = "demander/index/qna/update", method = RequestMethod.GET)
+	@RequestMapping(value = "demander/{demander_seq}/qna/update", method = RequestMethod.GET)
 	public ModelAndView deRevUpdateForm(HttpSession session, @RequestParam(value = "num") int num,
-			@RequestParam(value = "page") String page) throws Exception {
+			@RequestParam(value = "page") String page,
+			@PathVariable int demander_seq) throws Exception {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
-
-		Qna dto = service.readQna(num);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("sqnaIdx", num);
+		map.put("demander_seq", demander_seq);
+		Qna dto = service.readQna(map);
+		
 
 		if (info.getUserIdx() != dto.getUserIdx())
-			return new ModelAndView("redirect:/demander/index/qna/list?page=" + page);
+			return new ModelAndView("redirect:/demander/"+demander_seq+"/qna/list?page=" + page);
 
-		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.create.후기게시판");
+		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.create.QnA 게시판");
 		mav.addObject("mode", "update");
 		mav.addObject("page", page);
 		mav.addObject("dto", dto);
 		return mav;
 	}
 
-	@RequestMapping(value = "demander/index/qna/update", method = RequestMethod.POST)
-	public String deRevUpdateSubmit(Qna dto, @RequestParam(value = "page") String page) throws Exception {
+	@RequestMapping(value = "demander/{demander_seq}/qna/update", method = RequestMethod.POST)
+	public String deRevUpdateSubmit(Qna dto, @RequestParam(value = "page") String page,
+			@PathVariable int demander_seq) throws Exception {
 
 		// 수정 하기
+		dto.setDemander_seq(demander_seq);
 		service.updateQna(dto);
 
-		return "redirect:/demander/index/qna/list?page=" + page;
+		return "redirect:/demander/"+demander_seq+"/qna/list?page=" + page;
 	}
 
-	@RequestMapping(value = "/demander/index/qna/delete")
+	@RequestMapping(value = "/demander/{demander_seq}/qna/delete")
 	public ModelAndView delete(HttpSession session, @RequestParam(value = "num") int num,
-			@RequestParam(value = "page") String page) throws Exception {
+			@RequestParam(value = "page") String page,
+			@PathVariable int demander_seq) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 	
 
 		// 해당 레코드 가져 오기
-		Qna dto = service.readQna(num);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("sqnaIdx", num);
+		map.put("demander_seq", demander_seq);
+		Qna dto = service.readQna(map);
 		if (dto == null) {
-			return new ModelAndView("redirect:/demander/index/qna/list?page=" + page);
+			return new ModelAndView("redirect:/demander/"+demander_seq+"/qna/list?page=" + page);
 		}
 
 		if (!info.getUserId().equals(dto.getUserId()) && !info.getUserId().equals("admin")) {
-			return new ModelAndView("redirect:/demander/index/qna/list?page=" + page);
+			return new ModelAndView("redirect:/demander/"+demander_seq+"/qna/list?page=" + page);
 		}
 
-		service.deleteQna(num);
+		service.deleteQna(map);
 
-		return new ModelAndView("redirect:/demander/index/qna/list?page=" + page);
+		return new ModelAndView("redirect:/demander/"+demander_seq+"/qna/list?page=" + page);
 	}
 
-	@RequestMapping(value = "/demander/index/qna/reply", method = RequestMethod.GET)
+	@RequestMapping(value = "/demander/{demander_seq}/qna/reply", method = RequestMethod.GET)
 	public ModelAndView replyForm(HttpSession session, @RequestParam(value = "num") int num,
-			@RequestParam(value = "page") String page) throws Exception {
+			@RequestParam(value = "page") String page,
+			@PathVariable int demander_seq) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
-
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("sqnaIdx", num);
+		map.put("demander_seq", demander_seq);
+		
 		if (info == null) {
 			return new ModelAndView("redirect:/member/login");
 		}
 
-		Qna dto = service.readQna(num);
+		Qna dto = service.readQna(map);
 		if (dto == null) {
 			return new ModelAndView("redirect:/board/list?page=" + page);
 		}
@@ -233,29 +261,30 @@ public class QnaController {
 		dto.setContent(str);
 		dto.setAnswer(dto.getSqnaIdx());
 	
-		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.create.후기게시판");
+		ModelAndView mav = new ModelAndView(".four.demander.dari.qna.create.QnA 게시판");
 		mav.addObject("dto", dto);
 		mav.addObject("page", page);
 		mav.addObject("mode", "reply");
 		return mav;
 	}
 
-	@RequestMapping(value = "/demander/index/qna/reply", method = RequestMethod.POST)
+	@RequestMapping(value = "/demander/{demander_seq}/qna/reply", method = RequestMethod.POST)
 	public String replySubmit(HttpSession session, Qna dto, @RequestParam(value = "num") int num,
-			@RequestParam(value = "page") String page) throws Exception {
+			@RequestParam(value = "page") String page,
+			@PathVariable int demander_seq) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
-		
+		dto.setDemander_seq(demander_seq);
 		dto.setUserIdx(info.getUserIdx());
 		dto.setAnswer(num);
 		int quserIdx=0;
 	
 		if(dto.getAnswer()!=0){ //답변article이라면 
-			quserIdx=service.quserIdx(num);
+			quserIdx=service.quserIdx(dto);
 		}
 		dto.setQuserIdx(quserIdx);
 		service.insertQnaReply(dto, num);
 
-		return "redirect:/demander/index/qna/list?page=" + page;
+		return "redirect:/demander/"+demander_seq+"/qna/list?page=" + page;
 	}
 }

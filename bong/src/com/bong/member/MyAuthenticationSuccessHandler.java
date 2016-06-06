@@ -46,6 +46,8 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 		
 		info.setIsService(member.getIsService());
 		
+		
+		
 		if(member.getIsService()==0){  
 			//일반회원일때
 
@@ -63,6 +65,7 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 			info.setUserIdx(demanderjoin.getUserIdx());
 			info.setUserId(demanderjoin.getUserId());
 			info.setUserName(demanderjoin.getServiceName());
+			info.setDemander_seq(demanderjoin.getServiceIdx());
 		}
 
 		

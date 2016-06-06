@@ -94,11 +94,11 @@ $(function(){
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/demander/index/qna/create";
+    		f.action="<%=cp%>/demander/${demander_seq}/qna/create";
     	else if(mode=="update")
-    		f.action="<%=cp%>/demander/index/qna/update";
+    		f.action="<%=cp%>/demander/${demander_seq}/qna/update";
     	else if(mode=="reply")
-        	f.action="<%=cp%>/demander/index/qna/reply?num=${dto.sqnaIdx}&page=${page}";
+        	f.action="<%=cp%>/demander/${demander_seq}/qna/reply?num=${dto.sqnaIdx}&page=${page}";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;
@@ -160,15 +160,11 @@ $(function(){
 							</button>
 							<button type="button" class="btn btn-default"
 								style="color: #F0AD4E;"
-								onclick="javascript:location.href='<%=cp%>/demander/index/qna/list';">
+								onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/qna/list';">
 								취소</button> <c:if test="${mode=='update'}">
 								
 								
-								<input type="hidden" name="sqnaIdx" value="${dto.serviceReviewIdx}">
-								<input type="hidden" name="saveFilename"
-									value="${dto.saveFilename}">
-								<input type="hidden" name="originalFilename"
-									value="${dto.originalFilename}">
+								<input type="hidden" name="sqnaIdx" value="${dto.sqnaIdx}">
 								<input type="hidden" name="page" value="${page}">
 							</c:if>
 						</td>

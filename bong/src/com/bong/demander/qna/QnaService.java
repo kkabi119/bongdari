@@ -8,10 +8,10 @@ public interface QnaService {
 	public int insertQnaReply(Qna dto,int sqnaIdx);
 	public int dataCount(Map<String, Object> map);
 	public List<Qna> listQna(Map<String, Object> map);
-	public int updateHitCount(int num);
-	public int quserIdx(int groupNum);
+	public int updateHitCount(Map<String, Object> map);
+	public int quserIdx(Qna	dto);
 	//public Qna deQnaReply(Map<String, Object> map);
-	public Qna readQna(int num);
+	public Qna readQna(Map<String, Object> map);
 	public int updateQna(Qna qna);
-	public int deleteQna(int num);
+	public int deleteQna(Map<String, Object> map);
 }

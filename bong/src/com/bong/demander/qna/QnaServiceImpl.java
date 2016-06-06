@@ -63,10 +63,10 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public Qna readQna(int num) {
+	public Qna readQna(Map<String, Object> map) {
 		Qna qna=null;
 		try {
-			qna=dao.getReadInformation("deQna.readQna",num);
+			qna=dao.getReadInformation("deQna.readQna",map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -74,10 +74,10 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public int updateHitCount(int num) {
+	public int updateHitCount(Map<String, Object> map) {
 		int result=0;
 		try {
-			result=dao.updateInformation("deQna.updateHitCount", num);
+			result=dao.updateInformation("deQna.updateHitCount", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -98,10 +98,10 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public int deleteQna(int num) {
+	public int deleteQna(Map<String, Object> map) {
 		int result=0;
 		try{
-			result=dao.deleteInformation("deQna.deleteQna", num);
+			result=dao.deleteInformation("deQna.deleteQna", map);
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}
@@ -109,10 +109,10 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public int quserIdx(int groupNum) {
+	public int quserIdx(Qna dto) {
 		int result=0;
 		try{
-			result=dao.getIntValue("deQna.quserIdx",groupNum);
+			result=dao.getIntValue("deQna.quserIdx",dto);
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}

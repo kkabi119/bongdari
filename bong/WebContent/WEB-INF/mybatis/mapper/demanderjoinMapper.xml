@@ -30,7 +30,7 @@
     </select>  
   
   	<select id="readDemanderjoinLogin" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="String">
-	   SELECT ci.userIdx, userId, serviceName, userPwd, serviceImgname,serviceIntro, serviceImg, isService FROM checkId ci
+	   SELECT ci.userIdx, userId, serviceName, userPwd, serviceImgname,serviceIntro, serviceImg, isService, serviceIdx FROM checkId ci
 	     LEFT OUTER JOIN serviceInfo si ON ci.userIdx=si.userIdx WHERE  ci.userIdx=#{userIdx}
 	</select>
 	

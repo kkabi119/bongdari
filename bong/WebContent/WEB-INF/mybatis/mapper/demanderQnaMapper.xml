@@ -28,12 +28,12 @@
 	
  	<!-- QnA -->
 	<insert id="insertQna" parameterType="com.bong.demander.qna.Qna">
-	  INSERT INTO service_qna(sqnaIdx, userIdx, subject, content,answer,groupNum,quserIdx) 
+	  INSERT INTO service_qna_${demander_seq}(sqnaIdx, userIdx, subject, content,answer,groupNum,quserIdx) 
 	  VALUES (#{sqnaIdx}, #{userIdx}, #{subject},#{content},#{answer},#{sqnaIdx},#{quserIdx})
 	</insert>
 	
 	<insert id="insertQnaReply" parameterType="com.bong.demander.qna.Qna">
-	  INSERT INTO service_qna(sqnaIdx, userIdx, subject, content,answer,groupNum,quserIdx) 
+	  INSERT INTO service_qna_${demander_seq}(sqnaIdx, userIdx, subject, content,answer,groupNum,quserIdx) 
 	  VALUES (service_qna_seq.NEXTVAL, #{userIdx}, #{subject},#{content},#{answer},#{answer},#{quserIdx})
 	</insert>
 	
@@ -42,7 +42,7 @@
 	<!-- 글개수 -->
 	<select id="dataCount" parameterType="map"
 	            resultType="Integer">
-		 SELECT NVL(COUNT(*), 0) FROM service_qna s
+		 SELECT NVL(COUNT(*), 0) FROM service_qna_${demander_seq} s
 		 JOIN checkId c ON s.userIdx=c.userIdx
 	     <where>
 	     	<if test="searchValue!=null and searchValue!='' ">
@@ -58,7 +58,7 @@
 		    SELECT ROWNUM rnum, tb.* FROM (
 			      SELECT sqnaIdx, s.useridx,c.userId,userName,subject, CONTENT, hitCount,to_char(created,'YYYY-MM-DD') created
 			      ,answer,groupNum,quserIdx
-				  FROM service_qna s join checkId c on s.userIdx=c.userIdx 
+				  FROM service_qna_${demander_seq} s join checkId c on s.userIdx=c.userIdx 
                     <where>
 	     	           <if test="searchValue!=null and searchValue!='' ">
 	     	               <include refid="where-list"/>
@@ -72,32 +72,32 @@
 	</select>
 	
 	<!-- 글읽기 -->
-	<select id="readQna" resultType="com.bong.demander.qna.Qna" parameterType="Integer">
+	<select id="readQna" resultType="com.bong.demander.qna.Qna" parameterType="map">
 	      SELECT sqnaIdx, s.useridx,userId,userName, subject,created,CONTENT, hitCount,answer,groupNum
-				FROM service_qna s join checkId c on s.userIdx=c.userIdx
+				FROM service_qna_${demander_seq} s join checkId c on s.userIdx=c.userIdx
 				WHERE sqnaIdx = #{sqnaIdx}
 	</select>
 	
 	<!-- 조회수 증가 -->
-	<update id="updateHitCount" parameterType="Integer">
-		UPDATE service_qna SET hitCount=hitCount+1 WHERE sqnaIdx =#{sqnaIdx}
+	<update id="updateHitCount" parameterType="map">
+		UPDATE service_qna_${demander_seq} SET hitCount=hitCount+1 WHERE sqnaIdx =#{sqnaIdx}
 	</update>
 
 
      <!-- 수정 -->
      <update id="updateQna" parameterType="com.bong.demander.qna.Qna">
-         UPDATE service_qna SET subject=#{subject}, content=#{content} WHERE sqnaIdx =#{sqnaIdx}
+         UPDATE service_qna_${demander_seq} SET subject=#{subject}, content=#{content} WHERE sqnaIdx =#{sqnaIdx}
       </update>
       
       <!-- 삭제 -->
-      <delete id="deleteQna" parameterType="Integer">
-             DELETE FROM service_qna WHERE sqnaIdx =#{sqnaIdx}
+      <delete id="deleteQna" parameterType="map">
+             DELETE FROM service_qna_${demander_seq} WHERE sqnaIdx =#{sqnaIdx}
       </delete>
       
      <!--질문의 답변 읽기-->
-	<select id="quserIdx" resultType="Integer" parameterType="Integer">
-	       SELECT c.userIdx FROM service_qna q JOIN checkId c ON q.useridx=c.useridx
-				WHERE groupNum=#{groupNum} and answer=0 
+	<select id="quserIdx" resultType="Integer" parameterType="com.bong.demander.qna.Qna">
+	       SELECT c.userIdx FROM service_qna_${demander_seq} q JOIN checkId c ON q.useridx=c.useridx
+				WHERE groupNum=#{answer} and answer=0 
 	</select>
 	
 	<!-- 답변보기-->
@@ -106,7 +106,7 @@
 				parameterType="map">
 		SELECT tb.* FROM (
 			SELECT sqnaIdx, subject,groupNum
-				FROM service_qna s
+				FROM service_qna_${demander_seq} s
 					JOIN checkid c ON s.useridx=c.useridx
 					<where>
 						<if test="searchValue != null and searchValue != '' ">

@@ -6,12 +6,18 @@ public class SessionInfo {
 	private int userIdx;
 	private String userId;
 	private String userName;
-	private int clubIdx, isService;
+	private int clubIdx, isService, demander_seq;
 	private int memberLevel;
 	private String memImgname;
 	private MultipartFile memImg;
 	
 	
+	public int getDemander_seq() {
+		return demander_seq;
+	}
+	public void setDemander_seq(int demander_seq) {
+		this.demander_seq = demander_seq;
+	}
 	public int getIsService() {
 		return isService;
 	}

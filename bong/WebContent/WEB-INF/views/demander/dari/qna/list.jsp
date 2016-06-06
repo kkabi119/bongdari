@@ -41,7 +41,7 @@ padding-top: 13px;
 <script type="text/javascript">
 function QnasearchList() {
 		var f=document.searchForm;
-		f.action="<%=cp%>/demander/index/qna/list";
+		f.action="<%=cp%>/demander/${demander_seq}/qna/list";
 		f.submit();
 }
 </script>
@@ -49,7 +49,7 @@ function QnasearchList() {
 	   <div class="col-lg-12">
 			<h1 class="page-header" style="color:#F0AD4E;">QnA</h1>
 			<ol class="breadcrumb">
-				<li><a href="<%=cp%>/demander/index/main" style="color:#F0AD4E;">수요처 메인</a></li>
+				<li><a href="<%=cp%>/demander/${demander_seq}/main" style="color:#F0AD4E;">수요처 메인</a></li>
 				<li class="active">질문과 답변 </li>
 			</ol>
 		</div>
@@ -115,7 +115,7 @@ function QnasearchList() {
 		<div style="clear: both;">
 		<div style="float: left; width: 20%; min-width: 85px;">
 			<button type="button" class="btn btn-warning"  
-				onclick="javascript:location.href='<%=cp%>/bbs/list';">새로고침</button>
+				onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/qna/list';">새로고침</button>
 		</div>
 		<div style="float: left; width: 60%; text-align: center;">
 			<form name="searchForm" method="post" class="form-inline">
@@ -135,7 +135,7 @@ function QnasearchList() {
 		<div
 			style="float: left; width: 20%; min-width: 85px; text-align: right;">
 			<button type="button" class="btn btn-warning" 
-				onclick="javascript:location.href='<%=cp%>/demander/index/qna/create';">
+				onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/qna/create';">
 				<span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기
 			</button>
 		</div>

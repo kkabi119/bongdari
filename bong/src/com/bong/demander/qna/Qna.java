@@ -9,7 +9,15 @@ public class Qna {
     private int answer;
     private int groupNum;
     private int quserIdx;
+    private int demander_seq;
 	
+    
+	public int getDemander_seq() {
+		return demander_seq;
+	}
+	public void setDemander_seq(int demander_seq) {
+		this.demander_seq = demander_seq;
+	}
 	public int getUserIdx() {
 		return userIdx;
 	}
