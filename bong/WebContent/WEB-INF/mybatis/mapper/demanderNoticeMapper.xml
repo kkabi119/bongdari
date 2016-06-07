@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demandernotice">
+	
+	<insert id="insertNotice" parameterType="com.bong.demander.notice.Notice">
+		INSERT INTO service_notice_${demander_seq}(servicenoticeIdx, userIdx, serviceIdx, subject, content, saveFilename, originalFilename)
+			VALUES(service_notice_seq.NEXTVAL, #{userIdx}, #{serviceIdx}, #{subject}
+						,#{content}, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename,jdbcType=VARCHAR})
+	</insert>
+	
+	
+	<sql id="where-list">
+	  <if test="searchKey=='userName'">
+	      userName=#{searchValue}
+	  </if>
+	  <if test="searchKey=='subject'">
+	      INSTR(subject, #{searchValue}) &gt; 0
+	  </if>
+	  <if test="searchKey=='content'">
+	      DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0 
+	  </if>
+	  <if test="searchKey=='created'">
+	      TO_CHAR(b.created, 'YYYY-MM-DD') = #{searchValue}
+	      OR TO_CHAR(b.created, 'YYYYMMDD') = #{searchValue}
+	  </if>
+	</sql>
+	
+	<!-- 글개수 -->
+	<select id="dataCount" parameterType="map"
+	            resultType="Integer">
+	         SELECT NVL(COUNT(*), 0) FROM service_notice_${demander_seq} n
+	        JOIN checkId m
+	        ON n.userIdx=m.userIdx
+	     <where>
+	     	<if test="searchValue!=null and searchValue!='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	     </where>   
+	</select>
+	
+	<!-- 글리스트 -->
+	<select id="listNotice" parameterType="map"
+	            resultType="com.bong.demander.notice.Notice">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			     SELECT servicenoticeIdx as demanderNoticeIdx, m.userIdx, m.userName, subject
+			           ,TO_CHAR(n.created, 'YYYY-MM-DD') created
+					   ,hitCount, n.saveFilename
+			        FROM service_notice_${demander_seq} n JOIN checkId m ON n.userIdx=m.userIdx
+                    <where>
+                         <if test="searchValue != null and searchValue != ''">
+			                  <include refid="where-list"/>
+		                 </if>
+	                </where>
+	                ORDER BY servicenoticeIdx DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	</select>
+	
+	<!-- 메인용 글리스트 -->
+	<select id="listNoticeSmall" parameterType="map"
+	            resultType="com.bong.demander.notice.Notice">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			     SELECT serviceNoticeIdx as demanderNoticeIdx, subject
+			        FROM service_notice_${demander_seq}
+	                ORDER BY servicenoticeIdx DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	</select>
+	
+	<!-- 글보기 -->
+	<select id="readNotice" resultType="com.bong.demander.notice.Notice" parameterType="map">
+		SELECT n.serviceNoticeIdx as demanderNoticeIdx, m.userIdx, userName, subject, content
+				   ,hitCount, n.created,  n.saveFilename, n.originalFilename
+		FROM service_notice_${demander_seq} n JOIN checkId m ON n.userIdx=m.userIdx
+		WHERE serviceNoticeIdx = #{num}
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateHitCount" parameterType="map">
+		UPDATE service_notice_${demander_seq} SET hitCount=hitCount+1 WHERE serviceNoticeIdx = #{num}
+	</update>
+	
+	<!-- AND 가 필요 없는 경우 자동으로 제거 됨 -->
+	<!-- 이전글 -->
+	<select id="preReadNotice" resultType="com.bong.demander.notice.Notice" 
+				parameterType="map">
+		SELECT tb.* FROM (
+			SELECT serviceNoticeIdx as demanderNoticeIdx, subject
+			      FROM service_notice_${demander_seq} n
+			      JOIN checkId m ON n.userIdx=m.userIdx
+                    <where>
+                         <if test="searchValue != null and searchValue != '' ">
+			                  <include refid="where-list"/>
+		                 </if>
+		               <![CDATA[
+		                 AND (serviceNoticeIdx > #{num})
+		                 ]]>
+	                </where>
+				ORDER BY serviceNoticeIdx ASC
+			) tb WHERE ROWNUM=1
+	</select>
+	
+	<!-- 다음글 -->
+	<select id="nextReadNotice" resultType="com.bong.demander.notice.Notice" 
+				parameterType="map">
+		SELECT tb.* FROM (
+			SELECT serviceNoticeIdx as demanderNoticeIdx, subject
+			      FROM service_notice_${demander_seq} n
+			      JOIN checkId m ON n.userIdx=m.userIdx
+                    <where>
+                         <if test="searchValue != null and searchValue != '' ">
+			                  <include refid="where-list"/>
+		                 </if>
+		               <![CDATA[
+		                 AND (serviceNoticeIdx < #{num})
+		                 ]]>
+	                </where>
+				ORDER BY serviceNoticeIdx DESC
+			) tb WHERE ROWNUM=1
+	</select>
+	
+	<!-- 수정 -->
+     <update id="updateNotice" parameterType="com.bong.demander.notice.Notice">
+         UPDATE service_notice_${demander_seq} SET subject=#{subject}, content=#{content}
+                    ,saveFilename=#{saveFilename, jdbcType=VARCHAR}
+                    ,originalFilename=#{originalFilename, jdbcType=VARCHAR}
+                    WHERE serviceNoticeIdx = #{serviceNoticeIdx}
+      </update>
+	
+	<!-- 삭제 -->
+      <delete id="deleteNotice" parameterType="map">
+           DELETE FROM service_notice_${demander_seq} WHERE serviceNoticeIdx = #{num}
+      </delete>
+	
+	<!-- 회원 탈퇴시 게시물 삭제 ................. -->
+	<select id="listNoticeId" parameterType="String" resultType="com.bong.demander.notice.Notice">
+	   SELECT serviceNoticeIdx as demanderNoticeIdx, m.userIdx, userName, subject, content
+				   ,hitCount, n.created,  n.saveFilename, n.originalFilename
+		FROM service_notice_${demander_seq} n JOIN checkId m ON n.userIdx=m.userIdx
+		WHERE m.userIdx = #{userIdx}
+	</select>
+    <delete id="deleteNoticeId" parameterType="String">
+         DELETE FROM service_notice_${demander_seq} WHERE userIdx = #{userIdx}
+    </delete>
+    
+	<select id="SNRSeq" resultType="Integer">
+		SELECT service_notice_reply_seq.NEXTVAL FROM DUAL
+	</select>
+	
+	<!-- 댓글 처리................. -->
+	<insert id="insertNoticeReply" parameterType="com.bong.demander.notice.Reply">
+	INSERT INTO service_notice_reply_${demander_seq}(SNRIDX , serviceNOTICEIDX, userIdx, content, answer)
+	   VALUES (#{replyNum}, #{num},#{userIdx},
+	        #{content}, #{answer})
+	</insert>
+	
+	<select id="replyDataCount" resultType="Integer" 
+	           parameterType="map">
+	   SELECT NVL(COUNT(*), 0)
+	        FROM service_notice_reply_${demander_seq} WHERE serviceNoticeIdx=#{num} AND answer=0
+	</select>
+	
+	<select id="listReply" resultType="com.bong.demander.notice.Reply" 
+	          parameterType="map">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT tbreply.SNRIDX as replyNum, serviceNoticeIdx as demanderNoticeIdx, userName 
+		                    ,content, created, tbreply.answer
+		                    ,NVL(answerCount, 0) answerCount
+		        FROM
+		        (
+				      (
+					     SELECT snridx, r.serviceNoticeIdx, r.userIdx,
+               userName, r.content, r.created, answer
+					        FROM service_notice_reply_${demander_seq} r 
+			                JOIN service_notice_${demander_seq} n ON r.serviceNoticeIdx=n.serviceNoticeIdx
+			                JOIN checkId m ON r.userIdx=m.userIdx
+			                WHERE r.serviceNoticeIdx=#{num} AND answer=0
+			           ) tbreply
+			           LEFT OUTER JOIN
+			           (
+			                SELECT answer, COUNT(*) answerCount
+                                 FROM service_notice_reply_${demander_seq} GROUP BY answer
+			           ) tbanswer ON tbreply.SNRIDX = tbanswer.answer
+	           )
+	           ORDER BY replyNum DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	</select>
+	
+	<!-- 댓글별 답글 리스트 -->
+	<select id="listReplyAnswer" resultType="com.bong.demander.notice.Reply" 
+	          parameterType="Integer">
+     SELECT SNRIDX AS replyNum, serviceNoticeIdx as demanderNoticeIdx, tbreply.userIdx, userName, content, created, answer
+	          FROM service_notice_reply_${demander_seq} tbreply 
+	          JOIN checkId m ON tbreply.userIdx=m.userIdx
+              WHERE answer=#{answer}
+              ORDER BY replyNum DESC
+	</select>
+	
+	<!-- 댓글별 답글 개수 -->
+	<select id="replyCountAnswer" resultType="Integer" 
+	           parameterType="map">
+	   SELECT NVL(COUNT(*), 0)
+	        FROM service_notice_reply_${demander_seq} WHERE answer=#{answer}
+	</select>
+	
+	<delete id="deleteReply" parameterType="map">
+	DELETE service_notice_reply_${demander_seq} WHERE
+	    <if test="mode == 'num' ">
+			 serviceNoticeIdx=#{num}
+		</if>
+	    <if test="mode == 'reply' ">
+			 SNRIDX IN 
+               (SELECT SNRIDX FROM service_notice_reply_${demander_seq} START WITH  SNRIDX = #{replyNum}
+	            CONNECT BY PRIOR SNRIDX = answer)
+		</if>
+	    <if test="mode == 'answer' ">
+			 SNRIDX=#{replyNum}
+		</if>
+	</delete>
+	
+</mapper>
