@@ -9,8 +9,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bong.club.ClubService;
 import com.bong.club.ClubTheme;
+import com.bong.member.SessionInfo;
 
 
 @Controller("bong.calController")
@@ -33,10 +38,8 @@ public class calController {
 	// 대화상자에 출력 할 일정 추가 폼
 	@RequestMapping(value="/cal/inputForm")
 	public ModelAndView inputForm() throws Exception {
-		
-		
 		List<ClubTheme> listGroup=cService.listClubThemeGroup();
-		ModelAndView mav = new ModelAndView("admin/calendar/inputForm");
+		ModelAndView mav = new ModelAndView("demander/dari/schedule/inputForm");
 		mav.addObject("listGroup", listGroup); // 테마 불러오려고 쓴거다
 		return mav;
 	}
@@ -44,8 +47,9 @@ public class calController {
 	// 일정 입력 (봉사일정 올리기)
 	@RequestMapping(value="/cal/insertSchedule", method=RequestMethod.POST)
 	@ResponseBody
-	public String insertSchedule(Schedule dto) throws Exception {
-		dto.setServiceIdx(7); // 수요처 번호 임시로 7 넣어줌.
+	public String insertSchedule(HttpSession session, Schedule dto) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		dto.setServiceIdx(info.getDemander_seq());
 		calService.insertVolunbbs(dto);
 		
 		String[] eachDayArray = dto.getEachDayArray().split(",");
@@ -72,7 +76,7 @@ public class calController {
 		return list;
 	}
 
-	// 대화상자에 출력 할 상세 일정 폼
+	// 대화상자에 출력 할 상세 일정 폼 // 아직 안함
 	@RequestMapping(value="/cal/articleForm")
 	public String articleForm() throws Exception {
 		return "admin/calendar/articleForm";
@@ -87,7 +91,7 @@ public class calController {
 			@RequestParam(value="checkDay") String checkDay
 			) throws Exception {
 		
-		ModelAndView mav=new ModelAndView("admin/calendar/eachDay");
+		ModelAndView mav=new ModelAndView("demander/dari/schedule/eachDay");
 		List<String> list = new ArrayList<String>();
 		list = eachDayCount(startDay, endDay, checkDay);
 		list.remove(list.size()-1);
@@ -99,15 +103,17 @@ public class calController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/cal/list")
+	@RequestMapping(value="/cal/{demander_seq}/list")
 	@ResponseBody
 	public Map<String, Object> calList(
 			@RequestParam(value="start") String startDay,
-			@RequestParam(value="end") String endDay
+			@RequestParam(value="end") String endDay,
+			@PathVariable int demander_seq
 			) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("start", startDay);
 		map.put("end", endDay);
+		map.put("demander_seq", demander_seq);
 		List<Schedule> listJson = new ArrayList<>();
 		List<Schedule> list=calService.listVolun(map);
 		Iterator<Schedule> it=list.iterator();

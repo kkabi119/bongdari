@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface GuestService {
 	public int insertGuest(Guest dto);
-	public int dataCount();
+	public int dataCount(int demander_seq);
 	public List<Guest> listGuest(Map<String, Object> map);
-	public int deleteGuest(int num);
+	public int deleteGuest(Map<String, Object> map);
 }

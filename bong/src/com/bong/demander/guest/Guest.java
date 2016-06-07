@@ -1,10 +1,22 @@
 package com.bong.demander.guest;
 
 public class Guest {
-	private int listNum,serviceIdx,userIdx;
+	private int listNum,serviceIdx,userIdx, demander_seq, sguestIdx;
 	private String userName, content, created;
 	
 	
+	public int getSguestIdx() {
+		return sguestIdx;
+	}
+	public void setSguestIdx(int sguestIdx) {
+		this.sguestIdx = sguestIdx;
+	}
+	public int getDemander_seq() {
+		return demander_seq;
+	}
+	public void setDemander_seq(int demander_seq) {
+		this.demander_seq = demander_seq;
+	}
 	public String getContent() {
 		return content;
 	}

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,29 +27,29 @@ public class GuestController {
 	private MyUtil myUtil;
 
 	
-	@RequestMapping(value="/demander/index/guest/list")
+	@RequestMapping(value="/demander/{demander_seq}/guest/list")
 	@ResponseBody
 	public Map<String, Object>  list(
 			HttpSession session,
-		    @RequestParam(value="pageNo", defaultValue="1") int current_page
+		    @RequestParam(value="pageNo", defaultValue="1") int current_page,
+		    @PathVariable int demander_seq
 			) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("demander_seq", demander_seq);
 		
 		int numPerPage=5;
-		int dataCount=service.dataCount();
+		int dataCount=service.dataCount(demander_seq);
 		System.out.println(dataCount);
 		int total_page=myUtil.pageCount(numPerPage, dataCount);
-		System.out.println("current_page:"+current_page+":"+dataCount+":"+total_page);
 		if(current_page>total_page)
 			current_page=total_page;
 		
 		int start=(current_page-1)*numPerPage+1;
 		int end=current_page*numPerPage;
 		
-		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("end", end);
-		System.out.println(current_page+":"+start+":"+end);
 		int listNum, n = 0;
 		
 		List<Guest> list=service.listGuest(map);
@@ -78,30 +79,33 @@ public class GuestController {
 		model.put("paging", paging);
 		// 게시물 리스트
 		model.put("list", list);
+		model.put("demander_seq", demander_seq);
 		
 		return model;
 	}
 	
-	@RequestMapping(value="/demander/index/guest/created", method=RequestMethod.POST)
+	@RequestMapping(value="/demander/{demander_seq}/guest/created", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object>  createdSubmit(
-			HttpSession session, Guest dto
+			HttpSession session, Guest dto,
+			@PathVariable int demander_seq
 			) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 
 		// 글을 쓴사람(로그인한 아이디)
 		dto.setUserIdx(info.getUserIdx());
+		dto.setDemander_seq(demander_seq);
 		service.insertGuest(dto);
-		return list(session, 1);
+		return list(session, 1, demander_seq);
 	}
 	
-	@RequestMapping(value="/demander/index/guest/delete",
-			method=RequestMethod.POST)
+	@RequestMapping(value="/demander/{demander_seq}/guest/delete", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object>  guestDelete(
 			HttpSession session,
 			@RequestParam(value="num") int num,
-			@RequestParam(value="pageNo") int pageNo
+			@RequestParam(value="pageNo") int pageNo,
+			@PathVariable int demander_seq
 			) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		if(info==null) {
@@ -110,9 +114,11 @@ public class GuestController {
 			model.put("isLogin", "false");
 			return model;
 		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("sguestIdx", num);
+		map.put("demander_seq", demander_seq);
+		service.deleteGuest(map);
 		
-		service.deleteGuest(num);
-		
-		return list(session, 1);
+		return list(session, 1, demander_seq);
 	}
 }

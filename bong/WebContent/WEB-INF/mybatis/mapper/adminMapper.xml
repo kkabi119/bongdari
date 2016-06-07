@@ -155,15 +155,12 @@
 	<update id="createServiceNoticeReply" parameterType="Integer">
 	CREATE TABLE service_notice_reply_${value}(
   	SNRIdx NUMBER
-  	,serviceIdx  NUMBER NOT NULL
   	,serviceNoticeIdx  NUMBER NOT NULL
   	,content  CLOB NOT NULL
   	,created  DATE DEFAULT SYSDATE
   	,answer  NUMBER NOT NULL
   	,userIdx NUMBER NOT NULL
   	,CONSTRAINT pk_sNoticeR_${value} PRIMARY KEY(SNRIdx)
-  	,CONSTRAINT fk_sNoticeR_serviceIdx_${value} FOREIGN KEY(serviceIdx)
-              REFERENCES serviceInfo(serviceIdx)
   	,CONSTRAINT fk_sNoticeR_srNoti_${value} FOREIGN KEY(serviceNoticeIdx)
               REFERENCES service_notice_${value}(serviceNoticeIdx)
     ,CONSTRAINT fk_sNoticeR_userIdx_${value} FOREIGN KEY(userIdx)

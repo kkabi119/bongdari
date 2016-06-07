@@ -4,12 +4,12 @@
 <mapper namespace="deGuest">
 
 <insert id="insertGuest" parameterType="com.bong.demander.guest.Guest">
-	  INSERT INTO service_guest (sguestIdx, userIdx, content)  
+	  INSERT INTO service_guest_${demander_seq} (sguestIdx, userIdx, content)  
 	  VALUES (service_guest_seq.NEXTVAL, #{userIdx}, #{content})
 	</insert>
 	
-	<select id="dataCount" resultType="Integer">
-	SELECT NVL(COUNT(*), 0) FROM service_guest  
+	<select id="dataCount" resultType="Integer" parameterType="Integer">
+	SELECT NVL(COUNT(*), 0) FROM service_guest_${value}  
 	</select>
 
      <select id="listGuest" parameterType="map"
@@ -17,7 +17,7 @@
 		 SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
 		       SELECT sguestIdx, g.useridx, CONTENT, created,userName
-		           FROM service_guest g JOIN checkId c ON g.useridx=c.useridx
+		           FROM service_guest_${demander_seq} g JOIN checkId c ON g.useridx=c.useridx
 		           ORDER BY sguestIdx DESC
 <![CDATA[		               
 		    ) tb WHERE ROWNUM <= #{end}
@@ -25,8 +25,8 @@
 ]]>
      </select>
      
-     <delete id="deleteGuest" parameterType="Integer">
-    	 DELETE FROM service_guest  WHERE sguestIdx=#{sguestIdx}
+     <delete id="deleteGuest" parameterType="map">
+    	 DELETE FROM service_guest_${demander_seq}  WHERE sguestIdx=#{sguestIdx}
      </delete>
 
 </mapper>
