@@ -65,7 +65,7 @@ $(function(){
 });
  
 function listPage(page) {
-	var url="<%=cp%>/demander/index/review/listReply";
+	var url="<%=cp%>/demander/${demander_seq}/review/listReply";
 	var num="${dto.serviceReviewIdx}";
 	$.post(url, {num:num, pageNo:page}, function(data){
 		$("#listReply").html(data);
@@ -74,11 +74,11 @@ function listPage(page) {
 
  //좋아요/싫어요 개수
  function countRevLike(serviceReviewIdx) {
-	var url="<%=cp%>/demander/index/review/countLike";
+	var url="<%=cp%>/demander/${demander_seq}/review/countLike";
 	$.post(url, {abc:serviceReviewIdx}, function(data){
 		var likeCountId="#likeCount"+serviceReviewIdx;
 		var likeCount=data.likeCount;
-		//alert(likeCount+"zz");
+		
 		$(likeCountId).html(likeCount);
 	}, "JSON");
 }
@@ -91,7 +91,7 @@ function sendLike(serviceReviewIdx) {
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/demander/index/review/sendLike"
+		,url:"<%=cp%>/demander/${demander_seq}/review/sendLike"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
@@ -109,7 +109,7 @@ function sendReply() {
 	var uid="${sessionScope.member.userId}";
 	
 
-	var num="${dto.serviceReviewIdx}"; // 해당 게시물 번호
+	var serviceReviewIdx="${dto.serviceReviewIdx}"; // 해당 게시물 번호
 	var content=$.trim($("#replyContent").val());
 	if(! content ) {
 		alert("내용을 입력하세요 !!! ");
@@ -117,13 +117,13 @@ function sendReply() {
 		return false;
 	}
 	
-	var params="num="+num;
+	var params="serviceReviewIdx="+serviceReviewIdx;
 	params+="&content="+content;
 	params+="&answer=0";
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/demander/index/review/createdReply"
+		,url:"<%=cp%>/demander/${demander_seq}/review/createdReply"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
@@ -150,7 +150,7 @@ function deleteReply(replyNum, page) {
 	
 	
 	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/demander/index/review/deleteReply";
+		var url="<%=cp%>/demander/${demander_seq}/review/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
 		        var state=data.state;
 					listPage(page);
@@ -161,10 +161,10 @@ function deleteReply(replyNum, page) {
 //-------------------------------------
 function deleteReview() {
 <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
-  var num = "${dto.serviceReviewIdx}";
+  var serviceReviewIdx = "${dto.serviceReviewIdx}";
   var page = "${page}";
-  var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/demander/index/review/delete?" + params;
+  var params = "num="+serviceReviewIdx+"&page="+page;
+  var url = "<%=cp%>/demander/${demander_seq}/review/delete?" + params;
 
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
@@ -177,10 +177,10 @@ function deleteReview() {
 
 function updateReview() {
 <c:if test="${sessionScope.member.userId==dto.userId}">
-  var num = "${dto.serviceReviewIdx}";
+  var serviceReviewIdx = "${dto.serviceReviewIdx}";
   var page = "${page}";
-  var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/demander/index/review/update?" + params;
+  var params = "num="+serviceReviewIdx+"&page="+page;
+  var url = "<%=cp%>/demander/${demander_seq}/review/update?" + params;
 
   location.href=url;
 </c:if>
@@ -218,7 +218,7 @@ function updateReview() {
                               <c:if test="${listFile.size()>0}">
                                     <div class="post-bottom overflow" style="margin-top: 0px; font-size:9pt;">
                                     <c:forEach var="vo" items="${listFile}">
-                                  			<a href="<%=cp%>/demander/index/review/download?num=${vo.serviceReviewIdx}&fileNum=${vo.serviceFileIdx}"><span class="fa fa-download"></span>${vo.originalFilename}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                  			<a href="<%=cp%>/demander/${demander_seq}/review/download?num=${vo.serviceReviewIdx}&fileNum=${vo.serviceFileIdx}"><span class="fa fa-download"></span>${vo.originalFilename}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                     </c:forEach>
                                     </div>
                                </c:if>
@@ -226,14 +226,14 @@ function updateReview() {
                                <c:if test="${not empty preReadDto }">
                                     <div class="post-bottom overflow" style="margin-top: 0px">
                                
-                                  			<a href="<%=cp%>/demander/index/review/article?${params}&num=${preReadDto.serviceReviewIdx}">이전글 : ${preReadDto.subject}</a>
+                                  			<a href="<%=cp%>/demander/${demander_seq}/review/article?${params}&num=${preReadDto.serviceReviewIdx}">이전글 : ${preReadDto.subject}</a>
                               
                                     </div>
                                 </c:if>
                                 <c:if test="${not empty nextReadDto }">    
                                     <div class="post-bottom overflow" style="margin-top: 0px">
                               
-                                  			<a href="<%=cp%>/demander/index/review/article?${params}&num=${nextReadDto.serviceReviewIdx}">다음글 : ${nextReadDto.subject}</a>
+                                  			<a href="<%=cp%>/demander/${demander_seq}/review/article?${params}&num=${nextReadDto.serviceReviewIdx}">다음글 : ${nextReadDto.subject}</a>
                                 
                                     </div>
                                </c:if>
@@ -242,7 +242,7 @@ function updateReview() {
                               				<span class="item-click" id="reply-open-close">댓글 ▼</span>&nbsp;<span id="postReplyCountView" class="item-title" style="color:#424951">(${dto.replyCount})</span>
                      				</div>
                                   	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px; ">
-                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/demander/index/review/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/review/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
                   					</div>
                                       
                   					

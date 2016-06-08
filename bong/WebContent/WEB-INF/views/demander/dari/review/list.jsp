@@ -11,7 +11,7 @@
 <script type="text/javascript">
 function searchList() {
 		var f=document.searchForm;
-		f.action="<%=cp%>/demander/index/review/list";
+		f.action="<%=cp%>/demander/${demander_seq}/review/list";
 		f.submit();
 }
 </script>
@@ -84,7 +84,7 @@ function searchList() {
             후기 게시판 <small style="color:#A6A6A6;">봉사활동 후기를 남겨주세요.</small>
          </h1>
          <ol class="breadcrumb">
-            <li><a href="<%=cp%>/demander/index/main" style="color:#F0AD4E;">수요처 메인</a></li>
+            <li><a href="<%=cp%>/demander/${demander_seq}/main" style="color:#F0AD4E;">수요처 메인</a></li>
             <li class="active">후기 게시판</li>
          </ol>
       </div>
@@ -147,7 +147,7 @@ function searchList() {
    <div style="clear: both;">
       <div style="float: left; width: 20%; min-width: 85px;">
          <button type="button" class="btn btn-warning"  
-            onclick="javascript:location.href='<%=cp%>/demander/index/review/list';">새로고침</button>
+            onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/review/list';">새로고침</button>
       </div>
       <div style="float: left; width: 60%; text-align: center;">
          <form name="searchForm" method="post" class="form-inline">
@@ -167,7 +167,7 @@ function searchList() {
       <div
          style="float: left; width: 20%; min-width: 85px; text-align: right;">
          <button type="button" class="btn btn-warning" 
-            onclick="javascript:location.href='<%=cp%>/demander/index/review/create';">
+            onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/review/create';">
             <span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기
          </button>
       </div>
