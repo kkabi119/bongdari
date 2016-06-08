@@ -21,7 +21,7 @@
 	
 	.post-comment{
 		border-top:1px solid #ccc;
-		min-height:150px;
+		min-height:140px;
 		padding-top:12px;
 		padding-left:20px;
 	}
@@ -64,7 +64,7 @@ function replyAnswerLayout(replyNum) {
 	}
 }
 
-/////////////////////////////////////////////////////////////////////////////// 댓글별 답글 리스트 불러오기 
+/////////////////////////////////////////////////////////////////////////////// 대댓글 리스트 불러오기 
   function listAnswer(answer) {
 	var listReplyAnswerId="#listReplyAnswer"+answer;
 	
@@ -168,7 +168,7 @@ function deleteReplyAnswer(replyNum, answer) {
    						<li class="media">
                                             <div class="post-comment" style="">
                                                 <a class="pull-left" href="#" >
-                                                    <img style=" width:137px; height:127px; background-size:cover; "class="media-object" src="<%=cp%>/res/images/blogdetails/2.png" alt="">
+                                                    <img style="border-radius:100%;  width:127px; height:127px; background-size:cover; "class="media-object" src="<%=cp%>/res/images/blogdetails/2.png" alt="">
                                                 </a>
                                                 <div class="media-body" style="padding-bottom: 0px">
                                                     <span><i class="fa fa-user"></i><a href="#">${Rdto.userName}</a></span>
@@ -181,7 +181,7 @@ function deleteReplyAnswer(replyNum, answer) {
 		     											</span>
 		     											  <span  style="color:#888; float:right;"><i class="fa fa-clock-o"  style="color:#888"></i>${Rdto.created}</span>
 						</c:if>
-                                                    <p style="min-height:45px;">${Rdto.content}</p>
+                                                    <p style="min-height:40px;">${Rdto.content}</p>
                                                     
                                                     
                                                 </div>

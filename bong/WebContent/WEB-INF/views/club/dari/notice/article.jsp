@@ -75,11 +75,11 @@ function listPage(page) {
 	});
 }
 
-<%-- 
+
 function login() {
 	location.href="<%=cp%>/member/login";
 }
- --%>
+
 //댓글 추가
 function sendReply() {
 	var uid="${sessionScope.member.userId}";
@@ -132,59 +132,7 @@ function replyCount() {
 		$("#replyCountView").text("("+count+")");
 	}, "JSON");
 }
-<%-- //좋아요/싫어요 개수
-function countLike(replyNum) {
-	var url="<%=cp%>/bbs/countLike";
-	$.post(url, {replyNum:replyNum}, function(data){
-		var likeCountId="#likeCount"+replyNum;
-		var disLikeCountId="#disLikeCount"+replyNum;
-		var likeCount=data.likeCount;
-		var disLikeCount=data.disLikeCount;
-		
-		$(likeCountId).html(likeCount);
-		$(disLikeCountId).html(disLikeCount);
-	}, "JSON");
-}
 
-//좋아요/싫어요 추가
-function sendLike(replyNum, replyLike) {
-	var uid="${sessionScope.member.userId}";
-	if(! uid) {
-		login();
-		return false;
-	}
-
-	var msg="게시물이 마음에 들지 않으십니까 ?";
-	if(replyLike==1)
-		msg="게시물에 공감하십니까 ?";
-	if(! confirm(msg))
-		return false;
-	
-	var params="replyNum="+replyNum;
-	params+="&replyLike="+replyLike;
-
-	$.ajax({
-		type:"POST"
-		,url:"<%=cp%>/bbs/replyLike"
-		,data:params
-		,dataType:"json"
-		,success:function(data) {
-			
-			var state=data.state;
-			if(state=="true") {
-				countLike(replyNum);
-			} else if(state=="false") {
-				alert("좋아요/싫어요는 한번만 가능합니다. !!!");
-			} else if(state=="loginFail") {
-				login();
-			}
-		}
-		,error:function(e) {
-			alert(e.responseText);
-		}
-	});
-}
---%>
 //댓글 삭제
 function deleteReply(replyNum, page) {
 	var uid="${sessionScope.member.userId}";
@@ -209,7 +157,7 @@ function deleteReply(replyNum, page) {
 
 //-------------------------------------
 function deleteNotice() {
-<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
+<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userIdx==dto.userIdx}">
   var num = "${dto.clubNoticeIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
@@ -218,22 +166,22 @@ function deleteNotice() {
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
 </c:if>    
-<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
+<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userIdx!=dto.userIdx}">
   alert("게시물을 삭제할 수  없습니다.");
 </c:if>
-}
+} 
 
 function updateNotice() {
-<c:if test="${sessionScope.member.userId==dto.userId}">
+<c:if test="${sessionScope.member.userIdx==dto.userIdx}">
   var num = "${dto.clubNoticeIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
   var url = "<%=cp%>/club/${clubSeq}/notice/update?" + params;
 
-  location.href=url;
+  location.href=url; 
 </c:if>
 
-<c:if test="${sessionScope.member.userId!=dto.userId}">
+<c:if test="${sessionScope.member.userIdx!=dto.userIdx}">
  alert("게시물을 수정할 수  없습니다.");
 </c:if> 
 }

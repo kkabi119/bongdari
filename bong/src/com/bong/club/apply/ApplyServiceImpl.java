@@ -39,7 +39,7 @@ public class ApplyServiceImpl implements ApplyService {
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		int result = 3;
+		int result = 0;
 		
 		try {
 			result=dao.getIntValue("clubApply.dataCount", map);

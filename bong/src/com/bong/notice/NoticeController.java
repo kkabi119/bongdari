@@ -1,6 +1,7 @@
 package com.bong.notice;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bong.common.FileManager;
@@ -144,6 +147,39 @@ public class NoticeController {
 		
 		
 		return mav;
+	}
+	//다운로드
+	@RequestMapping(value="/notice/download")
+	public void download(
+			HttpServletRequest req
+		   ,HttpServletResponse resp
+		   ,HttpSession session
+		   ,@RequestParam(value="num") int num
+			) throws Exception{
+		String cp=req.getContextPath();
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		if(info==null){
+			resp.sendRedirect(cp+"/member/login");
+			return;
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		String root=session.getServletContext().getRealPath("/");
+		String path=root+File.separator+"uploads"+File.separator+"notice";
+		Notice dto = service.readNotice(map);
+		boolean flag = false;
+		
+		if(dto!=null){
+			flag=fileManager.doFileDownload(dto.getSaveFilename()
+					,dto.getOriginalFilename(), path, resp);
+		}
+		
+		if(! flag){
+			resp.setContentType("text/html;charset=utf-8");
+			PrintWriter out = resp.getWriter();
+			out.print("<script>alert('파일 다운로드가 실패했습니다.');history.back();</script>");
+		}
 	}
 	//글보기
 	@RequestMapping(value="/notice/article")
@@ -310,5 +346,170 @@ public class NoticeController {
 		
 		return new ModelAndView("redirect:.layout.customer.notice.update?num="+num+"&page"+page);
 		 
+	}
+	
+	// 댓글 리스트
+	@RequestMapping(value="/notice/listReply")
+	public ModelAndView listReply(
+			@RequestParam(value="num") int num
+		   ,@RequestParam(value="pageNo", defaultValue="1") int current_page
+			) throws Exception{
+		int numPerPage=5;
+		int total_page=0;
+		int dataCount=0;
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		
+		dataCount=service.replyDataCount(map);
+		total_page=myUtil.pageCount(numPerPage, dataCount);
+		if(current_page>total_page)
+			current_page=total_page;
+		
+		// 리스트에 출력할 데이터
+		int start=(current_page-1)*numPerPage+1;
+		int end=current_page*numPerPage;
+		map.put("start", start);
+		map.put("end", end);
+		List<Reply> listReply = service.listReply(map);
+		
+		//엔터를 <br>
+		Iterator<Reply> it=listReply.iterator();
+		int listNum, n=0;
+		while(it.hasNext()){
+			Reply dto=it.next();
+			listNum=dataCount-(start+n-1);
+			dto.setListNum(listNum);
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+			n++;
+		}
+		// 페이징 처리(인수2개짜리 js로 처리)
+		String paging=myUtil.paging(current_page, total_page);
+		
+		ModelAndView mav=new ModelAndView("/customer/notice/listReply");
+		
+		//jsp로 넘길 데이터
+		mav.addObject("listReply", listReply);
+		mav.addObject("pageNo", current_page);
+		mav.addObject("replyCount", dataCount);
+		mav.addObject("total_page", total_page);
+		mav.addObject("paging", paging);
+		
+		return mav;
+	}
+	// 댓글 및 리플별 답글 추가
+	@RequestMapping(value="/notice/createdReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> createdReply(
+			HttpSession session
+		   ,Reply dto
+			) throws Exception{
+       SessionInfo info=(SessionInfo) session.getAttribute("member");
+       String state="true";
+       if(info==null){
+    	   state="loginFail";
+       } else {
+    	   dto.setUserIdx(info.getUserIdx());
+    	   
+    	   int result=service.insertReply(dto);
+    	   if(result==0)
+    		   state="false";
+       }
+       
+       // 작업결과를 json으로 전송
+       Map<String, Object> model = new HashMap<>();
+       model.put("state", state);
+       return model;
+	}
+	// 답글 리스트
+	@RequestMapping(value="/notice/listReplyAnswer")
+	@ResponseBody
+	public ModelAndView listReplyAnswer(
+			@RequestParam(value="answer") int answer
+			) throws Exception{
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("answer", answer);
+		
+		List<Reply> listReplyAnswer=service.listReplyAnswer(map);
+		
+		// 엔터를 <br>
+		Iterator<Reply> it=listReplyAnswer.iterator();
+		while(it.hasNext()){
+			Reply dto = it.next();
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		}
+		
+		ModelAndView mav=new ModelAndView("/customer/notice/listReplyAnswer");
+	
+		//jsp로 넘길 데이터
+		mav.addObject("listReplyAnswer", listReplyAnswer);
+		return mav;
+	}
+	@RequestMapping(value="/notice/replyCount", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> replyCount(
+			@RequestParam(value="num") int num
+			) throws Exception{
+		//AJAX(JSON) - 댓글 별 개수
+	 
+		String state="true";
+		int count=0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		
+		count=service.replyDataCount(map);
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		model.put("count", count);
+	   
+		return model;
+	}
+	  // 댓글 및 리플별 답글 개수
+	@RequestMapping(value="/notice/replyCountAnswer", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> replyCountAnswer(
+			@RequestParam(value="answer") int answer
+			) throws Exception{
+		int count = 0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("answer", answer);
+		count=service.replyCountAnswer(map);
+		
+		// 작업결과를 json으로 전송
+		map.put("count", count);
+		return map;
+	}
+	@RequestMapping(value="/notice/deleteReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteReply(
+			HttpSession session
+		   ,@RequestParam(value="replyNum") int replyNum
+		   ,@RequestParam(value="mode") String mode
+			) throws Exception{
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		
+		String state="true";
+		if(info==null){
+			state="loginFail";
+		} else {
+			Map<String, Object> map=new HashMap<String,Object>();
+			map.put("mode", mode);
+			map.put("replyNum", replyNum);
+			
+			//좋아요 ,싫어요는 ON DELETE CASCADE 로 자동삭제
+			
+			// 댓글 삭제
+			int result=service.deleteReply(map);
+			
+			if(result==0)
+				state="false";
+		}
+		
+		// 작업 결과를 json으로 전송
+		Map<String, Object> model = new HashMap<>(); 
+		model.put("state", state);
+		return model;
 	}
 }

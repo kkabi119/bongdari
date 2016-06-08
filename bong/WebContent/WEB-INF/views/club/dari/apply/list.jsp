@@ -8,6 +8,10 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 <style type="text/css">
+.col-md-9{
+	margin-top:-30px;
+
+}
 .list-page li a{
 	
 	border-color:#3897f0;

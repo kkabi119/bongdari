@@ -18,17 +18,17 @@ function searchList() {
 <style type="text/css">
 
 .col-md-9{
-	margin-top:-30px; width:7%;
+	margin-top:-30px;
 
 }
 .col-md-7{
 
-	width: 46%;
+	width: 47%;
 }
 /* 후기게시판 리스트row */
  .row2 {
-   margin-top: 10px;
-   margin-bottom: 35px;
+   margin-top: 0px;
+   margin-bottom: 0px;
    margin-left: 20px;
    height: 225px;
    width: 100%;
@@ -36,8 +36,6 @@ function searchList() {
 /* 후기게시판 타이틀 */
  .row3 {
    margin-top: 5px;
- 
-   height: 100px;
    width: 100%;
 }  
 
@@ -85,7 +83,7 @@ function searchList() {
    min-height: 1px;
    padding-right: 15px;
    padding-left: 0px;
-   margin-top:10px;
+   margin-top:14px;
 }
 
 .col2 {
@@ -112,18 +110,18 @@ hr:LAST-CHILD {
       <div class="col-lg-12">
             <h3  style="font-size:30px;"> 봉사 후기<span style="margin-left:10px;color:gray; font-size:15px;">  우리의 봉사후기를 나누어 보아요~</span> </h3>
 
-         <ol class="breadcrumb">
+     <%--     <ol class="breadcrumb">
             <li><a href="<%=cp%>/demander/index/main" style="color:gray; font-weight: bold;">우리 동아리</a></li>
             <li class="active">후기 게시판 </li>
-         </ol>
+         </ol> --%>
       </div>
    </div>
    <!-- /.row -->
  <c:if test="${dataCount!=0 }"> 
-			<div style="clear: both; height: 30px; line-height: 30px; margin-left:35px; margin-top:20px ;">
+			<div style="clear: both; height: 30px; line-height: 30px; margin-left:35px; margin-top:20px ; margin-bottom:3px;">
             				<div style="float: left; color:#00aeef;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
             					전체 ${dataCount}개 <span style="color:#777;">(${page}/${total_page}  페이지)</span> </div>
-        	  <hr style="margin:0px; width:98%; border-top:2px solid #DADADA;">
+        	  <hr style="margin:0px; width:100%; border-top:3px solid #00aeef;">
         	</div> 
   
    <!-- Project One -->
@@ -148,7 +146,7 @@ hr:LAST-CHILD {
          	  <a href="${urlArticle}&num=${dto.clubReviewIdx}" style="color:#4E4E4E; max-height:37px; overflow:hidden; ">
          	  	${dto.subject}
 	         </a>
-	         </span><span style="color: black; font-size: 14pt;"> &nbsp;(${dto.replyCount})</span>
+	         </span><span class="item-title" style='color:#f0ad4e; font-size:14pt; font-weight: bold;'>(${dto.replyCount})</span>
          
          </div> <hr style="margin-top:10px; border:1px solid #ddd; margin-bottom:5px;">
          <h5 style="font-size:14px;margin-top:10px;line-height: 14px;"> 
@@ -175,7 +173,7 @@ hr:LAST-CHILD {
   
    </c:forEach>
     </c:if> 
-      <hr style="margin-left:35px; margin-top:-2px; margin-bottom:-1px; width:98%; border-top:2px solid #DADADA;">
+      <hr style="margin-left:35px; margin-top:1px; margin-bottom:-1px; width:98%; border-top:2px solid #00aeef;">
    <!-- /.row -->
 
 	<div class="paging"

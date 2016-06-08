@@ -28,29 +28,8 @@
 	<link href="<%=cp%>/res/css/responsive.css" rel="stylesheet">
 	
 	<script type="text/javascript" src="<%=cp%>/res/js/jquery-1.12.3.min.js"></script>
-	<script type="text/javascript" src="<%=cp%>/res/calendar/jquery.ui.datepicker-ko.js"></script>
 	<script type="text/javascript" src="<%=cp%>/res/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-	/* $(function() {
-	    $( document ).tooltip();
-	  }); */
-	  $(function () {
-	      $(document).tooltip({
-	          items: ".entry",
-	          position: {
-	              my: "right bottom+50"
-	          },
-	          tooltipClass: "entry-tooltip-positioner",
-	          track: true,
-	          content: function () {
-	              var element = $(this);
-	              if ((element.is(".entry"))) {
-	                  return "<div class='hi'>This is a very nice entry! It's    so pretty and I feel like I can touch it. This is just random filler text.</div>";
-	              }
-	          }
-	      });
-	  });
-	</script>
+	<script type="text/javascript" src="<%=cp%>/res/calendar/jquery.ui.datepicker-ko.js"></script>
     <!--[if lt IE 9]>
 	    <script src="<%=cp%>/res/js/html5shiv.js"></script>
 	    <script src="<%=cp%>/res/js/respond.min.js"></script>
@@ -60,7 +39,11 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<%=cp%>/res/images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<%=cp%>/res/images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="<%=cp%>/res/images/ico/apple-touch-icon-57-precomposed.png">
-
+<style>
+.col-md-9{
+	width:76%; margin-left:15px;
+}
+</style>
 </head><!--/head-->
 
 <body>
@@ -74,11 +57,9 @@
              <div class="container">
                 <div class="row">
                     <div class="action">
-                        <div class="col-sm-12">
-                            <h1>
-                            <tiles:insertAttribute name="title"/>
+                            <h1 style="margin-bottom: 0px">
+                            <div id="clubname" style="float:left; padding-right: 10px"></div><div><tiles:insertAttribute name="title"/></div>
                             </h1>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -104,7 +85,6 @@
         <tiles:insertAttribute name="footer"/>
     </footer>
     <!--/#footer-->
-	<script type="text/javascript" src="<%=cp%>/res/calendar/jquery.ui.datepicker-ko.js"></script>
 	<script type="text/javascript" src="<%=cp%>/res/calendar/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/lightbox.min.js"></script>
     <script type="text/javascript" src="<%=cp%>/res/js/wow.min.js"></script>

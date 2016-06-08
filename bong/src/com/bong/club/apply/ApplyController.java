@@ -371,7 +371,7 @@ public class ApplyController {
 			}
 			/////////////////////////////////////////////////////////////////////////////////////// 	좋 아 요 
 			//////////////////////////////////////////////////////////////// 댓글 좋아요 추가
-			@RequestMapping(value="/apply/replyLike",	method=RequestMethod.POST)
+			@RequestMapping(value="/apply/insertReplyLike",	method=RequestMethod.POST)
 			@ResponseBody
 			public Map<String, Object>  replyLike(
 					HttpSession session, Reply dto) throws Exception {

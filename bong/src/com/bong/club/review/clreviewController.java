@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bong.club.apply.Reply;
 import com.bong.common.FileManager;
 import com.bong.common.MyUtil;
 import com.bong.member.SessionInfo;
@@ -111,7 +112,7 @@ public class clreviewController {
 	        mav.addObject("dataCount", dataCount);
 	        mav.addObject("total_page", total_page);
 	        mav.addObject("paging", myUtil.paging(current_page, total_page, urlList));	
-	        
+	        mav.addObject("subMenu","6");
 		
 		return mav;
 	}
@@ -127,7 +128,7 @@ public class clreviewController {
 		}
 		
 		ModelAndView mav=new ModelAndView(".four.club.dari.review.create.후기게시판");
-		mav.addObject("mode", "created");
+		mav.addObject("mode", "created"); mav.addObject("subMenu","6");
 		return mav;
 	}
 	
@@ -201,7 +202,7 @@ public class clreviewController {
 		}
 		
 		ModelAndView mav=new ModelAndView(".four.club.dari.review.article.후기게시판");
-		
+		mav.addObject("subMenu","6");
 		mav.addObject("dto", dto);
 		mav.addObject("preReadDto", preReadDto);
 		mav.addObject("nextReadDto", nextReadDto);
@@ -272,7 +273,8 @@ public class clreviewController {
 		ModelAndView mav=new ModelAndView(".four.club.dari.review.create.후기게시판");
 		mav.addObject("mode", "update");
 		mav.addObject("page", page);
-		mav.addObject("dto", dto);
+		mav.addObject("dto", dto); 
+		mav.addObject("subMenu","6");
 		return mav;
 	}
 
@@ -285,8 +287,7 @@ public class clreviewController {
 		if (info == null) {
 			return "redirect:/member/login";
 		}*/
-		
-		
+				
 		String root=session.getServletContext().getRealPath("/");
 		String path=root+File.separator+"uploads"+File.separator+"review";
 				
@@ -299,9 +300,7 @@ public class clreviewController {
 	@RequestMapping(value="/club/index/review/deleteFile", 
 			method=RequestMethod.GET)
 	public ModelAndView deleteFile(
-			HttpSession session,
-			@RequestParam(value="num") int num,
-			@RequestParam(value="page") String page
+			HttpSession session,	@RequestParam(value="num") int num,	@RequestParam(value="page") String page
 			) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		/*if(info==null) {
@@ -332,7 +331,7 @@ public class clreviewController {
 		return new ModelAndView("redirect:/club/index/review/update?num="+num+"&page="+page);
 	}
 	
-
+////////////////////////////////////////////////////////////////////		게시글 삭제 
 	@RequestMapping(value="/club/index/review/delete")
 	public ModelAndView delete(
 			HttpSession session,
@@ -363,27 +362,26 @@ public class clreviewController {
 		
 		return new ModelAndView("redirect:/club/index/review/list?page="+page);
 	}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////	게시글의 좋아요 처리 
 	
-	//좋아요
-	@RequestMapping(value="/club/index/review/sendLike",
-			method=RequestMethod.POST)
+	/////////////// 	게시글의 좋아요추가
+	@RequestMapping(value="/club/index/review/sendLike",	method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> ClReviewLike(
-			HttpSession session,
-			ClReview dto) throws Exception {
+	public Map<String, Object> sendLike(	HttpSession session,	ClReview dto)
+			throws Exception {
 	
 		SessionInfo info=(SessionInfo) session.getAttribute("member");
 		dto.setUserIdx(info.getUserIdx());
-		System.out.println("*****************userIdx:"+info.getUserIdx());
+	
+		int state=service.stateLike(dto);
 		
-		int state=service.stateClRevLike(dto);
-		
-		if(state==0){
+		if(state==0){ // 게시물의 좋아요가 아직 안누러졌다면 > 1추가 
 			dto.setUserIdx(info.getUserIdx());
-			service.insertClReviewLike(dto);
-		}else if(state==1){
+			service.insertLike(dto);
+			System.out.println("게시물의 좋아요를 추가하였습니다 ");
+		}else if(state==1){ //이미 좋아요를 눌렀다면 -1 
 			dto.setUserIdx(info.getUserIdx());
-			service.deleteClReviewLike(dto);
+			service.deleteLike(dto);
 		}
 		
    	    // 작업 결과를 json으로 전송
@@ -392,15 +390,15 @@ public class clreviewController {
 		return model;
 	}
 	
-	// 좋아요/싫어요 개수
-	@RequestMapping(value="/club/index/review/countLike",
-			method=RequestMethod.POST)
+	////////////////////////////////////////////////////////////////////		게시글의 좋아요/싫어요 개수
+	@RequestMapping(value="/club/index/review/countLike",   	method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object>  countLike(
-			@RequestParam(value="abc") int num) throws Exception {
-		System.out.println("countLike컨트롤러");
+	public Map<String, Object>  countLike(	@RequestParam(value="clubReviewIdx") int num) 
+			throws Exception {
+		
 		int likeCount=0;
-		Map<String, Object> map=service.ClRevCountLike(num);
+		Map<String, Object> map=service.countLike(num);
+		
 		if(map!=null) {
 			// resultType이 map인 경우 int는 BigDecimal로 넘어옴
 			likeCount=((BigDecimal)map.get("LIKECOUNT")).intValue();
@@ -410,14 +408,15 @@ public class clreviewController {
 		Map<String, Object> model = new HashMap<>(); 
 		model.put("likeCount", likeCount);
 		
-		System.out.println("controller_likeCount:"+likeCount);
 		return model;
 	}
 	
-	//댓글리스트
+	///////////////////////////////////////////////////////////////////////////////////////////		댓글 관련
+	
+	//////////////////////////////////////////////////////////////////				댓글리스트
 	@RequestMapping(value="/club/index/review/listReply")
 	public ModelAndView listReply(
-			@RequestParam(value="num") int num,
+			@RequestParam(value="num") int num, //ClubReviewIdx가 넘어왔다
 			@RequestParam(value="pageNo", defaultValue="1") int current_page
 			) throws Exception {
 		
@@ -425,36 +424,34 @@ public class clreviewController {
 		int total_page=0;
 		int dataCount=0;
 		
+		System.out.println("listReply로 넘어옴 ");
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("clubReviewIdx", num);
 		
-		
-		dataCount=service.ClReviewReplyDataCount(map);
-		
+		dataCount=service.replyDataCount(map); //댓글 개수 세기 -clubReviewIdx넘김
 		total_page=myUtil.pageCount(numPerPage, dataCount);
 		if(current_page>total_page)
 			current_page=total_page;
-		
 		
 		// 리스트에 출력할 데이터
 		int start=(current_page-1)*numPerPage+1;
 		int end=current_page*numPerPage;
 		map.put("start", start);
 		map.put("end", end);
-		List<ClReviewReply> listReply=service.listClReviewReply(map);
+		List<ClReviewReply> listReply=service.listReply(map);
 		
-	
 		// 엔터를 <br>
 		Iterator<ClReviewReply> it=listReply.iterator();
 		int listNum, n=0;
+		
 		while(it.hasNext()) {
+			
 			ClReviewReply dto=it.next();
 			listNum=dataCount-(start+n-1);
 			dto.setListNum(listNum);
 			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 			n++;
 		}
-		
 		// 페이징처리(인수2개 짜리 js로 처리)
 		String paging=myUtil.paging(current_page, total_page);
 		
@@ -463,26 +460,27 @@ public class clreviewController {
 		// jsp로 넘길 데이터
 		mav.addObject("listReply", listReply);
 		mav.addObject("pageNo", current_page);
-		mav.addObject("replyCount", dataCount);
+		mav.addObject("replyCount", dataCount); //
 		mav.addObject("total_page", total_page);
 		mav.addObject("paging", paging);
 		
 		return mav;
 	}
 	
-	// 댓글별 답글 리스트
+	//////////////////////////////////////////////////////////////					 대댓글 리스트
 			@RequestMapping(value="/club/index/review/listReplyAnswer")
-			public ModelAndView listReplyAnswer(
-					@RequestParam(value="answer") int answer
+			public ModelAndView listReplyAnswer(	@RequestParam(value="answer") int answer
 					) throws Exception {
 				
 				Map<String, Object> map=new HashMap<String, Object>();
 				map.put("answer", answer);
-				List<ClReviewReply> listReplyAnswer=service.listClReviewReplyAnswer(answer);
+				
+				List<ClReviewReply> listReplyAnswer=service.listReplyAnswer(map);
 				
 				// 엔터를 <br>
 				Iterator<ClReviewReply> it=listReplyAnswer.iterator();
 				while(it.hasNext()) {
+					System.out.println("대댓글 리스트를 받았다 ");
 					ClReviewReply dto=it.next();
 					dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 				}
@@ -491,15 +489,12 @@ public class clreviewController {
 
 				// jsp로 넘길 데이터
 				mav.addObject("listReplyAnswer", listReplyAnswer);
-				
 				return mav;
 			}
 	
-			@RequestMapping(value="/club/index/review/replyCount",
-					method=RequestMethod.POST)
+			@RequestMapping(value="/club/index/review/replyCount", method=RequestMethod.POST)
 			@ResponseBody
-			public Map<String, Object> replyCount(
-					@RequestParam(value="num") int num
+			public Map<String, Object> replyCount(	@RequestParam(value="num") int num
 					) throws Exception {
 				// AJAX(JSON) - 댓글별 개수
 
@@ -511,7 +506,7 @@ public class clreviewController {
 		 		//map.put("tableName", tableName);
 		   		map.put("clubReviewIdx", num);
 		  	    
-		   	    count=service.ClReviewReplyDataCount(map);
+		   	    count=service.replyDataCount(map);
 		   	    
 		   	    Map<String, Object> model = new HashMap<>(); 
 				model.put("state", state);
@@ -520,13 +515,12 @@ public class clreviewController {
 				return model;
 			}
 			
-			@RequestMapping(value="/club/index/review/replyCountAnswer",
-					method=RequestMethod.POST)
+			@RequestMapping(value="/club/index/review/replyCountAnswer", method=RequestMethod.POST)
 			@ResponseBody
-			public Map<String, Object>  replyCountAnswer(
-					@RequestParam(value="answer") int answer) throws Exception {
+			public Map<String, Object>  replyCountAnswer( @RequestParam(value="answer") int answer) throws Exception {
+				
 				int count=0;
-				count=service.ClReviewReplyCountAnswer(answer);
+				count=service.replyCountAnswer(answer);
 				
 		   	    // 작업 결과를 json으로 전송
 				Map<String, Object> model = new HashMap<>(); 
@@ -535,19 +529,19 @@ public class clreviewController {
 			}
 			
 			// 댓글 및 리플별 답글 추가
-			@RequestMapping(value="/club/index/review/createdReply",
-					method=RequestMethod.POST)
+			@RequestMapping(value="/club/index/review/createdReply", method=RequestMethod.POST)
 			@ResponseBody
-			public Map<String, Object>  createdReply(
-					HttpSession session,
-					ClReviewReply dto) throws Exception {
+			public Map<String, Object>  createdReply(	HttpSession session,	ClReviewReply dto) 
+					throws Exception {
+				
 				SessionInfo info=(SessionInfo) session.getAttribute("member");
 				String state="true";
 				if(info==null) { // 로그인이 되지 않는 경우
 					state="loginFail";
-				} else {
+				}
+				else {
 					dto.setUserIdx(info.getUserIdx());
-					int result=service.insertClReviewReply(dto);
+					int result=service.insertReply(dto);
 					if(result==0)
 						state="false";
 				}
@@ -558,9 +552,8 @@ public class clreviewController {
 				return model;
 			}
 			
-			// 댓글 및 댓글별답글 삭제
-			@RequestMapping(value="/club/index/review/deleteReply",
-					method=RequestMethod.POST)
+			// 댓글 및 대댓글 삭제
+			@RequestMapping(value="/club/index/review/deleteReply",		method=RequestMethod.POST)
 			@ResponseBody	
 			public Map<String, Object>  deleteReply(
 					HttpSession session,
@@ -580,7 +573,7 @@ public class clreviewController {
 					// 좋아요/싫어요 는 ON DELETE CASCADE 로 자동 삭제
 
 		            // 댓글삭제
-					int result=service.deleteClReviewReply(map);
+					int result=service.deleteReply(map);
 
 					if(result==0)
 						state="false";
@@ -592,25 +585,29 @@ public class clreviewController {
 				return model;
 			}
 			
-	//*********댓글 좋아요*************
+	//*********								댓글 좋아요											*************
 			//좋아요
-			@RequestMapping(value="/club/index/review/sendLikeReply",
-					method=RequestMethod.POST)
+			@RequestMapping(value="/club/index/review/insertReplyLike",	method=RequestMethod.POST)
 			@ResponseBody
-			public Map<String, Object> ClReviewLikeReply(
-					HttpSession session,
-					ClReviewReply dto) throws Exception {
+			public Map<String, Object> insertReplyLike(
+					HttpSession session,	ClReviewReply dto) throws Exception {
 				
 				SessionInfo info=(SessionInfo) session.getAttribute("member");
 				dto.setUserIdx(info.getUserIdx());
-				int state=service.stateClRevReplyLike(dto);
+				
+				int state=service.stateReplyLike(dto);
+				
 				System.out.println("컨트롤러state:"+state);
-				if(state==0){
+				if(state==0){ //아직 좋아요가 없을때 !
+					
 					dto.setUserIdx(info.getUserIdx());
-					service.insertClReviewReplyLike(dto);
-				}else if(state==1){
+					service.insertReplyLike(dto);
+					
+				}else if(state==1){ //이미 좋아요를 한 상태일때!
+					
 					dto.setUserIdx(info.getUserIdx());
-					service.deleteClRevReplyLike(dto);
+					service.deleteReplyLike(dto);
+					System.out.println("DELTE 좋아요 들어옴 올나어");
 				}
 				
 		   	    // 작업 결과를 json으로 전송
@@ -620,14 +617,15 @@ public class clreviewController {
 			}
 			
 			// 좋아요/싫어요 개수
-			@RequestMapping(value="/club/index/review/countLikeReply",
+			@RequestMapping(value="/club/index/review/replyCountLike",
 					method=RequestMethod.POST)
 			@ResponseBody
-			public Map<String, Object>  countLikeReply(
-					@RequestParam(value="replyNum") int num) throws Exception {
-				//성공//System.out.println("countLikeReply컨트롤러:"+num);
+			public Map<String, Object>  replyCountLike(	@RequestParam(value="replyNum") int num)
+					throws Exception {
+				
 				int likeCount=0;
-				Map<String, Object> map=service.ClReviewReplyCountLike(num);
+				Map<String, Object> map=service.replyCountLike(num);
+				
 				if(map!=null) {
 					// resultType이 map인 경우 int는 BigDecimal로 넘어옴
 					likeCount=((BigDecimal)map.get("LIKECOUNT")).intValue();

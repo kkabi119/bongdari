@@ -150,13 +150,13 @@
          DELETE FROM notice WHERE userIdx = #{userIdx}
     </delete>
     
-	<select id="CNRSeq" resultType="Integer">
+	<select id="NRSeq" resultType="Integer">
 		SELECT notice_reply_seq.NEXTVAL FROM DUAL
 	</select>
 	
 	<!-- 댓글 처리................. -->
 	<insert id="insertNoticeReply" parameterType="com.bong.notice.Reply">
-	INSERT INTO notice_reply(CNRIDX ,NOTICEIDX, userIdx, content, answer)
+	INSERT INTO notice_reply(NRIDX ,NOTICEIDX, userIdx, content, answer)
 	   VALUES (#{replyNum}, #{num},#{userIdx},
 	        #{content}, #{answer})
 	</insert>
@@ -171,13 +171,13 @@
 	          parameterType="map">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		        SELECT tbreply.CNRIDX as replyNum, noticeIdx as num, userName 
+		        SELECT tbreply.NRIDX as replyNum, noticeIdx as num, userName 
 		                    ,content, created, tbreply.answer
 		                    ,NVL(answerCount, 0) answerCount
 		        FROM
 		        (
 				      (
-					     SELECT cnridx, r.clubNoticeIdx, r.userIdx,
+					     SELECT nridx, r.noticeIdx, r.userIdx,
                userName, r.content, r.created, answer
 					        FROM notice_reply r 
 			                JOIN notice n ON r.noticeIdx=n.noticeIdx
@@ -188,7 +188,7 @@
 			           (
 			                SELECT answer, COUNT(*) answerCount
                                  FROM notice_reply GROUP BY answer
-			           ) tbanswer ON tbreply.CNRIDX = tbanswer.answer
+			           ) tbanswer ON tbreply.NRIDX = tbanswer.answer
 	           )
 	           ORDER BY replyNum DESC
 	<![CDATA[
@@ -200,7 +200,7 @@
 	<!-- 댓글별 답글 리스트 -->
 	<select id="listReplyAnswer" resultType="com.bong.notice.Reply" 
 	          parameterType="Integer">
-     SELECT CNRIDX AS replyNum, noticeIdx AS num, tbreply.userIdx, userName, content, created, answer
+     SELECT NRIDX AS replyNum, noticeIdx AS num, tbreply.userIdx, userName, content, created, answer
 	          FROM notice_reply tbreply 
 	          JOIN memberInfo m ON tbreply.userIdx=m.userIdx
               WHERE answer=#{answer}
@@ -220,12 +220,12 @@
 			 noticeIdx=#{num}
 		</if>
 	    <if test="mode == 'reply' ">
-			 CNRIDX IN 
-               (SELECT CNRIDX FROM notice_reply START WITH  CNRIDX = #{replyNum}
-	            CONNECT BY PRIOR CNRIDX = answer)
+			 NRIDX IN 
+               (SELECT NRIDX FROM notice_reply START WITH  NRIDX = #{replyNum}
+	            CONNECT BY PRIOR NRIDX = answer)
 		</if>
 	    <if test="mode == 'answer' ">
-			 CNRIDX=#{replyNum}
+			 NRIDX=#{replyNum}
 		</if>
 	</delete>
 	

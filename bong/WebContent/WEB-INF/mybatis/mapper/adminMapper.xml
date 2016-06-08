@@ -233,7 +233,7 @@
   	,CONSTRAINT fk_ser_rrl_srridx_${value} FOREIGN KEY(srridx)
   	REFERENCES service_review_reply_${value}(srridx) ON DELETE CASCADE
   	,CONSTRAINT fk_ser_rrl_useridx_${value} FOREIGN KEY(useridx)
-  	REFERENCES memberinfo(useridx) ON DELETE CASCADE
+  	REFERENCES checkId(useridx) ON DELETE CASCADE
 	)
 	</update>
 	

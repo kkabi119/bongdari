@@ -1,5 +1,6 @@
 package com.bong.notice;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -158,44 +159,93 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public int deleteNoticeId(String userId, String root) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		// 탈퇴한 경우 게시물 삭제
+		// 좋아요,싫어요, 댓글 등은 ON DELETE CASCADE 옵션으로 자동삭제
+        try {
+			String path = root+File.separator+"uploads"+File.separator+"bbs";
+			
+			List<Notice>list = dao.getListInformation("notice.listNoticeId", userId);
+			for(Notice dto:list){
+				if(dto.getSaveFilename() != null && dto.getSaveFilename().length()!=0){
+					fileManager.doFileDelete(dto.getSaveFilename(), path);
+				}
+			}
+			dao.deleteInformation("notice.deleteNoticeId", userId);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}	
+		return result;
 	}
 
 	@Override
 	public int insertReply(Reply dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			dto.setReplyNum(dao.getIntValue("notice.NRSeq"));
+			result=dao.insertInformation("notice.insertNoticeReply", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
 	}
 
 	@Override
 	public List<Reply> listReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Reply> list=null;
+		try {
+			list=dao.getListInformation("notice.listReply", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
 	}
 
 	@Override
 	public List<Reply> listReplyAnswer(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Reply> list=null;
+		try {
+			list=dao.getListInformation("notice.listReplyAnswer", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
 	}
 
 	@Override
 	public int replyDataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			result=dao.getIntValue("notice.replyDataCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public int replyCountAnswer(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.getIntValue("notice.replyCountAnswer", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
 	}
 
 	@Override
 	public int deleteReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result=dao.deleteInformation("notice.deleteReply", map);
+		} catch (Exception e) {
+		   System.out.println(e.toString());
+		}
+		return result;
 	}
 
 }

@@ -30,12 +30,12 @@ function nextPage(page){
         		    	<button type="button" class="btn btn-lg btn-info" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/free/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
         			</div>
                     <div class="timeline-date text-center" style="clear:both">
-                        <a href="#" class="btn btn-common uppercase">May 2016</a>
+                        <a href="#" class="btn btn-common uppercase" style="border-color: #0099AE; background-color: #FFFFFF">May 2016</a>
                     </div>
              		
                 <div class="timeline-date text-center">
                        	<div id="listFree${page}"></div>
     
-                <div  id="seeMore${page}"><a onclick="nextPage();" class='btn btn-common'>See More</a></div>
+                <div  id="seeMore${page}"><a onclick="nextPage();" class='btn btn-common' style="border-color: #0099AE; background-color: #FFFFFF">See More</a></div>
                 </div>
     </section>

@@ -108,6 +108,7 @@ public class NoticeController {
 		ModelAndView mav = new ModelAndView(".four.club.dari.notice.list.공지게시판");
 		
         mav.addObject("list", list);
+        mav.addObject("subMenu","3");
         mav.addObject("clubSeq",clubSeq);
         mav.addObject("urlArticle", urlArticle);
         mav.addObject("page", current_page);
@@ -208,6 +209,7 @@ public class NoticeController {
 		mav.addObject("nextReadDto", nextReadDto);
 
 		mav.addObject("page", page);
+		mav.addObject("subMenu","3");
 		mav.addObject("params", params);
 		mav.addObject("replyCount",replyCount);
 		return mav;
@@ -282,6 +284,7 @@ public class NoticeController {
 		
 		ModelAndView mav = new ModelAndView(".four.club.dari.notice.created.공지글쓰기");
 		mav.addObject("mode", "created");
+		mav.addObject("subMenu","3");
 		mav.addObject("clubSeq", clubSeq);
 		return mav;
 	}

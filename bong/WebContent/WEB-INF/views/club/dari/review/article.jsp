@@ -49,65 +49,262 @@
     text-align: left;
 }
 
-.reply-write {
+/* .reply-write {
     border: #d5d5d5 solid 1px;
     padding: 10px;
     min-height: 50px;
+} */
+
+.bbs-reply {
+    border-top: #3897f0 solid 2px; 
+    border-bottom: #3897f0 solid 2px; padding:15px;
+    margin-bottom:70px;
+}
+
+.bbs-reply-write {   
+   border-bottom: #ddd solid 2px; 
+    padding: 10px;
+    min-height: 50px;
+}
+
+.table>thead>tr>th{
+
+	font-size:20px; text-align: center;
+	 padding:14px; 
+	 border-bottom: 2px solid #6D6D6D;
+
+}
+.icon-wrapper{
+box-shadow:none;
+background-color: #4FCCCD;
+}
+.icon-wrapper:hover{
+	background-color:#4FCCCD;
+}
+
+.table>tbody>tr>td{
+
+padding-top: 13px;
+}
+
+.form-control{
+	border-radius:0px;
+	height:120px;
+	font-weight:lighter;
+	font-size:15px;
+	border:none;
+	border-bottom: 1px solid #ddd;
+	resize:none;
+}
+.form-control:hover, .form-control:focus{
+
+	border-bottom: 1px solid #999;'
+}
+
+.btn {
+	border-radius:2px;
+	padding: 9px 15px;
 }
 </style>
 <script type="text/javascript">
-//댓글
+///////////////////////////////////////////////////////////////		댓글관련
+/////////////////////		페이지 틀자마자 실행되는 함수들
 $(function(){
-	$("#reply-open-close").click(function(){
-		  if($("#reply-content").is(':visible')) {
-			  $("#reply-content").fadeOut(100);
-			  $("#reply-open-close").text("댓글 ▼");
-		  } else {
-			  $("#reply-content").fadeIn(100);
-			  $("#reply-open-close").text("댓글 ▲");
-		  }
-	});
+		$("#reply-open-close").click(function(){
+			
+			if($("#reply-content").is(':visible')) {
+				$("#reply-content").fadeOut(100);
+				$("#reply-open-close").text("COMMENTS ▼");
+			} else {
+				$("#reply-content").fadeIn(100);
+				$("#reply-open-close").text("COMMENTS ▲");
+			}
+		});
 })
 
-
- $(function(){
+$(function(){
 	listPage(1);
-	/* countRevLike(31);  */
 });
- 
+
 function listPage(page) {
 	var url="<%=cp%>/club/index/review/listReply";
 	var num="${dto.clubReviewIdx}";
+	
 	$.post(url, {num:num, pageNo:page}, function(data){
+		
 		$("#listReply").html(data);
+			replyCount(num);
+		});
+}
+//////////////////////////////////////////////////////////////////////////댓글 개수
+function replyCount() {
+	var num="${dto.clubReviewIdx}";// 해당 게시물 번호
+	
+	var url="<%=cp%>/club/index/review/replyCount";
+	$.post(url, {num:num}, function(data){
+	
+		var count=data.count;
+		$("#replyCountView").text(""+count+"개");
+		
+	}, "JSON");
+}
+/////////////////////////////////////////////////////////////////////////// 댓글 추가
+function sendReply() {
+	
+		var uid="${sessionScope.member.userId}";
+		if(! uid) {
+			login();
+			return false;
+		}
+
+		var num="${dto.clubReviewIdx}"; // 해당 게시물 번호
+		var content= $.trim($("#replyContent").val());
+		
+		if(! content ) {
+			alert("내용을 입력하세요 ! ");
+			$("#replyContent").focus();
+			return false;
+		}
+		
+		var params="num="+num;
+		params+="&content="+content;
+		params+="&answer=0";
+		
+		//dto에 clubReviewId, content, answer을 담아서 보내고 > 컨트롤러에서 session의 useridx를 담아 mapper로 보내는고
+		$.ajax({
+			type:"POST"
+			,url:"<%=cp%>/club/index/review/createdReply"
+			,data:params
+			,dataType:"json"
+			,success:function(data) {
+				$("#replyContent").val("");
+			
+				var state=data.state;
+				if(state=="true") {
+				
+					listPage(1);
+					$("#reply-content").fadeIn(100);
+					$("#reply-open-close").text("COMMENTS ▲");
+					
+				} else if(state=="false") {
+					alert("댓글을 등록하지 못했습니다 !");
+				} else if(state=="loginFail") {
+					login();
+				}
+			}
+			
+			,error:function(e) {
+				alert(e.responseText);
+			}
+		});
+}
+
+
+//////////////////////////////////////////////////////댓글 삭 제 
+function deleteReply(replyNum, page) {
+	var uid="${sessionScope.member.userId}";
+	if(! uid) {
+		login();
+		return false;
+	}
+	
+	if(confirm("댓글을 삭제하시겠습니까 ? ")) {	
+		var url="<%=cp%>/club/index/review/deleteReply";
+		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
+			
+			var state=data.state;
+			if(state=="loginFail") {
+				login();
+			} 
+			else {
+				listPage(page);
+				replyCount();
+			}
+		}, "json");
+	}
+}
+
+//---------------------------------------------------------		댓 글의 좋 아 요   //---------------------------------------------------------------------------
+// 댓글 좋아요 카운트 
+function replyCountLike(replyNum) {
+		
+	var url="<%=cp%>/club/index/review/replyCountLike";
+	
+	$.post(url, {replyNum:replyNum}, function(data){
+		
+		var replyLikeCount="#replyLikeCount"+replyNum;
+		var likeCount=data.likeCount;
+		
+		$(replyLikeCount).html("&nbsp; "+likeCount);
+		
+	}, "JSON");
+}
+
+/////////////////////////////////////////////////////////////////////////////////	댓글의 좋아요/싫어요 추가
+function insertReplyLike(replyNum) {
+	
+	var uid="${sessionScope.member.userId}";
+	if(! uid) {
+		login();
+		return false;
+	}
+
+	var params="replyNum="+replyNum;
+
+	$.ajax({
+		type:"POST"
+		,url:"<%=cp%>/club/index/review/insertReplyLike"
+		,data:params
+		,dataType:"json"
+		,success:function(data) {
+			
+			var state=data.state;
+			replyCountLike(replyNum);
+		}
+		,error:function(e) {
+			alert(e.responseText);
+		}
 	});
 }
 
- //좋아요/싫어요 개수
- function countRevLike(clubReviewIdx) {
+
+
+////////////////////////////////////////////////////////////////////////////////////					게 시 글의  좋 아 요 처리 
+
+///////////////////////////////////////////		좋아요/싫어요 개수
+function countLike(clubReviewIdx) {
+	
 	var url="<%=cp%>/club/index/review/countLike";
-	$.post(url, {abc:clubReviewIdx}, function(data){
+	
+	$.post(url, {clubReviewIdx:clubReviewIdx}, function(data){
+	
 		var likeCountId="#likeCount"+clubReviewIdx;
 		var likeCount=data.likeCount;
-		//alert(likeCount+"zz");
-		$(likeCountId).html(likeCount);
+		
+		$(likeCountId).html(""+likeCount);
+
 	}, "JSON");
 }
-//좋아요추가
-function sendLike(clubReviewIdx) {
-	var uid="${sessionScope.member.userId}";
 
-	alert("alert");
-	var params="clubReviewIdx="+clubReviewIdx;
+///////////////////////////////////////////		좋아요/싫어요 추가
+function sendLike(clubReviewIdx) {
 	
+	var uid="${sessionScope.member.userId}";
+	if(! uid) {
+		login();
+		return false;
+	}
+	
+	var params="clubReviewIdx="+clubReviewIdx;
 	$.ajax({
 		type:"POST"
 		,url:"<%=cp%>/club/index/review/sendLike"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
+		
 			var state=data.state;
-			countRevLike(clubReviewIdx);
+			countLike(clubReviewIdx);
 		}
 		,error:function(e) {
 			alert(e.responseText);
@@ -115,61 +312,7 @@ function sendLike(clubReviewIdx) {
 	});
 }
 
-//댓글 추가
-function sendReply() {
-	var uid="${sessionScope.member.userId}";
-	
-
-	var num="${dto.clubReviewIdx}"; // 해당 게시물 번호
-	var content=$.trim($("#replyContent").val());
-	if(! content ) {
-		alert("내용을 입력하세요 !!! ");
-		$("#replyContent").focus();
-		return false;
-	}
-	
-	var params="num="+num;
-	params+="&content="+content;
-	params+="&answer=0";
-	
-	$.ajax({
-		type:"POST"
-		,url:"<%=cp%>/club/index/review/createdReply"
-		,data:params
-		,dataType:"json"
-		,success:function(data) {
-			$("#replyContent").val("");
-			
-			var state=data.state;
-			if(state=="true") {
-				listPage(1);
-			} else if(state=="false") {
-				alert("댓글을 등록하지 못했습니다. !!!");
-			} 
-		}
-		,error:function(e) {
-			alert(e.responseText);
-		}
-	});
-}
-
- 
-
- //댓글 삭제
-function deleteReply(replyNum, page) {
-	var uid="${sessionScope.member.userId}";
-	
-	
-	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/club/index/review/deleteReply";
-		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
-		        var state=data.state;
-					listPage(page);
-		}, "json");
-	}
-} 
-
-//-------------------------------------
+//-------------------------------- 게시물 삭제 ----------------------------------------------------------
 function deleteReview() {
 <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
   var num = "${dto.clubReviewIdx}";
@@ -177,15 +320,16 @@ function deleteReview() {
   var params = "num="+num+"&page="+page;
   var url = "<%=cp%>/club/index/review/delete?" + params;
 
-  if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
+  if(confirm("이 글을 삭제 하시겠습니까 ? "))
   	location.href=url;
 </c:if>
 
 <c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
-  alert("게시물을 삭제할 수  없습니다.");
+  alert("작성자만 게시물을 삭제할 수 있습니다!");
 </c:if>
 }
 
+//-------------------------------- 게시물 수정 ----------------------------------------------------------
 function updateReview() {
 <c:if test="${sessionScope.member.userId==dto.userId}">
   var num = "${dto.clubReviewIdx}";
@@ -197,15 +341,18 @@ function updateReview() {
 </c:if>
 
 <c:if test="${sessionScope.member.userId!=dto.userId}">
- alert("게시물을 수정할 수  없습니다.");
+ 	alert("게시물을 수정할 수  없습니다.");
 </c:if> 
 }
 </script>
+
+
+
     <section id="blog-details">
                <div class="col-md-12 col-sm-12">
                             <div class="single-blog blog-details two-column">
                                 <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="#" style="line-height: 37px;">${dto.subject}	</a></h2>
+                                    <h2 class="post-title bold"><a href="#" style="line-height: 37px; font-weight:bold;">${dto.subject}	</a></h2>
                                     
 								    <hr style="margin-top:0px; margin-bottom:15px; width:98%; border-top:2px solid #DADADA;">
                                     <h3 class="post-author" style=" margin-bottom:15px; "><a href="#">${dto.userName} &nbsp;&nbsp;&nbsp;| No.${dto.clubReviewIdx}	</a></h3>
@@ -219,7 +366,6 @@ function updateReview() {
                                         
                                          	<li onclick="sendLike('${dto.clubReviewIdx}')"><a href="#"><i class="fa fa-thumbs-o-up"></i>좋아요 <span id="likeCount${dto.clubReviewIdx}">${dto.likeCount}</span></a></li> 
                                                                                         
-                                            <li><a href="#"><i class="fa fa-comments"></i>댓글수  ${dto.replyCount}</a></li>
                                             <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
                                         </ul>
                                     </div>
@@ -253,9 +399,7 @@ function updateReview() {
                                     </div>
                                </c:if>
                                <div>
-                               		<div style="float:left; padding-top: 20px; padding-right: 10px">
-                              				<span class="item-click" id="reply-open-close">댓글 ▼</span>&nbsp;<span id="postReplyCountView" class="item-title" style="color:#424951">(${dto.replyCount})</span>
-                     				</div>
+                              
                                   	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px; ">
                       					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/club/index/review/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
                   					</div>
@@ -270,30 +414,37 @@ function updateReview() {
                   				</div>
                   					
                   					
-                                    <div class="response-area" style="clear: both">
-                <!-- 댓글 폼 및 리스트-->                    
-               <div id="reply-content"  style="display:none; margin-top: 10px; margin-bottom: 10px;">
-               
-              <div class="reply-write" >
+         <div class="response-area" style="clear: both">
+               <div style="clear: both;  margin-bottom:30px; border-bottom:2px solid #6D6D6D;">
                   
-                  <div style="clear: both; ">
-                        <div style="float: left; "><span style="font-size:23px;">COMMENTS</span><span></span></div>
-                        <div style="float: right; text-align: right;"></div>
+                   <div style="float: left; margin-bottom:20px;margin-top:20px;">
+                    <span class="item-click" id="reply-open-close" style="cursor:pointer; font-size:20px; color:#6D6D6D;" >COMMENTS ▼</span>&nbsp;
+                	    <span id="replyCountView" class="item-title" style='color:#f0ad4e; font-size:20px; font-weight: bold;'> </span>
+                     <div style="float: right; text-align: right;"></div>
+                     
+          		  </div>
+         <div class="reply-write"  style="margin-bottom:20px;">
+                  
+                  <div style="clear: both; margin-top:0px; border: 1px solid #A2A2A2;">
+                      <textarea id="replyContent" class="form-control" rows="4" required="required"  ></textarea>
+                 
+                  <div style="text-align: right; padding-top: 0px; margin-right:0px; ">
+                      <button type="button" class="btn btn-default" style="border-radius:0px; padding:15px 25px ; margin-bottom:0px;
+                      			 background-color:#3897f0; color:white; border:none;" onclick="sendReply();">
+                       		등록 
+                       </button>
                   </div>
-                  
-                  <div style="clear: both; padding-top: 30px; ">
-                      <textarea id="replyContent" class="form-control" rows="3" required="required"></textarea>
-                  </div>
-                  
-                  <div style="text-align: right; padding-top: 10px;">
-                      <button type="button" class="btn btn-warning" style="padding:10px 15px ; color:white; border:none;" onclick="sendReply();"> 댓글등록 <span class="fa fa-pencil"></span></button>
-                  </div>           
-              
+                   </div>           
               </div>
           
-              <div id="listReply"></div>
+          
+          <div id="reply-content"  style="display:none; margin-top: 10px; margin-bottom: 10px;">
+               
               
-          </div>                 
+              <div id="listReply"></div>
+          </div>
+                         
+          </div>
                                 </div><!--/Response-area-->
                                 </div>
                             </div>

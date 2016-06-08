@@ -21,9 +21,6 @@
 
 
 <style type="text/css">
-.col-md-9{
-	margin-top:-25px;
-}
 .bs-write table {
 	width: 100%;
 	border: 0;
@@ -41,7 +38,7 @@
 }
 
 .bs-write .td1 {
-	min-width: 90px;
+	min-width: 100px;
 	min-height: 30px;
 	color: #666;
 	vertical-align: middle;
@@ -58,14 +55,6 @@
 .bs-write .td4 {
 	
 }
-.body-title{
-margin: 0 0 10px 0;
-}
-
-
-.btn {
-	padding: 10px 15px;
-}
 </style>
 
 <script type="text/javascript" src="<%=cp%>/res/se/js/HuskyEZCreator.js" charset="utf-8"></script>
@@ -75,12 +64,11 @@ $(function(){
 	$("body").on("change", "form[name='boardForm'] input[name='upload']", function(){
 		if(! $(this).val())
 			return;
-		
+	
 		var s;
 		s="<tr align='left' height='40' >";
-		s+="<td style='color:#666; vertical-align:middle;'> <img Id='listBtn' style='margin-top:-4px;width:16px; height:16px; background-size:cover;  ' src='<%=cp%>/res/images/myclub/save.png' >&nbsp&nbsp;&nbsp; 첨부</td>";
-		
-		s+="<td style='padding-left:5px;' width='600'>";
+		s+="<td>첨부</td>";
+		s+="<td style='padding-left:10px;' width='600'>";
 		s+="<input type='file' name='upload' class='form-control input-sm'>";
 		s+="</td>";
 		s+="</tr>";
@@ -106,9 +94,11 @@ $(function(){
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/club/index/review/create";
+    		f.action="<%=cp%>/demander/${demander_seq}/qna/create";
     	else if(mode=="update")
-    		f.action="<%=cp%>/club/index/review/update";
+    		f.action="<%=cp%>/demander/${demander_seq}/qna/update";
+    	else if(mode=="reply")
+        	f.action="<%=cp%>/demander/${demander_seq}/qna/reply?num=${dto.sqnaIdx}&page=${page}";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;
@@ -118,9 +108,9 @@ $(function(){
 
 
 <div class="body-title">
-	<h2 style="">
-		<span class="glyphicon glyphicon-pencil" style="color: #00aeef;"></span>
-		글쓰기
+	<h2 style="color: #F0AD4E;">
+		<span class="glyphicon glyphicon-book" style="color: #F0AD4E;"></span>
+		QnA
 	</h2>
 </div>
 
@@ -149,7 +139,7 @@ $(function(){
 					</tr>
 
 					<tr>
-						<td class="td1" colspan="4" style="padding-bottom: 0px;"></td>
+						<td class="td1" colspan="4" style="padding-bottom: 0px;">내용</td>
 					</tr>
 					<tr>
 						<td colspan="4" class="td4"><textarea id="content"
@@ -157,45 +147,24 @@ $(function(){
 								style="max-width: 99%;">${dto.content}</textarea></td>
 					</tr>
 
-					<c:if test="${mode=='update'}">
-						<tr>
-							<td class="td1">등록파일</td>
-							<td colspan="3" class="td3">${dto.originalFilename} <c:if
-									test="${not empty dto.originalFilename}">
-                                    | <a href="<%=cp%>/demander/index/review/deleteFile?num=${dto.clubReviewIdx}&page=${page}">삭제</a>
-								</c:if>
-							</td>
-						</tr>
-					</c:if>
 					
-					<tr height="40">
-						<td class="td1" style="">
-							<img Id="listBtn"style=" margin-top:-4px;width:16px; height:16px; background-size:cover; "src="<%=cp%>/res/images/myclub/save.png" alt="">
-							 &nbsp; 첨부
-						</td>
-						<td colspan="3" class="td3">
-							<input type="file" name="upload" class="form-control input-sm">
-						</td>
-					</tr>
+				
 
 					
 				</tbody>
 				<tfoot>
 					<tr>
 						<td colspan="4" style="text-align: center; padding-top: 15px;">
-							<button type="submit" class="btn btn-warning" style="background-color: #00aeef; border:1px solid #00aeef;">
-								등록 <span class="glyphicon glyphicon-ok"></span>
+							<button type="submit" class="btn btn-warning">
+								확인 <span class="glyphicon glyphicon-ok"></span>
 							</button>
-							<button type="button" class="btn btn-default"	style="color: #00aeef; margin-left:10px; border:1px solid #00aeef;"
-										onclick="javascript:location.href='<%=cp%>/demander/index/review/list';">
+							<button type="button" class="btn btn-default"
+								style="color: #F0AD4E;"
+								onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/qna/list';">
 								취소</button> <c:if test="${mode=='update'}">
 								
 								
-								<input type="hidden" name="clubReviewIdx" value="${dto.clubReviewIdx}">
-								<input type="hidden" name="saveFilename"
-									value="${dto.saveFilename}">
-								<input type="hidden" name="originalFilename"
-									value="${dto.originalFilename}">
+								<input type="hidden" name="sqnaIdx" value="${dto.sqnaIdx}">
 								<input type="hidden" name="page" value="${page}">
 							</c:if>
 						</td>
@@ -247,7 +216,7 @@ function submitContents(elClickedObj) {
 }
 
 function setDefaultFont() {
-	var sDefaultFont = '나눔돋움';
+	var sDefaultFont = '돋움';
 	var nFontSize = 24;
 	oEditors.getById["content"].setDefaultFont(sDefaultFont, nFontSize);
 }
