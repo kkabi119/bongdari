@@ -104,13 +104,14 @@ $(function(){
   
  <c:if test="${mode=='update'}">
   function deleteFile(fileNum) {
-	  alert("deletefile");
+	  if(confirm("해당 파일을 삭제 하시 겠습니까 ? ")){
 		var url="<%=cp%>/demander/${demander_seq}/review/deleteFile";
 		$.post(url, {fileNum:fileNum}, function(data){
 			$("#b"+fileNum).remove();
 			$("#f"+fileNum).remove();
 
 		}, "JSON");
+	  }
   }
 </c:if>
 </script>

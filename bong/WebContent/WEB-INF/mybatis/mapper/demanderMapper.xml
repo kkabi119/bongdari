@@ -80,12 +80,12 @@
 	            resultType="com.bong.demander.review.DeReview">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-          SELECT tbrev.servicereviewidx, tbrev.useridx,userid, username, subject
+          SELECT tbrev.servicereviewidx, tbrev.useridx,userid, username, subject,content
 			          ,created,hitcount,NVL(replyCount, 0) replyCount,NVL(likeCount, 0) likeCount
         FROM
         (
          (
-			     SELECT serviceReviewIdx, c.userIdx,userId, c.userName, subject
+			     SELECT serviceReviewIdx, c.userIdx,userId, c.userName, subject,content
 			           ,TO_CHAR(s.created, 'YYYY-MM-DD') created
 					   ,hitCount
 			        FROM service_review_${demander_seq} s

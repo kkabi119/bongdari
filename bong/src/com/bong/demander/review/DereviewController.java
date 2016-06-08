@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -82,16 +84,28 @@ public class DereviewController {
 	        // 글 리스트
 	        List<DeReview> list = service.listDeReview(map);
 
-	        // 리스트의 번호
+	        // 리스트의 번호 , 첫번째 사진 썸네일로 지정 
+	        Pattern pattern=Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
+	        Matcher match;
 	        int listNum, n = 0;
 	        Iterator<DeReview> it=list.iterator();
+	     
 	        while(it.hasNext()) {
 	        	DeReview data = it.next();
 	            listNum = dataCount - (start + n - 1);
+	          
 	            data.setListNum(listNum);
+	            
+	            match=pattern.matcher(data.getContent());
+	            
+	            if(match.find())
+	            	data.setListImageName(match.group(0));
+	            System.out.println("--------------"+data.getContent());
+	            System.out.println("**************"+data.getListImageName());
 	            n++;
-	        }
-	        
+	            
+	            }
+	     
 	        String params = "";
 	        String urlList = cp+"/demander/"+demander_seq+"/review/list";
 	        String urlArticle = cp+"/demander/"+demander_seq+"/review/article?page=" + current_page;
