@@ -7,13 +7,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class DeReview {
 	private int serviceReviewIdx,serviceFileIdx,listNum;
     private int userIdx,serviceIdx;
-    private String demanderName;
+    private String demanderName,listImageName;
     private String userName, userId, subject, content, created;
     private int hitCount;
     private int replyCount;
     private int likeCount;
 	private int reviewLikeCount;
 	private int demander_seq;
+	
 	
 	
 	// 스프링에서 파일 받기
@@ -150,6 +151,12 @@ public class DeReview {
 	}
 	public void setDemander_seq(int demander_seq) {
 		this.demander_seq = demander_seq;
+	}
+	public String getListImageName() {
+		return listImageName;
+	}
+	public void setListImageName(String listImageName) {
+		this.listImageName = listImageName;
 	}
 
 	

@@ -74,25 +74,9 @@ public class DeReviewServiceImpl implements DeReviewService {
 	//파일************************
 	@Override
 	public int insertFile(DeReview dto, Map<String, Object> map) {
-	/*	int result = 0;
-
-		try {
-			if (dto.getUpload() != null && !dto.getUpload().isEmpty()) {
-				String saveFilename = fileManager.doFileUpload(dto.getUpload(), path);
-				dto.setSaveFilename(saveFilename);
-				dto.setOriginalFilename(dto.getUpload().getOriginalFilename());
-				// result=dao.insertInformation("demander.insertDeReFile", dto);
-			}
-			result = dao.insertInformation("demander.insertDeReFile", dto);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return result;*/
-		
+	
 		int result=0;
 		try {
-			/*int maxNum=dao.getIntValue("demander.maxFileNum", map);
-			dto.setFileNum(maxNum+1);*/
 			
 			result=dao.insertInformation("demander.insertFile", dto);
 		} catch (Exception e) {
@@ -199,28 +183,6 @@ public class DeReviewServiceImpl implements DeReviewService {
 
 	@Override
 	public int updateDeReview(DeReview dto, String path) {
-		/*int result=0;
-		try{
-			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()) {
-				// 이전파일 지우기
-				if(dto.getSaveFilename().length()!=0)
-					fileManager.doFileDelete(dto.getSaveFilename(), path);
-				
-				String newFilename = fileManager.doFileUpload(dto.getUpload(), path);
-				if (newFilename != null) {
-					dto.setOriginalFilename(dto.getUpload().getOriginalFilename());
-					dto.setSaveFilename(newFilename);
-				}
-			}
-			
-			dao.updateInformation("demander.updateDeReview", dto);
-			dao.updateInformation("demander.updateDeReviewFile", dto);
-			result=1;
-		} catch(Exception e) {
-			System.out.println(e.toString());
-		}
-		return result;*/
-		
 		int result=0;
 		
 		try {

@@ -158,6 +158,17 @@ function deleteReply(replyNum, page) {
 	}
 } 
 
+function countRevLikeRe(replyNum) {
+	var url="<%=cp%>/demander/${demander_seq}/review/countLikeReply";
+	$.post(url, {replyNum:replyNum}, function(data){
+		var likeCountReId="#likeCountRe"+replyNum;
+		var likeCountRe=data.likeCount;
+		$(likeCountReId).html(likeCountRe);
+	}, "JSON");
+	
+}
+
+
 //-------------------------------------
 function deleteReview() {
 <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
@@ -189,6 +200,7 @@ function updateReview() {
  alert("게시물을 수정할 수  없습니다.");
 </c:if> 
 }
+
 </script>
     <section id="blog-details" class="padding-top">
                <div class="col-md-12 col-sm-12">

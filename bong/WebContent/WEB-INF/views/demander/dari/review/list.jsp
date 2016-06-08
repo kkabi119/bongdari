@@ -55,8 +55,9 @@ function searchList() {
     width: 100%;
     height: 100%;
     background-position: center;
-    background-size: cover;
+    background-size: cover; 
 }
+
 
 /* 후기게시판 리스트  */
 .col1 {
@@ -104,11 +105,22 @@ function searchList() {
          <div class="carousel2">
             <div class="carousel-inner">
                <div class="item active">
-                  <div class="fill"
+                 <c:if test="${not empty dto.listImageName}">
+                           <div class="fill">
+                           ${dto.listImageName}
+                            </div>      
+                  </c:if>
+                  <c:if test="${empty dto.listImageName}">
+                            <div class="fill" style="background-image:url('<%=cp%>/res/images/demander/demander3.jpg');">
+                                   
+                            </div>      
+                </c:if>
+                <%-- <div class="fill"
                      style="background-image:url('<%=cp%>/res/images/demander/demander3.jpg');"></div>
-               </div>
+               </div> --%>
             </div>
          </div>
+      </div>
       </div>
       
       <div class="col1">
