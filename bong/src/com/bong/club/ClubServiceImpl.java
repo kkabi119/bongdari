@@ -22,9 +22,9 @@ public class ClubServiceImpl  implements ClubService {
 	public int insertClub(ClubInfo dto, String pathname) {
 		int result=0;
 		try {
-			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()) {
+			if(dto.getUploads()!=null && !dto.getUploads().isEmpty()) {
 				String filename=fileManager.doFileUpload(
-						dto.getUpload(), pathname);
+						dto.getUploads(), pathname);
 				dto.setPhotoFilename(filename);
 			}
 			
@@ -81,12 +81,12 @@ public class ClubServiceImpl  implements ClubService {
 	public int updateClub(ClubInfo dto, String pathname) {
 		int result=0;
 		try {
-			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()) {
+			if(dto.getUploads()!=null && !dto.getUploads().isEmpty()) {
 				if(dto.getPhotoFilename().length()!=0) {
 					fileManager.doFileDelete(dto.getPhotoFilename(), pathname);
 				}
 				
-				String filename=fileManager.doFileUpload(dto.getUpload(), pathname);
+				String filename=fileManager.doFileUpload(dto.getUploads(), pathname);
 				dto.setPhotoFilename(filename);
 			}			
 			
