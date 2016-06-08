@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,12 +39,13 @@ public class clreviewController {
 	@Autowired
 	private FileManager fileManager;
 	
-	@RequestMapping(value="/club/index/review/list")
+	@RequestMapping(value="/club/${club_seq}/review/list")
 	public ModelAndView ClReviewList(
 			HttpServletRequest req,
 			@RequestParam(value="page",defaultValue="1")int current_page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
-			@RequestParam(value="searchValue", defaultValue="") String searchValue
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			@PathVariable int club_seq
 			
 			) throws Exception {
 		
@@ -92,16 +94,16 @@ public class clreviewController {
 	        }
 	        
 	        String params = "";
-	        String urlList = cp+"/club/index/review/list";
-	        String urlArticle = cp+"/club/index/review/article?page=" + current_page;
+	        String urlList = cp+"/club/${club_seq}/review/list";
+	        String urlArticle = cp+"/club/${club_seq}/review/article?page=" + current_page;
 	        if(searchValue.length()!=0) {
 	        	params = "searchKey=" +searchKey + 
 	        	             "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");	
 	        }
 	        
 	        if(params.length()!=0) {
-	            urlList = cp+"/club/index/review/list?" + params;
-	            urlArticle = cp+"/club/index/review/article?page=" + current_page + "&"+ params;
+	            urlList = cp+"/club/${club_seq}/review/list?" + params;
+	            urlArticle = cp+"/club/${club_seq}/review/article?page=" + current_page + "&"+ params;
 	        }
 	        
 	        ModelAndView mav=new ModelAndView(".four.club.dari.review.list.후기게시판");
@@ -117,7 +119,7 @@ public class clreviewController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/club/index/review/create",method=RequestMethod.GET)
+	@RequestMapping(value="/club/${club_seq}/review/create",method=RequestMethod.GET)
 	public ModelAndView ClRevCreateForm(
 			HttpSession session
 			) throws Exception {
@@ -132,7 +134,7 @@ public class clreviewController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/club/index/review/create",method=RequestMethod.POST)
+	@RequestMapping(value="/club/${club_seq}/review/create",method=RequestMethod.POST)
 	public ModelAndView ClRevCreateSubmit(
 			HttpSession session,
 			ClReview dto
@@ -151,12 +153,12 @@ public class clreviewController {
 		
 		service.insertClReview(dto, path);		
 		
-		return new ModelAndView("redirect:/club/index/review/list");
+		return new ModelAndView("redirect:/club/${club_seq}/review/list");
 		
 	}
 	
 	
-	@RequestMapping(value="/club/index/review/article")
+	@RequestMapping(value="/club/${club_seq}/review/article")
 	public ModelAndView ClReArticle(
 			HttpSession session,
 			@RequestParam(value="num") int num,
@@ -213,7 +215,7 @@ public class clreviewController {
 	}
 	
 	//다운로드
-	@RequestMapping(value="/club/index/review/download")
+	@RequestMapping(value="/club/${club_seq}/review/download")
 	public void ClReviewDownload(
 			HttpServletRequest req,
 			HttpServletResponse resp,
@@ -252,7 +254,7 @@ public class clreviewController {
 		}
 	}
 	
-	@RequestMapping(value = "club/index/review/update", method=RequestMethod.GET)
+	@RequestMapping(value = "club/${club_seq}/review/update", method=RequestMethod.GET)
 	public ModelAndView ClRevUpdateForm(HttpSession session,
 			@RequestParam(value = "num") int num,
 			@RequestParam(value = "page") String page
@@ -264,11 +266,11 @@ public class clreviewController {
 		map.put("clubReviewIdx", num);
 		ClReview dto = service.readClReview(map);
 		/*if (dto == null) {
-			return new ModelAndView("redirect:/club/index/review/list?page="+page);
+			return new ModelAndView("redirect:/club/${club_seq}/review/list?page="+page);
 		}*/
 	
 		if (info.getUserIdx()!=dto.getUserIdx())
-			return new ModelAndView("redirect:/club/index/review/list?page="+page);
+			return new ModelAndView("redirect:/club/${club_seq}/review/list?page="+page);
 
 		ModelAndView mav=new ModelAndView(".four.club.dari.review.create.후기게시판");
 		mav.addObject("mode", "update");
@@ -278,7 +280,7 @@ public class clreviewController {
 		return mav;
 	}
 
-	@RequestMapping(value = "club/index/review/update", method=RequestMethod.POST)
+	@RequestMapping(value = "club/${club_seq}/review/update", method=RequestMethod.POST)
 	public String ClRevUpdateSubmit(HttpSession session, 
 			ClReview dto,
 			@RequestParam(value = "page") String page) throws Exception {
@@ -294,10 +296,10 @@ public class clreviewController {
 		// 수정 하기
 		service.updateClReview(dto, path);
 		
-		return "redirect:/club/index/review/list?page="+page;
+		return "redirect:/club/${club_seq}/review/list?page="+page;
 	}
 
-	@RequestMapping(value="/club/index/review/deleteFile", 
+	@RequestMapping(value="/club/${club_seq}/review/deleteFile", 
 			method=RequestMethod.GET)
 	public ModelAndView deleteFile(
 			HttpSession session,	@RequestParam(value="num") int num,	@RequestParam(value="page") String page
@@ -310,7 +312,7 @@ public class clreviewController {
 		map.put("clubReviewIdx", num);
 		ClReview dto = service.readClReview(map);
 		if(dto==null) {
-			return new ModelAndView("redirect:/club/index/review/list?page="+page);
+			return new ModelAndView("redirect:/club/${club_seq}/review/list?page="+page);
 		}
 			
 		if(! info.getUserId().equals(dto.getUserId())) {
@@ -328,11 +330,11 @@ public class clreviewController {
 			  service.updateClReview(dto, path);
        }
 		
-		return new ModelAndView("redirect:/club/index/review/update?num="+num+"&page="+page);
+		return new ModelAndView("redirect:/club/${club_seq}/review/update?num="+num+"&page="+page);
 	}
 	
 ////////////////////////////////////////////////////////////////////		게시글 삭제 
-	@RequestMapping(value="/club/index/review/delete")
+	@RequestMapping(value="/club/${club_seq}/review/delete")
 	public ModelAndView delete(
 			HttpSession session,
 			@RequestParam(value="num") int num,
@@ -348,11 +350,11 @@ public class clreviewController {
 		// 해당 레코드 가져 오기
 		ClReview dto = service.readClReview(map);
 		if(dto==null) {
-			return new ModelAndView("redirect:/club/index/review/list?page="+page);
+			return new ModelAndView("redirect:/club/${club_seq}/review/list?page="+page);
 		}
 		
 		if(! info.getUserId().equals(dto.getUserId()) && ! info.getUserId().equals("admin")) {
-			return new ModelAndView("redirect:/club/index/review/list?page="+page);
+			return new ModelAndView("redirect:/club/${club_seq}/review/list?page="+page);
 		}
 		
 		String root = session.getServletContext().getRealPath("/");
@@ -360,12 +362,12 @@ public class clreviewController {
  	
 		service.deleteClReview(num, dto.getSaveFilename(), path);
 		
-		return new ModelAndView("redirect:/club/index/review/list?page="+page);
+		return new ModelAndView("redirect:/club/${club_seq}/review/list?page="+page);
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////	게시글의 좋아요 처리 
 	
 	/////////////// 	게시글의 좋아요추가
-	@RequestMapping(value="/club/index/review/sendLike",	method=RequestMethod.POST)
+	@RequestMapping(value="/club/${club_seq}/review/sendLike",	method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> sendLike(	HttpSession session,	ClReview dto)
 			throws Exception {
@@ -391,7 +393,7 @@ public class clreviewController {
 	}
 	
 	////////////////////////////////////////////////////////////////////		게시글의 좋아요/싫어요 개수
-	@RequestMapping(value="/club/index/review/countLike",   	method=RequestMethod.POST)
+	@RequestMapping(value="/club/${club_seq}/review/countLike",   	method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object>  countLike(	@RequestParam(value="clubReviewIdx") int num) 
 			throws Exception {
@@ -414,7 +416,7 @@ public class clreviewController {
 	///////////////////////////////////////////////////////////////////////////////////////////		댓글 관련
 	
 	//////////////////////////////////////////////////////////////////				댓글리스트
-	@RequestMapping(value="/club/index/review/listReply")
+	@RequestMapping(value="/club/${club_seq}/review/listReply")
 	public ModelAndView listReply(
 			@RequestParam(value="num") int num, //ClubReviewIdx가 넘어왔다
 			@RequestParam(value="pageNo", defaultValue="1") int current_page
@@ -468,7 +470,7 @@ public class clreviewController {
 	}
 	
 	//////////////////////////////////////////////////////////////					 대댓글 리스트
-			@RequestMapping(value="/club/index/review/listReplyAnswer")
+			@RequestMapping(value="/club/${club_seq}/review/listReplyAnswer")
 			public ModelAndView listReplyAnswer(	@RequestParam(value="answer") int answer
 					) throws Exception {
 				
@@ -492,7 +494,7 @@ public class clreviewController {
 				return mav;
 			}
 	
-			@RequestMapping(value="/club/index/review/replyCount", method=RequestMethod.POST)
+			@RequestMapping(value="/club/${club_seq}/review/replyCount", method=RequestMethod.POST)
 			@ResponseBody
 			public Map<String, Object> replyCount(	@RequestParam(value="num") int num
 					) throws Exception {
@@ -515,7 +517,7 @@ public class clreviewController {
 				return model;
 			}
 			
-			@RequestMapping(value="/club/index/review/replyCountAnswer", method=RequestMethod.POST)
+			@RequestMapping(value="/club/${club_seq}/review/replyCountAnswer", method=RequestMethod.POST)
 			@ResponseBody
 			public Map<String, Object>  replyCountAnswer( @RequestParam(value="answer") int answer) throws Exception {
 				
@@ -529,7 +531,7 @@ public class clreviewController {
 			}
 			
 			// 댓글 및 리플별 답글 추가
-			@RequestMapping(value="/club/index/review/createdReply", method=RequestMethod.POST)
+			@RequestMapping(value="/club/${club_seq}/review/createdReply", method=RequestMethod.POST)
 			@ResponseBody
 			public Map<String, Object>  createdReply(	HttpSession session,	ClReviewReply dto) 
 					throws Exception {
@@ -553,7 +555,7 @@ public class clreviewController {
 			}
 			
 			// 댓글 및 대댓글 삭제
-			@RequestMapping(value="/club/index/review/deleteReply",		method=RequestMethod.POST)
+			@RequestMapping(value="/club/${club_seq}/review/deleteReply",		method=RequestMethod.POST)
 			@ResponseBody	
 			public Map<String, Object>  deleteReply(
 					HttpSession session,
@@ -587,7 +589,7 @@ public class clreviewController {
 			
 	//*********								댓글 좋아요											*************
 			//좋아요
-			@RequestMapping(value="/club/index/review/insertReplyLike",	method=RequestMethod.POST)
+			@RequestMapping(value="/club/${club_seq}/review/insertReplyLike",	method=RequestMethod.POST)
 			@ResponseBody
 			public Map<String, Object> insertReplyLike(
 					HttpSession session,	ClReviewReply dto) throws Exception {
@@ -617,7 +619,7 @@ public class clreviewController {
 			}
 			
 			// 좋아요/싫어요 개수
-			@RequestMapping(value="/club/index/review/replyCountLike",
+			@RequestMapping(value="/club/${club_seq}/review/replyCountLike",
 					method=RequestMethod.POST)
 			@ResponseBody
 			public Map<String, Object>  replyCountLike(	@RequestParam(value="replyNum") int num)

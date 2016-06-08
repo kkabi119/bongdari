@@ -11,7 +11,7 @@
 <script type="text/javascript">
 function searchList() {
 		var f=document.searchForm;
-		f.action="<%=cp%>/demander/index/review/list";
+		f.action="<%=cp%>/club/${club_seq}/review/list";
 		f.submit();
 }
 </script>
@@ -111,7 +111,7 @@ hr:LAST-CHILD {
             <h3  style="font-size:30px;"> 봉사 후기<span style="margin-left:10px;color:gray; font-size:15px;">  우리의 봉사후기를 나누어 보아요~</span> </h3>
 
      <%--     <ol class="breadcrumb">
-            <li><a href="<%=cp%>/demander/index/main" style="color:gray; font-weight: bold;">우리 동아리</a></li>
+            <li><a href="<%=cp%>/demander/${club_seq}/main" style="color:gray; font-weight: bold;">우리 동아리</a></li>
             <li class="active">후기 게시판 </li>
          </ol> --%>
       </div>
@@ -192,7 +192,7 @@ hr:LAST-CHILD {
    <div style="clear: both; border-radius:0px;">
       <div style="float: left; width: 20%; min-width: 85px;">
          <button type="button" class="btn btn-default " style=" color: gray; border:1px solid gray; margin-left:30px;" 
-            onclick="javascript:location.href='<%=cp%>/demander/index/review/list';">새로고침</button>
+            onclick="javascript:location.href='<%=cp%>/demander/${club_seq}/review/list';">새로고침</button>
       </div>
       <div style="float: left; width: 60%; height:41px; text-align: center; margin-top:0px; padding-top:0px;">
          <form name="searchForm" method="post" class="form-inline" style=" ">
@@ -213,7 +213,7 @@ hr:LAST-CHILD {
       <div
          style="float: left; width: 20%; min-width: 85px; text-align: right;">
          <button type="button" class="btn btn-warning" style="background-color: #00aeef; border:none;"
-            onclick="javascript:location.href='<%=cp%>/club/index/review/create';">
+            onclick="javascript:location.href='<%=cp%>/club/${club_seq}/review/create';">
             <span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기
          </button>
       </div>

@@ -13,8 +13,16 @@ public class ClReview {
     private int replyCount;
     private int likeCount;
 	private int reviewLikeCount;
+	private int club_seq;
 	
 	
+	
+	public int getClub_seq() {
+		return club_seq;
+	}
+	public void setClub_seq(int club_seq) {
+		this.club_seq = club_seq;
+	}
 	public int getClubReviewIdx() {
 		return clubReviewIdx;
 	}
