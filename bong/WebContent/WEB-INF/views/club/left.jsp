@@ -32,11 +32,20 @@
 			var introduce=data.dto.introduce;
 			var city=data.dto.city;
 			var category=data.dto.groupSubject+" > "+data.dto.subject;
+			var clubname=data.dto.clubname;
 			
 			$("#introduce").html(introduce);
 			$("#city").html(city);
 			$("#category").html(category);
+			$("#clubname").html(clubname);
 		}, "JSON");
+	});
+	
+	$(function(){
+		var idx="${subMenu}";
+		if(!idx) idx=1;
+		var subMenu=".navbar-stacked-item"+idx;
+		$(subMenu).addClass("active");
 	});
 	</script>
                 <div class="col-md-3 col-sm-5">
@@ -72,30 +81,29 @@
                                 </div>
                             </div>
                         </div> --%>
-                        <div class="sidebar-item categories">
-                            <h3>Categories</h3>
-                            <ul class="nav navbar-stacked">
-                                <li><a href="<%=cp%>/main/club/">동아리 메인페이지<span class="pull-right">(1)</span></a></li>
-                                <li class="active"><a href="<%=cp%>/club/${clubSeq}/main">내 동아리 메인<span class="pull-right">(8)</span></a></li>
-                                <li><a href="<%=cp%>/club/${clubSeq}/notice/list">공지사항<span class="pull-right">(4)</span></a></li>
-                                <li><a href="<%=cp%>/club/${clubSeq}/japply">가입신청하기<span class="pull-right">(9)</span></a></li>
-                                <li><a href="<%=cp%>/club/${clubSeq}/free/list">자유게시판<span class="pull-right">(3)</span></a></li>
-                                <li><a href="<%=cp%>/club/${clubSeq}/review/list">후기/포토게시판<span class="pull-right">(4)</span></a></li>
-                                <li><a href="<%=cp%>/club/${clubSeq}/apply/list">봉사신청게시판<span class="pull-right">(2)</span></a></li>
-                                <li><a href="<%=cp%>/club/${clubSeq}/calendar/main">우리동아리 달력<span class="pull-right">(8)</span></a></li>
-                                <li><a href="<%=cp%>/club/${clubSeq}/admin">관리자모드<span class="pull-right">(8)</span></a></li>
-                            </ul>
-                        </div>
                         <div class="sidebar-item tag-cloud">
                             <h3>동아리 간단정보</h3>
                             <ul class="nav nav-pills">
-                                <li><a href="#">황금다리</a></li>
-                                <li><a href="#">297점</a></li>
+                                <li><a href="level">황금다리</a></li>
+                                <li><a href="point">297점</a></li>
                                 <li><a id="city" href=""></a></li>
                                 <li><a  id="category" href=""></a></li>
                                 <li><a id="introduce" href=""></a></li>
                             </ul>
                         </div>
-                        
+                        <div class="sidebar-item categories">
+                            <ul class="nav navbar-stacked">
+                            <li><h3 class="nav navbar-stacked lefthead">Categories</h3></li>
+                                <li  class="navbar-stacked-item1"><a href="<%=cp%>/main/club/">동아리 메인페이지<span></span></a></li>
+                                <li  class="navbar-stacked-item2"><a href="<%=cp%>/club/${clubSeq}/main">내 동아리 메인</a></li>
+                                <li  class="navbar-stacked-item3"><a href="<%=cp%>/club/${clubSeq}/notice/list">공지사항</a></li>
+                                <li  class="navbar-stacked-item4"><a href="<%=cp%>/club/${clubSeq}/japply">가입신청하기</a></li>
+                                <li  class="navbar-stacked-item5"><a href="<%=cp%>/club/${clubSeq}/free/list">자유게시판</a></li>
+                                <li  class="navbar-stacked-item6"><a href="<%=cp%>/club/${clubSeq}/review/list">후기/포토게시판</a></li>
+                                <li  class="navbar-stacked-item7"><a href="<%=cp%>/club/${clubSeq}/apply/list">봉사신청게시판</a></li>
+                                <li  class="navbar-stacked-item8"><a href="<%=cp%>/club/${clubSeq}/calendar/main">우리동아리 달력</a></li>
+                                <li  class="navbar-stacked-item9"><a href="<%=cp%>/club/${clubSeq}/admin">관리자모드</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
