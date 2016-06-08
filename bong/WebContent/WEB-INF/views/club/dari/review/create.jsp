@@ -22,7 +22,7 @@
 
 <style type="text/css">
 .col-md-9{
-	margin-left:25px; margin-top:-25px;
+	margin-top:-25px;
 }
 .bs-write table {
 	width: 100%;

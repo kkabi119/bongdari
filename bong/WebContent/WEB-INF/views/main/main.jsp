@@ -12,22 +12,38 @@
    border-radius:0px;
     font-weight: bold;
     padding: 20px 40px;
-    background-color: #32BEF3;
+    background-color: #32BEF3; border:none;
 
 }
+ .btn-common:hover{
+  background-color: #37DABA;
+ 	font-size: 19px;  border-radius:0px; border:none; color:white;
+ }
  
+ 
+  .padding{
+    padding: 30px 0;
+  }
 
 </style>
     <section id="home-slider">
         <div class="container">
             <div class="row">
                 <div class="main-slider">
-                    <div class="slide-text" style="margin-top:13%"><!-- 
+                    <div class="slide-text" style="margin-top:11%"><!-- 
                      <p  style="font-size:25px;">봉사에 친목을 더하다 따뜻함을 더하다 </p> -->
-                        <h1 style="font-size:40px; font-weight:bolder; margin-bottom:5px;">우리를 이어주는 다리 </h1>
-                        <h1 style="margin-top:3px;font-size:60px; font-weight:900; color:white;">봉 다 리 </h1>
-                        <p  style="font-size:23px; margin-bottom:-10px"></p>
-                        <a href="#" class="btn btn-common">시작하기</a>
+                    
+                      	<img Id="listBtn"style="margin-left:-10px; width:300px; height:150px; background-size:cover; "src="<%=cp%>/res/images/mainslide/maintext.png" alt="">
+                      
+           <!--         <h1 style="font-size:40px; font-weight:bolder; margin-bottom:5px;">우리를 이어주는 다리 </h1>
+                        <h1 style="margin-top:3px;font-size:60px; font-weight:900; color:white;">봉 다 리 </h1> -->
+                        <p  style="font-size:20px;margin-top:20px; margin-bottom:-10px ;font-weight:600; line-height:25px;">
+                        작은 실천과 만남으로 따뜻한 일상을 만들어 보세요<br>
+                        </p>
+                        <div><a href="#" style="margin-top:30px; "class="btn btn-common">가입하기</a></div>
+                    </div>
+                    <div>
+          	          
                     </div>
                  <%--    <img src="<%=cp%>/res/images/home/slider/hill.png" class="slider-hill" alt="slider image">
                     <img src="<%=cp%>/res/images/home/slider/house.png" class="slider-house" alt="slider image">
@@ -41,34 +57,45 @@
     </section>
     <!--/#home-slider-->
 
-    <section id="services">
+    <section id="services" style="margin-bottom:30px;">
         <div class="container">
             <div class="row">
-                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <div class="single-service">
+                <div class="col-sm-3 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
+                    <div class="single-service" style="color:#555; ">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
-                            <img src="<%=cp%>/res/images/home/icon1.png" alt="">
+                          <a href="#">  <img style="border-radius:100%; width:120px; height:120px;"src="<%=cp%>/res/images/home/icon3.png" alt=""></a>
                         </div>
-                        <h2>Incredibly Responsive</h2>
-                        <p>Ground round tenderloin flank shank ribeye. Hamkevin meatball swine. Cow shankle beef sirloin chicken ground round.</p>
+                        <h2 style="font-size:22px;font-size:22px; font-weight:600;">봉다리 메인</h2>
+                       <!--  <p style="font-weight:400">이번 달의 포토와 후기를 칭찬해주세요 </p> -->
                     </div>
                 </div>
-                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                <div class="col-sm-3 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
                     <div class="single-service">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
-                            <img src="<%=cp%>/res/images/home/icon2.png" alt="">
+                              <a href="#">  <img style="border-radius:100%; width:120px; height:120px;"src="<%=cp%>/res/images/home/icon3.png" alt=""></a>
                         </div>
-                        <h2>Superior Typography</h2>
-                        <p>Hamburger ribeye drumstick turkey, strip steak sausage ground round shank pastrami beef brisket pancetta venison.</p>
+                        <h2 style="font-size:22px;font-weight:600;">동아리 검색</h2>
+                      <!--   <p> 우리 지역 봉다리에 참여하세요 </p> -->
                     </div>
                 </div>
-                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
+                <div class="col-sm-3 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
                     <div class="single-service">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
-                            <img src="<%=cp%>/res/images/home/icon3.png" alt="">
+                             <a href="#">  <img style="border-radius:100%; width:120px; height:120px;"src="<%=cp%>/res/images/home/icon3.png" alt=""></a>
                         </div>
-                        <h2>Swift Page Builder</h2>
-                        <p>Venison tongue, salami corned beef ball tip meatloaf bacon. Fatback pork belly bresaola tenderloin bone pork kevin shankle.</p>
+                          <h2 style="font-size:22px;font-weight:600;">수요처 메인</h2>
+          <!--               <p> 지금 관심있는 수요처를 찾아보세요</p> -->
+                       
+                    </div>
+                </div>
+                <div class="col-sm-3 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
+                    <div class="single-service">
+                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
+                              <a href="#">  <img style="border-radius:100%; width:120px; height:120px;"src="<%=cp%>/res/images/home/icon3.png" alt=""></a>
+                        </div>
+                          <h2 style="font-size:22px;font-weight:600; "> 봉사 달력</h2>
+                      <!--   <p> 나에게 맞는 봉사활동을 찾을 수 있어요 </p> -->
+                       
                     </div>
                 </div>
             </div>

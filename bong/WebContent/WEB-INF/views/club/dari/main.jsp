@@ -10,8 +10,7 @@
 <style type="text/css">
 
 .col-md-9{
-	
-	margin-left:3%;
+	W
 }
 		
 </style>

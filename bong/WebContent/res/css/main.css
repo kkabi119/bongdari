@@ -54,7 +54,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Lato', sans-serif;
+    font-family:' ³ª´®°íµñ','Lato', sans-serif;
     font-weight: 300;
   }
 
@@ -169,7 +169,7 @@
 #header{
   margin-bottom: 0;
  /* padding: 10px 0 10px 0; ¿¡¼­ ¹ØÀ¸·Î º¯°æ - ¾çÈ÷ - */
-   padding: 15px 0 25px 0;
+   padding: 15px 0 20px 0;
 }
 
 #header .navbar-inverse .container{
@@ -548,15 +548,15 @@ ul.sub-menu {
 *******Home Page******
 **************************/
 #home-slider {
-  background: url(../images/mainslide/child1.jpg)  ;
+  background: url(../images/mainslide/child2.jpg)  ;
   position: relative;
-  background-size:100% 125%;
+  background-size:100% 120%;
   color:white;
 }
 
 #home-slider .main-slider {
   position: relative;
-  height: 600px;
+  height: 630px;
   color:white;
 }
 
@@ -686,7 +686,7 @@ ul.sub-menu {
 }
 
 .single-service img {
-  margin-bottom: 35px;
+  margin-bottom: 20px;
 }
 
 .single-service .fold {
@@ -695,11 +695,11 @@ ul.sub-menu {
 
 .single-service h2 {
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 4px;
 }
 
 .single-service p {
-  padding: 0 48px;
+  padding: 0 20px;
 }
 
 .action h1{

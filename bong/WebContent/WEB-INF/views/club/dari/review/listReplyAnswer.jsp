@@ -5,6 +5,15 @@
 <%
 	String cp=request.getContextPath();
 %>
+<style type="text/css">
+.parrent .media-list{
+	margin-left:0px;
+}
+.parrent .post-comment{
+	margin-left:20px;
+	min-height:124px;
+}
+</style>
 <c:if test="${not empty listReplyAnswer}">
 	<c:forEach var="Adto" items="${listReplyAnswer}">
 <div class="parrent">
@@ -12,40 +21,23 @@
                                                     <li class="post-comment reply">
                                                     
                                                         <a class="pull-left" href="#">
-                                                            <img class="media-object" src="images/blogdetails/3.png" alt="">
+                                                            <img style="border-radius:100%; width:110px; height:110px; background-size:cover; "class="media-object" src="<%=cp%>/res/images/blogdetails/1.png" alt="">
                                                         </a>
-                                                        <div class="media-body">
-                                                            <span><i class="fa fa-user"></i>Posted by <a href="#">${Adto.userName}</a></span>
+                                                        <div class="media-body" style="padding-bottom: 10px">
+                                                            <span><i class="fa fa-user"></i><a href="#">${Adto.userName }</a></span>
+                                                             <c:if test="${sessionScope.member.userId==Adto.userId || sessionScope.member.userId=='admin'}">   
+		     											<span style="margin-left:10px; float:right; ">
+		     												<a class="btn" onclick='deleteReplyAnswer("${Adto.replyNum}", "${Adto.answer}");' style="background-color:none; margin-top:-5px;color:#C03035; border:none;">
+		     													삭제
+		     												</a>
+		     											</span>
+		     											  <span  style="color:#888; float:right;"><i class="fa fa-clock-o"  style="color:#888"></i>${Adto.created}</span>
+						</c:if>
                                                             <p>${Adto.content}</p>
-                                                            <ul class="nav navbar-nav post-nav">
-                                                                <li><a href="#"><i class="fa fa-clock-o"></i>${Adto.created }</a></li>
-<c:if test="${sessionScope.member.userId==Adto.userId || sessionScope.member.userId=='admin'}">   
-		     														<li><a href="#" onclick='deleteReplyAnswer("${Adto.replyNum}", "${Adto.answer}");'>삭제</a></li>
-</c:if>
-                                                            </ul>
+                      
                                                         </div>
                                                     </li>
                                                 </ul>
                                             </div>
 	</c:forEach>
 </c:if>
-
-<%-- 
-<c:if test="${not empty listReplyAnswer}">
-    <c:forEach var="vo" items="${listReplyAnswer}">
-        <div style="clear: both; border-top: #d5d5d5 solid 1px; margin-top: 7px; padding-top: 5px;">
-            <div style="float: left;">${vo.userName} | ${vo.created }</div>
-            <div style="float: right; text-align: rigth;">
-<c:if test="${sessionScope.member.userId==vo.userId || sessionScope.member.userId=='admin'}">   
-		     <a onclick='deleteReplyAnswer("${vo.replyNum}", "${vo.answer}");'>삭제</a>
-</c:if>
-<c:if test="${sessionScope.member.userId!=vo.userId && sessionScope.member.userId!='admin'}">   
-		   | <a href='#'>신고</a>
-</c:if>
-            </div>
-        </div>
-        <div style="clear: both; padding: 5px 0 5px 0px;  min-height: 70px;">
-            ${vo.content}
-        </div>
-    </c:forEach>
-</c:if> --%>

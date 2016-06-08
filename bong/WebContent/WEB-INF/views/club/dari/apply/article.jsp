@@ -62,6 +62,7 @@ padding-top: 13px;
 
 .btn {
 	border-radius:2px;
+	padding: 9px 15px;
 }
 
 .icon-wrapper:hover{
@@ -214,7 +215,7 @@ function countLike(replyNum) {
 }
 
 /////////////////////////////////////////////////////////////////////////////////	좋아요/싫어요 추가
-function sendLike(replyNum) {
+function insertReplyLike(replyNum) {
 	
 	var uid="${sessionScope.member.userId}";
 	if(! uid) {
@@ -225,7 +226,7 @@ function sendLike(replyNum) {
 	var params="replyNum="+replyNum;
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/apply/replyLike"
+		,url:"<%=cp%>/apply/insertReplyLike"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {

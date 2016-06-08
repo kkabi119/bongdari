@@ -28,10 +28,12 @@ public interface ApplyService {
 	public int replyDataCount(Map<String, Object> map);//v
 	public int replyCountAnswer(int answer);//v
 	public int deleteReply(Map<String, Object> map);//v
+
 	int insertReplyLike(Reply dto);//v
 	Map<String, Object> replyCountLike(int replyNum);//v
 	public int stateReplyLike(Reply dto);//v
 	int deleteReplyLike(Reply dto);//v
+	
 	public int updateHitCount_club(int clubApplyIdx);//v
 	
 	public List<Member> readApplyList(int clubApplyIdx);

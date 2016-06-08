@@ -218,12 +218,13 @@
               ORDER BY replyNum DESC
 	</select>
 	
-	<!-- 													댓글 좋아요 																-->
+	<!-- 								댓글 좋아요 추가																-->
 	<insert id="insertReplyLike" parameterType="com.bong.club.apply.Reply">
 	INSERT INTO club_applyR_like(CARIdx, userIdx)
 	   VALUES (#{replyNum}, #{userIdx})
 	</insert>
 
+	<!-- 								댓글 좋아요 세기 -->
 	<select id="replyCountLike" resultType="map" parameterType="Integer">
 	   SELECT  NVL(COUNT(*), 0) AS likeCount
 	    FROM club_applyR_like

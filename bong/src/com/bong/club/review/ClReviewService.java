@@ -3,6 +3,8 @@ package com.bong.club.review;
 import java.util.List;
 import java.util.Map;
 
+import com.bong.club.apply.Reply;
+
 public interface ClReviewService {
 	public int insertClReview(ClReview dto, String path);
 	public List<ClReview> listClReview(Map<String, Object> map);
@@ -21,23 +23,26 @@ public interface ClReviewService {
 	public int deleteFile(Map<String, Object> map);
 	
 	
-	public int stateClRevLike(ClReview dto);
-	public int insertClReviewLike(ClReview dto);
-	public int deleteClReviewLike(ClReview dto);
-	public Map<String, Object> ClRevCountLike(int num);
+	public int stateLike(ClReview dto);
+	public int insertLike(ClReview dto);
+	public int deleteLike(ClReview dto);
+	public Map<String, Object> countLike(int num);
 	public int updateClRevLikeCount(ClReview dto);
 	
 	public int deleteClReviewId(String userId, String root);
 	
-	public int insertClReviewReply(ClReviewReply dto);
-	public List<ClReviewReply> listClReviewReply(Map<String, Object> map);
-	public List<ClReviewReply> listClReviewReplyAnswer(int answer);
-	public int ClReviewReplyDataCount(Map<String, Object> map);
-	public int ClReviewReplyCountAnswer(int answer);
-	public int deleteClReviewReply(Map<String, Object> map);
+	/// 댓글관련
+	public int insertReply(ClReviewReply dto) ;//v
+	public List<ClReviewReply> listReply(Map<String, Object> map);//v
+	public List<ClReviewReply> listReplyAnswer(Map<String, Object> map);//v
+	public int replyDataCount(Map<String, Object> map);//v
+	public int replyCountAnswer(int answer);//v
+	public int deleteReply(Map<String, Object> map);//v
 	
-	public int stateClRevReplyLike(ClReviewReply dto);
-	public int insertClReviewReplyLike(ClReviewReply dto);
-	public int deleteClRevReplyLike(ClReviewReply dto);
-	public Map<String, Object> ClReviewReplyCountLike(int ClReviewReplyNum);
+	/// 좋아요 관련
+	int insertReplyLike(ClReviewReply dto);//v
+	Map<String, Object> replyCountLike(int replyNum);//v
+	public int stateReplyLike(ClReviewReply dto);//v
+	int deleteReplyLike(ClReviewReply dto);//v
+	
 }
