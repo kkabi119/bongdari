@@ -67,30 +67,6 @@ public class DemanderController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/demander/{demander_seq}/notice/list")
-	public ModelAndView deNoticeList(
-			@PathVariable int demander_seq
-			) throws Exception {
-		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.notice.list.공지사항");
-		return mav;
-	}
-	@RequestMapping(value="/demander/{demander_seq}/notice/create")
-	public ModelAndView deNoticeCreate(
-			@PathVariable int demander_seq
-			) throws Exception {
-		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.notice.create.공지사항");
-		return mav;
-	}
-	@RequestMapping(value="/demander/{demander_seq}/notice/article")
-	public ModelAndView deNoticeArticle(
-			@PathVariable int demander_seq
-			) throws Exception {
-		ModelAndView mav = new ModelAndView(".four.demander.dari.notice.article.공지사항");
-		return mav;
-	}
-	
 	@RequestMapping(value="/demander/{demander_seq}/photo")
 	public ModelAndView demanderPhoto(
 			@PathVariable int demander_seq

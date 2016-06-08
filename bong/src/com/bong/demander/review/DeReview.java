@@ -13,6 +13,7 @@ public class DeReview {
     private int replyCount;
     private int likeCount;
 	private int reviewLikeCount;
+	private int demander_seq;
 	
 	
 	// 스프링에서 파일 받기
@@ -143,6 +144,12 @@ public class DeReview {
 	}
 	public void setServiceFileIdx(int serviceFileIdx) {
 		this.serviceFileIdx = serviceFileIdx;
+	}
+	public int getDemander_seq() {
+		return demander_seq;
+	}
+	public void setDemander_seq(int demander_seq) {
+		this.demander_seq = demander_seq;
 	}
 
 	

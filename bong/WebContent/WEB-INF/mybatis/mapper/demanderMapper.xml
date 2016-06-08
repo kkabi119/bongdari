@@ -10,37 +10,37 @@
 	
 	<!-- 리뷰 글넣기 -->
 	<insert id="insertDeReview" parameterType="com.bong.demander.review.DeReview">
-	INSERT INTO service_review(servicereviewidx,subject,CONTENT,serviceidx,useridx)
-	VALUES(#{serviceReviewIdx},#{subject},#{content},7,#{userIdx})
+	INSERT INTO service_review_${demander_seq}(servicereviewidx,subject,CONTENT,serviceidx,useridx)
+	VALUES(#{serviceReviewIdx},#{subject},#{content},${demander_seq},#{userIdx})
 	</insert>
 	
 	
 <!-- 파일 *********************** -->
 	<!-- 리뷰 파일넣기 -->
 	<insert id="insertFile" parameterType="com.bong.demander.review.DeReview">
-	INSERT INTO service_review_file(servicefileidx,savefilename,originalfilename,servicereviewidx
+	INSERT INTO service_review_file_${demander_seq}(servicefileidx,savefilename,originalfilename,servicereviewidx
 	)VALUES(service_rf_seq.NEXTVAL,#{saveFilename, jdbcType=VARCHAR},#{originalFilename, jdbcType=VARCHAR},#{serviceReviewIdx})
 	</insert>
 	
 
 	<select id="maxFileNum" resultType="Integer" parameterType="map">
-		SELECT NVL(MAX(servicefileidx), 0) FROM service_review_file
+		SELECT NVL(MAX(servicefileidx), 0) FROM service_review_file_${demander_seq}
 	</select>
 	
 	<select id="listFile" parameterType="map"
 	              resultType="com.bong.demander.review.DeReview">
 	   SELECT serviceFileIdx,serviceReviewIdx,saveFilename,originalFilename
-	    FROM service_review_file WHERE serviceReviewIdx=#{serviceReviewIdx}  
+	    FROM service_review_file_${demander_seq} WHERE serviceReviewIdx=#{serviceReviewIdx}  
 	</select>
 	
 	<select id="readFile" parameterType="map"
 	              resultType="com.bong.demander.review.DeReview">
 		SELECT serviceFileIdx, serviceReviewIdx, saveFilename,originalFilename
-	    FROM service_review_file WHERE serviceFileIdx=#{serviceFileIdx}    
+	    FROM service_review_file_${demander_seq} WHERE serviceFileIdx=#{serviceFileIdx}    
 	</select>
 	
 	<delete id="deleteFile" parameterType="map">
-	DELETE FROM service_review_file WHERE serviceReviewIdx =#{serviceReviewIdx}
+	DELETE FROM service_review_file_${demander_seq} WHERE serviceFileIdx =#{serviceFileIdx}
 	</delete>
 	
 <!-- 파일  끝*********************** -->	
@@ -66,7 +66,7 @@
 	<!-- 글개수 -->
 	<select id="dataCount" parameterType="map"
 	            resultType="Integer">
-	  SELECT NVL(COUNT(*), 0) FROM service_review s
+	  SELECT NVL(COUNT(*), 0) FROM service_review_${demander_seq} s
 	        JOIN checkId c  ON s.userIdx=c.userIdx
 	     <where>
 	     	<if test="searchValue!=null and searchValue!='' ">
@@ -88,7 +88,7 @@
 			     SELECT serviceReviewIdx, c.userIdx,userId, c.userName, subject
 			           ,TO_CHAR(s.created, 'YYYY-MM-DD') created
 					   ,hitCount
-			        FROM service_review s
+			        FROM service_review_${demander_seq} s
 	       			  JOIN checkId c ON s.useridx=c.useridx
 	       			  <where>
                          <if test="searchValue != null and searchValue != ''">
@@ -99,12 +99,12 @@
                   LEFT OUTER JOIN
 			        (
 			                SELECT serviceReviewIdx, count(*) replycount
-                                 FROM service_review_reply  tbreply GROUP BY serviceReviewIdx
+                                 FROM service_review_reply_${demander_seq}  tbreply GROUP BY serviceReviewIdx
 			        ) tbreply ON tbrev.serviceReviewIdx = tbreply.serviceReviewIdx
 	            ) LEFT OUTER JOIN
 			           (
 			                SELECT servicereviewidx, COUNT(*) likeCount
-                                 FROM service_review_like GROUP BY servicereviewidx
+                                 FROM service_review_like_${demander_seq} GROUP BY servicereviewidx
 			           ) tblike ON tbreply.servicereviewidx = tblike.servicereviewidx    
                    
 	                ORDER BY serviceReviewIdx DESC
@@ -118,23 +118,23 @@
 	<select id="readDeReview" parameterType="map" resultType="com.bong.demander.review.DeReview">
 		SELECT r.servicereviewidx, c.useridx, userid, c.username, subject,
 		content,hitcount, r.created,NVL(replyCount, 0) replyCount,NVL(likeCount, 0) likeCount
-		FROM service_review r 
+		FROM service_review_${demander_seq} r 
 		  JOIN checkId c ON r.useridx=c.useridx
    	    LEFT OUTER JOIN
 			        ( SELECT serviceReviewIdx, count(*) replycount
-                                 FROM service_review_reply  tbreply GROUP BY serviceReviewIdx
+                                 FROM service_review_reply_${demander_seq}  tbreply GROUP BY serviceReviewIdx
 			        ) tbreply ON r.servicereviewidx = tbreply.servicereviewidx
           LEFT OUTER JOIN
 			           (
 			                SELECT servicereviewidx, COUNT(*) likeCount
-                                 FROM service_review_like GROUP BY servicereviewidx
+                                 FROM service_review_like_${demander_seq} GROUP BY servicereviewidx
 			           ) tblike ON tbreply.servicereviewidx = tblike.servicereviewidx
 		WHERE r.servicereviewidx=#{serviceReviewIdx}
 	</select>
 	
 	<!-- 조회수 증가 -->
-	<update id="hitCountDeReview" parameterType="Integer">
-		UPDATE service_review SET hitCount=hitCount+1 WHERE servicereviewidx = #{serviceReviewIdx}
+	<update id="hitCountDeReview" parameterType="map">
+		UPDATE service_review_${demander_seq} SET hitCount=hitCount+1 WHERE servicereviewidx = #{serviceReviewIdx}
 	</update>
 	
 	
@@ -144,14 +144,14 @@
 				parameterType="map">
 		SELECT tb.* FROM (
 			SELECT serviceReviewIdx, subject
-				FROM service_review r
+				FROM service_review_${demander_seq} r
 					JOIN checkId c ON r.userIdx=c.userIdx
 					<where>
 						<if test="searchValue != null and searchValue != '' ">
 							<include refid="where-list" />
 						</if>
 						      <![CDATA[
-						           AND (servicereviewidx>#{num})
+						           AND (servicereviewidx>#{serviceReviewIdx})
 						      ]]>
 				</where>
 			ORDER BY serviceReviewIdx ASC
@@ -163,14 +163,14 @@
 				parameterType="map">
 	SELECT tb.* FROM (
 			SELECT serviceReviewIdx, subject
-				FROM service_review r
+				FROM service_review_${demander_seq} r
 					JOIN checkId c ON r.userIdx=c.userIdx
 				<where>
 						<if test="searchValue != null and searchValue != '' ">
 							<include refid="where-list" />
 						</if>
 						      <![CDATA[
-						           AND (servicereviewidx<#{num})
+						           AND (servicereviewidx<#{serviceReviewIdx})
 						      ]]>
 				</where>
 			ORDER BY serviceReviewIdx DESC
@@ -179,38 +179,38 @@
 	
 	<!-- 수정  service_review-->
      <update id="updateDeReview" parameterType="com.bong.demander.review.DeReview">
-         UPDATE service_review SET subject=#{subject}, content=#{content}
+         UPDATE service_review_${demander_seq} SET subject=#{subject}, content=#{content}
                     WHERE serviceReviewIdx = #{serviceReviewIdx}
       </update>
       
    <!-- 수정  service_review_file-->
      <update id="updateDeReviewFile" parameterType="com.bong.demander.review.DeReview">
-         UPDATE service_review_file SET originalFilename=#{originalFilename, jdbcType=VARCHAR}, 
+         UPDATE service_review_file_${demander_seq} SET originalFilename=#{originalFilename, jdbcType=VARCHAR}, 
          saveFilename=#{saveFilename, jdbcType=VARCHAR}
                     WHERE serviceReviewIdx = #{serviceReviewIdx}
     </update>
 	
 	<!-- 삭제  -->
-      <delete id="deleteDeReview" parameterType="Integer">
-           DELETE FROM service_review WHERE serviceReviewIdx = #{serviceReviewIdx}
+      <delete id="deleteDeReview" parameterType="com.bong.demander.review.DeReview">
+           DELETE FROM service_review_${demander_seq} WHERE serviceReviewIdx = #{serviceReviewIdx}
       </delete>
       
     
     <!-- 좋아요상태 -->
     <select id="stateDeRevLike" parameterType="com.bong.demander.review.DeReview" resultType="Integer">
-     SELECT NVL(COUNT(*),0) FROM service_review_like 
+     SELECT NVL(COUNT(*),0) FROM service_review_like_${demander_seq} 
      WHERE userIdx=#{userIdx} AND serviceReviewIdx=#{serviceReviewIdx}
     </select>
     
     <!--send 좋아요-->
 	<insert id="insertDeReviewLike" parameterType="com.bong.demander.review.DeReview">
-	INSERT INTO service_review_like(serviceReviewIdx, userIdx)
+	INSERT INTO service_review_like_${demander_seq}(serviceReviewIdx, userIdx)
 	   VALUES (#{serviceReviewIdx}, #{userIdx})
 	</insert>
 	
 	<!-- 좋아요가 이미 눌렸을때 해제 되도록 -->
 	<delete id="deleteDeReviewLike" parameterType="com.bong.demander.review.DeReview">
-	DELETE FROM service_review_like WHERE serviceReviewIdx=#{serviceReviewIdx} AND userIdx=#{userIdx}
+	DELETE FROM service_review_like_${demander_seq} WHERE serviceReviewIdx=#{serviceReviewIdx} AND userIdx=#{userIdx}
 	</delete>
 	
 	<!-- 
@@ -219,9 +219,9 @@
 	</update> -->
 	
 	<select id="deRevCountLike" resultType="map" 
-	           parameterType="Integer">
+	           parameterType="com.bong.demander.review.DeReview">
 	   SELECT  NVL(COUNT(*), 0 ) likeCount  
-	   FROM service_review_like WHERE serviceReviewIdx=#{serviceReviewIdx}
+	   FROM service_review_like_${demander_seq} WHERE serviceReviewIdx=#{serviceReviewIdx}
 	</select>
       
       
@@ -231,16 +231,15 @@
 	</select>
 	
 	<insert id="deRevInsertReply" parameterType="com.bong.demander.review.DeReviewReply">
-	INSERT INTO service_review_reply(srrIdx, serviceReviewIdx, userIdx, CONTENT, answer)
-    VALUES (#{replyNum}, #{num},#{userIdx},
-	       #{content}, #{answer})
+	INSERT INTO service_review_reply_${demander_seq}(srrIdx, serviceReviewIdx, userIdx, CONTENT, answer)
+    VALUES (#{replyNum},#{serviceReviewIdx},#{userIdx},#{content},#{answer})
 	</insert>
 	
 	
 	<select id="DeRevReplyDataCount" resultType="Integer" 
 	           parameterType="map">
 	   SELECT NVL(COUNT(*), 0)
-	        FROM service_review_reply WHERE serviceReviewIdx=#{serviceReviewIdx} AND answer=0
+	        FROM service_review_reply_${demander_seq} WHERE serviceReviewIdx=#{serviceReviewIdx} AND answer=0
 	</select>
 	
 	<!-- 댓글 리스트 -->
@@ -248,7 +247,7 @@
 	          parameterType="map">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		        SELECT tbreply.SRRIDX as replyNum, serviceReviewIdx as num, userId, userName 
+		        SELECT tbreply.SRRIDX as replyNum, serviceReviewIdx, userId,userIdx, userName 
 		                    ,content, created, tbreply.answer
 		                    ,NVL(answerCount, 0) answerCount,NVL(likeCount, 0)likeCount
 		        FROM
@@ -256,20 +255,20 @@
 				      (
 					     SELECT srridx, r.serviceReviewIdx, r.userIdx, userid,
                c.userName, r.content, r.created, answer
-					        FROM service_review_reply r 
-			                JOIN service_review s ON r.serviceReviewIdx=s.serviceReviewIdx
+					        FROM service_review_reply_${demander_seq} r 
+			                JOIN service_review_${demander_seq} s ON r.serviceReviewIdx=s.serviceReviewIdx
 			                JOIN checkId c ON s.useridx=c.useridx
 			                WHERE r.serviceReviewIdx=#{serviceReviewIdx} AND answer=0
 			           ) tbreply
 			           LEFT OUTER JOIN
 			           (
 			                SELECT answer, COUNT(*) answerCount
-                                 FROM service_review_reply GROUP BY answer
+                                 FROM service_review_reply_${demander_seq} GROUP BY answer
 			           ) tbanswer ON tbreply.SRRIDX = tbanswer.answer
 			             LEFT OUTER JOIN
 			           (
 			                SELECT srridx, COUNT(*) likeCount
-                                 FROM serv_rev_reply_like GROUP BY srridx
+                                 FROM serv_rev_reply_like_${demander_seq} GROUP BY srridx
 			           ) tblike ON tbreply.srridx = tblike.srridx
 	           )
 	           ORDER BY replynum DESC
@@ -282,9 +281,9 @@
 
     <!-- 댓글별 답글 리스트 -->
 	<select id="listDeRevReplyAnswer" resultType="com.bong.demander.review.DeReviewReply" 
-	          parameterType="Integer">
-       SELECT SRRIDX AS replyNum, serviceReviewIdx AS num, tbreply.userIdx, c.userName, content, created, answer
-	          FROM service_review_reply tbreply 
+	          parameterType="map">
+       SELECT SRRIDX AS replyNum, serviceReviewIdx, tbreply.userIdx, c.userName, content, created, answer
+	          FROM service_review_reply_${demander_seq} tbreply 
 	          JOIN checkId c ON tbreply.userIdx=c.userIdx
               WHERE answer=#{answer}
               ORDER BY replyNum DESC
@@ -292,20 +291,20 @@
 	
     <!-- 댓글별 답글 개수 -->
 	<select id="DeRevReplyCountAnswer" resultType="Integer" 
-	           parameterType="Integer">
+	           parameterType="map">
 	   SELECT NVL(COUNT(*), 0)
-	        FROM service_review_reply WHERE answer=#{answer}
+	        FROM service_review_reply_${demander_seq} WHERE answer=#{answer}
 	</select>
 	
 	<!-- 댓글지우기 -->
 	<delete id="deleteDeRevReply" parameterType="map">
-	DELETE service_review_reply WHERE
+	DELETE service_review_reply_${demander_seq} WHERE
 	    <if test="mode == 'num' ">
-			 serviceReviewIdx=#{num}
+			 serviceReviewIdx=#{serviceReviewIdx}
 		</if>
 	    <if test="mode == 'reply' ">
 			 SRRIDX IN 
-               (SELECT SRRIDX FROM service_review_reply START WITH  SRRIDX = #{replyNum}
+               (SELECT SRRIDX FROM service_review_reply_${demander_seq} START WITH  SRRIDX = #{replyNum}
 	            CONNECT BY PRIOR SRRIDX = answer)
 		</if>
 	    <if test="mode == 'answer' ">
@@ -316,40 +315,28 @@
 	<!-- 댓글 좋아요 -->
 	  <!-- 좋아요상태 -->
     <select id="stateDeRevLikeRe" parameterType="com.bong.demander.review.DeReviewReply" resultType="Integer">
-     SELECT NVL(count(*),0) FROM serv_rev_reply_like 
+     SELECT NVL(count(*),0) FROM serv_rev_reply_like_${demander_seq} 
      WHERE userIdx=#{userIdx} AND SRRIDX=#{replyNum}
     </select>
     
     <!--send 좋아요-->
 	<insert id="insertDeReviewLikeRe" parameterType="com.bong.demander.review.DeReviewReply">
-	INSERT INTO serv_rev_reply_like(SRRIDX, userIdx)
+	INSERT INTO serv_rev_reply_like_${demander_seq}(SRRIDX, userIdx)
 	   VALUES (#{replyNum}, #{userIdx})
 	</insert>
 	
 	<!-- 좋아요가 이미 눌렸을때 해제 되도록 -->
 	<delete id="deleteDeReviewLikeRe" parameterType="com.bong.demander.review.DeReviewReply">
-	DELETE FROM serv_rev_reply_like WHERE SRRIDX=#{replyNum} AND userIdx=#{userIdx}
+	DELETE FROM serv_rev_reply_like_${demander_seq} WHERE SRRIDX=#{replyNum} AND userIdx=#{userIdx}
 	</delete>
 	
 	<!-- 좋아요 개수 -->
 	<select id="deRevCountLikeRe" resultType="map" 
-	           parameterType="Integer">
-	   SELECT NVL(count(*),0) likeCount FROM serv_rev_reply_like WHERE SRRIDX=#{replyNum}
+	           parameterType="map">
+	   SELECT NVL(count(*),0) likeCount FROM serv_rev_reply_like_${demander_seq} WHERE SRRIDX=#{replyNum}
 	</select>
       
-<!-- 	
-	(보류)댓글 좋아요/싫어요 처리.................
-	<insert id="insertDeRevReplyLike" parameterType="com.bong.demander.review.DeReviewReply">
-	INSERT INTO serv_rev_reply_like(replyNum, userId, replyLike)
-	   VALUES (#{replyNum}, #{userId}, #{replyLike})
-	</insert>
 
-	<select id="DeRevReplyCountLike" resultType="map" 
-	           parameterType="Integer">
-	   SELECT  NVL(COUNT(DECODE(replyLike, 1, 1)), 0) likeCount,
-			        NVL(COUNT(DECODE(replyLike, 0, 1)), 0) disLikeCount
-	        FROM bbsReplyLike WHERE replyNum=#{replyNum}
-	</select> -->
       
 <!-- 	
 	회원 탈퇴시 게시물 삭제 .................

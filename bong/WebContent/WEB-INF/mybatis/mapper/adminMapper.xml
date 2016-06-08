@@ -155,16 +155,16 @@
 	<update id="createServiceNoticeReply" parameterType="Integer">
 	CREATE TABLE service_notice_reply_${value}(
   	SNRIdx NUMBER
-  	,serviceIdx  NUMBER NOT NULL
   	,serviceNoticeIdx  NUMBER NOT NULL
   	,content  CLOB NOT NULL
   	,created  DATE DEFAULT SYSDATE
-  	,answer  NUMBER NOT NULL  
+  	,answer  NUMBER NOT NULL
+  	,userIdx NUMBER NOT NULL
   	,CONSTRAINT pk_sNoticeR_${value} PRIMARY KEY(SNRIdx)
-  	,CONSTRAINT fk_sNoticeR_serviceIdx_${value} FOREIGN KEY(serviceIdx)
-              REFERENCES serviceInfo(serviceIdx)
   	,CONSTRAINT fk_sNoticeR_srNoti_${value} FOREIGN KEY(serviceNoticeIdx)
               REFERENCES service_notice_${value}(serviceNoticeIdx)
+    ,CONSTRAINT fk_sNoticeR_userIdx_${value} FOREIGN KEY(userIdx)
+    		  REFERENCES checkId(userIdx)
 	)
 	</update>
 	
@@ -181,7 +181,7 @@
   	,CONSTRAINT fk_serv_rev_sidx_${value} FOREIGN KEY(serviceidx)
   	REFERENCES serviceinfo(serviceidx) ON DELETE CASCADE
   	,CONSTRAINT fk_serv_rev_useridx_${value} FOREIGN KEY(useridx)
-  	REFERENCES memberinfo(useridx) ON DELETE CASCADE
+  	REFERENCES checkId(useridx) ON DELETE CASCADE
 	)
 	</update>
 	
@@ -233,7 +233,7 @@
   	,CONSTRAINT fk_ser_rrl_srridx_${value} FOREIGN KEY(srridx)
   	REFERENCES service_review_reply_${value}(srridx) ON DELETE CASCADE
   	,CONSTRAINT fk_ser_rrl_useridx_${value} FOREIGN KEY(useridx)
-  	REFERENCES memberinfo(useridx) ON DELETE CASCADE
+  	REFERENCES checkId(useridx) ON DELETE CASCADE
 	)
 	</update>
 	

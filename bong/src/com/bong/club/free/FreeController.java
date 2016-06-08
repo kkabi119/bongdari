@@ -73,6 +73,7 @@ public class FreeController {
         ModelAndView mav = new ModelAndView(".four.club.dari.free.list.자유게시판");
         mav.addObject("clubSeq",clubSeq);
         mav.addObject("total_page", total_page);
+        mav.addObject("subMenu","5");
              
 		return mav;
 	}
@@ -190,6 +191,7 @@ public class FreeController {
 		ModelAndView mav = new ModelAndView(".four.club.dari.free.created.자유글쓰기");
 		mav.addObject("mode", "created");
 		mav.addObject("clubSeq", clubSeq);
+		mav.addObject("subMenu","5");
 		return mav;
 	}
 	
@@ -302,6 +304,7 @@ public class FreeController {
 		mav.addObject("nextReadDto", nextReadDto);
 
 		mav.addObject("page", page);
+		mav.addObject("subMenu","5");
 		mav.addObject("params", params);
 		mav.addObject("replyCount",replyCount);
 		return mav;
@@ -338,6 +341,7 @@ public class FreeController {
 		mav.addObject("dto", dto);
 		mav.addObject("clubSeq",clubSeq);
 		mav.addObject("mode", "update");
+		mav.addObject("subMenu","5");
 		mav.addObject("page", page);
 		return mav;
 	}

@@ -2,14 +2,15 @@ package com.bong.demander.review;
 
 public class DeReviewReply {
 	//replyNum 에 srridx(serviceReviewReplyIndex 값이 들어간다 )
-	private int replyNum, num, listNum;
+	private int replyNum, serviceReviewIdx, listNum;
 	private String userId, userName, content, created;
 	private int answer,userIdx;
 	private int replyLike;
 	
 	private int likeCount;
 	private int answerCount;
-
+	
+	private int demander_seq;
 
 	
 	public int getListNum() {
@@ -79,11 +80,18 @@ public class DeReviewReply {
 	public void setReplyNum(int replyNum) {
 		this.replyNum = replyNum;
 	}
-	public int getNum() {
-		return num;
+
+	public int getDemander_seq() {
+		return demander_seq;
 	}
-	public void setNum(int num) {
-		this.num = num;
+	public void setDemander_seq(int demander_seq) {
+		this.demander_seq = demander_seq;
+	}
+	public int getServiceReviewIdx() {
+		return serviceReviewIdx;
+	}
+	public void setServiceReviewIdx(int serviceReviewIdx) {
+		this.serviceReviewIdx = serviceReviewIdx;
 	}
 
 	

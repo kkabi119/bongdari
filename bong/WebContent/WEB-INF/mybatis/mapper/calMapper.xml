@@ -6,9 +6,8 @@
 	<select id="volunList" parameterType="map" resultType="com.bong.cal.Schedule">
 		SELECT vb.volunIdx as id, subject as title, TO_CHAR(volDate, 'YYYY-MM-DD') as startDay, TO_CHAR(volDate, 'YYYY-MM-DD') as endDay, startTime, endTime  FROM volun_bbs vb
 			 JOIN memnumperdate mn ON vb.volunIdx=mn.volunIdx      
-             WHERE <![CDATA[
-             ((startDay>=#{start} AND startDay<=#{end})
-                OR (endDay>=#{start} AND endDay<=#{end}))
+             WHERE <![CDATA[             
+             (vb.serviceIdx = #{demander_seq} AND startDay>=#{start} AND startDay<=#{end})
         ]]>      
              ORDER BY startDay ASC, id DESC
 	

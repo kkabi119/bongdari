@@ -165,10 +165,10 @@ public class DeReviewServiceImpl implements DeReviewService {
 	}
 
 	@Override
-	public int updateHitCount(int num) {
+	public int updateHitCount(Map<String, Object> map) {
 		int result=0;
 		try {
-			result=dao.updateInformation("demander.hitCountDeReview", num);
+			result=dao.updateInformation("demander.hitCountDeReview", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -245,8 +245,10 @@ public class DeReviewServiceImpl implements DeReviewService {
 						
 						insertFile(dto, map);
 					}
+					
 				}
 			}
+			dao.updateInformation("demander.updateDeReview", dto);
 			
 		} catch (Exception e) {
 		}
@@ -255,16 +257,15 @@ public class DeReviewServiceImpl implements DeReviewService {
 	}
 
 	@Override
-	public int deleteDeReview(int num, String saveFilename, String path) {
+	public int deleteDeReview(DeReview dto, String saveFilename, String path) {
 		int result=0;
 
 		try{
-			
 			if(saveFilename != null ) {
 			  fileManager.doFileDelete(saveFilename, path);
 			}
 			
-			dao.deleteInformation("demander.deleteDeReview", num);
+			dao.deleteInformation("demander.deleteDeReview", dto);
 			result=1;
 		} catch(Exception e) {
 		}
@@ -303,10 +304,10 @@ public class DeReviewServiceImpl implements DeReviewService {
 	}
 
 	@Override
-	public List<DeReviewReply> listDeReviewReplyAnswer(int answer) {
+	public List<DeReviewReply> listDeReviewReplyAnswer(Map<String, Object> map) {
 		List<DeReviewReply> list=null;
 		try {
-			list=dao.getListInformation("demander.listDeRevReplyAnswer", answer);
+			list=dao.getListInformation("demander.listDeRevReplyAnswer", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -325,10 +326,10 @@ public class DeReviewServiceImpl implements DeReviewService {
 	}
 
 	@Override
-	public int DeReviewReplyCountAnswer(int answer) {
+	public int DeReviewReplyCountAnswer(Map<String, Object> map) {
 		int result=0;
 		try {
-			result=dao.getIntValue("demander.DeRevReplyCountAnswer", answer);
+			result=dao.getIntValue("demander.DeRevReplyCountAnswer", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -400,10 +401,10 @@ public class DeReviewServiceImpl implements DeReviewService {
 	
 	//좋아요 개수 세기
 	@Override
-	public Map<String, Object> deRevCountLike(int num) {
+	public Map<String, Object> deRevCountLike(DeReview dto) {
 		Map<String, Object> map=null;
 		try {
-			map=dao.getReadInformation("demander.deRevCountLike", num);
+			map=dao.getReadInformation("demander.deRevCountLike", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -447,14 +448,14 @@ public class DeReviewServiceImpl implements DeReviewService {
 	}
 	
 	@Override
-	public Map<String, Object> DeReviewReplyCountLike(int DeReviewReplyNum) {
-		Map<String, Object> map=null;
+	public Map<String, Object> DeReviewReplyCountLike(Map<String, Object> map) {
+		Map<String, Object> resultMap=null;
 		try {
-			map=dao.getReadInformation("demander.deRevCountLikeRe", DeReviewReplyNum);
+			resultMap=dao.getReadInformation("demander.deRevCountLikeRe", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		return map;
+		return resultMap;
 	}
 
 

@@ -35,7 +35,7 @@ $(function(){
 
 function listPage(page) {
 
-	var url="<%=cp%>/demander/index/guest/list";
+	var url="<%=cp%>/demander/${demander_seq}/guest/list";
 	$.post(url, {pageNo:page}, function(data){
 		printGuest(data);
 	}, "JSON");
@@ -44,14 +44,13 @@ function listPage(page) {
 function sendGuest() {
 	var uid="${sessionScope.member.userId}";
 	
-	
 	var content=$.trim($("#content").val());
 	
 	var params="content="+content;
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/demander/index/guest/created"
+		,url:"<%=cp%>/demander/${demander_seq}/guest/created"
 		,data:params
 		,dataType:"JSON"
 		,success:function(data) {
@@ -75,14 +74,13 @@ function check() {
 }
 
 function deleteGuest(num, page) {
-	var uid="${sessionScope.member.userId}";
+	var uid="${sessionScope.member.userIdx}";
 	if(! uid) {
 		alert("로그인이 필요 합니다.");
 		return;
 	}
-	
-	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/demander/index/guest/delete";
+	if(confirm("게시물을 삭제하시겠습니까 ? ")) {
+		var url="<%=cp%>/demander/${demander_seq}/guest/delete";
 		$.post(url, {num:num, pageNo:page}, function(data){
 			printGuest(data);
 
@@ -91,7 +89,7 @@ function deleteGuest(num, page) {
 }
 
 function printGuest(data) {
-	var uid="${sessionScope.member.userId}";
+	var uid="${sessionScope.member.userIdx}";
 	var total_page=data.total_page;
 	var dataCount=data.dataCount;
 	var pageNo=data.pageNo;
@@ -107,16 +105,16 @@ function printGuest(data) {
 		out+="  <div class='table-responsive' style='clear: both; padding-top: 5px;'>";
 		out+="    <table class='table'>";
 		for(var idx=0; idx<data.list.length; idx++) {
-			var num=data.list[idx].num;
+			var num=data.list[idx].sguestIdx;
 			var userName=data.list[idx].userName;
-			var userId=data.list[idx].userId;
+			var userIdx=data.list[idx].userIdx;
 			var content=data.list[idx].content;
 			var created=data.list[idx].created;
 			
 			out+="    <tr class='guest-header'>";
 			out+="      <td style='width: 50%;'>"+ userName+"</td>";
 			out+="      <td style='width: 50%; text-align: right;'>" + created;
-			if(uid==userId || uid=="admin") {
+			if(uid==userIdx || uid=="admin") {
 				out+=" | <a onclick='deleteGuest(\""+num+"\", \""+pageNo+"\");'>삭제</a></td>" ;
 			} else {
 				out+=" | <a href='#'>신고</a></td>" ;
@@ -147,7 +145,7 @@ function printGuest(data) {
 				방명록 
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="<%=cp%>/demander/index/main" style="color:#F0AD4E;">수요처 메인</a></li>
+				<li><a href="<%=cp%>/demander/${demander_seq}/main" style="color:#F0AD4E;">수요처 메인</a></li>
 				<li class="active">방명록</li>
 			</ol>
 		</div>

@@ -25,10 +25,10 @@ public class GuestServiceImpl implements GuestService {
 	}
 
 	@Override
-	public int dataCount() {
+	public int dataCount(int demander_seq) {
 		int result=0;
 		try {
-			result=dao.getIntValue("deGuest.dataCount");
+			result=dao.getIntValue("deGuest.dataCount", demander_seq);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -48,10 +48,10 @@ public class GuestServiceImpl implements GuestService {
 	}
 
 	@Override
-	public int deleteGuest(int num) {
+	public int deleteGuest(Map<String, Object> map) {
 		int result=0;
 		try {
-			result=dao.deleteInformation("deGuest.deleteGuest", num);
+			result=dao.deleteInformation("deGuest.deleteGuest", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

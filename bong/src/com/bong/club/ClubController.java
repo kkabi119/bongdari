@@ -55,9 +55,7 @@ public class ClubController {
 		map.put("start", 1);
 		map.put("end", 5);
 		map.put("clubSeq", clubSeq);
-		List<Notice> listN=noticeService.listNoticeSmall(map);
-		ClubInfo dto=clubService.readClubInfoSmall(map);
-			
+		List<Notice> listN=noticeService.listNoticeSmall(map);			
 		 // 리스트의 번호
         int listNum, n = 0;
         Iterator<Notice> it=listN.iterator();
@@ -71,7 +69,8 @@ public class ClubController {
         String urlList = cp+"/club/"+clubSeq+"/notice/list";
         String urlArticle = cp+"/club/"+clubSeq+"/notice/article?page="+ 1;
         Map<String, Object> clubMin = new HashMap<String, Object>();
-		ModelAndView mav = new ModelAndView(".four.club.dari.main."+dto.getClubname());
+		ModelAndView mav = new ModelAndView(".four.club.dari.main.동아리 메인");
+		mav.addObject("subMenu", "2");
 		mav.addObject("clubSeq", clubSeq);
 		mav.addObject("listN", listN);
 		mav.addObject("urlList", urlList);

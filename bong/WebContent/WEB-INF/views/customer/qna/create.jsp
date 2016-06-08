@@ -94,25 +94,15 @@ $(function(){
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/demander/${demander_seq}/review/create";
+    		f.action="<%=cp%>/demander/${demander_seq}/qna/create";
     	else if(mode=="update")
-    		f.action="<%=cp%>/demander/${demander_seq}/review/update";
+    		f.action="<%=cp%>/demander/${demander_seq}/qna/update";
+    	else if(mode=="reply")
+        	f.action="<%=cp%>/demander/${demander_seq}/qna/reply?num=${dto.sqnaIdx}&page=${page}";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;
  }
-  
- <c:if test="${mode=='update'}">
-  function deleteFile(fileNum) {
-	  alert("deletefile");
-		var url="<%=cp%>/demander/${demander_seq}/review/deleteFile";
-		$.post(url, {fileNum:fileNum}, function(data){
-			$("#b"+fileNum).remove();
-			$("#f"+fileNum).remove();
-
-		}, "JSON");
-  }
-</c:if>
 </script>
 
 
@@ -120,7 +110,7 @@ $(function(){
 <div class="body-title">
 	<h2 style="color: #F0AD4E;">
 		<span class="glyphicon glyphicon-book" style="color: #F0AD4E;"></span>
-		게시판
+		QnA
 	</h2>
 </div>
 
@@ -157,25 +147,10 @@ $(function(){
 								style="max-width: 99%;">${dto.content}</textarea></td>
 					</tr>
 
-					<c:if test="${mode=='update'}">
-						<tr>
-							<td class="td1">등록파일</td>
-							<td colspan="3" class="td3">
-							<c:forEach var="vo" items="${listFile}">
-								<span id="b${vo.serviceFileIdx}">${vo.originalFilename}<a href="javascript:deleteFile('${vo.serviceFileIdx}');" style="color:#b95a5a;">
-                                  	<span class="glyphicon glyphicon-remove"></span></a></span>&nbsp;&nbsp;
-								</c:forEach>
-							</td>
-						</tr>
-					</c:if>
-					    
-					<tr>
-						<td class="td1">첨부</td>
-						<td colspan="3" class="td3">
-						<input type="file" name="upload" class="form-control input-sm">
-						</td>
-					</tr>
+					
+				
 
+					
 				</tbody>
 				<tfoot>
 					<tr>
@@ -185,15 +160,11 @@ $(function(){
 							</button>
 							<button type="button" class="btn btn-default"
 								style="color: #F0AD4E;"
-								onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/review/list';">
+								onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/qna/list';">
 								취소</button> <c:if test="${mode=='update'}">
 								
 								
-								<input type="hidden" name="serviceReviewIdx" value="${dto.serviceReviewIdx}">
-								<input type="hidden" name="saveFilename"
-									value="${dto.saveFilename}">
-								<input type="hidden" name="originalFilename"
-									value="${dto.originalFilename}">
+								<input type="hidden" name="sqnaIdx" value="${dto.sqnaIdx}">
 								<input type="hidden" name="page" value="${page}">
 							</c:if>
 						</td>

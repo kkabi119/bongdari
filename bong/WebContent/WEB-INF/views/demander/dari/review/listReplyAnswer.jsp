@@ -5,6 +5,51 @@
 <%
 	String cp=request.getContextPath();
 %>
+<style type="text/css">
+.parrent .media-list{
+	margin-left:0px;
+}
+.parrent .post-comment{
+	margin-left:20px;
+	min-height:130px;
+}
+</style>
+<c:if test="${not empty listReplyAnswer}">
+	<c:forEach var="Adto" items="${listReplyAnswer}">
+<div class="parrent">
+                                                <ul class="media-list">
+                                                    <li class="post-comment reply">
+                                                    
+                                                        <a class="pull-left" href="#">
+                                                            <img style=" width:117px; height:107px; background-size:cover; "class="media-object" src="<%=cp%>/res/images/blogdetails/1.png" alt="">
+                                                        </a>
+                                                        <div class="media-body" style="padding-bottom: 10px">
+                                                            <span><i class="fa fa-user"></i><a href="#">${Adto.userName}</a></span>
+                                                             <c:if test="${sessionScope.member.userIdx==Adto.userIdx || sessionScope.member.userId=='admin'}">   
+		     											<span style="margin-left:10px; float:right; ">
+		     												<a class="btn" onclick='deleteReplyAnswer("${Adto.replyNum}", "${Adto.answer}");' style="background-color:none; margin-top:-5px;color:#C03035; border:none;">
+		     													삭제
+		     												</a>
+		     											</span>
+		     											  <span  style="color:#888; float:right;"><i class="fa fa-clock-o"  style="color:#888"></i>${Adto.created}</span>
+						</c:if>
+                                                            <p>${Adto.content}</p>
+                      
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+	</c:forEach>
+</c:if>
+
+
+<%-- <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%
+	String cp=request.getContextPath();
+%>
 <c:if test="${not empty listReplyAnswer}">
 	<c:forEach var="Adto" items="${listReplyAnswer}">
 <div class="parrent">
@@ -30,22 +75,4 @@
 	</c:forEach>
 </c:if>
 
-<%-- 
-<c:if test="${not empty listReplyAnswer}">
-    <c:forEach var="vo" items="${listReplyAnswer}">
-        <div style="clear: both; border-top: #d5d5d5 solid 1px; margin-top: 7px; padding-top: 5px;">
-            <div style="float: left;">${vo.userName} | ${vo.created }</div>
-            <div style="float: right; text-align: rigth;">
-<c:if test="${sessionScope.member.userId==vo.userId || sessionScope.member.userId=='admin'}">   
-		     <a onclick='deleteReplyAnswer("${vo.replyNum}", "${vo.answer}");'>삭제</a>
-</c:if>
-<c:if test="${sessionScope.member.userId!=vo.userId && sessionScope.member.userId!='admin'}">   
-		   | <a href='#'>신고</a>
-</c:if>
-            </div>
-        </div>
-        <div style="clear: both; padding: 5px 0 5px 0px;  min-height: 70px;">
-            ${vo.content}
-        </div>
-    </c:forEach>
-</c:if> --%>
+ --%>

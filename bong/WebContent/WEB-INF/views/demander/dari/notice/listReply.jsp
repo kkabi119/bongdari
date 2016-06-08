@@ -19,16 +19,15 @@
 // 댓글별 답글 리스트
   function listAnswer(answer) {
 	var listReplyAnswerId="#listReplyAnswer"+answer;
-	var url="<%=cp%>/notice/listReplyAnswer";
+	var url="<%=cp%>/club/${clubSeq}/notice/listReplyAnswer";
 	$.post(url, {answer:answer}, function(data){
 		$(listReplyAnswerId).html(data);
 	});
-	
 }
 
 // 댓글별 답글 갯수
 function countAnswer(answer) {
-	var url="<%=cp%>/notice/replyCountAnswer";
+	var url="<%=cp%>/club/${clubSeq}/notice/replyCountAnswer";
 	
 	$.post(url, {answer:answer}, function(data){
 		var count="("+data.count+")";
@@ -55,6 +54,7 @@ function replyAnswerLayout(replyNum) {
 		
 		listAnswer(replyNum);
 		countAnswer(replyNum);
+		
 		$(id).show();
 		$(answerGlyphiconId).removeClass("glyphicon-triangle-bottom");
 		$(answerGlyphiconId).addClass("glyphicon-triangle-top");
@@ -82,20 +82,18 @@ function sendReplyAnswer(num, replyNum) {
 	}
 	
 	var params="num="+num;
-	
 	params+="&content="+content;
 	params+="&answer="+replyNum;
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/notice/createdReply"
+		,url:"<%=cp%>/club/${clubSeq}/notice/createdReply"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
 			$(rta).val("");
 			
   			var state=data.state;
-  			
 			if(state=="true") {
 				listAnswer(replyNum);
 				countAnswer(replyNum);
@@ -120,7 +118,7 @@ function deleteReplyAnswer(replyNum, answer) {
 	}
 	
 	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/notice/deleteReply";
+		var url="<%=cp%>/club/${clubSeq}/notice/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"answer"}, function(data){
 		        var state=data.state;
 				if(state=="loginFail") {

@@ -5,24 +5,81 @@
 <%
 	String cp=request.getContextPath();
 %>
+<style type="text/css">
+li{
+	color:#0099AE;
+}
+.item-click {
+   color: #424951; display: inline-block; cursor: pointer;
+}
+.item-click:hover {
+   color:#000000;
+}
+.item-title {
+   color: #aaa; display: inline-block;
+}
+
+.file-list-content {
+   position: relative;
+   display: none;
+}
+.file-list{
+  border:1px solid #2f3741;
+  width: 250px;
+  position: absolute;
+  z-index:1000;
+  padding:10px;
+  background: #fefefe;
+  
+  top: 10px;
+  left: 120px;
+}
+.file-list-item{
+    width: 240px;
+    text-overflow:ellipsis;
+    white-space: nowrap;overflow:hidden;
+    text-align: left;
+}
+
+.reply-write {
+    border: #d5d5d5 solid 1px;
+    padding: 10px;
+    min-height: 50px;
+}
+</style>
 <script type="text/javascript">
-//댓글 리스트
+//댓글
 $(function(){
+	$("#reply-open-close").click(function(){
+		  if($("#reply-content").is(':visible')) {
+			  $("#reply-content").fadeOut(100);
+			  $("#reply-open-close").text("댓글 ▼");
+		  } else {
+			  $("#reply-content").fadeIn(100);
+			  $("#reply-open-close").text("댓글 ▲");
+		  }
+	});
+})
+
+
+
+ $(function(){
 	listPage(1);
 });
-
+ 
 function listPage(page) {
-	var url="<%=cp%>/club/index/notice/listReply";
-	var num="${dto.clubNoticeIdx}";
+	var url="<%=cp%>/demander/${demander_seq}/notice/listReply";
+	var num="${dto.demanderNoticeIdx}";
 	$.post(url, {num:num, pageNo:page}, function(data){
 		$("#listReply").html(data);
 	});
 }
 
+<%-- 
 function login() {
 	location.href="<%=cp%>/member/login";
 }
-
+ --%>
 //댓글 추가
 function sendReply() {
 	var uid="${sessionScope.member.userId}";
@@ -31,11 +88,11 @@ function sendReply() {
 		return false;
 	}
 
-	var num="${dto.clubNoticeIdx}"; // 해당 게시물 번호
-	var content=$.trim($("#content").val());
+	var num="${dto.demanderNoticeIdx}"; // 해당 게시물 번호
+	var content=$.trim($("#replyContent").val());
 	if(! content ) {
 		alert("내용을 입력하세요 !!! ");
-		$("#content").focus();
+		$("#replyContent").focus();
 		return false;
 	}
 	
@@ -45,15 +102,16 @@ function sendReply() {
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/bbs/createdReply"
+		,url:"<%=cp%>/demander/${demander_seq}/notice/createdReply"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
-			$("#content").val("");
+			$("#replyContent").val("");
 			
 			var state=data.state;
 			if(state=="true") {
 				listPage(1);
+				replyCount();
 			} else if(state=="false") {
 				alert("댓글을 등록하지 못했습니다. !!!");
 			} else if(state=="loginFail") {
@@ -65,8 +123,16 @@ function sendReply() {
 		}
 	});
 }
-
-//좋아요/싫어요 개수
+//댓글 개수
+function replyCount() {
+	var num="${dto.demanderNoticeIdx}";// 해당 게시물 번호
+	var url="<%=cp%>/demander/${demander_seq}/notice/replyCount";
+	$.post(url, {num:num}, function(data){
+		var count=data.count;
+		$("#replyCountView").text("("+count+")");
+	}, "JSON");
+}
+<%-- //좋아요/싫어요 개수
 function countLike(replyNum) {
 	var url="<%=cp%>/bbs/countLike";
 	$.post(url, {replyNum:replyNum}, function(data){
@@ -118,7 +184,7 @@ function sendLike(replyNum, replyLike) {
 		}
 	});
 }
-
+--%>
 //댓글 삭제
 function deleteReply(replyNum, page) {
 	var uid="${sessionScope.member.userId}";
@@ -128,26 +194,26 @@ function deleteReply(replyNum, page) {
 	}
 	
 	if(confirm("게시물을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/bbs/deleteReply";
+		var url="<%=cp%>/demander/${demander_seq}/notice/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
 		        var state=data.state;
-
 				if(state=="loginFail") {
 					login();
 				} else {
 					listPage(page);
+					replyCount();
 				}
 		}, "json");
 	}
 }
 
 //-------------------------------------
-function deleteBoard() {
+function deleteNotice() {
 <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
-  var num = "${dto.clubNoticeIdx}";
+  var num = "${dto.demanderNoticeIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/bbs/delete?" + params;
+  var url = "<%=cp%>/demander/${demander_seq}/notice/delete?" + params;
 
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
@@ -157,19 +223,19 @@ function deleteBoard() {
 </c:if>
 }
 
-function updateBoard() {
+function updateNotice() {
 <c:if test="${sessionScope.member.userId==dto.userId}">
-  var num = "${dto.clubNoticeIdx}";
+  var num = "${dto.demanderNoticeIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/bbs/update?" + params;
+  var url = "<%=cp%>/demander/${demander_seq}/notice/update?" + params;
 
   location.href=url;
 </c:if>
 
 <c:if test="${sessionScope.member.userId!=dto.userId}">
  alert("게시물을 수정할 수  없습니다.");
-</c:if>
+</c:if> 
 }
 </script>
     <section id="blog-details" class="padding-top">
@@ -181,87 +247,69 @@ function updateBoard() {
                                     <p>${dto.content}</p>
                                     <div class="post-bottom overflow">
                                         <ul class="nav navbar-nav post-nav">
-                                            <li><a href="#"><i class="fa fa-thumbs-o-up"></i>32 좋아요</a></li>
-                                            <li><a href="#"><i class="fa fa-comments"></i>3 댓글수</a></li>
-                                            <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
+                                            <li><i class="fa fa-clock-o"></i> ${dto.created}</li>
                                         </ul>
                                     </div>
                                <c:if test="${not empty dto.saveFilename}">
                                     <div class="post-bottom overflow" style="margin-top: 0px">
-                                  			<a href="<%=cp%>/club/index/notice/download?num=${dto.clubNoticeIdx}"><span class="fa fa-download"></span> ${dto.originalFilename}</a>
+                                  			<a href="<%=cp%>/demander/${demander_seq}/notice/download?num=${dto.demanderNoticeIdx}"><span class="fa fa-download"></span> ${dto.originalFilename}</a>
                                     </div>
                                </c:if>
-                               
-                                    <div class="post-bottom overflow" style="margin-top: 0px">
                                <c:if test="${not empty preReadDto }">
-                                  			<a href="<%=cp%>/club/index/notice/article?${params}&num=${preReadDto.clubNoticeIdx}">${preReadDto.subject}</a>
-                              </c:if>
-                                    </div>
-                                    
                                     <div class="post-bottom overflow" style="margin-top: 0px">
-                              <c:if test="${not empty nextReadDto }">
-                                  			<a href="<%=cp%>/club/index/notice/article?${params}&num=${nextReadDto.clubNoticeIdx}">${nextReadDto.subject}</a>
-                              </c:if>      
+                               
+                                  			<a href="<%=cp%>/demander/${demander_seq}/notice/article?${params}&num=${preReadDto.demanderNoticeIdx}">이전글 : ${preReadDto.subject}</a>
+                              
                                     </div>
-                                    
-                                    <div class="blog-share">
-                                        <span class='st_facebook_hcount'></span>
-                                        <span class='st_twitter_hcount'></span>
-                                        <span class='st_linkedin_hcount'></span>
-                                        <span class='st_pinterest_hcount'></span>
-                                        <span class='st_email_hcount'></span>
+                                </c:if>
+                                <c:if test="${not empty nextReadDto }">    
+                                    <div class="post-bottom overflow" style="margin-top: 0px">
+                              
+                                  			<a href="<%=cp%>/demander/${demander_seq}/notice/article?${params}&num=${nextReadDto.demanderNoticeIdx}">다음글 : ${nextReadDto.subject}</a>
+                                
                                     </div>
-                                    <div class="response-area">
-                                    <h2 class="bold">Comments</h2>
-                                    <ul class="media-list">
-                                        <li class="media">
-                                            <div class="post-comment">
-                                                <a class="pull-left" href="#">
-                                                    <img class="media-object" src="images/blogdetails/2.png" alt="">
-                                                </a>
-                                                <div class="media-body">
-                                                    <span><i class="fa fa-user"></i>Posted by <a href="#">Endure</a></span>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliq Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
-                                                    <ul class="nav navbar-nav post-nav">
-                                                        <li><a href="#"><i class="fa fa-clock-o"></i>February 11,2014</a></li>
-                                                        <li><a href="#"><i class="fa fa-reply"></i>Reply</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="parrent">
-                                                <ul class="media-list">
-                                                    <li class="post-comment reply">
-                                                        <a class="pull-left" href="#">
-                                                            <img class="media-object" src="images/blogdetails/3.png" alt="">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <span><i class="fa fa-user"></i>Posted by <a href="#">Endure</a></span>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut </p>
-                                                            <ul class="nav navbar-nav post-nav">
-                                                                <li><a href="#"><i class="fa fa-clock-o"></i>February 11,2014</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <div class="post-comment">
-                                                <a class="pull-left" href="#">
-                                                    <img class="media-object" src="images/blogdetails/4.png" alt="">
-                                                </a>
-                                                <div class="media-body">
-                                                    <span><i class="fa fa-user"></i>Posted by <a href="#">Endure</a></span>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliq Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
-                                                    <ul class="nav navbar-nav post-nav">
-                                                        <li><a href="#"><i class="fa fa-clock-o"></i>February 11,2014</a></li>
-                                                        <li><a href="#"><i class="fa fa-reply"></i>Reply</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        
-                                    </ul>                   
+                               </c:if>
+                               <div>
+                               		<div style="float:left; padding-top: 20px; padding-right: 10px">
+                              				<span class="item-click" id="reply-open-close">댓글 ▼</span>&nbsp;<span id="replyCountView" class="item-title" style="color:#424951">(${replyCount})</span>
+                     				</div>
+                                  	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/notice/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
+                  					</div>
+                                     
+                                    <div style="float:right; padding-top: 10px;padding-bottom: 10px;">
+                      					<button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="updateNotice();"> 수정 <span class="fa fa-pencil"></span></button>
+                  					</div>
+                  					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="deleteNotice();"> 삭제 <span class="fa fa-times"></span></button>
+                  					</div>
+                  				</div>
+                  					
+                  					
+                                    <div class="response-area" style="clear: both">
+                <!-- 댓글 폼 및 리스트-->                    
+               <div id="reply-content"  style="display:none; margin-top: 10px; margin-bottom: 10px;">
+               
+              <div class="reply-write" >
+                  
+                  <div style="clear: both; ">
+                        <div style="float: left; "><span style="font-size:23px;">COMMENTS</span><span></span></div>
+                        <div style="float: right; text-align: right;"></div>
+                  </div>
+                  
+                  <div style="clear: both; padding-top: 30px; ">
+                      <textarea id="replyContent" class="form-control" rows="3" required="required"></textarea>
+                  </div>
+                  
+                  <div style="text-align: right; padding-top: 10px;">
+                      <button type="button" class="btn btn-info" style="padding:10px 15px ; color:white; border:none;" onclick="sendReply();"> REPLY <span class="fa fa-pencil"></span></button>
+                  </div>           
+              
+              </div>
+          
+              <div id="listReply"></div>
+              
+          </div>                 
                                 </div><!--/Response-area-->
                                 </div>
                             </div>
