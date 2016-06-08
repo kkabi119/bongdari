@@ -32,7 +32,7 @@
 	  VALUES (#{qnaIdx}, #{userIdx}, #{subject},#{content},#{answer},#{qnaIdx},#{quserIdx})
 	</insert>
 	
-	<insert id="insertQnaReply" parameterType="com.bong.demander.qna.Qna">
+	<insert id="insertQnaReply" parameterType="com.bong.qna.Qna">
 	  INSERT INTO qna (qnaIdx, userIdx, subject, content,answer,groupNum,quserIdx) 
 	  VALUES (qna_seq.NEXTVAL, #{userIdx}, #{subject},#{content},#{answer},#{answer},#{quserIdx})
 	</insert>
@@ -53,10 +53,10 @@
 
 	<!-- 글리스트 -->
 	<select id="listQna" parameterType="map"
-	            resultType="com.bong.demander.qna.Qna">
+	            resultType="com.bong.qna.Qna">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-			      SELECT qnaIdx, s.useridx,c.userId,userName,subject, CONTENT, hitCount,to_char(created,'YYYY-MM-DD') created
+			      SELECT qnaIdx, q.userIdx,c.userId,userName,subject, CONTENT, hitCount,to_char(created,'YYYY-MM-DD') created
 			      ,answer,groupNum,quserIdx
 				  FROM qna q join checkId c on q.userIdx=c.userIdx 
                     <where>
@@ -73,7 +73,7 @@
 	
 	<!-- 글읽기 -->
 	<select id="readQna" resultType="com.bong.demander.qna.Qna" parameterType="map">
-	      SELECT qnaIdx, s.useridx,userId,userName, subject,created,CONTENT, hitCount,answer,groupNum
+	      SELECT qnaIdx, q.useridx,userId,userName, subject,created,CONTENT, hitCount,answer,groupNum
 				FROM qna q join checkId c on q.userIdx=c.userIdx
 				WHERE qnaIdx = #{qnaIdx}
 	</select>
