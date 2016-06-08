@@ -18,12 +18,12 @@
 <script type="text/javascript">
 // 댓글별 답글 리스트
   function listAnswer(answer) {
-	alert(answer);
 	var listReplyAnswerId="#listReplyAnswer"+answer;
 	var url="<%=cp%>/notice/listReplyAnswer";
 	$.post(url, {answer:answer}, function(data){
 		$(listReplyAnswerId).html(data);
 	});
+	
 }
 
 // 댓글별 답글 갯수
@@ -55,7 +55,6 @@ function replyAnswerLayout(replyNum) {
 		
 		listAnswer(replyNum);
 		countAnswer(replyNum);
-		
 		$(id).show();
 		$(answerGlyphiconId).removeClass("glyphicon-triangle-bottom");
 		$(answerGlyphiconId).addClass("glyphicon-triangle-top");
@@ -83,6 +82,7 @@ function sendReplyAnswer(num, replyNum) {
 	}
 	
 	var params="num="+num;
+	
 	params+="&content="+content;
 	params+="&answer="+replyNum;
 	
@@ -95,6 +95,7 @@ function sendReplyAnswer(num, replyNum) {
 			$(rta).val("");
 			
   			var state=data.state;
+  			
 			if(state=="true") {
 				listAnswer(replyNum);
 				countAnswer(replyNum);

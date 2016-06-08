@@ -424,7 +424,7 @@ public class NoticeController {
 	// 답글 리스트
 	@RequestMapping(value="/notice/listReplyAnswer")
 	@ResponseBody
-	public ModelAndView listReplyAnser(
+	public ModelAndView listReplyAnswer(
 			@RequestParam(value="answer") int answer
 			) throws Exception{
 		
@@ -440,11 +440,10 @@ public class NoticeController {
 			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		}
 		
-		ModelAndView mav=new ModelAndView("/customer/notice/listReply");
+		ModelAndView mav=new ModelAndView("/customer/notice/listReplyAnswer");
 	
 		//jsp로 넘길 데이터
 		mav.addObject("listReplyAnswer", listReplyAnswer);
-		System.out.println(listReplyAnswer);
 		return mav;
 	}
 	@RequestMapping(value="/notice/replyCount", method=RequestMethod.POST)
