@@ -14,7 +14,7 @@ public interface ClReviewService {
 	public ClReview preReadClReview(Map<String, Object> map);
 	public ClReview nextReadClReview(Map<String, Object> map);
 	public int updateClReview(ClReview dto, String path);
-	public int deleteClReview(int num, String saveFilename, String path);
+	public int deleteClReview(ClReview dto, String saveFilename, String path);
 	
 
 	public int insertFile(ClReview dto, Map<String, Object> map);
@@ -26,7 +26,7 @@ public interface ClReviewService {
 	public int stateLike(ClReview dto);
 	public int insertLike(ClReview dto);
 	public int deleteLike(ClReview dto);
-	public Map<String, Object> countLike(int num);
+	public Map<String, Object> countLike(ClReview dto);
 	public int updateClRevLikeCount(ClReview dto);
 	
 	public int deleteClReviewId(String userId, String root);
@@ -41,7 +41,7 @@ public interface ClReviewService {
 	
 	/// 좋아요 관련
 	int insertReplyLike(ClReviewReply dto);//v
-	Map<String, Object> replyCountLike(int replyNum);//v
+	Map<String, Object> replyCountLike(Map<String, Object> map);//v
 	public int stateReplyLike(ClReviewReply dto);//v
 	int deleteReplyLike(ClReviewReply dto);//v
 	

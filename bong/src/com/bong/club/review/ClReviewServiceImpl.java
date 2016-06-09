@@ -150,12 +150,14 @@ public class ClReviewServiceImpl implements ClReviewService {
 	
 	@Override
 	public int updateClReview(ClReview dto, String path) {
-		
-		int result=0;
+	int result=0;
 		
 		try {
 			Map<String, Object> map=new HashMap<String, Object>();
-		
+			/*map.put("tableName", dto.getTableName());
+			
+			result=dao.updateData("demander.updateBoard", dto);*/
+			
 			if(! dto.getUpload().isEmpty()) {
 				for(MultipartFile mf:dto.getUpload()) {
 					if(mf.isEmpty())
@@ -172,8 +174,10 @@ public class ClReviewServiceImpl implements ClReviewService {
 						
 						insertFile(dto, map);
 					}
+					
 				}
 			}
+			dao.updateInformation("club_review.updateClReview", dto);
 			
 		} catch (Exception e) {
 		}
@@ -182,7 +186,7 @@ public class ClReviewServiceImpl implements ClReviewService {
 	}
 
 	@Override
-	public int deleteClReview(int num, String saveFilename, String path) {
+	public int deleteClReview(ClReview dto, String saveFilename, String path) {
 		int result=0;
 
 		try{
@@ -191,7 +195,7 @@ public class ClReviewServiceImpl implements ClReviewService {
 			  fileManager.doFileDelete(saveFilename, path);
 			}
 			
-			result=dao.deleteInformation("club_review.deleteReview", num);
+			result=dao.deleteInformation("club_review.deleteReview", dto);
 			result=1;
 			
 		} catch(Exception e) {
@@ -235,11 +239,11 @@ public class ClReviewServiceImpl implements ClReviewService {
 	}
 
 	@Override
-	public Map<String, Object> countLike(int num) {//게시글 좋아요 개수
+	public Map<String, Object> countLike(ClReview dto) {//게시글 좋아요 개수
 	
 		Map<String, Object> map=null;
 		try {
-			map=dao.getReadInformation("club_review.countLike", num);
+			map=dao.getReadInformation("club_review.countLike", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -303,28 +307,54 @@ public class ClReviewServiceImpl implements ClReviewService {
 
 	@Override
 	public List<ClReview> listFile(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<ClReview> listFile=null;
+		
+		try {
+			listFile=dao.getListInformation("club_review.listFile", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return listFile;
 	}
 
 	@Override
 	public ClReview readFile(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		ClReview dto=null;
+		
+		try {
+			dto=dao.getReadInformation("club_review.readFile", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public int deleteFile(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+
+		try {
+			result=dao.deleteInformation("club_review.deleteFile", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
 	}
 
 	
 
 	@Override
 	public int updateClRevLikeCount(ClReview dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.updateInformation("club_review.updateClRevLikeCount",dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
@@ -402,23 +432,20 @@ public class ClReviewServiceImpl implements ClReviewService {
 		}
 		return result;
 	}
-	
+
+
 	@Override
-	public Map<String, Object> replyCountLike(int replyNum) {
+	public Map<String, Object> replyCountLike(Map<String, Object> map) {
 		
-		Map<String, Object> map=null;
+		Map<String, Object> resultMap=null;
 		try {
-			map=dao.getReadInformation("club_review.replyCountLike", replyNum);
+			resultMap=dao.getReadInformation("club_review.replyCountLike", map);
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		return map;
+		return resultMap;
 	}
-	
-
-	
-
 	
 
 }
