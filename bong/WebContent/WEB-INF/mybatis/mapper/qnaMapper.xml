@@ -16,8 +16,8 @@
 	      DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0 
 	  </if>
 	  <if test="searchKey=='created'">
-	      TO_CHAR(s.created, 'YYYY-MM-DD') = #{searchValue}
-	      OR TO_CHAR(s.created, 'YYYYMMDD') = #{searchValue}
+	      TO_CHAR(q.created, 'YYYY-MM-DD') = #{searchValue}
+	      OR TO_CHAR(q.created, 'YYYYMMDD') = #{searchValue}
 	  </if>
 	</sql>
 	
@@ -72,7 +72,7 @@
 	</select>
 	
 	<!-- 글읽기 -->
-	<select id="readQna" resultType="com.bong.demander.qna.Qna" parameterType="map">
+	<select id="readQna" resultType="com.bong.qna.Qna" parameterType="map">
 	      SELECT qnaIdx, q.useridx,userId,userName, subject,created,CONTENT, hitCount,answer,groupNum
 				FROM qna q join checkId c on q.userIdx=c.userIdx
 				WHERE qnaIdx = #{qnaIdx}
@@ -85,7 +85,7 @@
 
 
      <!-- 수정 -->
-     <update id="updateQna" parameterType="com.bong.demander.qna.Qna">
+     <update id="updateQna" parameterType="com.bong.qna.Qna">
          UPDATE qna SET subject=#{subject}, content=#{content} WHERE qnaIdx =#{qnaIdx}
       </update>
       
@@ -95,7 +95,7 @@
       </delete>
       
      <!--질문의 답변 읽기-->
-	<select id="quserIdx" resultType="Integer" parameterType="com.bong.demander.qna.Qna">
+	<select id="quserIdx" resultType="Integer" parameterType="com.bong.qna.Qna">
 	       SELECT c.userIdx FROM qna q JOIN checkId c ON q.useridx=c.useridx
 				WHERE groupNum=#{answer} and answer=0 
 	</select>

@@ -164,7 +164,7 @@ $(function(){
 								취소</button> <c:if test="${mode=='update'}">
 								
 								
-								<input type="hidden" name="sqnaIdx" value="${dto.qnaIdx}">
+								<input type="hidden" name="qnaIdx" value="${dto.qnaIdx}">
 								<input type="hidden" name="page" value="${page}">
 							</c:if>
 						</td>

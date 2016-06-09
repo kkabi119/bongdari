@@ -24,7 +24,6 @@
   border:1px solid #2f3741;
   width: 250px;
   position: absolute;
-  z-${demander_seq}:1000;
   padding:10px;
   background: #fefefe;
   
@@ -48,10 +47,10 @@
 
 function deleteQna() {
 <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
-  var num = "${dto.sqnaIdx}";
+  var num = "${dto.qnaIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/demander/${demander_seq}/qna/delete?" + params;
+  var url = "<%=cp%>/qna/delete?" + params;
 
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
@@ -64,10 +63,10 @@ function deleteQna() {
 
 function updateQna() {
 <c:if test="${sessionScope.member.userId==dto.userId}">
-  var num = "${dto.sqnaIdx}";
+  var num = "${dto.qnaIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/demander/${demander_seq}/qna/update?" + params;
+  var url = "<%=cp%>/qna/update?" + params;
 
   location.href=url;
 </c:if>
@@ -81,7 +80,7 @@ function updateQna() {
                <div class="col-md-12 col-sm-12">
                             <div class="single-blog blog-details two-column">
                                 <div class="post-content overflow">
-                                    <h2 class="post-title bold"><a href="#">${dto.subject}&nbsp;&nbsp;<small>no.${dto.sqnaIdx}</small></a></h2>
+                                    <h2 class="post-title bold"><a href="#">${dto.subject}&nbsp;&nbsp;<small>no.${dto.qnaIdx}</small></a></h2>
                                     <h3 class="post-author"><a href="#">${dto.userName}</a></h3>
                                     <p>${dto.content}</p>
                                     <div class="post-bottom overflow">
@@ -95,7 +94,7 @@ function updateQna() {
                                 
                                    <div>
                                   	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
-                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/qna/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/qna/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
                   					</div>
      
                                     <div style="float:right; padding-top: 10px;padding-bottom: 10px;">
@@ -109,7 +108,7 @@ function updateQna() {
                   				<c:if test="${sessionScope.member.userId=='admin'}">
                   					<c:if test="${amode!='reply'}">
 	        		   					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
-	        		   					 <button type="button" style="color:#F0AD4E; padding:10px 15px ;" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/qna/reply?num=${dto.sqnaIdx}&page=${page}';"><span class='glyphicon glyphicon-ok'>&nbsp;답변 </span></button>
+	        		   					 <button type="button" style="color:#F0AD4E; padding:10px 15px ;" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/qna/reply?num=${dto.qnaIdx}&page=${page}';"><span class='glyphicon glyphicon-ok'>&nbsp;답변 </span></button>
 										</div>
 									</c:if>
 								</c:if> 
