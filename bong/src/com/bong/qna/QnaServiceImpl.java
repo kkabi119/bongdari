@@ -35,14 +35,24 @@ public class QnaServiceImpl implements QnaService{
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = dao.getIntValue("qna.dataCount",map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public List<Qna> listQna(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Qna> list = null;
+		try {
+			list=dao.getListInformation("qna.listQna", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
 	}
 
 	@Override

@@ -41,7 +41,7 @@ padding-top: 13px;
 <script type="text/javascript">
 function QnasearchList() {
 		var f=document.searchForm;
-		f.action="<%=cp%>/demander/${demander_seq}/qna/list";
+		f.action="<%=cp%>/qna/list";
 		f.submit();
 }
 </script>
@@ -84,7 +84,7 @@ function QnasearchList() {
 	                   					<c:if test="${dto.answer!=0}">
 	                   						&nbsp;&nbsp;<img src="<%=cp%>/res/images/demander/re.gif">
 	                   					</c:if>
-	                   					<a href='${urlArticle}&num=${dto.sqnaIdx}'>&nbsp;&nbsp;${dto.subject}</a>
+	                   					<a href='${urlArticle}&num=${dto.qnaIdx}'>&nbsp;&nbsp;${dto.subject}</a>
 	                   				</c:otherwise> 
 	                   			</c:choose>
 	                        </td>
@@ -115,7 +115,7 @@ function QnasearchList() {
 		<div style="clear: both;">
 		<div style="float: left; width: 20%; min-width: 85px;">
 			<button type="button" class="btn btn-warning"  
-				onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/qna/list';">새로고침</button>
+				onclick="javascript:location.href='<%=cp%>/qna/list';">새로고침</button>
 		</div>
 		<div style="float: left; width: 60%; text-align: center;">
 			<form name="searchForm" method="post" class="form-inline">
@@ -135,7 +135,7 @@ function QnasearchList() {
 		<div
 			style="float: left; width: 20%; min-width: 85px; text-align: right;">
 			<button type="button" class="btn btn-warning" 
-				onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/qna/create';">
+				onclick="javascript:location.href='<%=cp%>/qna/create';">
 				<span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기
 			</button>
 		</div>
