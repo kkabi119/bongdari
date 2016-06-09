@@ -25,14 +25,15 @@
                                                         </a>
                                                         <div class="media-body" style="padding-bottom: 10px">
                                                             <span><i class="fa fa-user"></i><a href="#">${Adto.userName }</a></span>
-                                                             <c:if test="${sessionScope.member.userId==Adto.userId || sessionScope.member.userId=='admin'}">   
+                                                
+                                                <c:if test="${sessionScope.member.userIdx==Adto.userIdx || sessionScope.member.userId=='admin'}">   
 		     											<span style="margin-left:10px; float:right; ">
 		     												<a class="btn" onclick='deleteReplyAnswer("${Adto.replyNum}", "${Adto.answer}");' style="background-color:none; margin-top:-5px;color:#C03035; border:none;">
 		     													삭제
 		     												</a>
 		     											</span>
 		     											  <span  style="color:#888; float:right;"><i class="fa fa-clock-o"  style="color:#888"></i>${Adto.created}</span>
-						</c:if>
+												</c:if>
                                                             <p>${Adto.content}</p>
                       
                                                         </div>

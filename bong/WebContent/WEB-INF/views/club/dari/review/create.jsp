@@ -106,13 +106,29 @@ $(function(){
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/club/index/review/create";
+    		f.action="<%=cp%>/club/${club_seq}/review/create";
     	else if(mode=="update")
-    		f.action="<%=cp%>/club/index/review/update";
+    		f.action="<%=cp%>/club/${club_seq}/review/update";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;
  }
+  
+
+  <c:if test="${mode=='update'}">
+   function deleteFile(clubFileIdx) {
+ 	  if(confirm("해당 파일을 삭제 하시 겠습니까 ? ")){
+ 		var url="<%=cp%>/club/${club_seq}/review/deleteFile";
+ 		
+ 		$.post(url, {clubFileIdx:clubFileIdx}, function(data){
+ 			
+ 			$("#b"+clubFileIdx).remove();
+ 			$("#f"+clubFileIdx).remove();
+
+ 		}, "JSON");
+ 	  }
+   }
+ </c:if>
 </script>
 
 
@@ -160,10 +176,11 @@ $(function(){
 					<c:if test="${mode=='update'}">
 						<tr>
 							<td class="td1">등록파일</td>
-							<td colspan="3" class="td3">${dto.originalFilename} <c:if
-									test="${not empty dto.originalFilename}">
-                                    | <a href="<%=cp%>/demander/index/review/deleteFile?num=${dto.clubReviewIdx}&page=${page}">삭제</a>
-								</c:if>
+							<td colspan="3" class="td3">
+								<c:forEach var="vo" items="${listFile}">
+								<span id="b${vo.clubFileIdx}">${vo.originalFilename}<a href="javascript:deleteFile('${vo.clubFileIdx}');" style="color:#b95a5a;">
+                                  	<span class="glyphicon glyphicon-remove"></span></a></span>&nbsp;&nbsp;
+								</c:forEach>
 							</td>
 						</tr>
 					</c:if>
@@ -187,7 +204,7 @@ $(function(){
 								등록 <span class="glyphicon glyphicon-ok"></span>
 							</button>
 							<button type="button" class="btn btn-default"	style="color: #00aeef; margin-left:10px; border:1px solid #00aeef;"
-										onclick="javascript:location.href='<%=cp%>/demander/index/review/list';">
+										onclick="javascript:location.href='<%=cp%>/club/${club_seq}/review/list';">
 								취소</button> <c:if test="${mode=='update'}">
 								
 								

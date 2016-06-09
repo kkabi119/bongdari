@@ -68,7 +68,7 @@ function replyAnswerLayout(replyNum) {
   function listAnswer(answer) {
 	var listReplyAnswerId="#listReplyAnswer"+answer;
 	
-	var url="<%=cp%>/club/index/apply/listReplyAnswer";
+	var url="<%=cp%>/club/${club_seq}/apply/listReplyAnswer";
 	
 	$.post(url, {answer:answer}, function(data){
 		
@@ -79,7 +79,7 @@ function replyAnswerLayout(replyNum) {
 ////////////////////////////////////////////////////////////////////////// 대댓글 갯수
 function countAnswer(answer) {
 	
-	var url="<%=cp%>/club/index/apply/replyCountAnswer";
+	var url="<%=cp%>/club/${club_seq}/apply/replyCountAnswer";
 	$.post(url, {answer:answer}, function(data){
 		var count="("+data.count+")";
 		var answerCountId="#answerCount"+answer;
@@ -113,7 +113,7 @@ function sendReplyAnswer(num, replyNum) {
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/club/index/apply/createdReply"
+		,url:"<%=cp%>/club/${club_seq}/apply/createdReply"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
@@ -148,7 +148,7 @@ function deleteReplyAnswer(replyNum, answer) {
 	}
 	
 	if(confirm("댓글을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/club/index/apply/deleteReply";
+		var url="<%=cp%>/club/${club_seq}/apply/deleteReply";
 		
 		$.post(url, {replyNum:replyNum, mode:"answer"}, function(data){
 		        var state=data.state;

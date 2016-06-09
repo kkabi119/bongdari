@@ -163,7 +163,8 @@ $(function(){
 							<td class="td1">등록파일</td>
 							<td colspan="3" class="td3">
 							<c:forEach var="vo" items="${listFile}">
-								<span id="b${vo.serviceFileIdx}">${vo.originalFilename}<a href="javascript:deleteFile('${vo.serviceFileIdx}');" style="color:#b95a5a;">
+								<span id="b${vo.serviceFileIdx}">${vo.originalFilename
+									}<a href="javascript:deleteFile('${vo.serviceFileIdx}');" style="color:#b95a5a;">
                                   	<span class="glyphicon glyphicon-remove"></span></a></span>&nbsp;&nbsp;
 								</c:forEach>
 							</td>

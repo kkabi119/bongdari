@@ -10,10 +10,26 @@ public class Apply {
 	private String saveFileName, originalFileName;
 	private int applyNum, maxNum; //현재 신청인원 / 수요인원수
 	private int hitCount;
-	private int userIdx;
+	private int userIdx,userId;
 	private int replyCount;
+	
+	private int club_seq;
+	
+	
 		
 	
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public int getClub_seq() {
+		return club_seq;
+	}
+	public void setClub_seq(int club_seq) {
+		this.club_seq = club_seq;
+	}
 	public int getReplyCount() {
 		return replyCount;
 	}

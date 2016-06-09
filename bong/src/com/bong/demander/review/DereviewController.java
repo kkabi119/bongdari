@@ -330,8 +330,7 @@ public class DereviewController {
 		Map<String, Object> model = new HashMap<>(); 
 		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		
-		
+				
 			String root=session.getServletContext().getRealPath("/");
 			String pathname=root+File.separator+"uploads"+File.separator+"blog"+File.separator+info.getUserId();
 			
@@ -609,7 +608,9 @@ public class DereviewController {
 			public Map<String, Object>  createdReply(
 					HttpSession session,
 					@PathVariable int demander_seq,
-					DeReviewReply dto) throws Exception {
+					DeReviewReply dto) 
+							throws Exception {
+				
 				SessionInfo info=(SessionInfo) session.getAttribute("member");
 				String state="true";
 				if(info==null) { // 로그인이 되지 않는 경우

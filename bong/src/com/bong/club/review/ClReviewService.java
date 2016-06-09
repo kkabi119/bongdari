@@ -10,7 +10,7 @@ public interface ClReviewService {
 	public List<ClReview> listClReview(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
 	public ClReview readClReview(Map<String, Object> map);
-	public int updateHitCount(int num);
+	public int updateHitCount(Map<String, Object> map);
 	public ClReview preReadClReview(Map<String, Object> map);
 	public ClReview nextReadClReview(Map<String, Object> map);
 	public int updateClReview(ClReview dto, String path);
@@ -36,7 +36,7 @@ public interface ClReviewService {
 	public List<ClReviewReply> listReply(Map<String, Object> map);//v
 	public List<ClReviewReply> listReplyAnswer(Map<String, Object> map);//v
 	public int replyDataCount(Map<String, Object> map);//v
-	public int replyCountAnswer(int answer);//v
+	public int replyCountAnswer(Map<String, Object> map);//v
 	public int deleteReply(Map<String, Object> map);//v
 	
 	/// 좋아요 관련

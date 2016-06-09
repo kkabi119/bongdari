@@ -44,7 +44,7 @@ padding-top: 13px;
 
 function searchList() {
 	var f=document.searchForm;
-	f.action="<%=cp%>/club/index/apply/list";
+	f.action="<%=cp%>/club/${club_seq}/apply/list";
 	f.submit();
 }
 
@@ -100,7 +100,7 @@ function searchList() {
  </c:forEach><!-- 리스트끝 -->
 								<%-- 	<tr>
                         				<td class="text-center">1</td>
-                        				<td colspan="4" style=""><a href="<%=cp%>/club/index/notice/article"></a>노원 동네주민 축제의 안전요원을 모집합니다</td>
+                        				<td colspan="4" style=""><a href="<%=cp%>/club/${club_seq}/notice/article"></a>노원 동네주민 축제의 안전요원을 모집합니다</td>
                        				 	<td class="text-center" >2016-10-10 ~ 2016-10-13</td>
                        				 	<td class="text-center">중랑구 산천역</td>
                        				 	<td class="text-center" style=""><a href="#">희망복지관</a></td>
@@ -126,7 +126,7 @@ function searchList() {
         
         				<div style="clear: both;">
         					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/club/index/apply/list?page=${page}';">새로고침</button>
+        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/club/${club_seq}/apply/list?page=${page}';">새로고침</button>
         					</div>
         					<div style="float: left; width: 60%; text-align: center;">
         		     			<form name="searchForm" method="post" class="form-inline">

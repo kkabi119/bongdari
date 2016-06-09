@@ -81,7 +81,7 @@ $(function(){
 		var page = "${page}";
 		var params = "num="+num+"&page="+page;
 	
-		$('#applyListModal .modal-body').load( "<%=cp%>/club/index/apply/applyList1?"+params, function() {
+		$('#applyListModal .modal-body').load( "<%=cp%>/club/${club_seq}/apply/applyList1?"+params, function() {
 			 
 				$('#applyListModal .modal-title').html('우리동아리 신청리스트');
 				$('#applyListModal').modal('show');
@@ -109,7 +109,7 @@ $(function(){
 	listPage(1);
 });
 function listPage(page) {
-	var url="<%=cp%>/club/index/apply/listReply";
+	var url="<%=cp%>/club/${club_seq}/apply/listReply";
 	var num="${dto.clubApplyIdx}";
 		
 	$.post(url, {num:num, pageNo:page}, function(data){
@@ -121,7 +121,7 @@ function listPage(page) {
 function replyCount() {
 	var num="${dto.clubApplyIdx}";// 해당 게시물 번호
 
-	var url="<%=cp%>/club/index/apply/replyCount";
+	var url="<%=cp%>/club/${club_seq}/apply/replyCount";
 	$.post(url, {num:num}, function(data){
 		
 		var count=data.count;
@@ -151,7 +151,7 @@ function sendReply() {
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/club/index/apply/createdReply"
+		,url:"<%=cp%>/club/${club_seq}/apply/createdReply"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
@@ -185,7 +185,7 @@ function deleteReply(replyNum, page) {
 	}
 	
 	if(confirm("댓글을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/club/index/apply/deleteReply";
+		var url="<%=cp%>/club/${club_seq}/apply/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
 		        var state=data.state;
 				if(state=="loginFail") {
@@ -248,7 +248,7 @@ function deleteApply() {
   var page = "${page}";
   var params = "num="+num+"&page="+page;
   
-  var url = "<%=cp%>/club/index/apply/delete?" + params;
+  var url = "<%=cp%>/club/${club_seq}/apply/delete?" + params;
 
   if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
 	  
@@ -409,7 +409,7 @@ function deleteApply() {
                          <c:if test="${not empty dto.saveFileName}">
                              <tr style=" border-top: 1px solid #6D6D6D;  border-bottom: 1px solid #6D6D6D;">
                                     <td class="post-bottom overflow" style="margin-top: 0px">
-                                  			<a href="<%=cp%>/club/index/apply/download?num=${dto.clubApplyIdx}">
+                                  			<a href="<%=cp%>/club/${club_seq}/apply/download?num=${dto.clubApplyIdx}">
                                   				<span class="fa fa-download"></span> ${dto.originalFilename}
                                   			</a>
                                     </td>
@@ -457,7 +457,7 @@ function deleteApply() {
 						 	   <td colspan="1"bgcolor="#EEEEEE" align="center">이전글</td>
 						    
 							    <td colspan="6" align="left" style="border-bottom:1px solid #ddd; padding-left:10px;" colspan="3">
-									<a href="<%=cp%>/club/index/apply/article?${params}&num=${preReadDto.clubApplyIdx}">
+									<a href="<%=cp%>/club/${club_seq}/apply/article?${params}&num=${preReadDto.clubApplyIdx}">
 											${preReadDto.subject} 
 									</a>
 									<c:if test="${preReadDto.progress.equals('모집마감')}">
@@ -478,7 +478,7 @@ function deleteApply() {
                       <tr height="35" style="border-bottom:1px solid #ddd; ">
 					    <td colspan="1"bgcolor="#EEEEEE" align="center">다음글</td>
 					    <td colspan="6" align="left" style="padding-left:10px;" colspan="3">
-							<a href="<%=cp%>/club/index/apply/article?${params}&num=${nextReadDto.clubApplyIdx}">
+							<a href="<%=cp%>/club/${club_seq}/apply/article?${params}&num=${nextReadDto.clubApplyIdx}">
 								 ${nextReadDto.subject}
 							</a>							
 							<c:if test="${nextReadDto.progress.equals('모집마감')}">
@@ -506,7 +506,7 @@ function deleteApply() {
    						</td>
    					</c:if>
    						<td align="right" colspan="2" style="padding-right:0px; border-top:none;margin-bottom:30px; ">
-					           <button style=""type="button" class="btn btn-default"  onclick="javascript:location.href='<%=cp%>/club/index/apply/list?${params}';">목록으로</button>
+					           <button style=""type="button" class="btn btn-default"  onclick="javascript:location.href='<%=cp%>/club/${club_seq}/apply/list?${params}';">목록으로</button>
 
 					    </td>
 					    </tr>

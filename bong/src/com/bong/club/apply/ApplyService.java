@@ -12,8 +12,8 @@ public interface ApplyService {
 	public List<Apply> listApply(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
 	
-	public Apply readApply(int num); //v
-	public int updateHitCount(int num); //v
+	public Apply readApply(Map<String, Object> map); //v
+	public int updateHitCount(Map<String, Object> map); //v
 	public Apply preReadApply(Map<String, Object> map);//v
 	public Apply nextReadApply(Map<String, Object> map);//v
 	
@@ -30,14 +30,14 @@ public interface ApplyService {
 	public int deleteReply(Map<String, Object> map);//v
 
 	int insertReplyLike(Reply dto);//v
-	Map<String, Object> replyCountLike(int replyNum);//v
+	Map<String, Object> replyCountLike(Map<String, Object> map);//v
 	public int stateReplyLike(Reply dto);//v
 	int deleteReplyLike(Reply dto);//v
 	
-	public int updateHitCount_club(int clubApplyIdx);//v
+	public int updateHitCount_club(Map<String, Object> map);//v
 	
-	public List<Member> readApplyList(int clubApplyIdx);
-	public List<Member> readApplyList_date(int clubApplyIdx);
+	public List<Member> readApplyList(Map<String, Object> map);
+	public List<Member> readApplyList_date(Map<String, Object> map);
 	
 	
 	

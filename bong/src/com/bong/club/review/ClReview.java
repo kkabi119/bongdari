@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ClReview {
-	private int clubReviewIdx,serviceFileIdx,listNum;
+	private int clubReviewIdx,clubFileIdx,listNum;
     private int userIdx,clubIdx;
     private String demanderName;
     private String userName, userId, subject, content, created;
@@ -15,33 +15,25 @@ public class ClReview {
 	private int reviewLikeCount;
 	private int club_seq;
 	
-	
-	
-	public int getClub_seq() {
-		return club_seq;
-	}
-	public void setClub_seq(int club_seq) {
-		this.club_seq = club_seq;
-	}
-	public int getClubReviewIdx() {
-		return clubReviewIdx;
-	}
-	public void setClubReviewIdx(int clubReviewIdx) {
-		this.clubReviewIdx = clubReviewIdx;
-	}
-	public int getClubIdx() {
-		return clubIdx;
-	}
-	public void setClubIdx(int clubIdx) {
-		this.clubIdx = clubIdx;
-	}
+
 	// 스프링에서 파일 받기
 	private List<MultipartFile> upload; // <input type='file' name='upload' ..
     private int fileNum;
 	private String saveFilename;
 	private String originalFilename;
 	private long fileSize;
-	
+	public int getClubReviewIdx() {
+		return clubReviewIdx;
+	}
+	public void setClubReviewIdx(int clubReviewIdx) {
+		this.clubReviewIdx = clubReviewIdx;
+	}
+	public int getClubFileIdx() {
+		return clubFileIdx;
+	}
+	public void setClubFileIdx(int clubFileIdx) {
+		this.clubFileIdx = clubFileIdx;
+	}
 	public int getListNum() {
 		return listNum;
 	}
@@ -53,6 +45,12 @@ public class ClReview {
 	}
 	public void setUserIdx(int userIdx) {
 		this.userIdx = userIdx;
+	}
+	public int getClubIdx() {
+		return clubIdx;
+	}
+	public void setClubIdx(int clubIdx) {
+		this.clubIdx = clubIdx;
 	}
 	public String getDemanderName() {
 		return demanderName;
@@ -96,26 +94,6 @@ public class ClReview {
 	public void setHitCount(int hitCount) {
 		this.hitCount = hitCount;
 	}
-	
-	public String getSaveFilename() {
-		return saveFilename;
-	}
-	public void setSaveFilename(String saveFilename) {
-		this.saveFilename = saveFilename;
-	}
-	public String getOriginalFilename() {
-		return originalFilename;
-	}
-	public void setOriginalFilename(String originalFilename) {
-		this.originalFilename = originalFilename;
-	}
-	
-	public int getReviewLikeCount() {
-		return reviewLikeCount;
-	}
-	public void setReviewLikeCount(int reviewLikeCount) {
-		this.reviewLikeCount = reviewLikeCount;
-	}
 	public int getReplyCount() {
 		return replyCount;
 	}
@@ -128,11 +106,17 @@ public class ClReview {
 	public void setLikeCount(int likeCount) {
 		this.likeCount = likeCount;
 	}
-	public int getFileNum() {
-		return fileNum;
+	public int getReviewLikeCount() {
+		return reviewLikeCount;
 	}
-	public void setFileNum(int fileNum) {
-		this.fileNum = fileNum;
+	public void setReviewLikeCount(int reviewLikeCount) {
+		this.reviewLikeCount = reviewLikeCount;
+	}
+	public int getClub_seq() {
+		return club_seq;
+	}
+	public void setClub_seq(int club_seq) {
+		this.club_seq = club_seq;
 	}
 	public List<MultipartFile> getUpload() {
 		return upload;
@@ -140,19 +124,30 @@ public class ClReview {
 	public void setUpload(List<MultipartFile> upload) {
 		this.upload = upload;
 	}
+	public int getFileNum() {
+		return fileNum;
+	}
+	public void setFileNum(int fileNum) {
+		this.fileNum = fileNum;
+	}
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
+	public String getOriginalFilename() {
+		return originalFilename;
+	}
+	public void setOriginalFilename(String originalFilename) {
+		this.originalFilename = originalFilename;
+	}
 	public long getFileSize() {
 		return fileSize;
 	}
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
-	public int getServiceFileIdx() {
-		return serviceFileIdx;
-	}
-	public void setServiceFileIdx(int serviceFileIdx) {
-		this.serviceFileIdx = serviceFileIdx;
-	}
-
 	
 	
 	

@@ -141,17 +141,21 @@ hr:LAST-CHILD {
       </div>
       
       <div class="col1">
-        <div style="margin-top:5px; max-height:45px; overflow:hidden; text-overflow:elevation; ">
-        	<span style="font-weight:600; color:#757575; font-size: 14pt;line-height: 24px; max-height:37px;margin-top:5px; overflow:hidden; width:95% ">
-         	  <a href="${urlArticle}&num=${dto.clubReviewIdx}" style="color:#4E4E4E; max-height:37px; overflow:hidden; ">
-         	  	${dto.subject}
+        <div style="margin-top:5px; max-height:45px;  overflow:hidden; white-space:nowrap; width:90%  ">
+        	<span style="font-weight:600; color:#757575; font-size: 14pt;line-height: 24px; max-height:37px; margin-top:5px;	">
+         	  <a href="${urlArticle}&num=${dto.clubReviewIdx}" style="color:#4E4E4E; max-height:37px;  overflow:hidden; width:90%; ">
+         	  	${dto.subject} ...
 	         </a>
-	         </span><span class="item-title" style='color:#f0ad4e; font-size:14pt; font-weight: bold;'>(${dto.replyCount})</span>
+	         </span>
+	         <span class="item-title" style='color:#f0ad4e; font-size:14pt; font-weight: bold;'>(${dto.replyCount})</span>
+         	         
+         </div>
          
-         </div> <hr style="margin-top:10px; border:1px solid #ddd; margin-bottom:5px;">
+          <hr style="margin-top:4px; border:1px solid #ddd; margin-bottom:5px;">
          <h5 style="font-size:14px;margin-top:10px;line-height: 14px;"> 
          		작성자 <span style="font-weight: 600; color:#757575;"> ${dto.userName}</span> 
-         		&nbsp;&nbsp;|&nbsp;&nbsp; 조회수  ${dto.hitCount} &nbsp;&nbsp;|&nbsp;&nbsp;  작성일 &nbsp; ${dto.created}&nbsp;&nbsp;|&nbsp;&nbsp;No. ${dto.listNum}   </h5>
+         		&nbsp;&nbsp;|&nbsp;&nbsp; 조회수  ${dto.hitCount} &nbsp;&nbsp;|&nbsp;&nbsp;  작성일 &nbsp; ${dto.created}&nbsp;&nbsp;|&nbsp;&nbsp;No. ${dto.listNum} 
+        </h5>
          
          <h5 style="font-size:14px;"><img Id="listBtn"style=" width:15px; height:15px; background-size:cover; "src="<%=cp%>/res/images/myclub/heart.png" alt="">
 	                                	 	&nbsp; ${dto.likeCount}</h5> 
@@ -173,7 +177,7 @@ hr:LAST-CHILD {
   
    </c:forEach>
     </c:if> 
-      <hr style="margin-left:35px; margin-top:1px; margin-bottom:-1px; width:98%; border-top:2px solid #00aeef;">
+      <hr style="margin-left:35px; margin-top:0px; margin-bottom:-1px; width:98%; border-top:3px solid #00aeef;">
    <!-- /.row -->
 
 	<div class="paging"

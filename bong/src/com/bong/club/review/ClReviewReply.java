@@ -12,8 +12,6 @@ public class ClReviewReply {
 	
 	private int club_seq;
 
-	
-	
 	public int getClub_seq() {
 		return club_seq;
 	}

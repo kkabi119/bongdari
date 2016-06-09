@@ -6,7 +6,15 @@ public class Reply {
 	private int answer ,userIdx;
 	private int answerCount;
 	private int likeCount;
+	private int club_seq;
 	
+	
+	public int getClub_seq() {
+		return club_seq;
+	}
+	public void setClub_seq(int club_seq) {
+		this.club_seq = club_seq;
+	}
 	public int getLikeCount() {
 		return likeCount;
 	}

@@ -127,7 +127,7 @@ $(function(){
 });
 
 function listPage(page) {
-	var url="<%=cp%>/club/index/review/listReply";
+	var url="<%=cp%>/club/${club_seq}/review/listReply";
 	var num="${dto.clubReviewIdx}";
 	
 	$.post(url, {num:num, pageNo:page}, function(data){
@@ -140,7 +140,7 @@ function listPage(page) {
 function replyCount() {
 	var num="${dto.clubReviewIdx}";// 해당 게시물 번호
 	
-	var url="<%=cp%>/club/index/review/replyCount";
+	var url="<%=cp%>/club/${club_seq}/review/replyCount";
 	$.post(url, {num:num}, function(data){
 	
 		var count=data.count;
@@ -173,7 +173,7 @@ function sendReply() {
 		//dto에 clubReviewId, content, answer을 담아서 보내고 > 컨트롤러에서 session의 useridx를 담아 mapper로 보내는고
 		$.ajax({
 			type:"POST"
-			,url:"<%=cp%>/club/index/review/createdReply"
+			,url:"<%=cp%>/club/${club_seq}/review/createdReply"
 			,data:params
 			,dataType:"json"
 			,success:function(data) {
@@ -209,7 +209,7 @@ function deleteReply(replyNum, page) {
 	}
 	
 	if(confirm("댓글을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/club/index/review/deleteReply";
+		var url="<%=cp%>/club/${club_seq}/review/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
 			
 			var state=data.state;
@@ -228,8 +228,8 @@ function deleteReply(replyNum, page) {
 // 댓글 좋아요 카운트 
 function replyCountLike(replyNum) {
 		
-	var url="<%=cp%>/club/index/review/replyCountLike";
-	
+	var url="<%=cp%>/club/${club_seq}/review/replyCountLike";
+		
 	$.post(url, {replyNum:replyNum}, function(data){
 		
 		var replyLikeCount="#replyLikeCount"+replyNum;
@@ -248,12 +248,12 @@ function insertReplyLike(replyNum) {
 		login();
 		return false;
 	}
-
+	
 	var params="replyNum="+replyNum;
 
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/club/index/review/insertReplyLike"
+		,url:"<%=cp%>/club/${club_seq}/review/insertReplyLike"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
@@ -274,7 +274,7 @@ function insertReplyLike(replyNum) {
 ///////////////////////////////////////////		좋아요/싫어요 개수
 function countLike(clubReviewIdx) {
 	
-	var url="<%=cp%>/club/index/review/countLike";
+	var url="<%=cp%>/club/${club_seq}/review/countLike";
 	
 	$.post(url, {clubReviewIdx:clubReviewIdx}, function(data){
 	
@@ -298,12 +298,13 @@ function sendLike(clubReviewIdx) {
 	var params="clubReviewIdx="+clubReviewIdx;
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/club/index/review/sendLike"
+		,url:"<%=cp%>/club/${club_seq}/review/sendLike"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
 		
 			var state=data.state;
+		
 			countLike(clubReviewIdx);
 		}
 		,error:function(e) {
@@ -314,11 +315,11 @@ function sendLike(clubReviewIdx) {
 
 //-------------------------------- 게시물 삭제 ----------------------------------------------------------
 function deleteReview() {
-<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
+<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userIdx==dto.userIdx}">
   var num = "${dto.clubReviewIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/club/index/review/delete?" + params;
+  var url = "<%=cp%>/club/${club_seq}/review/delete?" + params;
 
   if(confirm("이 글을 삭제 하시겠습니까 ? "))
   	location.href=url;
@@ -335,7 +336,7 @@ function updateReview() {
   var num = "${dto.clubReviewIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
-  var url = "<%=cp%>/club/index/review/update?" + params;
+  var url = "<%=cp%>/club/${club_seq}/review/update?" + params;
 
   location.href=url;
 </c:if>
@@ -379,7 +380,7 @@ function updateReview() {
                               <c:if test="${listFile.size()>0}">
                                     <div class="post-bottom overflow" style="margin-top: 0px; font-size:9pt;">
                                     <c:forEach var="vo" items="${listFile}">
-                                  			<a href="<%=cp%>/club/index/review/download?num=${vo.clubReviewIdx}&fileNum=${vo.serviceFileIdx}"><span class="fa fa-download"></span>${vo.originalFilename}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                  			<a href="<%=cp%>/club/${club_seq}/review/download?num=${vo.clubReviewIdx}&clubFileIdx=${vo.clubFileIdx}"><span class="fa fa-download"></span>${vo.originalFilename}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                     </c:forEach>
                                     </div>
                                </c:if>
@@ -387,21 +388,21 @@ function updateReview() {
                                <c:if test="${not empty preReadDto }">
                                     <div class="post-bottom overflow" style="margin-top: 0px">
                                
-                                  			<a href="<%=cp%>/club/index/review/article?${params}&num=${preReadDto.clubReviewIdx}">이전글 : ${preReadDto.subject}</a>
+                                  			<a href="<%=cp%>/club/${club_seq}/review/article?${params}&num=${preReadDto.clubReviewIdx}">이전글 : ${preReadDto.subject}</a>
                               
                                     </div>
                                 </c:if>
                                 <c:if test="${not empty nextReadDto }">    
                                     <div class="post-bottom overflow" style="margin-top: 0px">
                               
-                                  			<a href="<%=cp%>/club/index/review/article?${params}&num=${nextReadDto.clubReviewIdx}">다음글 : ${nextReadDto.subject}</a>
+                                  			<a href="<%=cp%>/club/${club_seq}/review/article?${params}&num=${nextReadDto.clubReviewIdx}">다음글 : ${nextReadDto.subject}</a>
                                 
                                     </div>
                                </c:if>
                                <div>
                               
                                   	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px; ">
-                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/club/index/review/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/club/${club_seq}/review/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
                   					</div>
                                       
                   					

@@ -52,13 +52,13 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 	
 	@Override
-	public Apply readApply(int num) {
+	public Apply readApply(Map<String, Object> map) {
 		Apply dto=null;
 		
 		try {
 			//게시물 가져오기
 			System.out.println("후후후후");
-			dto=dao.getReadInformation("clubApply.readApply", num);
+			dto=dao.getReadInformation("clubApply.readApply", map);
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -68,12 +68,12 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 
 	@Override
-	public int updateHitCount(int num) {
+	public int updateHitCount(Map<String, Object> map) {
 		int result=0;
 		
 		try{
 			// 조회수 증가
-			result=dao.updateInformation("clubApply.updateHitCount", num);
+			result=dao.updateInformation("clubApply.updateHitCount", map);
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}
@@ -83,13 +83,13 @@ public class ApplyServiceImpl implements ApplyService {
 	
 
 	@Override
-	public int updateHitCount_club(int clubApplyIdx) {
+	public int updateHitCount_club( Map<String, Object> map) {
 
 		int result=0;
 		
 		try{
 			// 클럽봉사신청게시판 조회수 증가
-			result=	dao.updateInformation("clubApply.updateHitCount_club",clubApplyIdx);
+			result=	dao.updateInformation("clubApply.updateHitCount_club",map);
 		
 			
 		} catch(Exception e) {
@@ -238,15 +238,15 @@ public class ApplyServiceImpl implements ApplyService {
 
 	
 	@Override
-	public Map<String, Object> replyCountLike(int replyNum) {
-		Map<String, Object> map=null;
+	public Map<String, Object> replyCountLike(Map<String, Object> map) {
+		Map<String, Object> resultMap=null;
 		try {
-			map=dao.getReadInformation("clubApply.replyCountLike", replyNum);
+			resultMap=dao.getReadInformation("clubApply.replyCountLike", map);
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		return map;
+		return resultMap;
 	}
 
 	@Override
@@ -272,14 +272,12 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 
 	@Override
-	public List<Member> readApplyList(int clubApplyIdx) {
+	public List<Member> readApplyList(Map<String, Object> map) {
 		
 		List<Member> list=null;
 		try {
 			//게시물 가져오기
-			System.out.println("readApplyList 들어옴");
-			
-			list=dao.getListInformation("clubApply.readApplyList", clubApplyIdx);
+			list=dao.getListInformation("clubApply.readApplyList", map);
 		
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -289,15 +287,12 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 
 	@Override
-	public List<Member> readApplyList_date(int clubApplyIdx) {
+	public List<Member> readApplyList_date(Map<String, Object> map) {
 		
 		List<Member> list=null;
 		
-		try {
-			//게시물 가져오기
-			System.out.println("readApplyList_date 들어옴");
-			
-			list=dao.getListInformation("clubApply.readApplyList_date", clubApplyIdx);
+		try {	
+			list=dao.getListInformation("clubApply.readApplyList_date", map);
 		
 		} catch (Exception e) {
 			System.out.println(e.toString());

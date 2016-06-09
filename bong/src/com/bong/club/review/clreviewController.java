@@ -123,14 +123,12 @@ public class clreviewController {
 	
 	@RequestMapping(value="/club/{club_seq}/review/create",method=RequestMethod.GET)
 	public ModelAndView ClRevCreateForm(
-			HttpSession session, 		@PathVariable int club_seq
+			HttpSession session
+			, @PathVariable int club_seq
 			) throws Exception {
 	
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		if(info==null) {
-			return new ModelAndView("redirect:/");
-		}
-		
+	
 		ModelAndView mav=new ModelAndView(".four.club.dari.review.create.후기게시판");
 		mav.addObject("mode", "created"); 
 		mav.addObject("subMenu","6");
@@ -144,15 +142,17 @@ public class clreviewController {
 			ClReview dto,
 			@PathVariable int club_seq
 			) throws Exception {
+		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		System.out.println("글쓰기 컨트롤러로 옴 ");
 		
 		String root=session.getServletContext().getRealPath("/");
 		String path=root+File.separator+"uploads"+File.separator+"review";
 		
-		//dto.setUserId(info.getUserId());
+		System.out.println("글쓰기 컨트롤러 - USER정보받기 ");
 		dto.setUserId(info.getUserId());
 		dto.setUserIdx(info.getUserIdx()); //유저idx 저장 
+		System.out.println("글쓰기 컨트롤러 - CLUB_SEQ 받기 ");
 		dto.setClub_seq(club_seq);
 		
 		System.out.println("유저 인덱스:"+dto.getUserId());
@@ -183,29 +183,28 @@ public class clreviewController {
 		searchValue= URLDecoder.decode(searchValue,"utf-8");
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("club_seq", club_seq);
-		//조회수증가
-		service.updateHitCount(num);
+		map.put("club_seq", club_seq); 
+		System.out.println("club_seq: "+club_seq);
 		
+		map.put("num",num);
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
-		map.put("num", num);
+		
+		//조회수증가
+		service.updateHitCount(map);
 		
 		ClReview preReadDto = service.preReadClReview(map);
 		ClReview nextReadDto = service.nextReadClReview(map);
-	
-		
-		Map<String, Object> map2 = new HashMap<String, Object>();
-		map2.put("clubReviewIdx", num);
+				
 		//해당아티클가져오기
-		ClReview dto=service.readClReview(map2);
-		List<ClReview> listFile=service.listFile(map2);
+		ClReview dto=service.readClReview(map);
+		System.out.println("listFile전");
+		List<ClReview> listFile=service.listFile(map);
 		
 		if(dto==null)
 			return new ModelAndView("redirect:/club/"+club_seq+"/review/list");
 			//return new ModelAndView("redirect:.club.index.review.list?page="+page);
-		
-		
+				
 		String params = "page="+page;
 		if(searchValue.length()!=0) {
 		    params += "&searchKey=" + searchKey + 
@@ -230,9 +229,10 @@ public class clreviewController {
 			HttpServletResponse resp,
 			HttpSession session,
 			@RequestParam(value="num") int num,
-			@RequestParam(value="fileNum") int fileNum,
+			@RequestParam(value="clubFileIdx") int clubFileIdx,
 			@PathVariable int club_seq
 			) throws Exception{
+		
 		String cp=req.getContextPath();
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
@@ -240,17 +240,17 @@ public class clreviewController {
 			resp.sendRedirect(cp+"/member/login");
 			return;
 		}*/
-		
-		
 		String root=session.getServletContext().getRealPath("/");
 		String path=root+File.separator+"uploads"+File.separator+"review";
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("clubReviewIdx", num); //fileIndex 
-		map.put("serviceFileIdx", fileNum); //fileIndex 
+		map.put("num", num); //fileIndex 
+		map.put("clubFileIdx", clubFileIdx); //fileIndex 
 		map.put("club_seq", club_seq);
 		
+		System.out.println("readFile 들어감");
 		ClReview dto=service.readFile(map);
+		System.out.println("readFile 넘어옴");
 		
 		boolean flag=false;
 		if(dto!=null) {
@@ -276,20 +276,19 @@ public class clreviewController {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("clubReviewIdx", num);
+		map.put("num", num);
 		map.put("club_seq", club_seq);
-
+		
+		System.out.println("readClReview 서비스 들어가기전");
 		ClReview dto = service.readClReview(map);
 		List<ClReview> listFile=service.listFile(map);
-		/*if (dto == null) {
-			return new ModelAndView("redirect:/club/"+club_seq+"/review/list?page="+page);
-		}*/
-	
+			
 		if (info.getUserIdx()!=dto.getUserIdx())
 			return new ModelAndView("redirect:/club/"+club_seq+"/review/list?page="+page);
 
 		ModelAndView mav=new ModelAndView(".four.club.dari.review.create.후기게시판");
 		mav.addObject("mode", "update");
+		mav.addObject("listFile", listFile);
 		mav.addObject("page", page);
 		mav.addObject("dto", dto); 
 		mav.addObject("subMenu","6");
@@ -319,44 +318,34 @@ public class clreviewController {
 	}
 
 	@RequestMapping(value="/club/{club_seq}/review/deleteFile", 
-			method=RequestMethod.GET)
-	public ModelAndView deleteFile(
+			method=RequestMethod.POST)
+	public Map<String, Object> deleteFile(
 			HttpSession session,	
-			@RequestParam(value="num") int num,	
-			@RequestParam(value="page") String page
-			,@PathVariable int club_seq
+			@RequestParam(value="clubFileIdx") int clubFileIdx,
+			@PathVariable int club_seq
 			) throws Exception {
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		/*if(info==null) {
-			return new ModelAndView("redirect:/member/login");
-		}*/
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("clubReviewIdx", num);
-		 map.put("club_seq", club_seq);
+		Map<String, Object> model = new HashMap<>(); 
 
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"blog"+File.separator+info.getUserId();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clubFileIdx", clubFileIdx);
+		map.put("num", clubFileIdx);
+		map.put("club_seq", club_seq);
 		
-		ClReview dto = service.readClReview(map);
-		if(dto==null) {
-			return new ModelAndView("redirect:/club/"+club_seq+"/review/list?page="+page);
+		ClReview dto = service.readFile(map);
+		if(dto!=null) {
+			fileManager.doFileDelete(dto.getSaveFilename(), pathname);
 		}
-			
-		if(! info.getUserId().equals(dto.getUserId())) {
-			return new ModelAndView("redirect:.four.club.dari.review.list?page="+page);
-		}
 		
-		String root = session.getServletContext().getRealPath("/");
-		String path = root + File.separator + "uploads" + File.separator + "notice";		
+		service.deleteFile(map);
+		System.out.println("deleteFile 컨트롤러 빠져나감 ");
+		model.put("state", "true");
 		
-		if(dto.getSaveFilename() != null && dto.getSaveFilename().length()!=0) {
-			  fileManager.doFileDelete(dto.getSaveFilename(), path);
-			  
-			  dto.setSaveFilename("");
-			  dto.setOriginalFilename("");
-			  service.updateClReview(dto, path);
-       }
-		
-		return new ModelAndView("redirect:/club/"+club_seq+"/review/update?num="+num+"&page="+page);
+		return model;
 	}
 	
 ////////////////////////////////////////////////////////////////////		게시글 삭제 
@@ -373,8 +362,8 @@ public class clreviewController {
 		}*/
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("clubReviewIdx", num);
-		 map.put("club_seq", club_seq);
+		map.put("num", num);
+		map.put("club_seq", club_seq);
 
 		// 해당 레코드 가져 오기
 		ClReview dto = service.readClReview(map);
@@ -391,8 +380,12 @@ public class clreviewController {
 		
 		dto.setClubReviewIdx(num);
 		dto.setClub_seq(club_seq);
-		service.deleteClReview(dto, dto.getSaveFilename(), path);
 		
+		System.out.println("서비스 delete 들어가기 전 ClubReviewIdx ="+dto.getClubReviewIdx());
+		
+		service.deleteClReview(dto, dto.getSaveFilename(), path);
+
+		System.out.println("갔다옴");
 		return new ModelAndView("redirect:/club/"+club_seq+"/review/list?page="+page);
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////	게시글의 좋아요 처리 
@@ -407,8 +400,10 @@ public class clreviewController {
 			throws Exception {
 	
 		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		
 		dto.setUserIdx(info.getUserIdx());
 		dto.setClub_seq(club_seq);
+		
 		int state=service.stateLike(dto);
 		
 		if(state==0){ // 게시물의 좋아요가 아직 안누러졌다면 > 1추가 
@@ -419,11 +414,13 @@ public class clreviewController {
 		}else if(state==1){ //이미 좋아요를 눌렀다면 -1 
 			dto.setUserIdx(info.getUserIdx());
 			service.deleteLike(dto);
+			System.out.println("게시물의 좋아요를 취소하였습니다 ");
 		}
 		
    	    // 작업 결과를 json으로 전송
 		Map<String, Object> model = new HashMap<>(); 
 		model.put("state", state);
+		System.out.println("게시물 좋아요 컨트롤러 성공하고 나감");
 		return model;
 	}
 	
@@ -431,14 +428,17 @@ public class clreviewController {
 	@RequestMapping(value="/club/{club_seq}/review/countLike",   	method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object>  countLike(	
-			@RequestParam(value="clubReviewIdx") int num,
-				ClReview dto,
+			@RequestParam(value="clubReviewIdx") int clubReviewIdx,
+			ClReview dto,
 			@PathVariable int club_seq) 
 			throws Exception {
 		
 		int likeCount=0;
+
+		System.out.println("게시글 좋아요 세기 컨트롤러 ) club리뷰 인덱스: "+clubReviewIdx);
+		
 		dto.setClub_seq(club_seq);
-		dto.setClubReviewIdx(num);
+		dto.setClubReviewIdx(clubReviewIdx);
 		
 		Map<String, Object> map=service.countLike(dto);
 		
@@ -449,6 +449,7 @@ public class clreviewController {
 		
    	    // 작업 결과를 json으로 전송
 		Map<String, Object> model = new HashMap<>(); 
+		System.out.println();
 		model.put("likeCount", likeCount);
 		
 		return model;
@@ -511,7 +512,7 @@ public class clreviewController {
 		return mav;
 	}
 	
-	//////////////////////////////////////////////////////////////					 대댓글 리스트
+	//////////////////////////////////////////////////////////////////////////////////////////////					 대댓글 리스트
 			@RequestMapping(value="/club/{club_seq}/review/listReplyAnswer")
 			public ModelAndView listReplyAnswer(	
 					@RequestParam(value="answer") int answer
@@ -523,11 +524,10 @@ public class clreviewController {
 				map.put("club_seq", club_seq);
 
 				List<ClReviewReply> listReplyAnswer=service.listReplyAnswer(map);
-				
+	
 				// 엔터를 <br>
 				Iterator<ClReviewReply> it=listReplyAnswer.iterator();
 				while(it.hasNext()) {
-					System.out.println("대댓글 리스트를 받았다 ");
 					ClReviewReply dto=it.next();
 					dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 				}
@@ -567,7 +567,8 @@ public class clreviewController {
 			@RequestMapping(value="/club/{club_seq}/review/replyCountAnswer", method=RequestMethod.POST)
 			@ResponseBody
 			public Map<String, Object>  replyCountAnswer( 
-					@RequestParam(value="answer") int answer ,@PathVariable int club_seq)
+					@RequestParam(value="answer") int answer
+					,@PathVariable int club_seq)
 					throws Exception {
 				
 				int count=0;
@@ -576,7 +577,7 @@ public class clreviewController {
 				map.put("answer", answer);
 				map.put("club_seq", club_seq);
 				
-				count=service.replyCountAnswer(answer);
+				count=service.replyCountAnswer(map);
 				
 		   	    // 작업 결과를 json으로 전송
 				Map<String, Object> model = new HashMap<>(); 
@@ -657,8 +658,11 @@ public class clreviewController {
 				throws Exception {
 				
 				SessionInfo info=(SessionInfo) session.getAttribute("member");
+				System.out.println("컨트롤러-좋아요 입성");
+				
 				dto.setUserIdx(info.getUserIdx());
 				dto.setClub_seq(club_seq);
+								
 				int state=service.stateReplyLike(dto);
 				
 				System.out.println("컨트롤러state:"+state);
@@ -671,7 +675,7 @@ public class clreviewController {
 					
 					dto.setUserIdx(info.getUserIdx());
 					service.deleteReplyLike(dto);
-					System.out.println("DELTE 좋아요 들어옴 올나어");
+					System.out.println("좋아요 취소햇다(컨트롤러)");
 				}
 				
 		   	    // 작업 결과를 json으로 전송
@@ -685,23 +689,28 @@ public class clreviewController {
 					method=RequestMethod.POST)
 			@ResponseBody
 			public Map<String, Object>  replyCountLike(
-					@RequestParam(value="replyNum") int num
+					@RequestParam(value="replyNum") int replyNum
 					,@PathVariable int club_seq )
 					throws Exception {
-				
+			
 				int likeCount=0;
+				
 				Map<String, Object> map=new HashMap<String, Object>();
-				map.put("num,", num);
+				map.put("replyNum", replyNum);
 				map.put("club_seq", club_seq);
+				System.out.println("replyCountLike에 들어가기전 replyNum="+replyNum);
 				
 				Map<String, Object> resultMap=service.replyCountLike(map);
 				
 				if(resultMap!=null) {
+					
 					// resultType이 map인 경우 int는 BigDecimal로 넘어옴
-					likeCount=((BigDecimal)map.get("LIKECOUNT")).intValue();
+					likeCount=((BigDecimal)resultMap.get("LIKECOUNT")).intValue();
 				}
-				//성공//System.out.println("넘어옴likeCount:"+likeCount);
-		   	    // 작업 결과를 json으로 전송
+			
+				
+				System.out.println("likecount="+likeCount);
+				
 				Map<String, Object> model = new HashMap<>(); 
 				model.put("likeCount", likeCount);
 				

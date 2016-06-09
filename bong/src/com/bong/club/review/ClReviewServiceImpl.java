@@ -94,6 +94,7 @@ public class ClReviewServiceImpl implements ClReviewService {
 		int result=0;
 		try {
 			result=dao.getIntValue("club_review.dataCount",map);
+			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -113,12 +114,12 @@ public class ClReviewServiceImpl implements ClReviewService {
 	}
 
 	@Override
-	public int updateHitCount(int num) {
+	public int updateHitCount(Map<String, Object> map) {
 		int result=0;
 		
 		try{
 			// 조회수 증가
-			result=dao.updateInformation("club_review.hitCountClReview", num);
+			result=dao.updateInformation("club_review.hitCountClReview", map);
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}
@@ -189,8 +190,7 @@ public class ClReviewServiceImpl implements ClReviewService {
 	public int deleteClReview(ClReview dto, String saveFilename, String path) {
 		int result=0;
 
-		try{
-			
+		try{			
 			if(saveFilename != null ) {
 			  fileManager.doFileDelete(saveFilename, path);
 			}
@@ -379,10 +379,10 @@ public class ClReviewServiceImpl implements ClReviewService {
 	}
 
 	@Override
-	public int replyCountAnswer(int answer) {
+	public int replyCountAnswer(Map<String, Object> map) {
 		int result=0;
 		try {
-			result=dao.getIntValue("club_review.replyCountAnswer", answer);
+			result=dao.getIntValue("club_review.replyCountAnswer", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -433,11 +433,12 @@ public class ClReviewServiceImpl implements ClReviewService {
 		return result;
 	}
 
-
+	////////////////////댓글 좋아요 세기
 	@Override
 	public Map<String, Object> replyCountLike(Map<String, Object> map) {
 		
 		Map<String, Object> resultMap=null;
+		
 		try {
 			resultMap=dao.getReadInformation("club_review.replyCountLike", map);
 			
