@@ -9,7 +9,7 @@ public class ClubInfo {
 	private String introduce, clubname, city,  clubBirth;
 	private String groupSubject, subject;
 	private int  closed;
-	private MultipartFile upload;
+	private MultipartFile uploads;
 	private String photoFilename;
 	private int isUserName, isCity;
 	
@@ -110,11 +110,12 @@ public class ClubInfo {
 	public void setClosed(int closed) {
 		this.closed = closed;
 	}
-	public MultipartFile getUpload() {
-		return upload;
+	
+	public MultipartFile getUploads() {
+		return uploads;
 	}
-	public void setUpload(MultipartFile upload) {
-		this.upload = upload;
+	public void setUploads(MultipartFile uploads) {
+		this.uploads = uploads;
 	}
 	public String getPhotoFilename() {
 		return photoFilename;

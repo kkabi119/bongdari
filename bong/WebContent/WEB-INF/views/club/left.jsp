@@ -102,7 +102,7 @@
                                 <li  class="navbar-stacked-item6"><a href="<%=cp%>/club/${clubSeq}/review/list">후기/포토게시판</a></li>
                                 <li  class="navbar-stacked-item7"><a href="<%=cp%>/club/${clubSeq}/apply/list">봉사신청게시판</a></li>
                                 <li  class="navbar-stacked-item8"><a href="<%=cp%>/club/${clubSeq}/calendar/main">우리동아리 달력</a></li>
-                                <li  class="navbar-stacked-item9"><a href="<%=cp%>/club/${clubSeq}/admin">관리자모드</a></li>
+                                <li  class="navbar-stacked-item9"><a href="<%=cp%>/club/${clubSeq}/manage">관리자모드</a></li>
                             </ul>
                         </div>
                     </div>

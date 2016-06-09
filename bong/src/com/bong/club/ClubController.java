@@ -55,7 +55,8 @@ public class ClubController {
 		map.put("start", 1);
 		map.put("end", 5);
 		map.put("clubSeq", clubSeq);
-		List<Notice> listN=noticeService.listNoticeSmall(map);			
+		List<Notice> listN=noticeService.listNoticeSmall(map);
+		ClubInfo clubInfo=clubService.readClubInfoSmall(map);
 		 // 리스트의 번호
         int listNum, n = 0;
         Iterator<Notice> it=listN.iterator();
@@ -68,14 +69,14 @@ public class ClubController {
            
         String urlList = cp+"/club/"+clubSeq+"/notice/list";
         String urlArticle = cp+"/club/"+clubSeq+"/notice/article?page="+ 1;
-        Map<String, Object> clubMin = new HashMap<String, Object>();
+        
 		ModelAndView mav = new ModelAndView(".four.club.dari.main.동아리 메인");
 		mav.addObject("subMenu", "2");
 		mav.addObject("clubSeq", clubSeq);
 		mav.addObject("listN", listN);
 		mav.addObject("urlList", urlList);
 		mav.addObject("urlArticle", urlArticle);
-		mav.addObject("clubMin",clubMin);
+		mav.addObject("clubInfo",clubInfo);
 		
 		return mav;
 	}
@@ -191,8 +192,7 @@ public class ClubController {
 		}
 		
 		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+File.separator+"uploads"+File.separator+"club"+
-				File.separator+info.getUserId();
+		String pathname=root+File.separator+"uploads"+File.separator+"club";
 
 		dto.setUserId(info.getUserId());
 		dto.setUserIdx(info.getUserIdx());
@@ -249,4 +249,40 @@ public class ClubController {
 		return new ModelAndView("redirect:/club/"+clubInfo.getClubSeq()+"/main");
 	}
 	
+	@RequestMapping(value="/club/{clubSeq}/manage")
+	public ModelAndView clubManage(
+			@PathVariable int clubSeq,
+			HttpSession session
+			) throws Exception {
+		
+		ModelAndView mav = new ModelAndView(".four.club.manage.admin.관리자페이지");
+		mav.addObject("subMenu","9");
+		return mav;
+	}
+	
+	@RequestMapping(value="/club/{clubSeq}/manage/clubInfo")
+	public ModelAndView readClubInfo(
+			@PathVariable int clubSeq,
+			HttpSession session
+			) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if (info == null) {
+			return new ModelAndView("redirect:/member/login");
+		}		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clubSeq", clubSeq);
+		ClubInfo clubInfo = clubService.readClubInfoSmall(map);
+		
+		ModelAndView mav = new ModelAndView("/club/dari/manage/clubInfo");
+		mav.addObject("clubSeq", clubSeq);
+		mav.addObject("clubInfo", clubInfo);
+		return mav;
+	}
+	
+	
+	
 }
+
+	
+

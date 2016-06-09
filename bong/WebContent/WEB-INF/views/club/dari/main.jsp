@@ -10,7 +10,8 @@
 <style type="text/css">
 
 .col-md-9{
-	W
+	
+	margin-left:3%;
 }
 		
 </style>
@@ -19,49 +20,10 @@
 			<div class="single-blog two-column">
                                 
 			<!-- Header Carousel -->
-    		<header id="myCarousel" class="carousel slide" style="height:400px">
-        		<!-- Indicators -->
-        			<ol class="carousel-indicators">
-            			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            			<li data-target="#myCarousel" data-slide-to="1"></li>
-            			<li data-target="#myCarousel" data-slide-to="2"></li>
-        			</ol>
-
-        	<!-- Wrapper for slides -->
+    		<header id="myCarousel" class="carousel slide" style="height:400px">    
         	<div class="carousel-inner">
-           		<div class="item active">
-            
-            	<div class="fill" style="background-image:url('<%=cp%>/res/images/myclub/111.jpg');"></div>
-                <div class="carousel-caption">
-                    <h2></h2>
-                </div>
-            </div>
-            <div class="item">	
-                <div class="fill" style="background-image:url('<%=cp%>/res/images/myclub/222.jpg');"></div>
-                <div class="carousel-caption">
-                    <h2></h2>
-                </div>
-            </div>
-            <div class="item">
-                <div class="fill" style="background-image:url('<%=cp%>/res/images/myclub/333.jpg');"></div>
-                <div class="carousel-caption">
-                    <h2></h2>
-                </div>
-            </div>
-          
-        </div>
-
-        <!-- Controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="icon-prev"></span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="icon-next"></span>
-        </a>
-        
-        <br><br>
-		<br><br>
-     
+           	<div class="fill" style="background-image:url('<%=cp%>/uploads/club/${clubInfo.photoFilename}');"></div>    
+        </div>  
     </header>
 	<hr>
       	

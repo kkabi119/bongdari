@@ -42,9 +42,9 @@
 	</insert>
 	
 	<insert id="insertClubInfo" parameterType="com.bong.club.ClubInfo">
-	    INSERT INTO clubInfo(clubIdx, userId, themeNum, clubname, introduce, closed, city)
+	    INSERT INTO clubInfo(clubIdx, userId, themeNum, clubname, introduce, closed, city, photoFilename)
 	      VALUES (#{clubSeq}, #{userId}, #{themeNum}, 
-	                #{clubname}, #{introduce}, #{closed},#{city})
+	                #{clubname}, #{introduce}, #{closed},#{city}, #{photoFilename, jdbcType=VARCHAR})
 	</insert>
 	
 	<insert id="insertJoinClub" parameterType="com.bong.club.ClubInfo">
@@ -149,7 +149,7 @@
 	<!-- 내 동아리의 전체 정보 -->
 	<select id="readClubInfo" parameterType="map" resultType="com.bong.club.ClubInfo">
 	    SELECT clubidx AS clubSeq, userId, c.parent groupNum ,clubname, introduce, clubBirth, 
-			closed, c.subject, g.subject groupSubject 
+			closed, c.subject, g.subject groupSubject, photoFilename 
 			FROM ClubInfo b 
 			JOIN theme c ON b.themeNum=c.themeNum 
 			JOIN ( SELECT themeNum, subject FROM theme WHERE parent IS NULL ) g ON c.parent = g.themeNum  
@@ -158,7 +158,7 @@
 	
 	<select id="readClubInfoSmall" parameterType="map" resultType="com.bong.club.ClubInfo">
 		SELECT clubidx AS clubSeq, userId, c.parent groupNum ,clubname, introduce, clubBirth, city,
-			closed, c.subject, g.subject groupSubject 
+			closed, c.subject, g.subject groupSubject, photoFilename 
 			FROM ClubInfo b 
 			JOIN theme c ON b.themeNum=c.themeNum 
 			JOIN ( SELECT themeNum, subject FROM theme WHERE parent IS NULL ) g ON c.parent = g.themeNum

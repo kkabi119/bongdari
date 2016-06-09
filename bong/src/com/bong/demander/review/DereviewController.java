@@ -218,8 +218,7 @@ public class DereviewController {
 		if(dto==null)
 			return new ModelAndView("redirect:/demander/{demander_seq}/review/list");
 		
-		
-		
+				
 		String params = "page="+page;
 		if(searchValue.length()!=0) {
 		    params += "&searchKey=" + searchKey + 

@@ -9,9 +9,17 @@ public class ClReviewReply {
 	
 	private int likeCount;
 	private int answerCount;
-
+	
+	private int club_seq;
 
 	
+	
+	public int getClub_seq() {
+		return club_seq;
+	}
+	public void setClub_seq(int club_seq) {
+		this.club_seq = club_seq;
+	}
 	public int getListNum() {
 		return listNum;
 	}
