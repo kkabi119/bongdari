@@ -79,7 +79,7 @@ public class QnaController {
 	   
 	   String params = "";
 	   String urlList = cp + "/qna/list";
-	   String urlArticle = cp+"qna/article?page="+current_page;
+	   String urlArticle = cp+"/qna/article?page="+current_page;
 	   
 	   if(searchValue.length() != 0){
 		   params = "searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "utf-8");
@@ -117,7 +117,153 @@ public class QnaController {
 	   
 	   service.insertQna(dto, "create");
 	  
-	   return new ModelAndView("redirect:/qna/list");
+	   return new ModelAndView("redirect:/qna/list");	   
+   }
+   @RequestMapping(value= "/qna/article")
+   public ModelAndView qnaArticle(
+		   HttpSession session
+		  ,@RequestParam(value="num") int num
+		  ,@RequestParam(value="page") int page
+		  ,@RequestParam(value="searchKey", defaultValue="subject") String searchKey
+		  ,@RequestParam(value="searchValue", defaultValue="") String searchValue
+		   ) throws Exception{
+	   SessionInfo info= (SessionInfo) session.getAttribute("member");
 	   
+	   //검색값 decode
+	   searchValue = URLDecoder.decode(searchValue,"utf-8");
+	   Map<String, Object> map = new HashMap<String, Object>();
+	   map.put("qnaIdx", num);
+	   
+	   //조회수 증가
+	   service.updateHitCount(map);
+	   
+	   // 아티클 가져오기
+	   Qna dto= service.readQna(map);
+	   
+	   if(dto==null){
+		   return new ModelAndView("redirect:/qna/list");
+	   }
+	   
+	   String params = "page="+page;
+	   if(searchValue.length()!=0){
+		   params += "&searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue,"utf-8");
+	   }
+	   
+	   String amode="article";
+	   if(dto.getAnswer()!=0){ //답변 article이면
+		   amode="reply"; 
+	   }
+	   ModelAndView mav = new ModelAndView(".layout.customer.qna.article.Q&A 게시판");
+	   mav.addObject("dto", dto);
+	   mav.addObject("page", page);
+	   mav.addObject("amode", amode);
+	   mav.addObject("params", params);	   
+	   return mav;
+   }
+   @RequestMapping(value="/qna/update", method=RequestMethod.GET)
+   public ModelAndView updateForm(
+		   HttpSession session
+		  ,@RequestParam(value="num") int num
+		  ,@RequestParam(value="page") String page		  
+		   ) throws Exception{
+	   
+	   SessionInfo info = (SessionInfo) session.getAttribute("member");
+	   Map<String, Object> map = new HashMap<String, Object>();
+	   map.put("qnaIdx", num);
+	   
+	   Qna dto = service.readQna(map);
+	   
+	   if(info.getUserIdx() != dto.getUserIdx())
+		   return new ModelAndView("redirect:/qna/list?page="+page);
+	   ModelAndView mav = new ModelAndView(".layout.customer.qna.create.Q&A 게시판");
+	   mav.addObject("mode", "update");
+	   mav.addObject("page", page);
+	   mav.addObject("dto", dto);
+	   return mav;
+   }
+   @RequestMapping(value="/qna/update", method=RequestMethod.POST)
+   public String updateSubmit(
+		   Qna dto
+		  ,@RequestParam(value="page") String page) throws Exception{
+	   
+	   // 수정
+     service.updateQna(dto);
+     
+     return "redirect:/qna/list?page="+page;
+   }
+   @RequestMapping(value="/qna/delete")
+   public ModelAndView delete(
+		   HttpSession session
+		  ,@RequestParam(value="num") int num
+		  ,@RequestParam(value="page") String page
+		   ) throws Exception{
+	   SessionInfo info = (SessionInfo) session.getAttribute("member");
+	   
+	   // 해당 레코드 가져오기
+	   Map<String, Object> map = new HashMap<String, Object>();
+	   map.put("qnaIdx", num);
+	   
+	   Qna dto = service.readQna(map);
+	   if(dto == null) {
+		   return new ModelAndView("redirect:/qna/list?page="+page);
+	   }
+	   
+	   if(!info.getUserId().equals(dto.getUserId()) && !info.getUserId().equals("admin")){
+		   return new ModelAndView("redirect:/qna/list?page="+page);
+	   }
+	   
+	   service.deleteQna(map);
+	   
+	   return new ModelAndView("redirect:/qna/list?page="+page);
+   }
+   @RequestMapping(value="/qna/reply", method=RequestMethod.GET)
+   public ModelAndView replyForm(
+		   HttpSession session
+		  ,@RequestParam(value="num") int num
+		  ,@RequestParam(value="page") String page
+		   ) throws Exception{
+	   SessionInfo info = (SessionInfo) session.getAttribute("member");
+	   Map<String, Object> map = new HashMap<String, Object>();
+	   map.put("qnaIdx", num);
+	   
+	   if(info==null){
+		   return new ModelAndView("redirect:/member/login");
+	   }
+	   
+	   Qna dto = service.readQna(map);
+	   if(dto==null){
+		   return new ModelAndView("redirect:/qna/list?page="+page);
+	   }
+	   
+	   String str = "["+dto.getSubject()+"] 에 대한 답변입니다.\n";
+	   dto.setContent(str);
+	   dto.setAnswer(dto.getQnaIdx());
+	   
+	   ModelAndView mav = new ModelAndView(".layout.customer.qna.create.Q&A 게시판");
+	   mav.addObject("dto", dto);
+	   mav.addObject("page", page);
+	   mav.addObject("mode", "reply");
+	   return mav;
+   }
+   @RequestMapping(value = "/qna/reply", method=RequestMethod.POST)
+   public String replySubmit(
+		   HttpSession session
+		  ,Qna dto
+		  ,@RequestParam(value="num") int num
+		  ,@RequestParam(value="page") String page
+		   ) throws Exception{
+     SessionInfo info = (SessionInfo) session.getAttribute("member");
+     
+     dto.setUserIdx(info.getUserIdx());
+     dto.setAnswer(num);
+     int quserIdx= 0;
+     
+     if(dto.getAnswer()!=0){ // 답변 article일 경우
+    	 quserIdx=service.quserIdx(dto);
+     }
+     dto.setQuserIdx(quserIdx);
+     service.insertQnaReply(dto, num);
+     
+     return "redirect:/qna/list?page="+page;
    }
 }

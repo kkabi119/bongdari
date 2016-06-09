@@ -29,8 +29,14 @@ public class QnaServiceImpl implements QnaService{
 
 	@Override
 	public int insertQnaReply(Qna dto, int qnaIdx) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			dto.setAnswer(qnaIdx);
+			result=dao.insertInformation("qna.insertQnaReply", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
@@ -57,32 +63,57 @@ public class QnaServiceImpl implements QnaService{
 
 	@Override
 	public int updateHitCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = dao.updateInformation("qna.updateHitCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public int quserIdx(Qna dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = dao.getIntValue("qna.quserIdx", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public Qna readQna(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Qna qna = null;
+		try {
+			qna = dao.getReadInformation("qna.readQna", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return qna;
 	}
 
 	@Override
 	public int updateQna(Qna qna) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = dao.updateInformation("qna.updateQna", qna);
+		} catch (Exception e) {
+          System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public int deleteQna(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = dao.deleteInformation("qna.deleteQna", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 }

@@ -255,7 +255,7 @@ function deleteReplyAnswer(replyNum, answer) {
 	                                            
 	                									<textarea id="replyContent${Rdto.replyNum}" class="form-control" rows="3" required="required"></textarea>
 	           									 		 <div style="text-align: right; padding-top: 0px;">
-		                      								<button type="button" class="btn btn-info" style=" padding:13px 20px ; color:white; border:none;" 
+		                      								<button type="button" class="btn btn-warning" style=" padding:13px 20px ; color:white; border:none;" 
 		                      											onclick="sendReplyAnswer('${Rdto.serviceReviewIdx}','${Rdto.replyNum}')">
 		                      								 등록 
 		                      								 </button>

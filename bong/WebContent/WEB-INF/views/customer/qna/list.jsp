@@ -49,7 +49,6 @@ function QnasearchList() {
 	   <div class="col-lg-12">
 			<h1 class="page-header" style="color:#F0AD4E;">QnA</h1>
 			<ol class="breadcrumb">
-				<li><a href="<%=cp%>/demander/${demander_seq}/main" style="color:#F0AD4E;">수요처 메인</a></li>
 				<li class="active">질문과 답변 </li>
 			</ol>
 		</div>

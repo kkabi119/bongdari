@@ -77,6 +77,12 @@ function searchList() {
    padding-right: 15px;
    padding-left: 0px;
 }
+
+.subStyle{
+overflow:hidden;
+white-space:nowrap; 
+text-overflow:ellipsis;
+}
 </style>
    <!-- Page Heading/Breadcrumbs -->
    <div class="row3">
@@ -106,12 +112,14 @@ function searchList() {
             <div class="carousel-inner">
                <div class="item active">
                  <c:if test="${not empty dto.listImageName}">
-                           <div class="fill">
-                           ${dto.listImageName}
-                            </div>      
+                     <div class="fill" style="background-image:url('${dto.listImageName}');">
+                         <%-- ${dto.listImageName}  --%> 
+                      </div>   
+                            <!-- style="background-image:url('/bong/uploads/image/201606081632001928924125029041.jpg'); -->   
+                           
                   </c:if>
                   <c:if test="${empty dto.listImageName}">
-                            <div class="fill" style="background-image:url('<%=cp%>/res/images/demander/demander3.jpg');">
+                            <div class="fill" style="background-image:url('<%=cp%>/res/images/demander/demander2.jpg');">
                                    
                             </div>      
                 </c:if>
@@ -124,11 +132,24 @@ function searchList() {
       </div>
       
       <div class="col1">
-         <h3 style="font-weight:600; color:#908E8A; font-size: 16pt; line-height: 6px;">${dto.subject}<small style="color: black; font-size: 13pt;"> &nbsp;(${dto.replyCount})</small></h3>
-         <hr>
-         <h5>글번호: ${dto.serviceReviewIdx}</h5>
+   	 	<div style="margin-top:5px; max-height:60px; overflow:hidden; text-overflow:elevation; ">
+        	<div style="font-weight:600; color:#757575; font-size: 14pt;line-height: 24px; max-height:37px;margin-top:5px; overflow:hidden; 
+        	width:80%;white-space:nowrap; text-overflow:ellipsis;float:left; ">
+         	  <span style="color:#4E4E4E; max-height:37px;">
+         	  	${dto.subject}
+	         </span>
+	         </div><span style="color: black;line-height: 24px; font-size: 14pt; float: left;"> &nbsp;(${dto.replyCount})</span>
+         </div> 
+         <hr style="margin-top:10px; border:1px solid #ddd; margin-bottom:5px;">
+         
+      	<%-- <h3 class="subStyle" style="font-weight:600; color:#908E8A; font-size: 16pt; line-height: 6px;" >
+         ${dto.subject}
+      	<small style="color: black; font-size: 13pt;"> &nbsp;(${dto.replyCount})</small></h3>  --%>
+      	 
          <h5>작성자 : ${dto.userName} &nbsp;&nbsp;|&nbsp;&nbsp; 조회수 : ${dto.hitCount}</h5> 
-         <h5>좋아요 : ${dto.likeCount} </h5> 
+         <h5>No. ${dto.serviceReviewIdx}</h5>
+         <h5><img style="width:15px; height:15px; background-size:cover;" src="<%=cp%>/res/images/myclub/heart.png" >
+          &nbsp;${dto.likeCount}</h5>
          <br>
          <a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
          href="${urlArticle}&num=${dto.serviceReviewIdx}">Review
