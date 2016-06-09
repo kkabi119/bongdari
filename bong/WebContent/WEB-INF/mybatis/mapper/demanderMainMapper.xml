@@ -4,10 +4,12 @@
 <mapper namespace="deMain">
 
 
-<select id="deMainProfile" parameterType="map" resultType="com.bong.demander.Demander">
-		SELECT serviceIdx,serviceName,serviceBirth,serviceTel,serviceIntro,serviceAddr,serviceEmail,serviceImg,serviceImgName,subject as themeName
+<select id="deMainProfile" parameterType="map" resultType="com.bong.demander.main.DeMain">
+		SELECT serviceIdx,serviceName,serviceBirth,serviceTel,
+		serviceIntro,serviceAddr,serviceEmail,serviceImg,serviceImgName,
+		subject as themeName
 		FROM serviceInfo s JOIN theme t ON s.themenum=t.themenum
-		WHERE serviceIdx=7
+		WHERE serviceIdx=${demander_seq}
 </select>
 	
 </mapper>

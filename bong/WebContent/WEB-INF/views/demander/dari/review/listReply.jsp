@@ -209,7 +209,7 @@ function deleteReplyAnswer(replyNum, answer) {
                                                 <div class="media-body" style="padding-bottom: 0px">
                                                     <span><i class="fa fa-user"></i><a href="#">${Rdto.userName}</a></span>
                                                   
-                                                      <c:if test="${sessionScope.member.userIdx==Rdto.userIdx || sessionScope.member.userId=='admin'}">   
+                                                      <c:if test="${sessionScope.member.userIdx==Rdto.userIdx|| sessionScope.member.userId=='admin'}">   
 		     											<span style="margin-right:0px; float:right; ">
 		     												<a class="btn btn-default" onclick='deleteReply("${Rdto.replyNum}", "${pageNo}");' style="margin-top:-8px;color:#C03035; border:none;">
 		     													삭제

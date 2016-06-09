@@ -25,6 +25,7 @@ public class DemanderController {
 	private DemanderjoinService service;
 	@Autowired
 	private MyUtil myUtil;
+	
 	@RequestMapping(value="/main/demander")
 	public ModelAndView demanderMain() throws Exception {
 		
@@ -48,15 +49,7 @@ public class DemanderController {
 		return mav;
 	}
 
-	
-	@RequestMapping(value="/demander/{demander_seq}/main")
-	public ModelAndView demanderMain(
-			@PathVariable int demander_seq
-			) throws Exception {
-		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.main.각 수요처 메인");
-		return mav;
-	}
+
 	
 	@RequestMapping(value="/demander/{demander_seq}/calendar")
 	public ModelAndView demanderCal(
@@ -75,31 +68,7 @@ public class DemanderController {
 		ModelAndView mav = new ModelAndView(".four.demander.dari.photo.포토게시판");
 		return mav;
 	}
-	/*
-	@RequestMapping(value="/demander/{demander_seq}/review/list")
-	public ModelAndView demanderReview(
-			@PathVariable int demander_seq
-			) throws Exception {
-		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.review.list.후기게시판");
-		return mav;
-	}
 	
-	@RequestMapping(value="/demander/{demander_seq}/review/create")
-	public ModelAndView demanderCreateReview(
-			@PathVariable int demander_seq
-			) throws Exception {
-		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.review.create.후기게시판");
-		return mav;
-	}
-	@RequestMapping(value="/demander/{demander_seq}/review/article")
-	public ModelAndView demanderArticleReview() throws Exception {
-		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.review.article.후기게시판");
-		return mav;
-	}
-	*/
 	
 	
 	@RequestMapping(value="/demander/{demander_seq}/schedule")
