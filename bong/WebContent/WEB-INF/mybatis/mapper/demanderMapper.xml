@@ -103,8 +103,8 @@
 			        ) tbreply ON tbrev.serviceReviewIdx = tbreply.serviceReviewIdx
 	            ) LEFT OUTER JOIN
 			           (
-			                SELECT servicereviewidx, COUNT(*) likeCount
-                                 FROM service_review_like_${demander_seq} GROUP BY servicereviewidx
+			                SELECT serviceReviewIdx, COUNT(*) likeCount
+                                 FROM service_review_like_${demander_seq} GROUP BY serviceReviewIdx
 			           ) tblike ON tbreply.servicereviewidx = tblike.servicereviewidx    
                    
 	                ORDER BY serviceReviewIdx DESC

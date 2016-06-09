@@ -61,7 +61,7 @@ $(function(){
 
  $(function(){
 	listPage(1);
-	/* countRevLike(31);  */
+	
 });
  
 function listPage(page) {
@@ -69,6 +69,8 @@ function listPage(page) {
 	var num="${dto.serviceReviewIdx}";
 	$.post(url, {num:num, pageNo:page}, function(data){
 		$("#listReply").html(data);
+		replyCount(num);
+		countRevLike(num);
 	});
 }
 
@@ -78,15 +80,12 @@ function listPage(page) {
 	$.post(url, {abc:serviceReviewIdx}, function(data){
 		var likeCountId="#likeCount"+serviceReviewIdx;
 		var likeCount=data.likeCount;
-		
 		$(likeCountId).html(likeCount);
 	}, "JSON");
 }
 //좋아요추가
 function sendLike(serviceReviewIdx) {
 	var uid="${sessionScope.member.userId}";
-
-	
 	var params="serviceReviewIdx="+serviceReviewIdx;
 	
 	$.ajax({
@@ -95,7 +94,6 @@ function sendLike(serviceReviewIdx) {
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
-			var state=data.state;
 			countRevLike(serviceReviewIdx);
 		}
 		,error:function(e) {
@@ -158,14 +156,16 @@ function deleteReply(replyNum, page) {
 	}
 } 
 
-function countRevLikeRe(replyNum) {
-	var url="<%=cp%>/demander/${demander_seq}/review/countLikeReply";
-	$.post(url, {replyNum:replyNum}, function(data){
-		var likeCountReId="#likeCountRe"+replyNum;
-		var likeCountRe=data.likeCount;
-		$(likeCountReId).html(likeCountRe);
+function replyCount() {
+	var num="${dto.serviceReviewIdx}";// 해당 게시물 번호
+
+	var url="<%=cp%>/demander/${demander_seq}/review/replyCount";
+	$.post(url, {num:num}, function(data){
+		
+		var count=data.count;
+		
+		$("#replyCount").text(""+count);
 	}, "JSON");
-	
 }
 
 
@@ -216,7 +216,7 @@ function updateReview() {
                                         
                                          	<li onclick="sendLike('${dto.serviceReviewIdx}')"><a href="#"><i class="fa fa-thumbs-o-up"></i>좋아요 <span id="likeCount${dto.serviceReviewIdx}">${dto.likeCount}</span></a></li> 
                                                                                         
-                                            <li><a href="#"><i class="fa fa-comments"></i>댓글수  ${dto.replyCount}</a></li>
+                                            <li><a href="#"><i class="fa fa-comments"></i>댓글  <span id="replyCount"> </span></a></li>
                                             <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
                                         </ul>
                                     </div>
@@ -251,7 +251,7 @@ function updateReview() {
                                </c:if>
                                <div>
                                		<div style="float:left; padding-top: 20px; padding-right: 10px">
-                              				<span class="item-click" id="reply-open-close">댓글 ▼</span>&nbsp;<span id="postReplyCountView" class="item-title" style="color:#424951">(${dto.replyCount})</span>
+                              				<span class="item-click" id="reply-open-close">댓글 ▼</span>&nbsp;<span id="postReplyCountView" class="item-title" style="color:#424951"></span>
                      				</div>
                                   	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px; ">
                       					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/demander/${demander_seq}/review/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>

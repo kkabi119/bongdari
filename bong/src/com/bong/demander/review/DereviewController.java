@@ -85,7 +85,9 @@ public class DereviewController {
 	        List<DeReview> list = service.listDeReview(map);
 
 	        // 리스트의 번호 , 첫번째 사진 썸네일로 지정 
+	      
 	        Pattern pattern=Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
+	       
 	        Matcher match;
 	        int listNum, n = 0;
 	        Iterator<DeReview> it=list.iterator();
@@ -98,10 +100,11 @@ public class DereviewController {
 	            
 	            match=pattern.matcher(data.getContent());
 	            
+	            //match2=pattern2.matcher(match);
+	            
 	            if(match.find())
-	            	data.setListImageName(match.group(0));
-	            System.out.println("--------------"+data.getContent());
-	            System.out.println("**************"+data.getListImageName());
+	            	data.setListImageName(match.group(1));
+	           
 	            n++;
 	            
 	            }
