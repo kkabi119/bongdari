@@ -71,7 +71,7 @@ function replyAnswerLayout(replyNum) {
 	
 	var listReplyAnswerId="#listReplyAnswer"+answer;
 	
-	var url="<%=cp%>/club/${club_seq}/review/listReplyAnswer";
+	var url="<%=cp%>/club/${clubSeq}/review/listReplyAnswer";
 	
 	$.post(url, {answer:answer}, function(data){
 		
@@ -82,7 +82,7 @@ function replyAnswerLayout(replyNum) {
 ////////////////////////////////////////////////////////////////////////// 대댓글 갯수
 function countAnswer(answer) {
 	
-	var url="<%=cp%>/club/${club_seq}/review/replyCountAnswer";
+	var url="<%=cp%>/club/${clubSeq}/review/replyCountAnswer";
 	$.post(url, {answer:answer}, function(data){
 		var count="("+data.count+")";
 		var answerCountId="#answerCount"+answer;
@@ -117,7 +117,7 @@ function sendReplyAnswer(num, replyNum) {
 	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/club/${club_seq}/review/createdReply"
+		,url:"<%=cp%>/club/${clubSeq}/review/createdReply"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
@@ -153,7 +153,7 @@ function deleteReplyAnswer(replyNum, answer) {
 	}
 	
 	if(confirm("댓글을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/club/${club_seq}/review/deleteReply";
+		var url="<%=cp%>/club/${clubSeq}/review/deleteReply";
 		
 		$.post(url, {replyNum:replyNum, mode:"answer"}, function(data){
 		        var state=data.state;
@@ -179,8 +179,8 @@ function deleteReplyAnswer(replyNum, answer) {
                                                     <span><i class="fa fa-user"></i><a href="#">${Rdto.userName}</a></span>
                                                   
                                                       <c:if test="${sessionScope.member.userIdx==Rdto.userIdx || sessionScope.member.userId=='admin'}">   
-		     											<span style="margin-right:0px; float:right; ">
-		     												<a class="btn btn-default" onclick='deleteReply("${Rdto.replyNum}", "${pageNo}");' style="margin-top:-8px;color:#C03035; border:none;">
+		     											<span style="margin-right:0px; float:right;">
+		     												<a class="btn btn-default" onclick='deleteReply("${Rdto.replyNum}", "${pageNo}");' style="margin-top:-8px;  color:#C03035; border:none;">
 		     													삭제
 		     												</a>
 		     											</span>

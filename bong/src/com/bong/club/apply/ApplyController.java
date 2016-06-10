@@ -44,13 +44,13 @@ public class ApplyController {
 	/*개인동아리 봉사 신청게시판*/
 	
 	///////////////////////////////////////////// 리스트 ///////////////////////////////////////////////////
-	@RequestMapping(value="/club/{club_seq}/apply/list")
+	@RequestMapping(value="/club/{clubSeq}/apply/list")
 	public ModelAndView clubApplyList(
 			HttpServletRequest req,
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue
-			,@PathVariable int club_seq 
+			,@PathVariable int clubSeq 
 			) throws Exception {
 		
 		String cp=req.getContextPath();
@@ -67,7 +67,7 @@ public class ApplyController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("searchKey", searchKey);
         map.put("searchValue", searchValue);
-        map.put("club_seq", club_seq);
+        map.put("clubSeq", clubSeq);
 
         
         dataCount = service.dataCount(map);
@@ -109,8 +109,8 @@ public class ApplyController {
         }
         
         String params = "";
-        String urlList = cp+"/club/"+club_seq+"/apply/list";
-        String urlArticle = cp+"/club/"+club_seq+"/apply/article?page=" + current_page;
+        String urlList = cp+"/club/"+clubSeq+"/apply/list";
+        String urlArticle = cp+"/club/"+clubSeq+"/apply/article?page=" + current_page;
       
         //검색인경우
         if(searchValue.length()!=0) {
@@ -118,8 +118,8 @@ public class ApplyController {
         	             "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");	
         }        
         if(params.length()!=0) {
-            urlList = cp+"/club/"+club_seq+"/apply/list?" + params;
-            urlArticle = cp+"/club/"+club_seq+"/apply/article?page=" + current_page + "&"+ params;
+            urlList = cp+"/club/"+clubSeq+"/apply/list?" + params;
+            urlArticle = cp+"/club/"+clubSeq+"/apply/article?page=" + current_page + "&"+ params;
         }
         
 		ModelAndView mav = new ModelAndView(".four.club.dari.apply.list.봉사신청");
@@ -136,13 +136,13 @@ public class ApplyController {
 	}
 	
 	///////////////////////////////////////////// 글보기 ///////////////////////////////////////////////////
-	@RequestMapping(value="/club/{club_seq}/apply/article")
+	@RequestMapping(value="/club/{clubSeq}/apply/article")
 	public ModelAndView readClubApply(HttpSession session,
 			@RequestParam(value="num") int num,
 			@RequestParam(value="page") String page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue
-			,@PathVariable int club_seq )
+			,@PathVariable int clubSeq )
 					throws Exception {
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
@@ -153,7 +153,7 @@ public class ApplyController {
 			// map1에 글번호와 클럽seq를 담는다
 		Map<String, Object> map1 = new HashMap<String, Object>();
 		map1.put("num", num);
-		map1.put("club_seq", club_seq);
+		map1.put("clubSeq", clubSeq);
 		
 			// 조회수 증가
 		service.updateHitCount(map1);
@@ -165,12 +165,12 @@ public class ApplyController {
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
 		map.put("num", num);
-		map.put("club_seq", club_seq);
+		map.put("clubSeq", clubSeq);
 		
 		// 해당 레코드 가져 오기
 		Apply dto = service.readApply(map);
 		if(dto==null)
-			return new ModelAndView("redirect:.club/{club_seq}/apply?page="+page);
+			return new ModelAndView("redirect:.club/{clubSeq}/apply?page="+page);
 		
 		// 전체 라인수			
         // int linesu = dto.getContent().split("\n").length;
@@ -200,13 +200,13 @@ public class ApplyController {
 	}
 	
 	////////////////////////////////////////////////////////// 		댓글관련 	///////////////////////////////////////////////////////
-	@RequestMapping(value="/club/{club_seq}/apply/createdReply",
+	@RequestMapping(value="/club/{clubSeq}/apply/createdReply",
 			method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object>  createdReply(	
 			HttpSession session
 			, Reply dto
-			,@PathVariable int club_seq ) 
+			,@PathVariable int clubSeq ) 
 					throws Exception {
 		
 		SessionInfo info=(SessionInfo) session.getAttribute("member");
@@ -217,7 +217,7 @@ public class ApplyController {
 				
 			dto.setUserIdx(info.getUserIdx());
 			dto.setUserId(info.getUserId());
-			dto.setClub_seq(club_seq);
+			dto.setClub_seq(clubSeq);
 			
 			int result=service.insertReply(dto);
 			if(result==0)
@@ -230,11 +230,11 @@ public class ApplyController {
 		return model;
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////		댓글 리스트 
-	@RequestMapping(value="/club/{club_seq}/apply/listReply")
+	@RequestMapping(value="/club/{clubSeq}/apply/listReply")
 	public ModelAndView listReply(
 			@RequestParam(value="num") int num,
 			@RequestParam(value="pageNo", defaultValue="1") int current_page
-			,@PathVariable int club_seq ) throws Exception {
+			,@PathVariable int clubSeq ) throws Exception {
 		int numPerPage=5;
 		int total_page=0;
 		int dataCount=0;
@@ -242,7 +242,7 @@ public class ApplyController {
 		System.out.println("listReply로 넘어옴 ");
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("num", num);
-		map.put("club_seq", club_seq);
+		map.put("clubSeq", clubSeq);
 		
 		dataCount=service.replyDataCount(map);
 		total_page=myUtil.pageCount(numPerPage, dataCount);
@@ -284,11 +284,11 @@ public class ApplyController {
 	}
 	
 	//////////////////////////////////// AJAX(JSON) - 댓글별 개수
-	@RequestMapping(value="/club/{club_seq}/apply/replyCount",  method=RequestMethod.POST)
+	@RequestMapping(value="/club/{clubSeq}/apply/replyCount",  method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> replyCount(	
 			@RequestParam(value="num") int num
-			,@PathVariable int club_seq ) throws Exception {
+			,@PathVariable int clubSeq ) throws Exception {
 		
 		String state="true";
 		int count=0;
@@ -300,7 +300,7 @@ public class ApplyController {
         Map<String, Object> map=new HashMap<String, Object>();
  		//map.put("tableName", tableName);
    		map.put("num", num);
-  	    map.put("club_seq", club_seq);
+  	    map.put("clubSeq", clubSeq);
   	    
    	    count=service.replyDataCount(map);
    	    
@@ -312,12 +312,12 @@ public class ApplyController {
 	}
 	
 	//////////////////////////////////////////////////// 댓글 및 대댓글 삭제
-			@RequestMapping(value="/club/{club_seq}/apply/deleteReply", method=RequestMethod.POST)
+			@RequestMapping(value="/club/{clubSeq}/apply/deleteReply", method=RequestMethod.POST)
 			@ResponseBody	
 			public Map<String, Object>  deleteReply(
 					HttpSession session,	@RequestParam(value="replyNum") int replyNum,	
 					@RequestParam(value="mode") String mode
-					,@PathVariable int club_seq 
+					,@PathVariable int clubSeq 
 					) throws Exception {
 				
 				SessionInfo info=(SessionInfo) session.getAttribute("member");
@@ -329,7 +329,7 @@ public class ApplyController {
 					Map<String, Object> map=new HashMap<String, Object>();
 					map.put("mode", mode);
 					map.put("replyNum", replyNum);
-					map.put("club_seq", club_seq);
+					map.put("clubSeq", clubSeq);
 
 					// 좋아요/싫어요 는 ON DELETE CASCADE 로 자동 삭제
 		            // 댓글삭제
@@ -346,16 +346,16 @@ public class ApplyController {
 			}
 			
 			//////////////////////////////////////////////////////////////////// 댓글별 답글 리스트
-			@RequestMapping(value="/club/{club_seq}/apply/listReplyAnswer")
+			@RequestMapping(value="/club/{clubSeq}/apply/listReplyAnswer")
 			
 			public ModelAndView listReplyAnswer(
 					@RequestParam(value="answer") int answer
-					,@PathVariable int club_seq )
+					,@PathVariable int clubSeq )
 				throws Exception {
 				
 				Map<String, Object> map=new HashMap<String, Object>();
 				map.put("answer", answer);
-				map.put("club_seq", club_seq);
+				map.put("clubSeq", clubSeq);
 				
 				List<Reply> listReplyAnswer=service.listReplyAnswer(map);
 				
@@ -375,11 +375,11 @@ public class ApplyController {
 			}
 			
 			//////////////////////////////////////////////////////////////////// 댓글별 답글 개수
-			@RequestMapping(value="/club/{club_seq}/apply/replyCountAnswer",method=RequestMethod.POST)
+			@RequestMapping(value="/club/{clubSeq}/apply/replyCountAnswer",method=RequestMethod.POST)
 			@ResponseBody
 			public Map<String, Object>  replyCountAnswer(
 					@RequestParam(value="answer") int answer,
-					@PathVariable int club_seq)
+					@PathVariable int clubSeq)
 				throws Exception {
 				
 				int count=0;
@@ -389,23 +389,23 @@ public class ApplyController {
 		   	    // 작업 결과를 json으로 전송
 				Map<String, Object> model = new HashMap<>(); 
 				model.put("count", count);
-				model.put("club_seq", club_seq);
+				model.put("clubSeq", clubSeq);
 				
 				return model;
 			}
 			/////////////////////////////////////////////////////////////////////////////////////// 	좋 아 요 
 			//////////////////////////////////////////////////////////////// 댓글 좋아요 추가
-			@RequestMapping(value="/apply/{club_seq}/insertReplyLike",	method=RequestMethod.POST)
+			@RequestMapping(value="/apply/{clubSeq}/insertReplyLike",	method=RequestMethod.POST)
 			@ResponseBody
 			public Map<String, Object>  replyLike(
 						HttpSession session, Reply dto
-						,@PathVariable int club_seq )
+						,@PathVariable int clubSeq )
 				throws Exception {
 			
 				SessionInfo info=(SessionInfo) session.getAttribute("member");
 				
 				dto.setUserIdx(info.getUserIdx());
-				dto.setClub_seq(club_seq);
+				dto.setClub_seq(clubSeq);
 				int state=service.stateReplyLike(dto);
 				
 				if(state==0){	//좋아요가 처음이라면
@@ -429,13 +429,13 @@ public class ApplyController {
 			@ResponseBody
 			public Map<String, Object>  countLike(
 						@RequestParam(value="replyNum") int replyNum
-						,@PathVariable int club_seq ) 
+						,@PathVariable int clubSeq ) 
 				throws Exception {
 				
 				int likeCount=0;
 				Map<String, Object> map=new HashMap<String, Object>();
 				map.put("replyNum", replyNum);
-				map.put("demandclub_seqer_seq",club_seq);
+				map.put("demandclubSeqer_seq",clubSeq);
 				
 				Map<String, Object> resultMap=service.replyCountLike(map);
 				
@@ -452,29 +452,29 @@ public class ApplyController {
 			}
 			
 			
-			@RequestMapping(value="/club/{club_seq}/apply/delete")
+			@RequestMapping(value="/club/{clubSeq}/apply/delete")
 			public ModelAndView delete(
 						HttpSession session, 
 						@RequestParam(value="num") int num
 						,@RequestParam(value="page") String page
-						,@PathVariable int club_seq)
+						,@PathVariable int clubSeq)
 				throws Exception {
 				
 				SessionInfo info=(SessionInfo)session.getAttribute("member");
 				
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("num", num);
-				map.put("club_seq",club_seq);
+				map.put("clubSeq",clubSeq);
 				
 				// 해당 레코드 가져 오기
 				Apply dto = service.readApply(map);
 				
 				if(dto==null) {
-					return new ModelAndView("redirect:/club/"+club_seq+"/apply/list?page="+page);
+					return new ModelAndView("redirect:/club/"+clubSeq+"/apply/list?page="+page);
 				}
 				
 				if(! info.getUserId().equals(dto.getUserId()) && ! info.getUserId().equals("admin")) {
-					return new ModelAndView("redirect:/club/"+club_seq+"/apply/list?page="+page);
+					return new ModelAndView("redirect:/club/"+clubSeq+"/apply/list?page="+page);
 				}
 								
 				String root = session.getServletContext().getRealPath("/");
@@ -482,11 +482,11 @@ public class ApplyController {
 		 	
 				service.deleteApply(num, dto.getSaveFileName(), path);
 				
-				return new ModelAndView("redirect:/club/"+club_seq+"/apply/list?page="+page);
+				return new ModelAndView("redirect:/club/"+clubSeq+"/apply/list?page="+page);
 			}
 			
 			
-			@RequestMapping(value="/club/{club_seq}/apply/applyList2")
+			@RequestMapping(value="/club/{clubSeq}/apply/applyList2")
 			public ModelAndView applyList2( HttpSession session) {
 				//   /club/index/apply/applyList
 				ModelAndView mav = new ModelAndView(".four.club.dari.apply.applyList.봉다리 개인페이지");
@@ -495,10 +495,10 @@ public class ApplyController {
 			}
 			
 			// 봉사신청한 회원리스트 모달창 
-			@RequestMapping(value="/club/{club_seq}/apply/applyList1")
+			@RequestMapping(value="/club/{clubSeq}/apply/applyList1")
 			public ModelAndView applyList1(HttpSession session, 
 					@RequestParam(value="num") int clubApplyIdx,
-					@RequestParam(value="page") String page	,@PathVariable int club_seq ) throws Exception {
+					@RequestParam(value="page") String page	,@PathVariable int clubSeq ) throws Exception {
 				
 				// 봉사신청한 같은 동아리의 회원을 dto에 담아와야함 
 				SessionInfo info=(SessionInfo)session.getAttribute("member");
@@ -508,7 +508,7 @@ public class ApplyController {
 				// 해당 레코드 가져 오기
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("clubApplyIdx", clubApplyIdx);
-				map.put("club_seq",club_seq);
+				map.put("clubSeq",clubSeq);
 				
 				List<Member> list = service.readApplyList(map);
 				List<Member> date_list = new ArrayList<>();

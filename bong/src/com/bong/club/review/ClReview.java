@@ -13,8 +13,8 @@ public class ClReview {
     private int replyCount;
     private int likeCount;
 	private int reviewLikeCount;
-	private int club_seq;
-	
+	private int clubSeq;
+
 
 	// 스프링에서 파일 받기
 	private List<MultipartFile> upload; // <input type='file' name='upload' ..
@@ -22,6 +22,14 @@ public class ClReview {
 	private String saveFilename;
 	private String originalFilename;
 	private long fileSize;
+	private String listImageName;
+	
+	public String getListImageName() {
+		return listImageName;
+	}
+	public void setListImageName(String listImageName) {
+		this.listImageName = listImageName;
+	}
 	public int getClubReviewIdx() {
 		return clubReviewIdx;
 	}
@@ -112,11 +120,13 @@ public class ClReview {
 	public void setReviewLikeCount(int reviewLikeCount) {
 		this.reviewLikeCount = reviewLikeCount;
 	}
-	public int getClub_seq() {
-		return club_seq;
+
+	
+	public int getClubSeq() {
+		return clubSeq;
 	}
-	public void setClub_seq(int club_seq) {
-		this.club_seq = club_seq;
+	public void setClubSeq(int clubSeq) {
+		this.clubSeq = clubSeq;
 	}
 	public List<MultipartFile> getUpload() {
 		return upload;

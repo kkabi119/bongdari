@@ -106,9 +106,9 @@ $(function(){
 
         var mode="${mode}";
     	if(mode=="created")
-    		f.action="<%=cp%>/club/${club_seq}/review/create";
+    		f.action="<%=cp%>/club/${clubSeq}/review/create";
     	else if(mode=="update")
-    		f.action="<%=cp%>/club/${club_seq}/review/update";
+    		f.action="<%=cp%>/club/${clubSeq}/review/update";
 
     	// <input type='submit' ..>,  <input type='image' ..>, <button>은 submit() 메소드 호출하면 두번전송
         return true;
@@ -118,7 +118,7 @@ $(function(){
   <c:if test="${mode=='update'}">
    function deleteFile(clubFileIdx) {
  	  if(confirm("해당 파일을 삭제 하시 겠습니까 ? ")){
- 		var url="<%=cp%>/club/${club_seq}/review/deleteFile";
+ 		var url="<%=cp%>/club/${clubSeq}/review/deleteFile";
  		
  		$.post(url, {clubFileIdx:clubFileIdx}, function(data){
  			
@@ -203,7 +203,7 @@ $(function(){
 								등록 <span class="glyphicon glyphicon-ok"></span>
 							</button>
 							<button type="button" class="btn btn-default"	style="color: #00aeef; margin-left:10px; border:1px solid #00aeef;"
-										onclick="javascript:location.href='<%=cp%>/club/${club_seq}/review/list';">
+										onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/review/list';">
 								취소</button> <c:if test="${mode=='update'}">
 								
 								

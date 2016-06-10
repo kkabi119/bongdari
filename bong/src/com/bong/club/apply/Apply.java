@@ -13,7 +13,7 @@ public class Apply {
 	private int userIdx,userId;
 	private int replyCount;
 	
-	private int club_seq;
+	private int clubSeq;
 	
 	
 		
@@ -25,10 +25,10 @@ public class Apply {
 		this.userId = userId;
 	}
 	public int getClub_seq() {
-		return club_seq;
+		return clubSeq;
 	}
-	public void setClub_seq(int club_seq) {
-		this.club_seq = club_seq;
+	public void setClub_seq(int clubSeq) {
+		this.clubSeq = clubSeq;
 	}
 	public int getReplyCount() {
 		return replyCount;

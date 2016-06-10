@@ -10,13 +10,14 @@ public class ClReviewReply {
 	private int likeCount;
 	private int answerCount;
 	
-	private int club_seq;
+	private int clubSeq;
 
-	public int getClub_seq() {
-		return club_seq;
+	
+	public int getClubSeq() {
+		return clubSeq;
 	}
-	public void setClub_seq(int club_seq) {
-		this.club_seq = club_seq;
+	public void setClubSeq(int clubSeq) {
+		this.clubSeq = clubSeq;
 	}
 	public int getListNum() {
 		return listNum;

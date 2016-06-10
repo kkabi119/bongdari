@@ -11,37 +11,37 @@
 	
 	<!-- 리뷰 글넣기 -->
 	<insert id="insertClReview" parameterType="com.bong.club.review.ClReview">
-	INSERT INTO club_review_${club_seq}(clubReviewIdx,subject,CONTENT, clubIdx, useridx)
-	VALUES(#{clubReviewIdx},#{subject},#{content},${club_seq},#{userIdx})
+	INSERT INTO club_review_${clubSeq}(clubReviewIdx,subject,CONTENT, clubIdx, useridx)
+	VALUES(#{clubReviewIdx},#{subject},#{content},${clubSeq},#{userIdx})
 	</insert>
 	
 	
 <!-- 파일 *********************** -->
 	<!-- 리뷰 파일넣기 -->
 	<insert id="insertFile" parameterType="com.bong.club.review.ClReview">
-	INSERT INTO club_review_file_${club_seq}(clubfileidx,savefilename,originalfilename,clubreviewidx
+	INSERT INTO club_review_file_${clubSeq}(clubfileidx,savefilename,originalfilename,clubreviewidx
 	)VALUES(club_rf_seq.NEXTVAL,#{saveFilename, jdbcType=VARCHAR},#{originalFilename, jdbcType=VARCHAR},#{clubReviewIdx})
 	</insert>
 	
 
 	<select id="maxFileNum" resultType="Integer" parameterType="map">
-		SELECT NVL(MAX(clubfileidx), 0) FROM club_review_file_${club_seq}
+		SELECT NVL(MAX(clubfileidx), 0) FROM club_review_file_${clubSeq}
 	</select>
 	
 	<select id="listFile" parameterType="map"
 	              resultType="com.bong.club.review.ClReview">
 	   SELECT clubFileIdx,clubReviewIdx,saveFilename,originalFilename
-	    FROM club_review_file_${club_seq} WHERE clubReviewIdx=#{num}  
+	    FROM club_review_file_${clubSeq} WHERE clubReviewIdx=#{num}  
 	</select>
 	
 	<select id="readFile" parameterType="map"
 	              resultType="com.bong.club.review.ClReview">
 		SELECT clubFileIdx, clubReviewIdx, saveFilename,originalFilename
-	    FROM club_review_file_${club_seq} WHERE clubFileIdx=#{clubFileIdx}    
+	    FROM club_review_file_${clubSeq} WHERE clubFileIdx=#{clubFileIdx}    
 	</select>
 	
 	<delete id="deleteFile" parameterType="map">
-	DELETE FROM club_review_file_${club_seq} WHERE clubFileIdx =#{clubFileIdx}
+	DELETE FROM club_review_file_${clubSeq} WHERE clubFileIdx =#{clubFileIdx}
 	</delete>
 	
 <!-- 파일  끝*********************** -->	
@@ -69,7 +69,7 @@
 	            resultType="Integer">
 	            
 	  SELECT NVL(COUNT(*), 0)
-	   FROM club_review_${club_seq} c
+	   FROM club_review_${clubSeq} c
 	   			 JOIN memberInfo m  ON c.userIdx=m.userIdx
 	    <where>
 	     	<if test="searchValue!=null and searchValue!='' ">
@@ -91,7 +91,7 @@
 			     SELECT clubReviewIdx, m.userIdx, m.userId, m.userName, subject,s.content
 			           ,TO_CHAR(s.created, 'YYYY-MM-DD') created
 					   ,hitCount
-			        FROM club_review_${club_seq} s
+			        FROM club_review_${clubSeq} s
 	       			  JOIN checkId m ON s.useridx=m.useridx
 	       			  <where>
                          <if test="searchValue != null and searchValue != ''">
@@ -102,7 +102,7 @@
                   LEFT OUTER JOIN
 			        (
 			                SELECT clubReviewIdx, count(*) replycount
-			                FROM club_reviewR_${club_seq} tbreply 
+			                FROM club_reviewR_${clubSeq} tbreply 
 			                WHERE answer=0
 			                GROUP BY clubReviewIdx
 			                
@@ -111,7 +111,7 @@
 	            ) LEFT OUTER JOIN
 			   (
 			          SELECT clubReviewIdx, COUNT(*) likeCount
-                      FROM club_review_like_${club_seq} GROUP BY clubReviewIdx
+                      FROM club_review_like_${clubSeq} GROUP BY clubReviewIdx
 			    ) tblike 
 			    ON tbrev.clubReviewIdx = tblike.clubReviewIdx    
                    
@@ -125,23 +125,23 @@
 	<!-- 리뷰 글보기 -->
 	<select id="readClReview" parameterType="map" resultType="com.bong.club.review.ClReview">
 		SELECT r.clubreviewidx, c.useridx, userid, c.username, subject, content, hitcount, r.created,NVL(replyCount, 0) replyCount, NVL(likeCount, 0) likeCount
-		FROM club_review_${club_seq} r 
+		FROM club_review_${clubSeq} r 
 			    JOIN checkId c ON r.useridx=c.useridx
 		   	    LEFT OUTER JOIN
 				( 	   SELECT clubReviewIdx, count(*) replycount
-		               FROM club_reviewR_${club_seq}  tbreply GROUP BY clubReviewIdx
+		               FROM club_reviewR_${clubSeq}  tbreply GROUP BY clubReviewIdx
 				) tbreply 
 			    ON r.clubreviewidx = tbreply.clubreviewidx
 		        LEFT OUTER JOIN
 				(      SELECT clubreviewidx, COUNT(*) likeCount
-		               FROM club_review_like_${club_seq} GROUP BY clubreviewidx
+		               FROM club_review_like_${clubSeq} GROUP BY clubreviewidx
 				) tblike ON tbreply.clubreviewidx = tblike.clubreviewidx
 		WHERE r.clubreviewidx=#{num}
 	</select>
 	
 	<!-- 조회수 증가 -->
 	<update id="hitCountClReview" parameterType="map">
-		UPDATE club_review_${club_seq} SET hitCount=hitCount+1 WHERE clubreviewidx = #{num}
+		UPDATE club_review_${clubSeq} SET hitCount=hitCount+1 WHERE clubreviewidx = #{num}
 	</update>
 	
 	
@@ -151,7 +151,7 @@
 				parameterType="map">
 		SELECT tb.* FROM (
 			SELECT clubReviewIdx, subject
-				FROM club_review_${club_seq} r
+				FROM club_review_${clubSeq} r
 						JOIN checkId c ON r.userIdx=c.userIdx
 					<where>
 						<if test="searchValue != null and searchValue != '' ">
@@ -170,7 +170,7 @@
 				parameterType="map">
 	SELECT tb.* FROM (
 			SELECT clubReviewIdx, subject
-				FROM club_review_${club_seq} r
+				FROM club_review_${clubSeq} r
 					JOIN checkId c ON r.userIdx=c.userIdx
 				<where>
 						<if test="searchValue != null and searchValue != '' ">
@@ -184,22 +184,22 @@
 		)tb WHERE ROWNUM=1
 	</select>
 	
-	<!-- 수정  club_review_${club_seq}-->
+	<!-- 수정  club_review_${clubSeq}-->
      <update id="updateClReview" parameterType="com.bong.club.review.ClReview">
-         UPDATE club_review_${club_seq} SET subject=#{subject}, content=#{content}
+         UPDATE club_review_${clubSeq} SET subject=#{subject}, content=#{content}
                     WHERE clubReviewIdx = #{clubReviewIdx}
       </update>
       
    <!-- 수정  club_review_file-->
      <update id="updateClReviewFile" parameterType="com.bong.club.review.ClReview">
-         UPDATE club_review_file_${club_seq} SET originalFilename=#{originalFilename, jdbcType=VARCHAR}, 
+         UPDATE club_review_file_${clubSeq} SET originalFilename=#{originalFilename, jdbcType=VARCHAR}, 
          saveFilename=#{saveFilename, jdbcType=VARCHAR}
                     WHERE clubReviewIdx = #{clubReviewIdx}
     </update>
 	
 	<!-- 삭제  -->
       <delete id="deleteReview" parameterType="com.bong.club.review.ClReview">
-           DELETE FROM club_review_${club_seq} 
+           DELETE FROM club_review_${clubSeq} 
            WHERE clubReviewIdx = #{clubReviewIdx}
       </delete>
       
@@ -207,25 +207,25 @@
     
     <!-- 좋아요상태 -->
     <select id="stateLike" parameterType="com.bong.club.review.ClReview" resultType="Integer">
-     SELECT NVL(COUNT(*),0) FROM club_review_like_${club_seq} 
+     SELECT NVL(COUNT(*),0) FROM club_review_like_${clubSeq} 
      WHERE userIdx=#{userIdx} AND clubReviewIdx=#{clubReviewIdx}
     </select>
     
     <!--send 좋아요-->
 	<insert id="insertLike" parameterType="com.bong.club.review.ClReview">
-	INSERT INTO club_review_like_${club_seq}(clubReviewIdx, userIdx)
+	INSERT INTO club_review_like_${clubSeq}(clubReviewIdx, userIdx)
 	   VALUES (#{clubReviewIdx}, #{userIdx})
 	</insert>
 	
 	<!-- 좋아요가 이미 눌렸을때 해제 되도록 -->
 	<delete id="deleteLike" parameterType="com.bong.club.review.ClReview">
-	DELETE FROM club_review_like_${club_seq} WHERE clubReviewIdx=#{clubReviewIdx} AND userIdx=#{userIdx}
+	DELETE FROM club_review_like_${clubSeq} WHERE clubReviewIdx=#{clubReviewIdx} AND userIdx=#{userIdx}
 	</delete>
 
 	<!-- 좋아요 세기 -->
 	<select id="countLike" resultType="map" parameterType="com.bong.club.review.ClReview">
 	   SELECT  NVL(COUNT(*), 0 ) likeCount
-	   FROM club_review_like_${club_seq} WHERE clubReviewIdx=#{clubReviewIdx}
+	   FROM club_review_like_${clubSeq} WHERE clubReviewIdx=#{clubReviewIdx}
 	</select>
       
       
@@ -238,14 +238,14 @@
 	
 	<!-- 	댓글 작성 -->
 	<insert id="insertReviewReply" parameterType="com.bong.club.review.ClReviewReply">
-		INSERT INTO club_reviewR_${club_seq}(crrIdx, clubReviewIdx, userIdx, CONTENT, answer)
+		INSERT INTO club_reviewR_${clubSeq}(crrIdx, clubReviewIdx, userIdx, CONTENT, answer)
 	    VALUES (#{replyNum}, #{num},#{userIdx},  #{content}, #{answer})
 	</insert>
 	
 	<!-- 	댓글 개수 세기 -->
 	<select id="replyDataCount" resultType="Integer"   parameterType="map">
 	   SELECT NVL(COUNT(*), 0)
-	        FROM club_reviewR_${club_seq} WHERE clubReviewIdx=#{clubReviewIdx} AND answer=0
+	        FROM club_reviewR_${clubSeq} WHERE clubReviewIdx=#{clubReviewIdx} AND answer=0
 	</select>
 	
 	<!-- 댓글 리스트 -->
@@ -259,20 +259,20 @@
 		        (
 				      (
 					     SELECT CRRIDX, r.clubReviewIdx, c.userIdx, c.userid, c.userName, r.content, r.created, answer
-					        FROM club_reviewR_${club_seq} r 
-			                JOIN club_review_${club_seq} s ON r.clubReviewIdx=s.clubReviewIdx
+					        FROM club_reviewR_${clubSeq} r 
+			                JOIN club_review_${clubSeq} s ON r.clubReviewIdx=s.clubReviewIdx
 			                JOIN checkId c ON s.useridx=c.useridx
 			                WHERE r.clubReviewIdx=#{clubReviewIdx} AND answer=0
 			           ) tbreply
 			           LEFT OUTER JOIN
 			           (
 			                SELECT answer, COUNT(*) answerCount
-                                 FROM club_reviewR_${club_seq} GROUP BY answer
+                                 FROM club_reviewR_${clubSeq} GROUP BY answer
 			           ) tbanswer ON tbreply.CRRIDX = tbanswer.answer
 			             LEFT OUTER JOIN
 			           (
 			                SELECT CRRIDX, COUNT(*) likeCount
-                                 FROM club_reviewR_like_${club_seq} GROUP BY CRRIDX
+                                 FROM club_reviewR_like_${clubSeq} GROUP BY CRRIDX
 			           ) tblike ON tbreply.CRRIDX = tblike.CRRIDX
 	           )
 	           ORDER BY replynum DESC
@@ -286,7 +286,7 @@
     <!-- 대댓글 리스트 -->
 	<select id="listReplyAnswer" parameterType="map" resultType="com.bong.club.review.ClReviewReply"  >
        SELECT CRRIDX AS replyNum, clubReviewIdx AS num, tbreply.userIdx, c.userName, content, created, answer
-	   FROM club_reviewR_${club_seq} tbreply 
+	   FROM club_reviewR_${clubSeq} tbreply 
 	   		   JOIN checkId c ON tbreply.userIdx=c.userIdx
        WHERE answer=#{answer}
        ORDER BY replyNum DESC
@@ -296,18 +296,18 @@
 	<select id="replyCountAnswer" resultType="Integer" 
 	           parameterType="map">
 	   SELECT NVL(COUNT(*), 0)
-	        FROM club_reviewR_${club_seq} WHERE answer=#{answer}
+	        FROM club_reviewR_${clubSeq} WHERE answer=#{answer}
 	</select>
 	
 	<!-- 게시글(num) / 댓글(reply) / 대댓글(answer) 삭제-->
 	<delete id="deleteReply" parameterType="map">
-		DELETE club_reviewR_${club_seq} WHERE
+		DELETE club_reviewR_${clubSeq} WHERE
 		    <if test="mode == 'num' ">
 				 clubReviewIdx=#{num}
 			</if>
 		    <if test="mode == 'reply' ">
 				 CRRIDX IN 
-	               (SELECT CRRIDX FROM club_reviewR_${club_seq} START WITH CRRIDX = #{replyNum}
+	               (SELECT CRRIDX FROM club_reviewR_${clubSeq} START WITH CRRIDX = #{replyNum}
 		            CONNECT BY PRIOR CRRIDX = answer)
 			</if>
 		    <if test="mode == 'answer' ">
@@ -320,25 +320,25 @@
 		<!-- 	댓글 좋아요 세기 		-->
 	<select id="replyCountLike"  parameterType="map" resultType="map" >
 	   SELECT NVL(count(*),0) likeCount 
-	   FROM club_reviewR_like_${club_seq}
+	   FROM club_reviewR_like_${clubSeq}
 	   WHERE CRRIDX=#{replyNum}
 	</select>
 		
 	  <!-- 좋아요상태 -->
     <select id="stateReplyLike" parameterType="com.bong.club.review.ClReviewReply" resultType="Integer">
-     SELECT NVL(count(*),0) FROM club_reviewR_like_${club_seq} 
+     SELECT NVL(count(*),0) FROM club_reviewR_like_${clubSeq} 
      WHERE userIdx=#{userIdx} AND CRRIDX=#{replyNum}
     </select>
     
     <!--send 좋아요-->
 	<insert id="insertReplyLike" parameterType="com.bong.club.review.ClReviewReply">
-	INSERT INTO club_reviewR_like_${club_seq}(CRRIDX, userIdx)
+	INSERT INTO club_reviewR_like_${clubSeq}(CRRIDX, userIdx)
 	   VALUES (#{replyNum}, #{userIdx})
 	</insert>
 	
 	<!-- 좋아요가 이미 눌렸을때 해제 되도록 -->
 	<delete id="deleteReplyLike" parameterType="com.bong.club.review.ClReviewReply">
-	DELETE FROM club_reviewR_like_${club_seq} WHERE CRRIDX=#{replyNum} AND userIdx=#{userIdx}
+	DELETE FROM club_reviewR_like_${clubSeq} WHERE CRRIDX=#{replyNum} AND userIdx=#{userIdx}
 	</delete>
 	
 
@@ -346,7 +346,7 @@
 <!-- 	
 	(보류)댓글 좋아요/싫어요 처리.................
 	<insert id="insertDeRevReplyLike" parameterType="com.bong.club.review.ClReviewReply">
-	INSERT INTO club_review_${club_seq}_like(replyNum, userId, replyLike)
+	INSERT INTO club_review_${clubSeq}_like(replyNum, userId, replyLike)
 	   VALUES (#{replyNum}, #{userId}, #{replyLike})
 	</insert>
 
