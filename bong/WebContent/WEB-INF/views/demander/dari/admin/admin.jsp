@@ -54,7 +54,7 @@ function tab3(){
 <style type="text/css">
 
 .col-md-9{
-	margin-top:-30px; width:78%;
+	margin-top:-30px; width:76%;
 
 }
 .col-md-7{
