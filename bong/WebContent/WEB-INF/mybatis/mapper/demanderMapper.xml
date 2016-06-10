@@ -79,35 +79,23 @@
 	<select id="listDeReview" parameterType="map"
 	            resultType="com.bong.demander.review.DeReview">
 		SELECT * FROM (
-		    SELECT ROWNUM rnum, tb.* FROM (
-          SELECT tbrev.servicereviewidx, tbrev.useridx,userid, username, subject,content
-			          ,created,hitcount,NVL(replyCount, 0) replyCount,NVL(likeCount, 0) likeCount
-        FROM
-        (
-         (
-			     SELECT serviceReviewIdx, c.userIdx,userId, c.userName, subject,content
-			           ,TO_CHAR(s.created, 'YYYY-MM-DD') created
-					   ,hitCount
-			        FROM service_review_${demander_seq} s
-	       			  JOIN checkId c ON s.useridx=c.useridx
-	       			  <where>
+     SELECT ROWNUM rnum, tb.* FROM (
+               SELECT s.servicereviewidx, c.useridx, userid, c.username, subject, CONTENT ,
+                         to_char(s.created, 'YYYY-MM-DD') created ,hitcount,
+                         nvl(replycount, 0) replycount, nvl(likecount, 0) likecount
+                FROM service_review_7 s
+                JOIN checkid c ON s.useridx=c.useridx
+                <where>
                          <if test="searchValue != null and searchValue != ''">
 			                  <include refid="where-list"/>
 		                 </if>
-	                </where>
-                  )tbrev
-                  LEFT OUTER JOIN
-			        (
-			                SELECT serviceReviewIdx, count(*) replycount
-                                 FROM service_review_reply_${demander_seq}  tbreply GROUP BY serviceReviewIdx
-			        ) tbreply ON tbrev.serviceReviewIdx = tbreply.serviceReviewIdx
-	            ) LEFT OUTER JOIN
-			           (
-			                SELECT serviceReviewIdx, COUNT(*) likeCount
-                                 FROM service_review_like_${demander_seq} GROUP BY serviceReviewIdx
-			           ) tblike ON tbreply.servicereviewidx = tblike.servicereviewidx    
-                   
-	                ORDER BY serviceReviewIdx DESC
+	               </where>
+                LEFT OUTER JOIN ( 
+                       SELECT serviceReviewIdx, count(*) replycount FROM service_review_reply_7 GROUP BY serviceReviewIdx
+                 ) tbreply  ON s.servicereviewidx = tbreply.servicereviewidx 
+                LEFT OUTER JOIN ( 
+                    SELECT serviceReviewIdx, count(*) likecount FROM service_review_like_7 GROUP BY serviceReviewIdx
+                 ) tblike ON s.servicereviewidx = tblike.servicereviewidx ORDER  BY serviceReviewIdx DESC
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start}
@@ -125,8 +113,7 @@
                                  FROM service_review_reply_${demander_seq}  tbreply GROUP BY serviceReviewIdx
 			        ) tbreply ON r.servicereviewidx = tbreply.servicereviewidx
           LEFT OUTER JOIN
-			           (
-			                SELECT servicereviewidx, COUNT(*) likeCount
+			           (SELECT servicereviewidx, COUNT(*) likeCount
                                  FROM service_review_like_${demander_seq} GROUP BY servicereviewidx
 			           ) tblike ON tbreply.servicereviewidx = tblike.servicereviewidx
 		WHERE r.servicereviewidx=#{serviceReviewIdx}

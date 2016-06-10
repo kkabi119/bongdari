@@ -113,19 +113,12 @@ text-overflow:ellipsis;
                <div class="item active">
                  <c:if test="${not empty dto.listImageName}">
                      <div class="fill" style="background-image:url('${dto.listImageName}');">
-                         <%-- ${dto.listImageName}  --%> 
-                      </div>   
-                            <!-- style="background-image:url('/bong/uploads/image/201606081632001928924125029041.jpg'); -->   
-                           
+                      </div>    
                   </c:if>
                   <c:if test="${empty dto.listImageName}">
                             <div class="fill" style="background-image:url('<%=cp%>/res/images/demander/demander2.jpg');">
-                                   
                             </div>      
                 </c:if>
-                <%-- <div class="fill"
-                     style="background-image:url('<%=cp%>/res/images/demander/demander3.jpg');"></div>
-               </div> --%>
             </div>
          </div>
       </div>

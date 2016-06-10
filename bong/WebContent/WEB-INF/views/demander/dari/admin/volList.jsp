@@ -96,7 +96,7 @@ $(function(){
 
 $(function(){
 	$("#listBtn").click(function(){
-		url="<%=cp%>/demander/index/admin/tab1/showList";
+		url="<%=cp%>/demander/${demander_seq}/admin/tab1/showList";
 		$.post(url, {}, function(data){ 	
 			$("#showList").html(data);
 		});	
@@ -110,7 +110,7 @@ $(function(){
 	});
 	
 	$("#approval").click(function(){
-		url="<%=cp%>/demander/index/admin/tab1/eval";
+		url="<%=cp%>/demander/${demander_seq}/admin/tab1/eval";
 		$.post(url, {}, function(data){ 	
 			$("#showList").html(data);
 		});	
@@ -313,10 +313,10 @@ $(function(){
 			<div class="btnList" style="clear:both; margin-left:8px; margin-top:15px;float:left;">
 				
 				<a class="btn btn btn-info" style="color:white;  " 
-					href="<%=cp%>/demander/index/review/article">공고보기
+					href="<%=cp%>/demander/${demander_seq}/review/article">공고보기
 				</a>
 				
-				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/index/review/article">
+				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/${demander_seq}/review/article">
 					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 참여자
 				</a>
 			</div>
@@ -406,10 +406,10 @@ $(function(){
 			<div class="btnList" style="clear:both; margin-left:8px; margin-top:15px;float:left;">
 				
 				<a class="btn btn btn-info" style="color:white;  " 
-					href="<%=cp%>/demander/index/review/article">공고보기
+					href="<%=cp%>/demander/${demander_seq}/review/article">공고보기
 				</a>
 				
-				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/index/review/article">
+				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/${demander_seq}/review/article">
 					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 참여자
 				</a>
 			</div>
@@ -499,10 +499,10 @@ $(function(){
 			<div class="btnList" style="clear:both; margin-left:8px; margin-top:15px;float:left;">
 				
 				<a class="btn btn btn-info" style="color:white;  " 
-					href="<%=cp%>/demander/index/review/article">공고보기
+					href="<%=cp%>/demander/${demander_seq}/review/article">공고보기
 				</a>
 				
-				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/index/review/article">
+				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/${demander_seq}/review/article">
 					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 참여자
 				</a>
 			</div>
@@ -592,10 +592,10 @@ $(function(){
 			<div class="btnList" style="clear:both; margin-left:8px; margin-top:15px;float:left;">
 				
 				<a class="btn btn btn-info" style="color:white;  " 
-					href="<%=cp%>/demander/index/review/article">공고보기
+					href="<%=cp%>/demander/${demander_seq}/review/article">공고보기
 				</a>
 				
-				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/index/review/article">
+				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/${demander_seq}/review/article">
 					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 참여자
 				</a>
 			</div>

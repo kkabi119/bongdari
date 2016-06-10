@@ -102,13 +102,14 @@ background-color: #4FCCCD;
                        		<td id="imgtd" style=" width:47%;" rowspan="6">
                         	 	<img style="width: 350px; height: 350px; background-size: cover; margin-left: 16px;"
 										class="media-object" 
-										src="<%=cp%>/res/images/demander/봉사활동2.jpg" alt="">
+										src="<%=cp%>/uploads/serviceImg/${dto.serviceImg}" alt="">
 							</td>
                         	<td id="td1" style="color:black; border-top:none;text-align: left; height:45px; width:14%; ">
                         	 	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
                         	 	<span style="color:#969494; font-weight: bold;">수요처 이름</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px; ">
+                        	${dto.serviceName}
                         	</td>
                         </tr>
                         <tr >
@@ -116,8 +117,8 @@ background-color: #4FCCCD;
                         	 	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
                         	 	<span style="color:#969494; font-weight: bold;">소개</span>	
                         	</td>
-                        	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
-                   
+                        	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;">
+                   			${dto.serviceIntro}
                         	</td>
                         </tr>
                           <tr >
@@ -126,7 +127,7 @@ background-color: #4FCCCD;
                         	 	<span style="color:#969494; font-weight: bold;">봉사유형</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
-                   
+                   			${dto.themeName}
                         	</td>
                         </tr>
                          <tr >
@@ -135,7 +136,7 @@ background-color: #4FCCCD;
                         	 	<span style="color:#969494; font-weight: bold;">전화번호</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
-                   
+               			    ${dto.serviceTel}
                         	</td>
                         </tr>
                          <tr >
@@ -144,7 +145,7 @@ background-color: #4FCCCD;
                         	 	<span style="color:#969494; font-weight: bold;">이메일</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
-                   
+                 		  ${dto.serviceEmail}
                         	</td>
                         </tr>
                          <tr >
@@ -153,7 +154,7 @@ background-color: #4FCCCD;
                         	 	<span style="color:#969494; font-weight: bold;">주소</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
-                   
+                   			${dto.serviceAddr}
                         	</td>
                         </tr>
                </table>

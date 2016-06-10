@@ -115,7 +115,7 @@ function demanderUpdate() {
     if(mode=="created") {
           f.action = "<%=cp%>/member/register";
     } else if(mode=="update") {
-       f.action = "<%=cp%>/demander/index/admin/tab3";
+       f.action = "<%=cp%>/demander/${demander_seq}/admin/tab3";
        
     }
 
@@ -139,7 +139,7 @@ function changeEmail() {
 
 function imageDelete(){
 	if(confirm("등록된 사진을 삭제 하시겠습니까?")){
-		var url="<%=cp%>/member/index/imageDelete";
+		var url="<%=cp%>/member/${demander_seq}/imageDelete";
 		var filename="${dto.serviceImg}";
 		$.post(url, {filename:filename}, function(data){
 			var isLogin=data.isLogin;
