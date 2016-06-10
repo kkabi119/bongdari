@@ -192,10 +192,12 @@ public class ClubController {
 		}
 		
 		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+File.separator+"uploads"+File.separator+"club";
+		int clubSeq=clubService.ReadSeqVal();
+		String pathname=root+File.separator+"uploads"+File.separator+"club"+File.separator+clubSeq;
 
 		dto.setUserId(info.getUserId());
 		dto.setUserIdx(info.getUserIdx());
+		dto.setClubSeq(clubSeq);
 		int result=clubService.insertClub(dto, pathname);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -274,14 +276,93 @@ public class ClubController {
 		map.put("clubSeq", clubSeq);
 		ClubInfo clubInfo = clubService.readClubInfoSmall(map);
 		
-		ModelAndView mav = new ModelAndView("/club/dari/manage/clubInfo");
+		ModelAndView mav = new ModelAndView("/club/manage/clubInfo");
 		mav.addObject("clubSeq", clubSeq);
 		mav.addObject("clubInfo", clubInfo);
 		return mav;
 	}
 	
+	@RequestMapping(value="/club/{clubSeq}/manage/updateClubInfo")
+	public ModelAndView updateClubForm(
+			@PathVariable int clubSeq,
+			HttpSession session
+			) throws Exception {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clubSeq", clubSeq);
+		ClubInfo dto = clubService.readClubInfoSmall(map);
+		List<ClubTheme> listGroup=clubService.listClubThemeGroup();
+		
+		ModelAndView mav=new ModelAndView("/club/manage/clubUpdate");
+		mav.addObject("clubSeq", clubSeq);
+		mav.addObject("dto", dto);
+		mav.addObject("listGroup", listGroup);
+		mav.addObject("mode", "update");
+		
+		return mav;
+	}
 	
+	@RequestMapping(value="/club/{clubSeq}/manage/update", method=RequestMethod.POST)
+	public ModelAndView updateClubInfo(
+			@PathVariable int clubSeq,
+			HttpSession session,
+			ClubInfo dto
+			) throws Exception{
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if (info == null) {
+			return new ModelAndView("redirect:/member/login");
+		}
+		
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"club"+File.separator+clubSeq;
+		
+		clubService.updateClub(dto, pathname);
+		
+		ModelAndView mav=new ModelAndView("redirect:/club/"+clubSeq+"/manage");
+		return mav;
+	}
 	
+	@RequestMapping(value="/club/{clubSeq}/manage/deleteClub",method=RequestMethod.GET)
+	public ModelAndView deleteClubForm(
+			@PathVariable int clubSeq,
+			HttpSession session
+			) throws Exception {
+		
+		ModelAndView mav=new ModelAndView("/club/manage/deleteClub");
+		return mav;
+	}
+	
+	@RequestMapping(value="/club/{clubSeq}/manage/deleteClub",method=RequestMethod.POST)
+	public String deleteClubInfo(HttpSession session,
+			@PathVariable int clubSeq
+			) throws Exception {
+		// 동아리 삭제
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if (info == null) {
+			return "redirect:/member/login";
+		}
+
+		Map<String, Object> map=new HashMap<>();
+		map.put("field", "userId");
+		map.put("field_value", info.getUserId());
+		ClubInfo dto=clubService.readClubInfo(map);
+		if(dto==null || ! dto.getUserId().equals(info.getUserId())) {
+			return "redirect:/";
+		}		
+		if(dto==null|| ! dto.getUserId().equals(info.getUserId())) {
+			return "redirect:/";
+		}
+		
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"club"+File.separator+File.separator+clubSeq;
+		
+		clubService.deleteClub(clubSeq, pathname);
+		info.setClubIdx(0);
+		
+		return "redirect:/";
+	}
 }
 
 	

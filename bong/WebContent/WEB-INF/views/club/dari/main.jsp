@@ -8,27 +8,14 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 <style type="text/css">
-
-.col-md-9{
-	
-	margin-left:3%;
+.row{
+	margin-left: 15px
 }
 		
 </style>
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
-			<div class="single-blog two-column">
-                                
-			<!-- Header Carousel -->
-    		<header id="myCarousel" class="carousel slide" style="height:400px">    
-        	<div class="carousel-inner">
-           	<div class="fill" style="background-image:url('<%=cp%>/uploads/club/${clubInfo.photoFilename}');"></div>    
-        </div>  
-    </header>
-	<hr>
-      	
-       <!--  이달의 우수 후기 끝-->                                    
-    </div>
+			<img src="<%=cp%>/uploads/club/${clubSeq}/${clubInfo.photoFilename}" style="width:100%; height:400px">
     
     </div>
 
