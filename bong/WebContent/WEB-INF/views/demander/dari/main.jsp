@@ -102,14 +102,14 @@ background-color: #4FCCCD;
                        		<td id="imgtd" style=" width:47%;" rowspan="6">
                         	 	<img style="width: 350px; height: 350px; background-size: cover; margin-left: 16px;"
 										class="media-object" 
-										src="<%=cp%>/uploads/serviceImg/${dto.serviceImg}" alt="">
+										src="<%=cp%>/uploads/serviceImg/${mainProfile.serviceImg}" alt="">
 							</td>
                         	<td id="td1" style="color:black; border-top:none;text-align: left; height:45px; width:14%; ">
                         	 	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
                         	 	<span style="color:#969494; font-weight: bold;">수요처 이름</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px; ">
-                        	${dto.serviceName}
+                        	${mainProfile.serviceName}
                         	</td>
                         </tr>
                         <tr >
@@ -118,7 +118,7 @@ background-color: #4FCCCD;
                         	 	<span style="color:#969494; font-weight: bold;">소개</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;">
-                   			${dto.serviceIntro}
+                   			${mainProfile.serviceIntro}
                         	</td>
                         </tr>
                           <tr >
@@ -127,7 +127,7 @@ background-color: #4FCCCD;
                         	 	<span style="color:#969494; font-weight: bold;">봉사유형</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
-                   			${dto.themeName}
+                   			${mainProfile.themeName}
                         	</td>
                         </tr>
                          <tr >
@@ -136,7 +136,7 @@ background-color: #4FCCCD;
                         	 	<span style="color:#969494; font-weight: bold;">전화번호</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
-               			    ${dto.serviceTel}
+               			    ${mainProfile.serviceTel}
                         	</td>
                         </tr>
                          <tr >
@@ -145,7 +145,7 @@ background-color: #4FCCCD;
                         	 	<span style="color:#969494; font-weight: bold;">이메일</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
-                 		  ${dto.serviceEmail}
+                 		  ${mainProfile.serviceEmail}
                         	</td>
                         </tr>
                          <tr >
@@ -154,7 +154,7 @@ background-color: #4FCCCD;
                         	 	<span style="color:#969494; font-weight: bold;">주소</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
-                   			${dto.serviceAddr}
+                   			 ${mainProfile.serviceAddr}<a href="#">&nbsp;&nbsp;[지도]</a>
                         	</td>
                         </tr>
                </table>
@@ -168,8 +168,8 @@ background-color: #4FCCCD;
     </div>
 
     </div>
-         <section id="team">
-       
+  
+     <section id="team">
             <div class="row">
                
                 <div id="team-carousel" class="carousel slide wow fadeIn" data-ride="carousel" data-wow-duration="400ms" data-wow-delay="400ms">
@@ -181,169 +181,32 @@ background-color: #4FCCCD;
                <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active">
-                            <div class="col-sm-3 col-xs-6">
+         <c:forEach var="dto" items="${revPhoto1}">
+                 <div class="col-sm-3 col-xs-6" >
+                                <div class="team-single-wrapper">
+                                    <div class="team-single"  >
+                                        <div class="person-thumb" >            
+                                             <img src="${dto.listImageName}" style="height:215px; width:215px; background-size:cover;" > 
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+        </c:forEach> 
+                         </div>
+                   
+                         <div class="item">
+        <c:forEach var="dto2" items="${revPhoto2}"><!-- style="height: 300px; width: 300px; background-size:cover; -->
+                 <div class="col-sm-3 col-xs-6" >
                                 <div class="team-single-wrapper">
                                     <div class="team-single">
                                         <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/1.jpg" class="img-responsive" alt="">
+                                            <img src="${dto2.listImageName}" style="height:215px; width:215px; background-size:cover;"><!-- class="img-responsive" alt="" -->
                                         </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div style="text-align:center;"class="person-info">
-                                        <h2>이 제훈</h2>
-                                        <p>서울북부 &amp; 으쌰아</p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/2.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                   <div style="text-align:center;"class="person-info">
-                                        <h2>최 양희</h2>
-                                        <p>부산북부 &amp; 따뜻따뜻</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/3.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                   <div style="text-align:center;"class="person-info">
-                                        <h2>안 선경</h2>
-                                        <p>강원북부 &amp; 위너맘</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/1.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div style="text-align:center;"class="person-info">
-                                        <h2>조 일환</h2>
-                                        <p>서울남부 &amp; 호주형</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/4.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="person-info">
-                                        <h2>John Doe</h2>
-                                        <p>CEO &amp; Developer</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/3.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="person-info">
-                                        <h2>John Doe</h2>
-                                        <p>CEO &amp; Developer</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/2.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="person-info">
-                                        <h2>John Doe</h2>
-                                        <p>CEO &amp; Developer</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/1.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="person-info">
-                                        <h2>John Doe</h2>
-                                        <p>CEO &amp; Developer</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                  </div>
+     	</c:forEach>
+                    </div>
                     </div>
                     
                              <!-- Controls -->
@@ -351,8 +214,11 @@ background-color: #4FCCCD;
                     <a class="right team-carousel-control hidden-xs" href="#team-carousel" data-slide="next">right</a>
                 </div>
             </div>
-       
-    </section>
+    
+    </section> 
+    
+   
+         
          
     
 <div class="row" style="margin-top:50px;">
@@ -363,16 +229,10 @@ background-color: #4FCCCD;
                     </div>
                     <div class="panel-body">
                         <ul type="disc">
-                        <%--   <c:forEach var="dtoDocu" items="${listDocu}">
-                        	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
-                          </c:forEach> --%>
-                        
-                       		 <li><a href="#" >[충주] 따뜻했던 연탄봉억~</a></li>
-                     	  	 <li><a href="#" >[서울] 벌써 보고싶은 아께</a></li>
-                       		 <li><a href="#" >[부산] 집에 가고 싶은 ~</a></li>
-                       		 <li><a href="#" >[강원] 저녁 뭐 먹지?</a></li>
-                       		 <li><a href="#" >[전주] 힘들었던만큼날</a></li>
-                        	<li><a href="#" class="btn btn-default" style="text-align: right">더보기</a></li>
+                           <c:forEach var="revList" items="${revList}">
+                        	<li><a href="${urlRevArticle}&num=${revList.serviceReviewIdx}" >${revList.subject}</a></li>
+                          </c:forEach> 
+                        	<li><a href="${urlRevList}" class="btn btn-default" style="text-align: right">더보기</a></li>
                         </ul>
                     </div>
                 </div>

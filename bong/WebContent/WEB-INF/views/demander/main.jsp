@@ -21,6 +21,12 @@
 </style>
 <script type="text/javascript" src="<%=cp%>/res/jquery/js/jquery-1.12.3.min.js"></script>
 <script type="text/javascript">
+
+/* 처음에는 mainResult가 닫혀있음 */
+$(function() {
+	$("#mainResult").hide();
+});
+
 function cityList() {
 	var snum=$("#sido").val();
 	if(snum=="") {
@@ -67,20 +73,45 @@ function result() {
 	
 	var s=sido+":"+snum+", "+city+":"+cnum;
 	alert(s);
+} 
+
+function searchList() {
+	var f=document.searchForm;
+	f.action="<%=cp%>/main/demander/searchList";
+	f.submit();
 }
+
+/* 메인result div */
+$(function mainResult() {
+	$("#searchBtn").click(function() {
+		url="<%=cp%>/main/demander/mainResult";
+		$.post(url, {}, function(data){ 	
+			$("#mainResult").html(data);
+		});	
+		if($("#mainResult").is(':visible')) {
+			$("#mainResult").hide("fast");
+			$("#listClosed").val("1");
+		} else {
+			$("#mainResult").show("fast");
+			$("#listClosed").val("0");
+		}
+	});
+});
 </script>
 <div style="margin: 50px auto 10px; height: 200px;" align="center">
 	<div class="row4">
 		<div class="col-md-12">
 			<ul id="tab2" class="nav nav-pills">
-				<li class="active"><a href="#tab2-item1" data-toggle="tab">지도로 찾기</a></li>
-				<li><a href="#tab2-item2" data-toggle="tab" >분야로 찾기</a></li>
+				<li class="active"><a href="#tab2-item1" data-toggle="tab">지역</a></li>
+				<li><a href="#tab2-item2" data-toggle="tab" >분야</a></li>
+				<li><a href="#tab2-item3" data-toggle="tab" >수요처 이름</a></li>
 
 			</ul>
-			<div class="tab-content" style="background: #F6F6F6; height: 200px;
+			<div class="tab-content" style="background: #F6F6F6; height: 100px;
 			border-radius: 7px 7px 7px 7px ;margin-top:5px; ">
+			<!-- 지역 검색 -->
 				<div class="tab-pane fade active in" id="tab2-item1">
-					<div style="color: blue">지역별 검색</div>
+					
 					시도선택<select id="sido" onchange="cityList();" class="selectField"
 						name="sido">
 						<option value="">::시도선택::</option>
@@ -90,29 +121,29 @@ function result() {
 					</select> 도시선택<select id="city" class="selectField" name="city">
 						<option value="">::도시선택::</option>
 					</select> <br> 수요처 명<input type="text" name="demandName"
-						class="textField"> <input type="button" value=" 확인 "
-						onclick="result();" class="btn"> 
+						class="textField"> <input type="button" value="검색"
+						id="searchBtn" onclick="searchList();" class="btn"> 
 					<table>
 						<tr>
 							<td></td>
 						</tr>
 					</table>	
 				</div>
+			<!-- 분야 검색 -->
 				<div class="tab-pane fade" id="tab2-item2">
-					<div style="color: blue">분야별 검색</div>
-					시설유형<select id="demandType" class="selectField">
-						<option value="">::시설유형::</option>
-					</select> 수요처 명<input type="text" name="demandName" class="textField">
-					<input type="button" value=" 확인 " onclick="result();" class="btn">
+					
+					<select id="demandType" class="selectField" 
+					style="height: 30px; width: 160px; border-radius: 5px 5px 5px 5px;">
+						<option value="">::시설 분야::</option></select>
+					<input type="button" value="검색" 
+					id="searchBtn" class="btn">
 
 				</div>
-				<div class="tab-pane fade" id="tab2-item2">
-					<div style="color: blue">분야별 검색</div>
-					시설유형<select id="demandType" class="selectField">
-						<option value="">::시설유형::</option>
-					</select> 수요처 명<input type="text" name="demandName" class="textField">
-					<input type="button" value=" 확인 " onclick="result();" class="btn">
-
+			<!-- 수요처 검색 -->
+				<div class="tab-pane fade" id="tab2-item3">
+					<input type="text" name="demandName" class="textField" style="border-radius: 5px 5px 5px 5px;">
+					<input type="button" value="검색 " 
+					id="searchBtn" class="btn">
 				</div>
 
 			</div>
@@ -121,7 +152,9 @@ function result() {
 </div>
 
 <!-- 검색결과는 ajax써서 jsp따로 빼야할 듯! -->
-<div style="margin: 100px auto 10px; width: 1000px" align="center" >
+
+<div id="mainResult"></div>
+<%-- <div style="margin: 100px auto 10px; width: 1000px" align="center" >
 <div class="row" style="margin-left:15px;">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">
@@ -206,6 +239,6 @@ function result() {
         	</div>
         </div>
 	</div>
-	</div>
+	</div> --%>
 	
 

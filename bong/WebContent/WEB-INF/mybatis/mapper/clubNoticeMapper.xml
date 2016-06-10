@@ -171,14 +171,14 @@
 	          parameterType="map">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		        SELECT tbreply.CNRIDX as replyNum, clubNoticeIdx as num, userName 
+		        SELECT tbreply.CNRIDX as replyNum, clubNoticeIdx as num, userName,userIdx 
 		                    ,content, created, tbreply.answer
-		                    ,NVL(answerCount, 0) answerCount
+		                    ,NVL(answerCount, 0) answerCount, memImg AS saveFilename
 		        FROM
 		        (
 				      (
 					     SELECT cnridx, r.clubNoticeIdx, r.userIdx,
-               userName, r.content, r.created, answer
+               userName, r.content, r.created, answer, memImg
 					        FROM club_notice_reply_${clubSeq} r 
 			                JOIN club_notice_${clubSeq} n ON r.clubNoticeIdx=n.clubNoticeIdx
 			                JOIN memberinfo m ON r.userIdx=m.userIdx
@@ -200,7 +200,7 @@
 	<!-- 댓글별 답글 리스트 -->
 	<select id="listReplyAnswer" resultType="com.bong.club.notice.Reply" 
 	          parameterType="Integer">
-     SELECT CNRIDX AS replyNum, clubNoticeIdx AS num, tbreply.userIdx, userName, content, created, answer
+     SELECT CNRIDX AS replyNum, clubNoticeIdx AS num, tbreply.userIdx, userName, content, created, answer, memImg AS saveFilename
 	          FROM club_notice_reply_${clubSeq} tbreply 
 	          JOIN memberInfo m ON tbreply.userIdx=m.userIdx
               WHERE answer=#{answer}

@@ -28,16 +28,13 @@ public class DemanderController {
 	
 	@RequestMapping(value="/main/demander")
 	public ModelAndView demanderMain() throws Exception {
-		
-		
-		
-		ModelAndView mav = new ModelAndView(".layout.demander.main.수요처 전체 메인페이지");
+	ModelAndView mav = new ModelAndView(".layout.demander.main.수요처 전체 메인페이지");
 		return mav;
 	}
 
-	@RequestMapping(value="/main/articleDemander")
+	@RequestMapping(value="/main/demander/mainResult")
 	public ModelAndView articleDemander() throws Exception {
-		ModelAndView mav = new ModelAndView(".layout.demander.article.수요처 간단프로필");
+		ModelAndView mav = new ModelAndView("/demander/mainResult");
 
 		return mav;
 	}

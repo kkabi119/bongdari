@@ -208,7 +208,7 @@ function deleteReply(replyNum, page) {
 
 //-------------------------------------
 function deleteFree() {
-<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
+<c:if test="${sessionScope.member.userIdx==10 || sessionScope.member.userIdx==dto.userIdx}">
   var num = "${dto.clubFreeIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
@@ -217,13 +217,13 @@ function deleteFree() {
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
 </c:if>    
-<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
+<c:if test="${sessionScope.member.userIdx!=10 && sessionScope.member.userIdx!=dto.userIdx}">
   alert("게시물을 삭제할 수  없습니다.");
 </c:if>
 }
 
 function updateFree() {
-<c:if test="${sessionScope.member.userId==dto.userId}">
+<c:if test="${sessionScope.member.userIdx==dto.userIdx}">
   var num = "${dto.clubFreeIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
@@ -232,7 +232,7 @@ function updateFree() {
   location.href=url;
 </c:if>
 
-<c:if test="${sessionScope.member.userId!=dto.userId}">
+<c:if test="${sessionScope.member.userIdx!=dto.userIdx}">
  alert("게시물을 수정할 수  없습니다.");
 </c:if> 
 }

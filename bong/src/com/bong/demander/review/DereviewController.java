@@ -104,7 +104,6 @@ public class DereviewController {
 	            
 	            if(match.find())
 	            	data.setListImageName(match.group(1));
-	           
 	            n++;
 	            
 	            }

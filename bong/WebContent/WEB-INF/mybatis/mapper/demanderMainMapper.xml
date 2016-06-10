@@ -4,6 +4,12 @@
 <mapper namespace="deMain">
 
 
+<!-- 수요처 메인 -->
+
+<!-- 검색 -->
+
+
+<!-- 수요처인덱스메인 프로필 -->
 <select id="deMainProfile" parameterType="map" resultType="com.bong.demander.main.DeMain">
 		SELECT serviceIdx,serviceName,serviceBirth,serviceTel,
 		serviceIntro,serviceAddr,serviceEmail,serviceImg,serviceImgName,

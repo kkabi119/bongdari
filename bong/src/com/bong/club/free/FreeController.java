@@ -333,7 +333,7 @@ public class FreeController {
 			return new ModelAndView("redirect:/free/list?page="+page);
 		}
 			
-		if(! info.getUserId().equals(dto.getUserId())) {
+		if(info.getUserIdx()!=dto.getUserIdx()) {
 			return new ModelAndView("redirect:/free/list?page="+page);
 		}
 		
@@ -390,7 +390,7 @@ public class FreeController {
 			return new ModelAndView("redirect:/club/{clubSeq}/free/list?page="+page);
 		}
 		
-		if(! info.getUserId().equals(dto.getUserId()) && ! info.getUserId().equals("admin")) {
+		if(info.getUserIdx()!=dto.getUserIdx() && info.getUserIdx()!=10) {
 			return new ModelAndView("redirect:/club/{clubSeq}/free/list?page="+page);
 		}
 		
