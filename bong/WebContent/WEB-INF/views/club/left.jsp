@@ -13,14 +13,24 @@
 	}
 	.tag-cloud .nav-pills li a {
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 500;
     padding: 5px 15px;
-    background: #FFB000;
-    color: #fff;
-    border-radius: 3px;
+    background: none;
+    color: #777;
+     border:1px solid #ccc;
+    border-radius: 1px;
     }
     .tag-cloud .nav-pills li a:hover {
     background: #FFE258;
+	}
+	
+	.sidebar h3{
+		border-bottom:3px solid #ccc;
+		margin-bottom: 10px ;
+	}
+	
+	.btn .btn-default:hover{
+		background-color:#777;
 	}
 </style>
 	<script type="text/javascript">
@@ -47,6 +57,15 @@
 		var subMenu=".navbar-stacked-item"+idx;
 		$(subMenu).addClass("active");
 	});
+	
+	function joinClub(){
+				
+		var url = "<%=cp%>/club/${clubSeq}/joinClub";
+
+	  	location.href=url;
+		  	
+	}
+	
 	</script>
                 <div class="col-md-3 col-sm-5">
                     <div class="sidebar blog-sidebar">
@@ -81,29 +100,33 @@
                                 </div>
                             </div>
                         </div> --%>
-                        <div class="sidebar-item tag-cloud">
-                            <h3>동아리 간단정보</h3>
-                            <ul class="nav nav-pills">
+                        <div class="sidebar-item tag-cloud" style="margin-bottom:20px;">
+                        <!-- 개설일, 회원수, 관리자이름  -->
+                            <h3 >Info </h3>
+                            <ul class="nav nav-pills" style="margin-top:10px;">
                                 <li><a href="level">황금다리</a></li>
                                 <li><a href="point">297점</a></li>
                                 <li><a id="city" href=""></a></li>
                                 <li><a  id="category" href=""></a></li>
                                 <li><a id="introduce" href=""></a></li>
                             </ul>
+                             <hr style="margin-bottom:10px; margin-top:15px; border:2px solid #ccc;">
+                             <button type="button" class="btn btn-default" 
+                             			style="width:100%;border-radius:0px; padding:15px 25px ; margin-bottom:0px; background-color:#3897f0; color:white; border:none;"
+                      			 onclick="joinClub();">가입하기</button>
                         </div>
                         <div class="sidebar-item categories">
-                            <ul class="nav navbar-stacked">
+                            <ul class="nav navbar-stacked" >
                             <li><h3 class="nav navbar-stacked lefthead">Categories</h3></li>
-                                <li  class="navbar-stacked-item1"><a href="<%=cp%>/main/club/">동아리 메인페이지<span></span></a></li>
-                                <li  class="navbar-stacked-item2"><a href="<%=cp%>/club/${clubSeq}/main">내 동아리 메인</a></li>
                                 <li  class="navbar-stacked-item3"><a href="<%=cp%>/club/${clubSeq}/notice/list">공지사항</a></li>
-                                <li  class="navbar-stacked-item4"><a href="<%=cp%>/club/${clubSeq}/japply">가입신청하기</a></li>
+                               
                                 <li  class="navbar-stacked-item5"><a href="<%=cp%>/club/${clubSeq}/free/list">자유게시판</a></li>
                                 <li  class="navbar-stacked-item6"><a href="<%=cp%>/club/${clubSeq}/review/list">후기/포토게시판</a></li>
                                 <li  class="navbar-stacked-item7"><a href="<%=cp%>/club/${clubSeq}/apply/list">봉사신청게시판</a></li>
                                 <li  class="navbar-stacked-item8"><a href="<%=cp%>/club/${clubSeq}/calendar/main">우리동아리 달력</a></li>
                                 <li  class="navbar-stacked-item9"><a href="<%=cp%>/club/${clubSeq}/manage">관리자모드</a></li>
                             </ul>
+                             <hr style="margin-bottom:10px; margin-top:15px; border:2px solid #ccc;">
                         </div>
                     </div>
                 </div>

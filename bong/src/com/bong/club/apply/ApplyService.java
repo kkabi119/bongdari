@@ -26,7 +26,7 @@ public interface ApplyService {
 	public List<Reply> listReply(Map<String, Object> map);//v
 	public List<Reply> listReplyAnswer(Map<String, Object> map);//v
 	public int replyDataCount(Map<String, Object> map);//v
-	public int replyCountAnswer(int answer);//v
+	public int replyCountAnswer(Map<String, Object> map);//v
 	public int deleteReply(Map<String, Object> map);//v
 
 	int insertReplyLike(Reply dto);//v

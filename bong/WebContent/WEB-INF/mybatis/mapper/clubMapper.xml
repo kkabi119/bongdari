@@ -531,4 +531,16 @@
 	<update id="dropPhotoTable" parameterType="Long">
 	    DROP TABLE b_${value}_photo PURGE
 	</update>
+	
+	<select id="joinClubEnabled" parameterType="map">
+	
+		select m.userAddr, (select count(*) from joinclub where userIdx=#{userIdx}) joinCount, j.authority
+		from memberInfo m
+  			   join (select authority,userIdx from joinclub where clubIdx=${clubSeq} and userIdx=#{userIdx}) j 
+    		   on m.USERIDX =j.USERIDX;
+	
+	
+	</select>
+	
+	
 </mapper>

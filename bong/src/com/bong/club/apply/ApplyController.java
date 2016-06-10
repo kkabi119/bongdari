@@ -203,8 +203,8 @@ public class ApplyController {
 	}
 	
 	////////////////////////////////////////////////////////// 		댓글관련 	///////////////////////////////////////////////////////
-	@RequestMapping(value="/club/{clubSeq}/apply/createdReply",
-			method=RequestMethod.POST)
+	////////////////////////////댓글 및 대댓글 쓰기 
+	@RequestMapping(value="/club/{clubSeq}/apply/createdReply", 		method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object>  createdReply(	
 			HttpSession session
@@ -221,7 +221,7 @@ public class ApplyController {
 		} else {				
 			dto.setUserIdx(info.getUserIdx());
 			dto.setUserId(info.getUserId());
-			dto.setClub_seq(clubSeq);
+			dto.setClubSeq(clubSeq);
 			
 			int result=service.insertReply(dto);
 			if(result==0)
@@ -349,7 +349,7 @@ public class ApplyController {
 				return model;
 			}
 			
-			//////////////////////////////////////////////////////////////////// 댓글별 답글 리스트
+			//////////////////////////////////////////////////////////////////// 대댓글 리스트
 			@RequestMapping(value="/club/{clubSeq}/apply/listReplyAnswer")
 			
 			public ModelAndView listReplyAnswer(
@@ -378,7 +378,7 @@ public class ApplyController {
 				return mav;
 			}
 			
-			//////////////////////////////////////////////////////////////////// 댓글별 답글 개수
+			//////////////////////////////////////////////////////////////////// 대댓글 개수
 			@RequestMapping(value="/club/{clubSeq}/apply/replyCountAnswer",method=RequestMethod.POST)
 			@ResponseBody
 			public Map<String, Object>  replyCountAnswer(
@@ -388,7 +388,12 @@ public class ApplyController {
 				
 				int count=0;
 				
-				count=service.replyCountAnswer(answer);
+				Map<String, Object> map=new HashMap<String, Object>();
+		 		
+		   		map.put("answer", answer);
+		  	    map.put("clubSeq", clubSeq);
+		  	    
+				count=service.replyCountAnswer(map);
 				
 		   	    // 작업 결과를 json으로 전송
 				Map<String, Object> model = new HashMap<>(); 
@@ -399,17 +404,19 @@ public class ApplyController {
 			}
 			/////////////////////////////////////////////////////////////////////////////////////// 	좋 아 요 
 			//////////////////////////////////////////////////////////////// 댓글 좋아요 추가
-			@RequestMapping(value="/apply/{clubSeq}/insertReplyLike",	method=RequestMethod.POST)
+			@RequestMapping(value="/club/{clubSeq}/apply/sendReplyLike",	method=RequestMethod.POST)
 			@ResponseBody
-			public Map<String, Object>  replyLike(
+			public Map<String, Object>  sendReplyLike(
 						HttpSession session, Reply dto
 						,@PathVariable int clubSeq )
 				throws Exception {
-			
+				
+				System.out.println("1 컨트롤러 sendReplyLike에 들어왔습니다 > replyNum: "+dto.getReplyNum());
 				SessionInfo info=(SessionInfo) session.getAttribute("member");
 				
 				dto.setUserIdx(info.getUserIdx());
-				dto.setClub_seq(clubSeq);
+				dto.setClubSeq(clubSeq);
+				
 				int state=service.stateReplyLike(dto);
 				
 				if(state==0){	//좋아요가 처음이라면
@@ -429,7 +436,7 @@ public class ApplyController {
 			}
 			
 			//////////////////////////////////////////////////////////////// 댓글 좋아요 개수
-			@RequestMapping(value="/apply/countLike",	method=RequestMethod.POST)
+			@RequestMapping(value="/club/{clubSeq}/apply/countLike",	method=RequestMethod.POST)
 			@ResponseBody
 			public Map<String, Object>  countLike(
 						@RequestParam(value="replyNum") int replyNum
@@ -439,7 +446,7 @@ public class ApplyController {
 				int likeCount=0;
 				Map<String, Object> map=new HashMap<String, Object>();
 				map.put("replyNum", replyNum);
-				map.put("demandclubSeqer_seq",clubSeq);
+				map.put("clubSeq",clubSeq);
 				
 				Map<String, Object> resultMap=service.replyCountLike(map);
 				
@@ -524,7 +531,7 @@ public class ApplyController {
 						if(list.get(i).getUserIdx()==date_list.get(date_list.size()-1).getUserIdx()) {
 							
 							date_list.get(date_list.size()-1).setHopeDate(
-												date_list.get(date_list.size()-1).getHopeDate()+"/ "+ list.get(i).getHopeDate().substring(5));
+												date_list.get(date_list.size()-1).getHopeDate()+", "+ list.get(i).getHopeDate().substring(5));
 							
 						}
 						else {							

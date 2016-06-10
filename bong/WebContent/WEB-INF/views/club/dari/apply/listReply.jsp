@@ -68,7 +68,7 @@ function replyAnswerLayout(replyNum) {
   function listAnswer(answer) {
 	var listReplyAnswerId="#listReplyAnswer"+answer;
 	
-	var url="<%=cp%>/club/${club_seq}/apply/listReplyAnswer";
+	var url="<%=cp%>/club/${clubSeq}/apply/listReplyAnswer";
 	
 	$.post(url, {answer:answer}, function(data){
 		
@@ -79,7 +79,7 @@ function replyAnswerLayout(replyNum) {
 ////////////////////////////////////////////////////////////////////////// 대댓글 갯수
 function countAnswer(answer) {
 	
-	var url="<%=cp%>/club/${club_seq}/apply/replyCountAnswer";
+	var url="<%=cp%>/club/${clubSeq}/apply/replyCountAnswer";
 	$.post(url, {answer:answer}, function(data){
 		var count="("+data.count+")";
 		var answerCountId="#answerCount"+answer;
@@ -93,8 +93,8 @@ function countAnswer(answer) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////// 대댓글 쓰기 
 function sendReplyAnswer(num, replyNum) {
-	var uid="${sessionScope.member.userId}";
-	if(! uid) {
+	var uidx="${sessionScope.member.userIdx}";
+	if(! uidx) {
 		login();
 		return false;
 	}
@@ -110,12 +110,14 @@ function sendReplyAnswer(num, replyNum) {
 	var params="num="+num;
 	params+="&content="+content;
 	params+="&answer="+replyNum;
-	
+	alert("ddd");
 	$.ajax({
+		
 		type:"POST"
-		,url:"<%=cp%>/club/${club_seq}/apply/createdReply"
+		,url:"<%=cp%>/club/${clubSeq}/apply/createdReply"
 		,data:params
 		,dataType:"json"
+		
 		,success:function(data) {
 			$(rta).val("");
 			
@@ -126,7 +128,9 @@ function sendReplyAnswer(num, replyNum) {
 				countAnswer(replyNum);
 			} 
 			else if(state=="false") {
+				
 				alert("답글을 등록하지 못했습니다!");
+				
 			} else if(state=="loginFail") {
 				login();
 			}
@@ -148,7 +152,7 @@ function deleteReplyAnswer(replyNum, answer) {
 	}
 	
 	if(confirm("댓글을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/club/${club_seq}/apply/deleteReply";
+		var url="<%=cp%>/club/${clubSeq}/apply/deleteReply";
 		
 		$.post(url, {replyNum:replyNum, mode:"answer"}, function(data){
 		        var state=data.state;
@@ -173,7 +177,7 @@ function deleteReplyAnswer(replyNum, answer) {
                                                 <div class="media-body" style="padding-bottom: 0px">
                                                     <span><i class="fa fa-user"></i><a href="#">${Rdto.userName}</a></span>
                                                   
-                                                      <c:if test="${sessionScope.member.userId==Adto.userId || sessionScope.member.userId=='admin'}">   
+                                                      <c:if test="${sessionScope.member.userIdx==Rdto.userIdx || sessionScope.member.userIdx==3}">   
 		     											<span style="margin-right:0px; float:right; ">
 		     												<a class="btn btn-default" onclick='deleteReply("${Rdto.replyNum}", "${pageNo}");' style="margin-top:-8px;color:#C03035; border:none;">
 		     													삭제
@@ -187,7 +191,7 @@ function deleteReplyAnswer(replyNum, answer) {
                                                 </div>
                                                 <ul class="nav navbar-nav post-nav" style="float: right; ">
                                                          <li>
-                                                         <button type="button" class="btn btn-default btn-sm" onclick="sendLike('${Rdto.replyNum}')" 
+                                                         <button type="button" class="btn btn-default btn-sm" onclick="sendReplyLike('${Rdto.replyNum}')" 
                                                          		style="font-weight: bold; width:60px; color: #6D6D6D; padding: 10px 15px; ;">
                                                          		<span> 
                                                          			<img style=" width:15px; height:15px; background-size:cover; "src="<%=cp%>/res/images/like.png" alt="">

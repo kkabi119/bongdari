@@ -30,7 +30,7 @@
 			SELECT * FROM
 			(SELECT num, title, color,  allDay, To_char(startDay,'YYYY-MM-DD') as startday, TO_CHAR(endday, 
 			'YYYY-MM-DD') as endDay, startTime, 
-			endTime FROM club_sch_79 s JOIN memberInfo m ON s.userIdx=m.userIdx 
+			endTime FROM club_sch_52 s JOIN memberInfo m ON s.userIdx=m.userIdx 
 			WHERE s.userIdx = #{userIdx} AND ((startDay>=#{start} AND startDay<=#{end}) OR (endDay>=#{start} AND 
 			endDay<=#{end})) ORDER BY startDay ASC, num DESC)
 			)

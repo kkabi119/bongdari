@@ -202,8 +202,8 @@
 		</if>
 	</delete>
 	
-	<!-- 																대댓글 개수 세기											-->
-	<select id="replyCountAnswer" resultType="Integer"   parameterType="Integer">
+	<!-- 		대댓글 개수 세기		-->
+	<select id="replyCountAnswer" resultType="Integer"   parameterType="map">
 	   SELECT NVL(COUNT(*), 0)
 	        FROM club_applyR_${clubSeq} WHERE answer=#{answer}
 	</select>
@@ -212,7 +212,7 @@
 	<select id="listReplyAnswer" resultType="com.bong.club.apply.Reply" parameterType="Integer">
      SELECT CARIDX AS replyNum, clubApplyIdx AS num, tbreply.userIdx, m.userName, content, created, answer
 	          FROM club_applyR_${clubSeq} tbreply 
-	          JOIN memberInfo m ON tbreply.userIdx=m.userIdx
+	    		      JOIN memberInfo m ON tbreply.userIdx=m.userIdx
               WHERE answer=#{answer}
               ORDER BY replyNum DESC
 	</select>
@@ -224,10 +224,10 @@
 	</insert>
 
 	<!-- 								댓글 좋아요 세기 -->
-	<select id="replyCountLike" resultType="map" parameterType="Integer">
-	   SELECT  NVL(COUNT(*), 0) AS likeCount
-	    FROM club_applyR_like_${clubSeq}
-	    WHERE CARIdx=#{replyNum}
+	<select id="replyCountLike" resultType="map" parameterType="com.bong.club.apply.Reply">
+	   SELECT NVL(COUNT(*), 0) AS likeCount
+	   FROM club_applyR_like_${clubSeq}
+	   WHERE CARIdx=#{replyNum}
 	</select>
 	
 	<!-- 									댓글 좋아요 취소											 -->
@@ -250,11 +250,12 @@
 	<!--   								봉사신청 리스트 목록 가져오기 -->
 	<select id="readApplyList" parameterType="Integer" resultType="com.bong.member.Member">
 
-	SELECT userName, userBirth, userGender, userAddr, m.userIdx, userTel, userEmail, hopeDate, memImg, MEMIMGNAME,
-			TRUNC( MONTHS_BETWEEN( SYSDATE, userbirth)/12) as age
-	FROM memberInfo m JOIN club_apply_memlist_${clubSeq} li ON m.userIdx=li.userIdx	
-	WHERE li.clubApplyIdx=#{clubApplyIdx}
-	ORDER BY userIdx, hopeDate
+		SELECT userName, userBirth, userGender, userAddr, m.userIdx, userTel, userEmail, 
+				  SUBSTR (hopedate,1,10) hopedate , memImg, MEMIMGNAME,
+				TRUNC( MONTHS_BETWEEN( SYSDATE, userbirth)/12) as age
+		FROM memberInfo m JOIN club_apply_memlist_${clubSeq} li ON m.userIdx=li.userIdx	
+		WHERE li.clubApplyIdx=#{clubApplyIdx}
+		ORDER BY userIdx, hopeDate
 	</select>
 	
 	<!--   								봉사신청 리스트 희망날짜 가져오기 -->

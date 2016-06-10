@@ -203,7 +203,7 @@ function deleteReply(replyNum, page) {
 //좋아요/싫어요 개수
 function countLike(replyNum) {
 		
-	var url="<%=cp%>/apply/countLike";
+	var url="<%=cp%>/club/${clubSeq}/apply/countLike";
 	
 	$.post(url, {replyNum:replyNum}, function(data){
 		
@@ -217,7 +217,7 @@ function countLike(replyNum) {
 }
 
 /////////////////////////////////////////////////////////////////////////////////	좋아요/싫어요 추가
-function insertReplyLike(replyNum) {
+function sendReplyLike(replyNum) {
 	
 	var uid="${sessionScope.member.userId}";
 	if(! uid) {
@@ -226,9 +226,10 @@ function insertReplyLike(replyNum) {
 	}
 
 	var params="replyNum="+replyNum;
+	
 	$.ajax({
 		type:"POST"
-		,url:"<%=cp%>/apply/insertReplyLike"
+		,url:"<%=cp%>/club/${clubSeq}/apply/sendReplyLike"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {

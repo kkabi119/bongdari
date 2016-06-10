@@ -102,13 +102,17 @@ public class MemberController {
 	public Map<String, Object> userIdCheck(
 			@RequestParam String userId
 			) throws Exception{
+		
 		String passed="false";
 	     Member dto=service.readMemberCheck(userId);
+	     
 		if(dto==null){
 			passed="true";
 		}
+		
 		Map<String, Object> model=new HashMap<String, Object>();
 		model.put("passed", passed);
+		
 		return model;
 	}
 	

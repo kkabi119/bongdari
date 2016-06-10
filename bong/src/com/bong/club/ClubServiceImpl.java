@@ -267,4 +267,20 @@ public class ClubServiceImpl  implements ClubService {
 		}
 		return result;
 	}
+
+	@Override
+	public JoinClub joinClubEnabled(Map<String, Object> map) {
+		
+		JoinClub dto=null;
+		try {
+			dto=dao.getReadInformation("club.joinClubEnabled", map);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+	
+	
+	
 }

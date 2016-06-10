@@ -190,11 +190,11 @@ public class ApplyServiceImpl implements ApplyService {
 
 	
 	@Override
-	public int replyCountAnswer(int answer) {
+	public int replyCountAnswer(Map<String, Object> map) {
 	
 		int result=0;
 		try {
-			result=dao.getIntValue("clubApply.replyCountAnswer", answer);
+			result=dao.getIntValue("clubApply.replyCountAnswer", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

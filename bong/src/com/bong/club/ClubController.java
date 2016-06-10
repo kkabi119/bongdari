@@ -334,7 +334,8 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="/club/{clubSeq}/manage/deleteClub",method=RequestMethod.POST)
-	public String deleteClubInfo(HttpSession session,
+	public String deleteClubInfo(
+			HttpSession session,
 			@PathVariable int clubSeq
 			) throws Exception {
 		// 동아리 삭제
@@ -363,6 +364,43 @@ public class ClubController {
 		
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value="/club/{clubSeq}/joinClub",method=RequestMethod.GET)
+	public ModelAndView joinClub(
+			@PathVariable int clubSeq
+			,HttpSession session)
+		throws Exception {		
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		int enabled=3; // 0이면 3개이상가입, 1이면 같은 지역이 아님
+		
+		ModelAndView mav=new ModelAndView(".four.club.dari.japply.클럽 회원가입 ");
+		mav.addObject("clubSeq",clubSeq);
+		
+		//가입가능한 회원인지 확인
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userIdx", info.getUserIdx());
+		map.put("userId", info.getUserId());
+		map.put("clubSeq",clubSeq);
+		
+		JoinClub joclub=clubService.joinClubEnabled(map);
+		
+		if(joclub.getJoinCount() >3){
+			enabled=0;
+		}
+		if(joclub.getMemAddr()!="클럽의 활동지역을 가져와서 비교해야함 "){
+			enabled=1;
+		}
+		
+		
+		
+		return mav;
+	}
+	
+	
+	
+	
 }
 
 	

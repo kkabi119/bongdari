@@ -29,4 +29,6 @@ public interface ClubService {
 
 	public int createClubTable(int clubSeq);
 	public int dropClubTable(int clubSeq);
+	
+	public JoinClub joinClubEnabled(Map<String, Object> map);
 }

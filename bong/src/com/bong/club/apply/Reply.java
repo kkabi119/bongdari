@@ -9,10 +9,10 @@ public class Reply {
 	private int clubSeq;
 	
 	
-	public int getClub_seq() {
+	public int getClubSeq() {
 		return clubSeq;
 	}
-	public void setClub_seq(int clubSeq) {
+	public void setClubSeq(int clubSeq) {
 		this.clubSeq = clubSeq;
 	}
 	public int getLikeCount() {
