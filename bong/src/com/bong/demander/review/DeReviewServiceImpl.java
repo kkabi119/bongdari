@@ -70,6 +70,18 @@ public class DeReviewServiceImpl implements DeReviewService {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<DeReview> listDeReviewSmall(Map<String, Object> map){
+		List<DeReview> list=null;
+		try {
+			list=dao.getListInformation("demander.listDeReviewSmall", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return list;
+	}
 
 	//ÆÄÀÏ************************
 	@Override

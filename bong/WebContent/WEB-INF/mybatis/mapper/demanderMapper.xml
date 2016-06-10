@@ -102,6 +102,22 @@
 	]]>
 	</select>
 	
+	
+	<!-- 메인에 띄울 리뷰 small리스트 -->
+	<select id="listDeReviewSmall" parameterType="map"
+	            resultType="com.bong.demander.review.DeReview">
+		  SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			     SELECT serviceReviewIdx, subject,content
+			        FROM service_review_7
+	                ORDER BY serviceReviewIdx DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	</select>
+	
+	
 	<!-- 리뷰 글보기 -->
 	<select id="readDeReview" parameterType="map" resultType="com.bong.demander.review.DeReview">
 		SELECT r.servicereviewidx, c.useridx, userid, c.username, subject,

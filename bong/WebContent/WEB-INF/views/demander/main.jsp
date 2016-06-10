@@ -73,14 +73,16 @@ function result() {
 	<div class="row4">
 		<div class="col-md-12">
 			<ul id="tab2" class="nav nav-pills">
-				<li class="active"><a href="#tab2-item1" data-toggle="tab">지도로 찾기</a></li>
-				<li><a href="#tab2-item2" data-toggle="tab" >분야로 찾기</a></li>
+				<li class="active"><a href="#tab2-item1" data-toggle="tab">지역</a></li>
+				<li><a href="#tab2-item2" data-toggle="tab" >분야</a></li>
+				<li><a href="#tab2-item3" data-toggle="tab" >수요처 이름</a></li>
 
 			</ul>
 			<div class="tab-content" style="background: #F6F6F6; height: 200px;
 			border-radius: 7px 7px 7px 7px ;margin-top:5px; ">
+			<!-- 지역 검색 -->
 				<div class="tab-pane fade active in" id="tab2-item1">
-					<div style="color: blue">지역별 검색</div>
+					
 					시도선택<select id="sido" onchange="cityList();" class="selectField"
 						name="sido">
 						<option value="">::시도선택::</option>
@@ -90,7 +92,7 @@ function result() {
 					</select> 도시선택<select id="city" class="selectField" name="city">
 						<option value="">::도시선택::</option>
 					</select> <br> 수요처 명<input type="text" name="demandName"
-						class="textField"> <input type="button" value=" 확인 "
+						class="textField"> <input type="button" value="검색"
 						onclick="result();" class="btn"> 
 					<table>
 						<tr>
@@ -98,20 +100,19 @@ function result() {
 						</tr>
 					</table>	
 				</div>
+			<!-- 분야 검색 -->
 				<div class="tab-pane fade" id="tab2-item2">
-					<div style="color: blue">분야별 검색</div>
-					시설유형<select id="demandType" class="selectField">
-						<option value="">::시설유형::</option>
-					</select> 수요처 명<input type="text" name="demandName" class="textField">
-					<input type="button" value=" 확인 " onclick="result();" class="btn">
+					
+					시설 분야<select id="demandType" class="selectField">
+						<option value="">::시설 분야::</option></select>
+					<input type="button" value="검색" onclick="result();" class="btn">
 
 				</div>
-				<div class="tab-pane fade" id="tab2-item2">
-					<div style="color: blue">분야별 검색</div>
-					시설유형<select id="demandType" class="selectField">
-						<option value="">::시설유형::</option>
-					</select> 수요처 명<input type="text" name="demandName" class="textField">
-					<input type="button" value=" 확인 " onclick="result();" class="btn">
+				<div class="tab-pane fade" id="tab2-item3">
+					
+					
+					<input type="text" name="demandName" class="textField">
+					<input type="button" value="검색 " onclick="result();" class="btn">
 
 				</div>
 
