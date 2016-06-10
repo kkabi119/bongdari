@@ -2,10 +2,18 @@ package com.bong.club.notice;
 
 public class Reply {
 	private int replyNum, num, listNum, clubSeq;
-	private String userId, userName, content, created;
+	private String userId, userName, content, created, saveFilename;
 	private int answer ,userIdx;
 	private int answerCount;
 	
+	
+	
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
 	public int getClubSeq() {
 		return clubSeq;
 	}

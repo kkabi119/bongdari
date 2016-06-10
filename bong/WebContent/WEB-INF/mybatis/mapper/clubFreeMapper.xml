@@ -168,7 +168,7 @@
 	<!-- 댓글별 답글 리스트 -->
 	<select id="listReplyAnswer" resultType="com.bong.club.free.Reply" 
 	          parameterType="Integer">
-     SELECT cfrIdx, clubFreeIdx, tbreply.userIdx, userName, content, created, answer
+     SELECT cfrIdx, clubFreeIdx, tbreply.userIdx, userName, content, created, answer, memImg AS saveFilename
 	          FROM club_free_reply_${clubSeq} tbreply 
 	          JOIN memberInfo m ON tbreply.userIdx=m.userIdx
               WHERE answer=#{answer}
