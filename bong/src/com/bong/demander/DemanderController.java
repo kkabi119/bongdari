@@ -32,12 +32,12 @@ public class DemanderController {
 		return mav;
 	}
 
-	/*@RequestMapping(value="/main/articleDemander")
+	@RequestMapping(value="/main/demander/mainResult")
 	public ModelAndView articleDemander() throws Exception {
-		ModelAndView mav = new ModelAndView(".layout.demander.article.수요처 간단프로필");
+		ModelAndView mav = new ModelAndView("/demander/mainResult");
 
 		return mav;
-	}*/
+	}
 	 
 	@RequestMapping(value="/main/searchDemander")
 	public ModelAndView searchDemander() throws Exception {
