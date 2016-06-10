@@ -139,7 +139,7 @@
 	          parameterType="map">
 			SELECT * FROM (
 				    SELECT ROWNUM rnum, tb.* FROM (
-				        SELECT tbreply.cfrIdx , clubFreeIdx, userName 
+				        SELECT tbreply.cfrIdx , clubFreeIdx, userName, userIdx 
 				                    ,content, created, tbreply.answer
 				                    ,NVL(answerCount, 0) answerCount, memImg AS saveFilename
 				        FROM

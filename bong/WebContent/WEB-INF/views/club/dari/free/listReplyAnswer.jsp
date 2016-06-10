@@ -12,14 +12,14 @@
                                                     <li class="post-comment reply">
                                                     
                                                         <a class="pull-left" href="#">
-                                                            <img class="media-object" src="<%=cp%>/uploads/photo/${Adto.saveFilename}" alt="">
+                                                            <img class="media-object" src="<%=cp%>/uploads/memImg/${Adto.saveFilename}" alt="">
                                                         </a>
                                                         <div class="media-body" style="padding-bottom: 10px">
                                                             <span><i class="fa fa-user"></i>Posted by <a href="#">${Adto.userName }</a></span>
                                                             <p>${Adto.content}</p>
                                                             <ul class="nav navbar-nav post-nav" style="float: right;">
                                                                 <li><a href="#"><i class="fa fa-clock-o"></i>${Adto.created }</a></li>
-<c:if test="${sessionScope.member.userId==Adto.userId || sessionScope.member.userId=='admin'}">   
+<c:if test="${sessionScope.member.userIdx==Adto.userIdx || sessionScope.member.userIdx==10}">   
 		     														<li><a onclick='deleteReplyAnswer("${Adto.cfrIdx}", "${Adto.answer}");' style="color:#FF7218">삭제</a></li>
 </c:if>
                                                             </ul>
