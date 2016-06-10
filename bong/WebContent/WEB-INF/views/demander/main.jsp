@@ -61,7 +61,7 @@ function cityList() {
 	    }
 	});
 }
-/* 
+
 function result() {
 	var snum=$("#sido").val();
 	var cnum=$("#city").val();
@@ -73,7 +73,13 @@ function result() {
 	
 	var s=sido+":"+snum+", "+city+":"+cnum;
 	alert(s);
-} */
+} 
+
+function searchList() {
+	var f=document.searchForm;
+	f.action="<%=cp%>/main/demander/searchList";
+	f.submit();
+}
 
 /* 메인result div */
 $(function mainResult() {
@@ -116,7 +122,7 @@ $(function mainResult() {
 						<option value="">::도시선택::</option>
 					</select> <br> 수요처 명<input type="text" name="demandName"
 						class="textField"> <input type="button" value="검색"
-						id="searchBtn" class="btn"> 
+						id="searchBtn" onclick="searchList();" class="btn"> 
 					<table>
 						<tr>
 							<td></td>
@@ -130,14 +136,14 @@ $(function mainResult() {
 					style="height: 30px; width: 160px; border-radius: 5px 5px 5px 5px;">
 						<option value="">::시설 분야::</option></select>
 					<input type="button" value="검색" 
-					id="searchBtn" onclick="result();" class="btn">
+					id="searchBtn" class="btn">
 
 				</div>
 			<!-- 수요처 검색 -->
 				<div class="tab-pane fade" id="tab2-item3">
 					<input type="text" name="demandName" class="textField" style="border-radius: 5px 5px 5px 5px;">
 					<input type="button" value="검색 " 
-					id="searchBtn" onclick="result();" class="btn">
+					id="searchBtn" class="btn">
 				</div>
 
 			</div>
