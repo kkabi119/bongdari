@@ -108,7 +108,7 @@ $(function(){
 		var url="<%=cp%>/demander/${demander_seq}/review/deleteFile";
 		$.post(url, {fileNum:fileNum}, function(data){
 			$("#b"+fileNum).remove();
-			$("#f"+fileNum).remove();
+			/* $("#f"+fileNum).remove(); */
 
 		}, "JSON");
 	  }

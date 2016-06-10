@@ -16,7 +16,7 @@ $(function(){
 
 function tab1(){
 	
-	var url="<%=cp%>/demander/index/admin/tab1";
+	var url="<%=cp%>/demander/${demander_seq}/admin/tab1";
 	
 	var num="${dto.num}";
 	
@@ -29,7 +29,7 @@ function tab1(){
 
 function tab2(){
 	
-	var url="<%=cp%>/demander/index/admin/tab2";
+	var url="<%=cp%>/demander/${demander_seq}/admin/tab2";
 
 	var num="${dto.num}";
 	
@@ -41,7 +41,7 @@ function tab2(){
 }	
 function tab3(){
 	
-	var url="<%=cp%>/demander/index/admin/tab3";
+	var url="<%=cp%>/demander/${demander_seq}/admin/tab3";
 	
 	var num="${dto.num}";
 	$.get(url, {}, function(data){ //ajax 써도됨 //url, {pageNo:page}는 보낼 때 쓰는거 function(data)는 받을 때 쓰는 함수

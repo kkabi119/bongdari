@@ -131,21 +131,21 @@
 
 			<div class="col-md-4">
 				<button type="button" class="btn btn-info"
-					onclick="javascript:location.href='<%=cp%>/club/index/notice/created';">
+					onclick="javascript:location.href='<%=cp%>/club/${club_seq}/notice/created';">
 					<span class="fa fa-arrow-right"></span>
 				</button>
 			</div>
 			
 			<div class="col-md-4" align="center">
 				<button type="button" class="btn btn-info"
-					onclick="javascript:location.href='<%=cp%>/club/index/notice/created';">
+					onclick="javascript:location.href='<%=cp%>/club/${club_seq}/notice/created';">
 					<span class="fa fa">완료하기</span>
 				</button>
 			</div>
 
 			<div class="col-md-4" align="right">
 				<button type="button" class="btn btn-info"
-					onclick="javascript:location.href='<%=cp%>/club/index/notice/created';">
+					onclick="javascript:location.href='<%=cp%>/club/${club_seq}/notice/created';">
 					<span class="fa fa-arrow-left"></span>
 				</button>
 			</div>

@@ -58,10 +58,10 @@ $(function(){
         </td>
         <td>
         					<div style="width: 20%; min-width: 85px; text-align: right; padding-bottom: 50px">
-        		    			<button type="button" class="btn btn-info" onclick="javascript:location.href='<%=cp%>/club/index/notice/created';"><span class="fa fa-arrow-right"></span></button>
+        		    			<button type="button" class="btn btn-info" onclick="javascript:location.href='<%=cp%>/club/${club_seq}/notice/created';"><span class="fa fa-arrow-right"></span></button>
         					</div>
         					<div style=" width: 20%; min-width: 85px; text-align: right;padding-right: 15px">
-        		    			<button type="button" class="btn btn-info" onclick="javascript:location.href='<%=cp%>/club/index/notice/created';"><span class="fa fa-arrow-left"></span></button>
+        		    			<button type="button" class="btn btn-info" onclick="javascript:location.href='<%=cp%>/club/${club_seq}/notice/created';"><span class="fa fa-arrow-left"></span></button>
         					</div>
         </td>
         <td>
