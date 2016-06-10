@@ -284,6 +284,10 @@
 		)
 	</update>
 	
+	<update id="dropClubCalendar" parameterType="Integer">
+		DROP TABLE CLUB_sch_${value} PURGE
+	</update>
+	
 	<update id="createClubCalendarSeq" parameterType="Integer">
 		CREATE SEQUENCE club_sch_seq_${value}
 		    INCREMENT BY 1
@@ -297,9 +301,6 @@
 		DROP SEQUENCE club_sch_seq_${value}
 	</update>
 	
-	<update id="dropClubCalendar" parameterType="Integer">
-		DROP TABLE CLUB_sch_${value} PURGE
-	</update>
 	
 	<update id="createClubReview" parameterType="Integer">
 		CREATE TABLE CLUB_REVIEW_${value} (
@@ -329,7 +330,7 @@
 		     CRRIdx 	NUMBER not null
 		    ,content   	VARCHAR2(200) NOT NULL
 		    ,created 	DATE DEFAULT SYSDATE
-			  ,anwer NUMBER
+			,answer 	NUMBER
 		    ,clubreviewIdx NUMBER NOT NULL
 		  	,userIdx NUMBER NOT NULL
 		  	,CONSTRAINT pk_clubrevR_${value} PRIMARY KEY(CRRIdx)
