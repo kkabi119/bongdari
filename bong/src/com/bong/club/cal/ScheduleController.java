@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.bong.member.SessionInfo;
 
@@ -24,16 +25,17 @@ public class ScheduleController {
 	private ScheduleService service;
 	
 	@RequestMapping(value="/club/{clubSeq}/calendar/main")
-	public String sch(
+	public ModelAndView sch(
 			HttpSession session
 			,@PathVariable int clubSeq
 			) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		if(info==null) {
-			return "redirect:/member/login";
+			return new ModelAndView("redirect:/member/login");
 		}
-		
-		return ".four.club.dari.cal.sch.우리동아리달력";
+		ModelAndView mav=new ModelAndView(".four.club.dari.cal.sch.우리동아리달력");
+		mav.addObject("subMenu","8");
+		return mav;
 	}
 
 	// 대화상자에 출력 할 일정 추가 폼
@@ -67,6 +69,7 @@ public class ScheduleController {
 		}
 		
 		sch.setUserIdx(info.getUserIdx());
+		
 		service.insertSchedule(sch);
 	
 		Map<String, Object> model = new HashMap<>(); 

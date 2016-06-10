@@ -11,6 +11,7 @@ public interface ClubService {
 	public List<ClubTheme> listClubThemeAll();
 	
 	public int ReadClubInfoSession(Map<String, Object> map);
+	public int ReadSeqVal();
 	
 	public int updateClub(ClubInfo dto, String pathname);
 	public int deleteImage(int clubSeq, String pathname, String filename);

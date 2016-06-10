@@ -32,6 +32,10 @@
 	    CONNECT BY PRIOR themeNum=parent	
 	</select>
 	
+	<select id="readSeqVal" resultType="integer">
+		 SELECT club_seq.NEXTVAL FROM DUAL
+	</select>
+	
 	<!-- 생성되는 동아리 정보 저장 -->
 	<select id="clubseq" resultType="integer">
 	    SELECT club_seq.NEXTVAL FROM DUAL
@@ -44,7 +48,7 @@
 	<insert id="insertClubInfo" parameterType="com.bong.club.ClubInfo">
 	    INSERT INTO clubInfo(clubIdx, userId, themeNum, clubname, introduce, closed, city, photoFilename)
 	      VALUES (#{clubSeq}, #{userId}, #{themeNum}, 
-	                #{clubname}, #{introduce}, #{closed},#{city}, #{photoFilename, jdbcType=VARCHAR})
+	                #{clubname}, #{introduce}, 1,#{city}, #{photoFilename, jdbcType=VARCHAR})
 	</insert>
 	
 	<insert id="insertJoinClub" parameterType="com.bong.club.ClubInfo">
@@ -54,33 +58,13 @@
 	
 	<!-- 동아리 정보 수정 -->
 	<update id="updateClubInfo" parameterType="com.bong.club.ClubInfo">
-	    UPDATE ClubInfo SET nickName=#{nickName},
-	           themeNum=#{themeNum},
-	           title=#{title}, introduce=#{introduce}, closed=#{closed}
-	           WHERE ClubSeq=#{ClubSeq}
+	    UPDATE ClubInfo SET themeNum=#{themeNum}, clubname=#{clubname}, introduce=#{introduce}, city=#{city}, photoFilename=#{photoFilename}
+	    WHERE clubIdx=#{clubSeq}
 	</update>
-
-	<update id="updateClubProfile" parameterType="com.bong.club.ClubInfo">
-	    UPDATE ClubProfile SET isUserName=#{isUserName},
-	           photoFilename=#{photoFilename, jdbcType=VARCHAR},
-	           city=#{city}, isCity=#{isCity},
-	           gender=#{gender}, isGender=#{isGender}, 
-	           hobby=#{hobby, jdbcType=VARCHAR}, isHobby=#{isHobby}
-	           WHERE ClubSeq=#{ClubSeq}
-	</update>
-	
-    <update id="deleteClubProfileImage" parameterType="Long">
-        UPDATE ClubProfile SET photoFilename=
-                    WHERE ClubSeq=#{ClubSeq}
-    </update>
 	
 	<!-- 동아리 정보 삭제 -->
-	<delete id="deleteClubInfo" parameterType="Long">
-	    DELETE FROM ClubInfo WHERE ClubSeq=#{ClubSeq}
-	</delete>
-
-	<delete id="deleteClubProfile" parameterType="Long">
-	    DELETE FROM ClubProfile WHERE ClubSeq=#{ClubSeq}
+	<delete id="deleteClubInfo" parameterType="Integer">
+	    DELETE FROM ClubInfo WHERE clubIdx=#{clubSeq}
 	</delete>
 
 	<!-- 동아리 전체 리스트 -->
@@ -158,7 +142,7 @@
 	
 	<select id="readClubInfoSmall" parameterType="map" resultType="com.bong.club.ClubInfo">
 		SELECT clubidx AS clubSeq, userId, c.parent groupNum ,clubname, introduce, clubBirth, city,
-			closed, c.subject, g.subject groupSubject, photoFilename 
+			closed, c.subject, g.subject groupSubject, photoFilename, c.themeNum, c.parent groupNum 
 			FROM ClubInfo b 
 			JOIN theme c ON b.themeNum=c.themeNum 
 			JOIN ( SELECT themeNum, subject FROM theme WHERE parent IS NULL ) g ON c.parent = g.themeNum
@@ -207,6 +191,10 @@
 )
 	</update>
 	
+	<update id="dropClubNotice" parameterType="Integer">
+		DROP TABLE club_notice_${value} PURGE
+	</update>
+	
 	<update id="createClubNoticeReply" parameterType="Integer">
 		create table club_notice_reply_${value}(
 			CNRIDX    	NUMBER NOT NULL 
@@ -221,6 +209,10 @@
 			,CONSTRAINT fk_clubNoticeIdx_${value} FOREIGN KEY(CLUBNOTICEIDX)
 	REFERENCES club_notice_${value} (CLUBNOTICEIDX) ON DELETE CASCADE
 )
+	</update>
+	
+	<update id="dropClubNoticeReply" parameterType="Integer">
+		DROP TABLE club_notice_reply_${value} PURGE
 	</update>
 	
 	<!-- 동아리 자유게시판 -->
@@ -244,6 +236,12 @@
 		)
 	</update>
 	
+	<update id="dropClubFree" parameterType="Integer">
+		DROP TABLE club_free_${value} PURGE
+	</update>
+	
+	
+	
 	<update id="createClubFreeReply" parameterType="Integer">
 		create table club_free_reply_${value}(
 			CFRIDX  	 NUMBER NOT NULL
@@ -259,6 +257,146 @@
 				REFERENCES club_free_${value}(clubFreeIdx) ON DELETE CASCADE
 		)
 	</update>	
+	
+	<update id="dropClubFreeReply" parameterType="Integer">
+		DROP TABLE club_free_reply_${value} PURGE
+	</update>
+	
+	<update id="createClubCalendar" parameterType="Integer">
+		CREATE TABLE CLUB_SCH_${value} (
+		  	num	 	          NUMBER      NOT NULL
+		  	,userIdx              	NUMBER    	NOT NULL
+		  	,clubIdx              	NUMBER    	NOT NULL
+		  	,title              	VARCHAR2(255) NOT NULL
+		  	,content             	VARCHAR(4000)         	NOT NULL
+		  	,allDay      VARCHAR2(10)
+		  	,color					VARCHAR2(10)
+		  	,STARTDAY       	DATE DEFAULT SYSDATE NOT NULL
+		  	,ENDDAY         	DATE DEFAULT SYSDATE
+		  	,startTime   VARCHAR2(5)
+        	,endTime     VARCHAR2(5)
+		  	,created              	DATE         	DEFAULT SYSDATE
+		  	,CONSTRAINT pk_CLUB_CALENDAR_${value} PRIMARY KEY(num)
+		  	,CONSTRAINT fk_CLUB_CALENDAR_${value} FOREIGN KEY(userIdx)
+		                   REFERENCES memberInfo(userIdx) ON DELETE CASCADE
+		  	,CONSTRAINT fk2_CLUB_CALENDAR_${value} FOREIGN KEY(clubIdx)
+		                    REFERENCES clubInfo(clubIdx) ON DELETE CASCADE
+		)
+	</update>
+	
+	<update id="dropClubCalendar" parameterType="Integer">
+		DROP TABLE CLUB_sch_${value} PURGE
+	</update>
+	
+	<update id="createClubCalendarSeq" parameterType="Integer">
+		CREATE SEQUENCE club_sch_seq_${value}
+		    INCREMENT BY 1
+		    START WITH 1
+		    NOMAXVALUE
+		    NOCYCLE
+		    NOCACHE
+	</update>
+	
+	<update id="dropClubCalendarSeq" parameterType="Integer">
+		DROP SEQUENCE club_sch_seq_${value}
+	</update>
+	
+	
+	<update id="createClubReview" parameterType="Integer">
+		CREATE TABLE CLUB_REVIEW_${value} (
+		    clubReviewIdx	NUMBER
+		  	,userIdx              	NUMBER    	NOT NULL
+		  	,clubIdx              	NUMBER    	NOT NULL
+		  	,subject              	VARCHAR2(255) NOT NULL
+		  	,content             	CLOB         	NOT NULL
+		  	,hitCount            	NUMBER   	DEFAULT 0
+		  	,created              	DATE         	DEFAULT SYSDATE
+		    ,modified           	DATE         	DEFAULT SYSDATE
+		 	
+		      ,CONSTRAINT pk_CLUB_REVIEW_${value} PRIMARY KEY(clubReviewIdx)
+		      ,CONSTRAINT fk_CLUB_REVIEW_${value} FOREIGN KEY(userIdx)
+		                   REFERENCES memberInfo(userIdx)
+		      ,CONSTRAINT fk2_CLUB_REVIEW_${value} FOREIGN KEY(clubIdx)
+		                    REFERENCES clubInfo(clubIdx)
+		)
+	</update>
+	
+	<update id="dropClubReview" parameterType="Integer">
+		DROP TABLE CLUB_REVIEW_${value} PURGE
+	</update>
+	
+	<update id="createClubReviewR" parameterType="Integer">
+		CREATE TABLE club_reviewR_${value} (
+		     CRRIdx 	NUMBER not null
+		    ,content   	VARCHAR2(200) NOT NULL
+		    ,created 	DATE DEFAULT SYSDATE
+			,answer 	NUMBER
+		    ,clubreviewIdx NUMBER NOT NULL
+		  	,userIdx NUMBER NOT NULL
+		  	,CONSTRAINT pk_clubrevR_${value} PRIMARY KEY(CRRIdx)
+			  ,CONSTRAINT fk_clubrevR_${value} FOREIGN KEY(useridx)
+		                REFERENCES memberInfo(userIdx) ON DELETE CASCADE
+		     ,CONSTRAINT fk2_clubrevR_${value} FOREIGN KEY(clubreviewIdx)
+		                REFERENCES club_review_${value}(clubreviewIdx) ON DELETE CASCADE
+		)
+	</update>
+	
+	<update id="dropClubReviewR" parameterType="Integer">
+		DROP TABLE CLUB_REVIEWR_${value} PURGE
+	</update>
+	
+	<update id="createClubReviewRLike" parameterType="Integer">
+		CREATE TABLE club_reviewR_like_${value} (
+			CRRIdx NUMBER
+			,userIdx NUMBER
+			,CONSTRAINT pk_clubRevR_Like_${value} PRIMARY KEY(CRRIdx,userIdx)
+			,CONSTRAINT fk_clubRevR_Like_${value} FOREIGN KEY(useridx)
+			            	REFERENCES memberInfo(userIdx) ON DELETE CASCADE
+			 ,CONSTRAINT fk2_clubRevR_Like_${value} FOREIGN KEY(CRRIdx)
+			           	REFERENCES club_reviewR_${value}(CRRIdx) ON DELETE CASCADE
+		)
+	</update>
+	
+	<update id="dropClubReviewRLike" parameterType="Integer">
+		DROP TABLE CLUB_REVIEWR_LIKE_${value} PURGE
+	</update>
+	
+	
+	<update id="createClubReviewFile" parameterType="Integer">
+		CREATE TABLE club_review_file_${value} (
+			 clubFileIdx NUMBER
+			 ,CLUBREVIEWIDX NUMBER NOT NULL
+			 ,SAVEFILENAME VARCHAR2(255) NOT NULL
+			 ,ORIGINALFILENAME VARCHAR2(255) NOT NULL
+			 
+			,CONSTRAINT pk_clubrevF_${value} PRIMARY KEY(clubFileIdx)
+			,CONSTRAINT fk_club_reviewF_${value} FOREIGN KEY(CLUBREVIEWIDX)
+			 	REFERENCES CLUB_REVIEW_${value}(CLUBREVIEWIDX) ON DELETE CASCADE 
+		)
+	</update>
+	
+	<update id="dropClubReviewFile" parameterType="Integer">
+		DROP TABLE CLUB_REVIEW_FILE_${value} PURGE
+	</update>	
+		
+	<update id="createClubReviewLike" parameterType="Integer">	
+		CREATE TABLE club_review_like_${value} (
+			 clubreviewIdx NUMBER
+			 ,userIdx NUMBER NOT NULL
+			 
+			 ,CONSTRAINT pk_clubRev_Like_${value} PRIMARY KEY(clubreviewIdx,userIdx)
+			 ,CONSTRAINT fk_clubRev_Like_${value} FOREIGN KEY(useridx)
+			       	REFERENCES memberInfo(userIdx) ON DELETE CASCADE
+			,CONSTRAINT fk2_clubRev_Like_${value} FOREIGN KEY(CLUBREVIEWIDX)
+			    	REFERENCES club_review_${value}(CLUBREVIEWIDX) ON DELETE CASCADE             	
+		)
+	</update>
+	
+	<update id="dropClubReviewLike" parameterType="Integer">
+		DROP TABLE CLUB_REVIEW_LIKE_${value} PURGE
+	</update>
+	
+	
 	
 	<update id="dropBoardCategoryTable" parameterType="Long">
 	    DROP TABLE b_${value}_category PURGE

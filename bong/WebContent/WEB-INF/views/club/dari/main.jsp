@@ -8,27 +8,15 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 <style type="text/css">
-
-.col-md-9{
-	
-	margin-left:3%;
+.row{
+	margin-left: 15px
 }
 		
 </style>
+
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
-			<div class="single-blog two-column">
-                                
-			<!-- Header Carousel -->
-    		<header id="myCarousel" class="carousel slide" style="height:400px">    
-        	<div class="carousel-inner">
-           	<div class="fill" style="background-image:url('<%=cp%>/uploads/club/${clubInfo.photoFilename}');"></div>    
-        </div>  
-    </header>
-	<hr>
-      	
-       <!--  이달의 우수 후기 끝-->                                    
-    </div>
+			<img src="<%=cp%>/uploads/club/${clubSeq}/${clubInfo.photoFilename}" style="width:100%; height:400px">
     
     </div>
 
@@ -264,9 +252,14 @@
             </div>
 
             </div>
-                 </div>
+            <div id="map-container">
+                <h2 class="page-header">Google Map</h2>
+                <div id="gmap"></div>
+            </div><!--/#map-container-->
      <script>
     $('.carousel').carousel({
         interval: 5000 //changes the speed
     })
     </script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="<%=cp%>/res/js/gmaps.js"></script>

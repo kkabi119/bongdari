@@ -70,11 +70,11 @@
 #classifyGroup .btn, #classifyGroup .focus.btn, #classifyGroup .btn:focus, #classifyGroup .btn:hover {
     color: #fff; background-image:none;
 }
-.btn-blue {
-    background-color:blue; border-color:blue;
+.btn-red {
+    background-color:red; border-color:red;
 }
-.btn-blue:hover, .btn-blue:focus {
-    background-color:blue; border-color:blue;
+.btn-red:hover, .btn-red:focus {
+    background-color:red; border-color:red;
 }
 .btn-black {
     background-color:black; border-color:black;
@@ -134,7 +134,7 @@ $(function() {
 				// 일정 제목을 선택할 경우 상세 일정
 				articleForm(calEvent);
 			},
-			editable: true,
+			editable: false,
 			events: function(start, end, timezone, callback){
 				// 캘린더가 처음 실행되거나 월이 변경되면
 				var startDay=start.format("YYYY-MM-DD");
@@ -192,8 +192,8 @@ function articleForm(calEvent) {
 	
 	var color=calEvent.color;
 	var classify="";
-	if(color=="blue") classify="개인일정";
-	else if(color=="black") classify="가족일정";
+	if(color=="red") classify="동아리일정";
+	else if(color=="black") classify="봉사일정";
 	else if(color=="green") classify="회사일정";
 	else if(color=="red") classify="부서일정";
 	
@@ -247,7 +247,7 @@ function articleForm(calEvent) {
 		$("#schEndDay").html(eday);
 		$("#schContent").html(content);
 		
-		str="<button type='button' class='btn btn-primary' style='margin-right: 5px;' onclick='updateForm(\""+num+"\", \""+title+"\", \""+allDay+"\", \""+startDay+"\",\""+endDay+"\",\""+startTime+"\",\""+endTime+"\",\""+color+"\");'> 수정 <span class='glyphicon glyphicon-ok'></span></button>";
+		str="<button type='button' class='btn btn-success' style='margin-right: 5px;' onclick='updateForm(\""+num+"\", \""+title+"\", \""+allDay+"\", \""+startDay+"\",\""+endDay+"\",\""+startTime+"\",\""+endTime+"\",\""+color+"\");'> 수정 <span class='glyphicon glyphicon-ok'></span></button>";
 		str+="<button type='button' class='btn btn-danger' style='margin-right: 5px;' onclick='deleteOk(\""+num+"\");'> 삭제 <span class='glyphicon glyphicon-remove'></span></button>";
 		str+="<button type='button' class='btn btn-default' data-dismiss='modal' style='margin-left: 0px;'> 닫기 </button>";
 		$("#schFooter").html(str);
@@ -552,7 +552,7 @@ function updateOk(num) {
 }
 
 //-------------------------------------------------------
-//일정을 드래그하거나 일정의 크기를 변경할 때 일정 수정
+<%-- //일정을 드래그하거나 일정의 크기를 변경할 때 일정 수정
 function updateDrag(e) {
 	var num=e.id;
 	var title=e.title;
@@ -620,7 +620,7 @@ function updateDrag(e) {
               alert(e.responseText);
           }
 	});
-}
+} --%>
 
 //-------------------------------------------
 function deleteOk(num) {
@@ -641,21 +641,21 @@ function deleteOk(num) {
 // -------------------------------------------------
 // 입력 및 수정 화면에서 일정 분류를 선택 한 경우
 function classifyChange(classify) {
-	$("#btnTitle").removeClass("btn-blue")
+	$("#btnTitle").removeClass("btn-red")
 	                     .removeClass("btn-black")
 	                     .removeClass("btn-green")
 	                     .removeClass("btn-red");
-	$("#btnDropdown").removeClass("btn-blue")
+	$("#btnDropdown").removeClass("btn-red")
 	                              .removeClass("btn-black")
 	                              .removeClass("btn-green")
 	                              .removeClass("btn-red");
 	
-	if(classify=="blue") {
-		$("#btnTitle").html("개인일정")
-		$("#btnTitle").addClass("btn-blue");
-		$("#btnDropdown").addClass("btn-blue");
+	if(classify=="red") {
+		$("#btnTitle").html("동아리일정")
+		$("#btnTitle").addClass("btn-red");
+		$("#btnDropdown").addClass("btn-red");
 	} else if(classify=="black") {
-		$("#btnTitle").html("가족일정")
+		$("#btnTitle").html("봉사일정")
 		$("#btnTitle").addClass("btn-black");
 		$("#btnDropdown").addClass("btn-black");
 	} else if(classify=="green") {
@@ -695,10 +695,10 @@ $(function(){
              <div class="btn-group" role="group" aria-label="header">
                  <a class="hbtn hbtn-bottom" style="background: white; color:#2f3741;"
                        href="javascript:classification('all', 0);">전체일정</a>
-                 <a class="hbtn" style="background: blue;"
-                       href="javascript:classification('blue', 1);">봉사일정</a>
+                 <a class="hbtn" style="background: red;"
+                       href="javascript:classification('red', 1);">동아리일정</a>
                  <a class="hbtn" style="background: black;"
-                       href="javascript:classification('black', 2);">동아리일정</a>
+                       href="javascript:classification('black', 2);">봉사일정</a>
                  <!-- <a class="hbtn" style="background: green;"
                        href="javascript:classification('green', 3);">회사일정</a>
                  <a class="hbtn" style="background: red;"
@@ -708,7 +708,7 @@ $(function(){
     </div>
     
     <div id="calendar"></div>
-	<div id='schLoading'>loading...</div>
+	<div id='schLoading'></div>
 </div>
 <div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

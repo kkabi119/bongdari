@@ -35,7 +35,6 @@ function tabPageView() {
 		url="<%=cp%>/club/${clubSeq}/manage/clubInfo"
 	} else if (tabs==1) {
 		url="<%=cp%>/club/${clubSeq}/manage/updateClubInfo"
-		mode="update"
 	} else if (tabs==2) {
 		url="<%=cp%>/club/${clubSeq}/manage/joinClubList"
 	} else if (tabs==3) {
@@ -43,7 +42,7 @@ function tabPageView() {
 	}
 	
 	
-	$.get(url,mode, {}, function(data){
+	$.get(url, {}, function(data){
 		var id="#tabContent"+tabs;
 		$(id).html(data);
 	});

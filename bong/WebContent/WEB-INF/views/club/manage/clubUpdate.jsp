@@ -15,12 +15,9 @@ $(function(){
 	$('.fileinput').fileinput();
 });
 
-<c:if test="${mode=='update'}">
 $(function(){
 	themeList();
 });
-</c:if>
-
 
 
 function themeList() {
@@ -115,7 +112,7 @@ function themeList() {
         if(mode=="created")
             f.action = "<%=cp%>/club/created";
         else if(mode=="update")
-            f.action = "<%=cp%>/club/update";
+            f.action = "<%=cp%>/club/${clubSeq}/manage/update";
             
        f.submit();
   }
@@ -141,22 +138,24 @@ function themeList() {
   <div class="bodyFrame">
   <div style="width:600px; padding-top:35px; clear: both; margin: 0px auto;">
         <div class="body-clubname">
-              <h3> 동아리 ${mode=="created"?"생성":"수정" }</h3>
+              <h1> 동아리 정보 수정</h1>
         </div>
+        <br><br>
      </div>
   <form class="form-horizontal" name="clubForm" method="post" enctype="multipart/form-data">
       <div class="form-group" style="margin-bottom:0px;">
         <label class="col-sm-2 control-label" for="userId">주제</label>
         <div class="col-sm-7">
-            <select name="groupNum" id="groupNum" class="form-control" onchange="themeList();" style="float:left; width:20%;margin-right: 10px">
-			<option value="">:: 대분류 ::</option>
-             	<c:forEach var="vo" items="${listGroup}">
-			          <option value="${vo.themeNum}" ${vo.themeNum==dto.groupNum ? "selected='selected'" : ""}>${vo.subject}</option>
-			    </c:forEach>
-			</select>
-			<select name="themeNum" id="themeNum" class="form-control" style="float:left; width:20%;">
-			     <option value="">:: 중분류 ::</option>
-			 </select>
+             <select name="groupNum" id="groupNum" class="selectField"
+			                      onchange="themeList();">
+			               <option value="">:: 대분류 ::</option>
+			               <c:forEach var="vo" items="${listGroup}">
+			                   <option value="${vo.themeNum}" ${vo.themeNum==dto.groupNum ? "selected='selected'" : ""}>${vo.subject}</option>
+			               </c:forEach>
+			          </select>
+			          <select name="themeNum" id="themeNum" class="selectField">
+			               <option value="">:: 중분류 ::</option>
+			          </select>
 			  <p style="clear:both" class="help-block"> 주요활동분야 혹은 관심분야를 지정해주세요</p>
         </div>
     </div>
@@ -224,7 +223,7 @@ function themeList() {
  <c:if test="${mode=='update'}">
             <div style="float: left; margin-left: 10px;">
                <c:if test="${not empty dto.photoFilename}">
-                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img id="imgPhoto" src="<%=cp%>/uploads/club/${dto.photoFilename}" style="width: 100%; height: 100%;"></div>
+                    <div style="width: 130px; height: 150px;  margin-bottom:10px; border: 1px solid #ddd; padding: 3px;"><img id="imgPhoto" src="<%=cp%>/uploads/club/${clubSeq}/${dto.photoFilename}" style="width: 100%; height: 100%;"></div>
                     <div style="padding-left: 15px;">
                          <span>등록 이미지</span>
                          <a id="btnDeletePhoto" href="javascript:imageDelete();" class="close" style="float: none">&times;</a>

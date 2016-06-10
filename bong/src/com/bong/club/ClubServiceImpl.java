@@ -28,8 +28,7 @@ public class ClubServiceImpl  implements ClubService {
 				dto.setPhotoFilename(filename);
 			}
 			
-			int seq=dao.getIntValue("club.clubseq");
-			dto.setClubSeq(seq);
+			int seq=	dto.getClubSeq();
 			
 			dao.insertInformation("club.insertClub", seq);
 			dao.insertInformation("club.insertClubInfo", dto);
@@ -81,17 +80,10 @@ public class ClubServiceImpl  implements ClubService {
 	public int updateClub(ClubInfo dto, String pathname) {
 		int result=0;
 		try {
-			if(dto.getUploads()!=null && !dto.getUploads().isEmpty()) {
-				if(dto.getPhotoFilename().length()!=0) {
-					fileManager.doFileDelete(dto.getPhotoFilename(), pathname);
-				}
-				
-				String filename=fileManager.doFileUpload(dto.getUploads(), pathname);
-				dto.setPhotoFilename(filename);
-			}			
+			String filename=fileManager.doFileUpload(dto.getUploads(), pathname);
+			dto.setPhotoFilename(filename);
 			
-			dao.updateInformation("club.updateclubInfo", dto);
-			dao.updateInformation("club.updateClubProfile", dto);
+			dao.updateInformation("club.updateClubInfo", dto);
 			result=1;
 			
 		} catch (Exception e) {
@@ -119,7 +111,6 @@ public class ClubServiceImpl  implements ClubService {
 			// 개인 블로그 파일 폴더 및 파일 삭제  
 			fileManager.removePathname(pathname);
 			
-			dao.deleteInformation("club.deleteClubProfile", clubSeq);
 			dao.deleteInformation("club.deleteClubInfo", clubSeq);
 			
 			// 테이블 지우기
@@ -207,22 +198,17 @@ public class ClubServiceImpl  implements ClubService {
 			dao.updateInformation("club.createClubNoticeReply", clubSeq);
 			dao.updateInformation("club.createClubFree", clubSeq);
 			dao.updateInformation("club.createClubFreeReply", clubSeq);
-			/*dao.updateInformation("club.createBoardCategoryTable", clubSeq);
-			dao.updateInformation("club.createBoardTable", clubSeq);
-			dao.updateInformation("club.createBoardLikeTable", clubSeq);
-			dao.updateInformation("club.createBoardFileTable", clubSeq);
-			dao.updateInformation("club.createBoardReplyTable", clubSeq);
-			dao.updateInformation("club.createBoardReplyLikeTable", clubSeq);
+			dao.updateInformation("club.createClubCalendar", clubSeq);
+			dao.updateInformation("club.createClubCalendarSeq", clubSeq);
+			dao.updateInformation("club.createClubReview", clubSeq);
+			dao.updateInformation("club.createClubReviewR", clubSeq);
+			dao.updateInformation("club.createClubReviewRLike", clubSeq);
+			dao.updateInformation("club.createClubReviewFile", clubSeq);
+			dao.updateInformation("club.createClubReviewLike", clubSeq);
+			/*dao.updateInformation("club.createBoardReplyLikeTable", clubSeq);
 			dao.updateInformation("club.createGuestTable", clubSeq);
 			dao.updateInformation("club.createPhotoTable", clubSeq);*/
 			
-			// 공지 테이블 추가
-			/*Category dto=new Category();
-			dto.setCategoryNum(1);
-			dto.setClassify("공지");
-			dto.setTableName("b_"+clubSeq);
-			dao.insertInformation("boardCategory.insertCategory", dto);
-			*/
 			result=1;
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -234,14 +220,17 @@ public class ClubServiceImpl  implements ClubService {
 	public int dropClubTable(int clubSeq) {
 		int result=0;
 		try {
-			/*dao.updateInformation("club.dropBoardReplyLikeTable", clubSeq);
-			dao.updateInformation("club.dropBoardReplyTable", clubSeq);
-			dao.updateInformation("club.dropBoardFileTable", clubSeq);
-			dao.updateInformation("club.dropBoardLikeTable", clubSeq);
-			dao.updateInformation("club.dropBoardTable", clubSeq);
-			dao.updateInformation("club.dropBoardCategoryTable", clubSeq);
-			dao.updateInformation("club.dropGuestTable", clubSeq);
-			dao.updateInformation("club.dropPhotoTable", clubSeq);*/
+			dao.updateInformation("club.dropClubNoticeReply", clubSeq);
+			dao.updateInformation("club.dropClubNotice", clubSeq);
+			dao.updateInformation("club.dropClubFreeReply", clubSeq);
+			dao.updateInformation("club.dropClubFree", clubSeq);
+			dao.updateInformation("club.dropClubCalendar", clubSeq);
+			dao.updateInformation("club.dropClubCalendarSeq", clubSeq);
+			dao.updateInformation("club.dropClubReview", clubSeq);
+			dao.updateInformation("club.dropClubReviewR", clubSeq);
+			dao.updateInformation("club.dropClubReviewRLike", clubSeq);
+			dao.updateInformation("club.dropClubReviewFile", clubSeq);
+			dao.updateInformation("club.dropClubReviewLike", clubSeq);
 			result=1;
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -267,5 +256,15 @@ public class ClubServiceImpl  implements ClubService {
 		return result;
 	}
 
-	
+	@Override
+	public int ReadSeqVal() {
+		int result=0;
+		try {
+			result=dao.getIntValue("club.readSeqVal");
+			result=result+1;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
 }
