@@ -24,7 +24,7 @@
 	<!-- 글개수 -->
 	<select id="dataCount" parameterType="map"  resultType="Integer">
 	  SELECT NVL(COUNT(*), 0) FROM volun_bbs v
-	        JOIN club_apply_${club_seq} a ON v.volunIdx=a.volunIdx
+	        JOIN club_apply_${clubSeq} a ON v.volunIdx=a.volunIdx
 	     <where>
 	     	<if test="searchValue!=null and searchValue!='' ">
 	     	    <include refid="where-list"/>
@@ -40,18 +40,18 @@
 		    FROM (
 			     SELECT a.clubApplyIdx, v.volunIdx AS volunIdx, s.serviceName, subject, v.startDay, v.endDay, a.enabled,
 			     		   progress, place, volunteer_type, v.volunDays, NVL(replyCount, 0) replyCount,
-			     		  ( (SELECT NVL(COUNT(*), 0) FROM club_apply_memlist_${club_seq} c JOIN club_apply_${club_seq} a ON c.clubApplyIdx=a.clubApplyIdx 
+			     		  ( (SELECT NVL(COUNT(*), 0) FROM club_apply_memlist_${clubSeq} c JOIN club_apply_${clubSeq} a ON c.clubApplyIdx=a.clubApplyIdx 
                        		 WHERE a.volunIdx = v.volunIdx)+
                        		( SELECT NVL(COUNT(*), 0) FROM volun_bbs_memlist vb
 		                      WHERE vb.volunIdx=v.volunIdx))AS applyNum,
 		                    ( select sum(maxNum) from MEMNUMPERDATE mnpd where mnpd.volunIdx=v.volunIdx ) as maxNum
 		                   
-        	    FROM volun_bbs v JOIN club_apply_${club_seq} a ON v.volunIdx=a.volunIdx
+        	    FROM volun_bbs v JOIN club_apply_${clubSeq} a ON v.volunIdx=a.volunIdx
 			        					JOIN serviceInfo s ON v.serviceIdx=s.serviceIdx
 					                    LEFT OUTER JOIN
 								        (
 								             SELECT clubApplyIdx, count(*) replycount
-					                         FROM club_applyR_${club_seq} tbreply GROUP BY clubApplyIdx
+					                         FROM club_applyR_${clubSeq} tbreply GROUP BY clubApplyIdx
 								        ) tbreply ON a.clubApplyIdx = tbreply.clubApplyIdx
                     <where>
                          <if test="searchValue != null and searchValue != ''">
@@ -75,42 +75,41 @@
 		SELECT a.CLUBAPPLYIDX,v.volunIdx AS volunIdx, s.serviceName, v.subject, v.startDay, v.endDay, a.enabled, progress, place, volunteer_type, v.volunDays, 
 				startTime, endTime, content,v.created,v.modified, t.subject as tsubject, a.hitCount, v.serviceIdx,
 				 ( SELECT subject FROM theme th WHERE th.themenum=t.parent) AS tsubject_parent,
-			     ( (SELECT NVL(COUNT(*), 0) FROM club_apply_memlist_${club_seq} c JOIN club_apply_${club_seq} a ON c.clubApplyIdx=a.clubApplyIdx 
+			     ( (SELECT NVL(COUNT(*), 0) FROM club_apply_memlist_${clubSeq} c JOIN club_apply_${clubSeq} a ON c.clubApplyIdx=a.clubApplyIdx 
                     WHERE a.volunIdx = v.volunIdx)+
                    ( SELECT NVL(COUNT(*), 0) FROM volun_bbs_memlist vb
 		             WHERE vb.volunIdx=v.volunIdx))AS applyNum,
 		         ( select sum(maxNum) from MEMNUMPERDATE mnpd where mnpd.volunIdx=v.volunIdx ) as maxNum
         	    
        FROM volun_bbs v 
-       			JOIN club_apply_${club_seq} a ON v.volunIdx=a.volunIdx
+       			JOIN club_apply_${clubSeq} a ON v.volunIdx=a.volunIdx
        			JOIN serviceInfo s ON v.serviceIdx=s.serviceIdx
         	  JOIN theme t ON v.themenum=t.themenum
-		WHERE clubApplyIdx = #{num}
+		WHERE clubApplyIdx = #{clubApplyIdx}
 	</select>
 	
-	<!-- 조회수 증가 -->
-	<update id="updateHitCount" parameterType="Integer">
-		UPDATE volun_bbs SET hitCount=hitCount+1 WHERE volunIdx= #{num}
+	<!-- 봉사게시판의 조회수 증가 -->
+	<update id="updateHitCount" parameterType="map">
+		UPDATE volun_bbs SET hitCount=hitCount+1 WHERE volunIdx= #{volunIdx}
 	</update>
 	
 	<!-- 클럽게시판 조회수 증가 -->
-	<update id="updateHitCount_club" parameterType="Integer">
-		UPDATE club_apply_${club_seq} SET hitCount=hitCount+1 WHERE clubApplyIdx= #{clubApplyIdx}
+	<update id="updateHitCount_club" parameterType="map">
+		UPDATE club_apply_${clubSeq} SET hitCount=hitCount+1 WHERE clubApplyIdx= #{clubApplyIdx}
 	</update>
 	
 	<!-- AND 가 필요 없는 경우 자동으로 제거 됨 -->
 	<!-- 이전글 -->
-	<select id="preReadApply" resultType="com.bong.club.apply.Apply" 
-				parameterType="map">
+	<select id="preReadApply" resultType="com.bong.club.apply.Apply"  parameterType="map">
 		SELECT tb.* FROM (
 			SELECT clubApplyIdx, subject, progress
-			FROM volun_bbs v JOIN club_apply_${club_seq} a ON v.volunIdx=a.volunIdx
+			FROM volun_bbs v JOIN club_apply_${clubSeq} a ON v.volunIdx=a.volunIdx
                     <where>
                          <if test="searchValue != null and searchValue != '' ">
 			                  <include refid="where-list"/>
 		                 </if>
 		               <![CDATA[
-		                 AND (clubApplyIdx > #{num})
+		                 AND (clubApplyIdx > #{clubApplyIdx})
 		                 ]]>
 	                </where>
 				ORDER BY clubApplyIdx ASC
@@ -122,14 +121,14 @@
 				parameterType="map">
 		SELECT tb.* FROM (
 			SELECT clubApplyIdx, subject, progress
-			 FROM volun_bbs v JOIN club_apply_${club_seq} a ON v.volunIdx=a.volunIdx
+			 FROM volun_bbs v JOIN club_apply_${clubSeq} a ON v.volunIdx=a.volunIdx
 			 
                     <where>
                          <if test="searchValue != null and searchValue != '' ">
 			                  <include refid="where-list"/>
 		                 </if>
 		               <![CDATA[
-		                 AND (clubApplyIdx < #{num})
+		                 AND (clubApplyIdx < #{clubApplyIdx})
 		                 ]]>
 	                </where>
 				ORDER BY clubApplyIdx DESC
@@ -144,14 +143,14 @@
 	</select>
 	
 	<insert id="insertApplyReply" parameterType="com.bong.club.apply.Reply">
-	INSERT INTO club_applyR(CARIDX , clubApplyIdx, userIdx, content, answer)
+	INSERT INTO club_applyR_${clubSeq}(CARIDX , clubApplyIdx, userIdx, content, answer)
 	   VALUES (#{replyNum}, #{num},#{userIdx}, #{content}, #{answer})
 	</insert>
 	
 	<select id="replyDataCount" resultType="Integer" 
 	           parameterType="map">
 	   SELECT NVL(COUNT(*), 0)
-	        FROM club_applyR_${club_seq} WHERE clubApplyIdx=#{num} AND answer=0
+	        FROM club_applyR_${clubSeq} WHERE clubApplyIdx=#{num} AND answer=0
 	</select>
 	
 	<select id="listReply" resultType="com.bong.club.apply.Reply" 
@@ -165,19 +164,19 @@
 		        (
 				      (
 					     SELECT CARIDX, r.clubApplyIdx, r.userIdx, m.userName, r.content, r.created, answer
-					        FROM club_applyR_${club_seq} r
-			                JOIN club_apply_${club_seq} a ON r.clubApplyIdx=a.clubApplyIdx
+					        FROM club_applyR_${clubSeq} r
+			                JOIN club_apply_${clubSeq} a ON r.clubApplyIdx=a.clubApplyIdx
 			                JOIN memberInfo m ON r.userIdx=m.userIdx
 			                WHERE r.clubApplyIdx=#{num} AND answer=0
 			           ) tbreply
 			           LEFT OUTER JOIN
 			           (         SELECT answer, COUNT(*) AS answerCount
-                                 FROM club_applyR_${club_seq} GROUP BY answer
+                                 FROM club_applyR_${clubSeq} GROUP BY answer
 			           ) tbanswer ON tbreply.CARIDX = tbanswer.answer
 	           		   LEFT OUTER JOIN
 	           		   (
 	           			  SELECT COUNT(*) likeCount, carIdx
-             		      FROM club_applyR_like_${club_seq} GROUP BY carIdx
+             		      FROM club_applyR_like_${clubSeq} GROUP BY carIdx
 	           		 )tblike ON tbreply.CARIDX = tblike.CARIDX
 	           )
 	           ORDER BY replyNum DESC
@@ -189,13 +188,13 @@
 	
 	<!-- 															댓글삭제  														-->
 	<delete id="deleteReply" parameterType="map"> 
-		DELETE club_applyR_${club_seq} WHERE
+		DELETE club_applyR_${clubSeq} WHERE
 	    <if test="mode == 'num' ">
 			 clubApplyIdx=#{num}
 		</if>
 	    <if test="mode == 'reply' ">
 			 CARIDX IN 
-               (SELECT CARIDX FROM club_applyR_${club_seq} START WITH CARIDX = #{replyNum}
+               (SELECT CARIDX FROM club_applyR_${clubSeq} START WITH CARIDX = #{replyNum}
 	            CONNECT BY PRIOR CARIDX = answer)
 		</if>
 	    <if test="mode == 'answer' ">
@@ -206,13 +205,13 @@
 	<!-- 																대댓글 개수 세기											-->
 	<select id="replyCountAnswer" resultType="Integer"   parameterType="Integer">
 	   SELECT NVL(COUNT(*), 0)
-	        FROM club_applyR_${club_seq} WHERE answer=#{answer}
+	        FROM club_applyR_${clubSeq} WHERE answer=#{answer}
 	</select>
 	
 	<!-- 대댓글 리스트 -->
 	<select id="listReplyAnswer" resultType="com.bong.club.apply.Reply" parameterType="Integer">
      SELECT CARIDX AS replyNum, clubApplyIdx AS num, tbreply.userIdx, m.userName, content, created, answer
-	          FROM club_applyR_${club_seq} tbreply 
+	          FROM club_applyR_${clubSeq} tbreply 
 	          JOIN memberInfo m ON tbreply.userIdx=m.userIdx
               WHERE answer=#{answer}
               ORDER BY replyNum DESC
@@ -220,32 +219,32 @@
 	
 	<!-- 								댓글 좋아요 추가																-->
 	<insert id="insertReplyLike" parameterType="com.bong.club.apply.Reply">
-	INSERT INTO club_applyR_like_${club_seq}(CARIdx, userIdx)
+	INSERT INTO club_applyR_like_${clubSeq}(CARIdx, userIdx)
 	   VALUES (#{replyNum}, #{userIdx})
 	</insert>
 
 	<!-- 								댓글 좋아요 세기 -->
 	<select id="replyCountLike" resultType="map" parameterType="Integer">
 	   SELECT  NVL(COUNT(*), 0) AS likeCount
-	    FROM club_applyR_like_${club_seq}
+	    FROM club_applyR_like_${clubSeq}
 	    WHERE CARIdx=#{replyNum}
 	</select>
 	
 	<!-- 									댓글 좋아요 취소											 -->
 	
 	 <select id="stateReplyLike" parameterType="com.bong.club.apply.Reply" resultType="Integer">
-     SELECT NVL(COUNT(*),0) FROM club_applyR_like_${club_seq} 
+     SELECT NVL(COUNT(*),0) FROM club_applyR_like_${clubSeq} 
      WHERE userIdx=#{userIdx} AND CARIdx=#{replyNum}
     </select>
 	
 	<!-- 좋아요가 이미 눌렸을때 해제 되도록 -->
 	<delete id="deleteReplyLike" parameterType="com.bong.club.apply.Reply">
-	DELETE FROM club_applyR_like_${club_seq} WHERE CARIdx=#{replyNum} AND userIdx=#{userIdx}
+	DELETE FROM club_applyR_like_${clubSeq} WHERE CARIdx=#{replyNum} AND userIdx=#{userIdx}
 	</delete>
 	
 	<!-- 								게시물삭제															 -->
 	<update id="deleteApply" parameterType="Integer">
-			update club_apply_${club_seq} set enabled=0 WHERE clubApplyIdx = #{num}
+			update club_apply_${clubSeq} set enabled=0 WHERE clubApplyIdx = #{num}
      </update>
 	
 	<!--   								봉사신청 리스트 목록 가져오기 -->
@@ -253,7 +252,7 @@
 
 	SELECT userName, userBirth, userGender, userAddr, m.userIdx, userTel, userEmail, hopeDate, memImg, MEMIMGNAME,
 			TRUNC( MONTHS_BETWEEN( SYSDATE, userbirth)/12) as age
-	FROM memberInfo m JOIN club_apply_memlist_${club_seq} li ON m.userIdx=li.userIdx	
+	FROM memberInfo m JOIN club_apply_memlist_${clubSeq} li ON m.userIdx=li.userIdx	
 	WHERE li.clubApplyIdx=#{clubApplyIdx}
 	ORDER BY userIdx, hopeDate
 	</select>
@@ -262,7 +261,7 @@
 	<select id="readApplyList_date" parameterType="Integer" resultType="com.bong.member.Member">
 
 		SELECT userIdx , LISTAGG(hopeDate,',')WITHIN GROUP (ORDER BY userIdx) hopedate
-		FROM club_apply_memlist_${club_seq}
+		FROM club_apply_memlist_${clubSeq}
 		WHERE clubApplyIdx=#{clubApplyIdx}
 		GROUP BY userIdx; 
 	</select>

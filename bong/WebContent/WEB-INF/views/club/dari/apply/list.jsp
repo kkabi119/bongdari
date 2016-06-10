@@ -82,7 +82,8 @@ function searchList() {
 									<tr height="20">
                         				<td class="text-center">${dto.listNum}</td>
                         				<td colspan="4">
-                        					<a style="font-weight:bold; font-size:14px; "href="${urlArticle}&num=${dto.clubApplyIdx}"> ${dto.subject} 
+                        					<a style="font-weight:bold; font-size:14px; "href="${urlArticle}&clubApplyIdx=${dto.clubApplyIdx}&volunIdx=${dto.volunIdx}">
+                        							 ${dto.subject} 
                         						    <span id="replyCountView" class="item-title" style='color:#f0ad4e; font-size:12px; font-weight: bold;'> (${dto.replyCount}) </span>
                         					</a>
                         				</td>

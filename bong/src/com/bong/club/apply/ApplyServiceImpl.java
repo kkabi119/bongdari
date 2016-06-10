@@ -57,9 +57,9 @@ public class ApplyServiceImpl implements ApplyService {
 		
 		try {
 			//게시물 가져오기
-			System.out.println("후후후후");
+			System.out.println("2. 서비스 -readAppy 매퍼로 이동 ");
 			dto=dao.getReadInformation("clubApply.readApply", map);
-			
+			System.out.println("2. 서비스 -readApply 빠져나갑니다 ");
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

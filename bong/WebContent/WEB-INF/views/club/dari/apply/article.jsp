@@ -81,7 +81,7 @@ $(function(){
 		var page = "${page}";
 		var params = "num="+num+"&page="+page;
 	
-		$('#applyListModal .modal-body').load( "<%=cp%>/club/${club_seq}/apply/applyList1?"+params, function() {
+		$('#applyListModal .modal-body').load( "<%=cp%>/club/${clubSeq}/apply/applyList1?"+params, function() {
 			 
 				$('#applyListModal .modal-title').html('우리동아리 신청리스트');
 				$('#applyListModal').modal('show');
@@ -109,7 +109,7 @@ $(function(){
 	listPage(1);
 });
 function listPage(page) {
-	var url="<%=cp%>/club/${club_seq}/apply/listReply";
+	var url="<%=cp%>/club/${clubSeq}/apply/listReply";
 	var num="${dto.clubApplyIdx}";
 		
 	$.post(url, {num:num, pageNo:page}, function(data){
@@ -121,7 +121,7 @@ function listPage(page) {
 function replyCount() {
 	var num="${dto.clubApplyIdx}";// 해당 게시물 번호
 
-	var url="<%=cp%>/club/${club_seq}/apply/replyCount";
+	var url="<%=cp%>/club/${clubSeq}/apply/replyCount";
 	$.post(url, {num:num}, function(data){
 		
 		var count=data.count;
@@ -131,8 +131,8 @@ function replyCount() {
 }
 /////////////////////////////////////////////////////////////////////////// 댓글 추가
 function sendReply() {
-	var uid="${sessionScope.member.userId}";
-	if(! uid) {
+	var uidx="${sessionScope.member.userIdx}";
+	if(! uidx) {
 		login();
 		return false;
 	}
@@ -144,14 +144,16 @@ function sendReply() {
 		$("#replyContent").focus();
 		return false;
 	}
+	//alert(num+ content);
 	
 	var params="num="+num;
 	params+="&content="+content;
 	params+="&answer=0";
 	
 	$.ajax({
+		
 		type:"POST"
-		,url:"<%=cp%>/club/${club_seq}/apply/createdReply"
+		,url:"<%=cp%>/club/${clubSeq}/apply/createdReply"
 		,data:params
 		,dataType:"json"
 		,success:function(data) {
@@ -185,7 +187,7 @@ function deleteReply(replyNum, page) {
 	}
 	
 	if(confirm("댓글을 삭제하시겠습니까 ? ")) {	
-		var url="<%=cp%>/club/${club_seq}/apply/deleteReply";
+		var url="<%=cp%>/club/${clubSeq}/apply/deleteReply";
 		$.post(url, {replyNum:replyNum, mode:"reply"}, function(data){
 		        var state=data.state;
 				if(state=="loginFail") {
@@ -248,7 +250,7 @@ function deleteApply() {
   var page = "${page}";
   var params = "num="+num+"&page="+page;
   
-  var url = "<%=cp%>/club/${club_seq}/apply/delete?" + params;
+  var url = "<%=cp%>/club/${clubSeq}/apply/delete?" + params;
 
   if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
 	  
@@ -409,7 +411,7 @@ function deleteApply() {
                          <c:if test="${not empty dto.saveFileName}">
                              <tr style=" border-top: 1px solid #6D6D6D;  border-bottom: 1px solid #6D6D6D;">
                                     <td class="post-bottom overflow" style="margin-top: 0px">
-                                  			<a href="<%=cp%>/club/${club_seq}/apply/download?num=${dto.clubApplyIdx}">
+                                  			<a href="<%=cp%>/club/${clubSeq}/apply/download?num=${dto.clubApplyIdx}">
                                   				<span class="fa fa-download"></span> ${dto.originalFilename}
                                   			</a>
                                     </td>
@@ -433,7 +435,8 @@ function deleteApply() {
                       <textarea id="replyContent" class="form-control" rows="4" required="required"  ></textarea>
                  
                   <div style="text-align: right; padding-top: 0px; margin-right:0px; ">
-                      <button type="button" class="btn btn-default" style="border-radius:0px; padding:15px 25px ; margin-bottom:0px; background-color:#3897f0; color:white; border:none;" onclick="sendReply();">
+                      <button type="button" class="btn btn-default" style="border-radius:0px; padding:15px 25px ; margin-bottom:0px; background-color:#3897f0; color:white; border:none;"
+                      			 onclick="sendReply();">
                        		등록 
                        </button>
                   </div>
@@ -457,7 +460,7 @@ function deleteApply() {
 						 	   <td colspan="1"bgcolor="#EEEEEE" align="center">이전글</td>
 						    
 							    <td colspan="6" align="left" style="border-bottom:1px solid #ddd; padding-left:10px;" colspan="3">
-									<a href="<%=cp%>/club/${club_seq}/apply/article?${params}&num=${preReadDto.clubApplyIdx}">
+									<a href="<%=cp%>/club/${clubSeq}/apply/article?${params}&clubApplyIdx=${preReadDto.clubApplyIdx}&volunIdx=${preReadDto.volunIdx}">
 											${preReadDto.subject} 
 									</a>
 									<c:if test="${preReadDto.progress.equals('모집마감')}">
@@ -478,7 +481,7 @@ function deleteApply() {
                       <tr height="35" style="border-bottom:1px solid #ddd; ">
 					    <td colspan="1"bgcolor="#EEEEEE" align="center">다음글</td>
 					    <td colspan="6" align="left" style="padding-left:10px;" colspan="3">
-							<a href="<%=cp%>/club/${club_seq}/apply/article?${params}&num=${nextReadDto.clubApplyIdx}">
+							<a href="<%=cp%>/club/${clubSeq}/apply/article?${params}&clubApplyIdx=${nextReadDto.clubApplyIdx}&volunIdx=${nextReadDto.volunIdx}">
 								 ${nextReadDto.subject}
 							</a>							
 							<c:if test="${nextReadDto.progress.equals('모집마감')}">
@@ -506,7 +509,7 @@ function deleteApply() {
    						</td>
    					</c:if>
    						<td align="right" colspan="2" style="padding-right:0px; border-top:none;margin-bottom:30px; ">
-					           <button style=""type="button" class="btn btn-default"  onclick="javascript:location.href='<%=cp%>/club/${club_seq}/apply/list?${params}';">목록으로</button>
+					           <button style=""type="button" class="btn btn-default"  onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/apply/list?${params}';">목록으로</button>
 
 					    </td>
 					    </tr>

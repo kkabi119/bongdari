@@ -138,13 +138,15 @@ public class ApplyController {
 	///////////////////////////////////////////// 글보기 ///////////////////////////////////////////////////
 	@RequestMapping(value="/club/{clubSeq}/apply/article")
 	public ModelAndView readClubApply(HttpSession session,
-			@RequestParam(value="num") int num,
+			@RequestParam(value="volunIdx") int volunIdx,
+			@RequestParam(value="clubApplyIdx") int clubApplyIdx,
 			@RequestParam(value="page") String page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue
 			,@PathVariable int clubSeq )
 					throws Exception {
 		
+		System.out.println("1. 컨트롤러 - readClubApply에 들어왔습니다 > volunIdx= "+volunIdx);
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		searchValue = URLDecoder.decode(searchValue, "utf-8"); //검색값 코드
@@ -152,7 +154,8 @@ public class ApplyController {
 		///////1) 조회수증가
 			// map1에 글번호와 클럽seq를 담는다
 		Map<String, Object> map1 = new HashMap<String, Object>();
-		map1.put("num", num);
+		map1.put("volunIdx", volunIdx);
+		map1.put("clubApplyIdx", clubApplyIdx);
 		map1.put("clubSeq", clubSeq);
 		
 			// 조회수 증가
@@ -164,14 +167,14 @@ public class ApplyController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
-		map.put("num", num);
+		map.put("clubApplyIdx", clubApplyIdx);
 		map.put("clubSeq", clubSeq);
 		
 		// 해당 레코드 가져 오기
 		Apply dto = service.readApply(map);
 		if(dto==null)
-			return new ModelAndView("redirect:.club/{clubSeq}/apply?page="+page);
-		
+			return new ModelAndView("redirect:.club/{clubSeq}/apply/list?page="+page);
+		System.out.println("3. 컨트롤러 - 아티클을 읽어왔습니다 ");
 		// 전체 라인수			
         // int linesu = dto.getContent().split("\n").length;
 		
@@ -209,12 +212,13 @@ public class ApplyController {
 			,@PathVariable int clubSeq ) 
 					throws Exception {
 		
+		System.out.println("컨트롤러 - createdReply에 들어왔습니다 ");
+		
 		SessionInfo info=(SessionInfo) session.getAttribute("member");
 		String state="true";
 		if(info==null) { // 로그인이 되지 않는 경우
 			state="loginFail";
-		} else {
-				
+		} else {				
 			dto.setUserIdx(info.getUserIdx());
 			dto.setUserId(info.getUserId());
 			dto.setClub_seq(clubSeq);
