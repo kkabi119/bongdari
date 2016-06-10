@@ -319,6 +319,7 @@ public class clreviewController {
 
 	@RequestMapping(value="/club/{club_seq}/review/deleteFile", 
 			method=RequestMethod.POST)
+	@ResponseBody
 	public Map<String, Object> deleteFile(
 			HttpSession session,	
 			@RequestParam(value="clubFileIdx") int clubFileIdx,

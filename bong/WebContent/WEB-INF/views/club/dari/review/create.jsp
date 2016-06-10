@@ -123,7 +123,6 @@ $(function(){
  		$.post(url, {clubFileIdx:clubFileIdx}, function(data){
  			
  			$("#b"+clubFileIdx).remove();
- 			$("#f"+clubFileIdx).remove();
 
  		}, "JSON");
  	  }
