@@ -13,6 +13,7 @@
 }
 		
 </style>
+
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
 			<img src="<%=cp%>/uploads/club/${clubSeq}/${clubInfo.photoFilename}" style="width:100%; height:400px">
@@ -251,9 +252,14 @@
             </div>
 
             </div>
-                 </div>
+            <div id="map-container">
+                <h2 class="page-header">Google Map</h2>
+                <div id="gmap"></div>
+            </div><!--/#map-container-->
      <script>
     $('.carousel').carousel({
         interval: 5000 //changes the speed
     })
     </script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="<%=cp%>/res/js/gmaps.js"></script>

@@ -290,16 +290,112 @@
 		    START WITH 1
 		    NOMAXVALUE
 		    NOCYCLE
-		    NOCACHE;
+		    NOCACHE
 	</update>
 	
 	<update id="dropClubCalendarSeq" parameterType="Integer">
-		DROP SEQUENCE club_sch_seq_${value} PURGE
+		DROP SEQUENCE club_sch_seq_${value}
 	</update>
 	
 	<update id="dropClubCalendar" parameterType="Integer">
 		DROP TABLE CLUB_sch_${value} PURGE
 	</update>
+	
+	<update id="createClubReview" parameterType="Integer">
+		CREATE TABLE CLUB_REVIEW_${value} (
+		    clubReviewIdx	NUMBER
+		  	,userIdx              	NUMBER    	NOT NULL
+		  	,clubIdx              	NUMBER    	NOT NULL
+		  	,subject              	VARCHAR2(255) NOT NULL
+		  	,content             	CLOB         	NOT NULL
+		  	,hitCount            	NUMBER   	DEFAULT 0
+		  	,created              	DATE         	DEFAULT SYSDATE
+		    ,modified           	DATE         	DEFAULT SYSDATE
+		 	
+		      ,CONSTRAINT pk_CLUB_REVIEW_${value} PRIMARY KEY(clubReviewIdx)
+		      ,CONSTRAINT fk_CLUB_REVIEW_${value} FOREIGN KEY(userIdx)
+		                   REFERENCES memberInfo(userIdx)
+		      ,CONSTRAINT fk2_CLUB_REVIEW_${value} FOREIGN KEY(clubIdx)
+		                    REFERENCES clubInfo(clubIdx)
+		)
+	</update>
+	
+	<update id="dropClubReview" parameterType="Integer">
+		DROP TABLE CLUB_REVIEW_${value} PURGE
+	</update>
+	
+	<update id="createClubReviewR" parameterType="Integer">
+		CREATE TABLE club_reviewR_${value} (
+		     CRRIdx 	NUMBER not null
+		    ,content   	VARCHAR2(200) NOT NULL
+		    ,created 	DATE DEFAULT SYSDATE
+			  ,anwer NUMBER
+		    ,clubreviewIdx NUMBER NOT NULL
+		  	,userIdx NUMBER NOT NULL
+		  	,CONSTRAINT pk_clubrevR_${value} PRIMARY KEY(CRRIdx)
+			  ,CONSTRAINT fk_clubrevR_${value} FOREIGN KEY(useridx)
+		                REFERENCES memberInfo(userIdx) ON DELETE CASCADE
+		     ,CONSTRAINT fk2_clubrevR_${value} FOREIGN KEY(clubreviewIdx)
+		                REFERENCES club_review_${value}(clubreviewIdx) ON DELETE CASCADE
+		)
+	</update>
+	
+	<update id="dropClubReviewR" parameterType="Integer">
+		DROP TABLE CLUB_REVIEWR_${value} PURGE
+	</update>
+	
+	<update id="createClubReviewRLike" parameterType="Integer">
+		CREATE TABLE club_reviewR_like_${value} (
+			CRRIdx NUMBER
+			,userIdx NUMBER
+			,CONSTRAINT pk_clubRevR_Like_${value} PRIMARY KEY(CRRIdx,userIdx)
+			,CONSTRAINT fk_clubRevR_Like_${value} FOREIGN KEY(useridx)
+			            	REFERENCES memberInfo(userIdx) ON DELETE CASCADE
+			 ,CONSTRAINT fk2_clubRevR_Like_${value} FOREIGN KEY(CRRIdx)
+			           	REFERENCES club_reviewR_${value}(CRRIdx) ON DELETE CASCADE
+		)
+	</update>
+	
+	<update id="dropClubReviewRLike" parameterType="Integer">
+		DROP TABLE CLUB_REVIEWR_LIKE_${value} PURGE
+	</update>
+	
+	
+	<update id="createClubReviewFile" parameterType="Integer">
+		CREATE TABLE club_review_file_${value} (
+			 clubFileIdx NUMBER
+			 ,CLUBREVIEWIDX NUMBER NOT NULL
+			 ,SAVEFILENAME VARCHAR2(255) NOT NULL
+			 ,ORIGINALFILENAME VARCHAR2(255) NOT NULL
+			 
+			,CONSTRAINT pk_clubrevF_${value} PRIMARY KEY(clubFileIdx)
+			,CONSTRAINT fk_club_reviewF_${value} FOREIGN KEY(CLUBREVIEWIDX)
+			 	REFERENCES CLUB_REVIEW_${value}(CLUBREVIEWIDX) ON DELETE CASCADE 
+		)
+	</update>
+	
+	<update id="dropClubReviewFile" parameterType="Integer">
+		DROP TABLE CLUB_REVIEW_FILE_${value} PURGE
+	</update>	
+		
+	<update id="createClubReviewLike" parameterType="Integer">	
+		CREATE TABLE club_review_like_${value} (
+			 clubreviewIdx NUMBER
+			 ,userIdx NUMBER NOT NULL
+			 
+			 ,CONSTRAINT pk_clubRev_Like_${value} PRIMARY KEY(clubreviewIdx,userIdx)
+			 ,CONSTRAINT fk_clubRev_Like_${value} FOREIGN KEY(useridx)
+			       	REFERENCES memberInfo(userIdx) ON DELETE CASCADE
+			,CONSTRAINT fk2_clubRev_Like_${value} FOREIGN KEY(CLUBREVIEWIDX)
+			    	REFERENCES club_review_${value}(CLUBREVIEWIDX) ON DELETE CASCADE             	
+		)
+	</update>
+	
+	<update id="dropClubReviewLike" parameterType="Integer">
+		DROP TABLE CLUB_REVIEW_LIKE_${value} PURGE
+	</update>
+	
+	
 	
 	<update id="dropBoardCategoryTable" parameterType="Long">
 	    DROP TABLE b_${value}_category PURGE

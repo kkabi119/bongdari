@@ -200,12 +200,12 @@ public class ClubServiceImpl  implements ClubService {
 			dao.updateInformation("club.createClubFreeReply", clubSeq);
 			dao.updateInformation("club.createClubCalendar", clubSeq);
 			dao.updateInformation("club.createClubCalendarSeq", clubSeq);
-			/*dao.updateInformation("club.createBoardCategoryTable", clubSeq);
-			dao.updateInformation("club.createBoardTable", clubSeq);
-			dao.updateInformation("club.createBoardLikeTable", clubSeq);
-			dao.updateInformation("club.createBoardFileTable", clubSeq);
-			dao.updateInformation("club.createBoardReplyTable", clubSeq);
-			dao.updateInformation("club.createBoardReplyLikeTable", clubSeq);
+			dao.updateInformation("club.createClubReview", clubSeq);
+			dao.updateInformation("club.createClubReviewR", clubSeq);
+			dao.updateInformation("club.createClubReviewRLike", clubSeq);
+			dao.updateInformation("club.createClubReviewFile", clubSeq);
+			dao.updateInformation("club.createClubReviewLike", clubSeq);
+			/*dao.updateInformation("club.createBoardReplyLikeTable", clubSeq);
 			dao.updateInformation("club.createGuestTable", clubSeq);
 			dao.updateInformation("club.createPhotoTable", clubSeq);*/
 			
@@ -226,10 +226,11 @@ public class ClubServiceImpl  implements ClubService {
 			dao.updateInformation("club.dropClubFree", clubSeq);
 			dao.updateInformation("club.dropClubCalendar", clubSeq);
 			dao.updateInformation("club.dropClubCalendarSeq", clubSeq);
-			/*dao.updateInformation("club.dropBoardTable", clubSeq);
-			dao.updateInformation("club.dropBoardCategoryTable", clubSeq);
-			dao.updateInformation("club.dropGuestTable", clubSeq);
-			dao.updateInformation("club.dropPhotoTable", clubSeq);*/
+			dao.updateInformation("club.dropClubReview", clubSeq);
+			dao.updateInformation("club.dropClubReviewR", clubSeq);
+			dao.updateInformation("club.dropClubReviewRLike", clubSeq);
+			dao.updateInformation("club.dropClubReviewFile", clubSeq);
+			dao.updateInformation("club.dropClubReviewLike", clubSeq);
 			result=1;
 		} catch (Exception e) {
 			System.out.println(e.toString());
