@@ -35,25 +35,17 @@
                 				</thead>
                 				
                 				<tbody>
+                				<c:forEach var="dto" items="${list}">
 									<tr>
-                        				<td class="text-center">1</td>
-                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/demander/index/main">희망 복지관</a></td>
-                       				 	<td class="text-center" >보육</td>
-                       				 	<td class="text-center">중랑구 산천역</td>
-                       				 	<td class="text-center" style="">010-1111-1111</a></td>
+                        				<td class="text-center">${dto.listNum}</td>
+                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/demander/${dto.serviceIdx}/main">${dto.serviceName}</a></td>
+                       				 	<td class="text-center" >${dto.themeName}</td>
+                       				 	<td class="text-center">${dto.serviceAddr}</td>
+                       				 	<td class="text-center" style="">${dto.serviceTel}</td>
                         				<td class="text-center" style="">10명</td>
                         				
             						</tr>
-            						
-            						<tr>
-                        				<td class="text-center">2</td>
-                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/demander/index/main">소망 복지관</a></td>
-                       				 	<td class="text-center" >보육</td>
-                       				 	<td class="text-center">덕양구 삼송역</td>
-                       				 	<td class="text-center" style="">010-2222-2222</td>
-                        				<td class="text-center" style="">20명</td>
-            						</tr>
-            						
+            					</c:forEach>	
             						
                 				</tbody>
             				</table>
@@ -68,24 +60,7 @@
 </c:if>
         				</div>        
         
-        				<div style="clear: both;">
-        					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/bbs/list';">새로고침</button>
-        					</div>
-        					<div style="float: left; width: 60%; text-align: center;">
-        		     			<form name="searchForm" method="post" class="form-inline">
-						  			<select class="form-control input-sm" name="searchKey" style="height:32px">
-						      			<option value="subject">제목</option>
-						      			<option value="userName">작성자</option>
-						      			<option value="content">내용</option>
-						      			<option value="created">등록일</option>
-						  			</select>
-						  			<input type="text" class="form-control input-sm input-search" name="searchValue" placeholder="검색" style="width:50%; height:32px;">
-						  			<button type="button" class="btn btn-success" onclick="searchList();" style="background-color: #3897f0; border:none;"><span class="glyphicon glyphicon-search" ></span> 검색</button>
-        		     			</form>
-        					</div>
-        					
-        				</div>
+        				
         			</div>
         		</div>
         	</div>

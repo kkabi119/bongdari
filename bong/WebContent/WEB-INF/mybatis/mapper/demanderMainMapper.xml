@@ -6,9 +6,6 @@
 
 <!-- 수요처 메인 -->
 
-<!-- 검색 -->
-
-
 <!-- 수요처인덱스메인 프로필 -->
 <select id="deMainProfile" parameterType="map" resultType="com.bong.demander.main.DeMain">
 		SELECT serviceIdx,serviceName,serviceBirth,serviceTel,
@@ -17,5 +14,60 @@
 		FROM serviceInfo s JOIN theme t ON s.themenum=t.themenum
 		WHERE serviceIdx=${demander_seq}
 </select>
+
+<!-- 
+	public int dataCount(Map<String, Object> map);
+	public List<Demander> deSearchList(Map<String, Object> map); -->
+
+
+<!-- 검색 -->
+
+
+<!-- 수요처 검색결과 list관련 -->
+	<sql id="where-list">
+	  <if test="demanderType=='silver'">
+	      subject='노인'
+	  </if>
+	  <if test="demanderType=='adult'">
+	     subject='일반성인'
+	  </if>
+	  <if test="demanderName.length()!=0">
+	      DBMS_LOB.INSTR(serviceName, #{demanderName}) &gt; 0 
+	  </if>
+	</sql>
 	
+		
+<!-- 수요처 검색 결과 dataCount-->
+<select id="dataCount" parameterType="map"
+	            resultType="Integer">
+	  SELECT NVL(COUNT(*), 0) FROM serviceInfo s JOIN theme t ON s.themenum=t.themenum
+	     <where>
+	     	<if test="demanderType!=null or demanderName!='' or demanderName!=null">
+	     	    <include refid="where-list"/>
+	     	</if>
+	     </where>   
+	</select>
+	
+	
+	
+<!-- 수요처 검색 결과 리스트 -->
+	<select id="deSearchList" parameterType="map"
+	            resultType="com.bong.demander.Demander">
+		  SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			     SELECT serviceIdx,serviceName,serviceAddr,serviceTel
+			        ,subject as themeName
+					FROM serviceInfo s JOIN theme t ON s.themenum=t.themenum
+	             <where>
+	     	<if test="demanderType!=null or demanderName!='' or demanderName!=null">
+	     	    <include refid="where-list"/>
+	     	</if>
+	     </where>   
+	                ORDER BY serviceIdx DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	</select>	
+
 </mapper>

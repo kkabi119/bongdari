@@ -4,6 +4,7 @@ public class Demander {
 
 	//프로필 관련
 	private int serviceIdx;
+	private int listNum;
 	private String serviceName,serviceBirth,serviceTel;
 	private String serviceIntro,serviceAddr,serviceMail;
 	private String serviceImg,serviceImgName;
@@ -69,6 +70,12 @@ public class Demander {
 	}
 	public void setThemeName(String themeName) {
 		this.themeName = themeName;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
 	
 	

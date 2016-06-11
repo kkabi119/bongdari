@@ -85,17 +85,20 @@
                          nvl(replycount, 0) replycount, nvl(likecount, 0) likecount
                 FROM service_review_7 s
                 JOIN checkid c ON s.useridx=c.useridx
-                <where>
-                         <if test="searchValue != null and searchValue != ''">
-			                  <include refid="where-list"/>
-		                 </if>
-	               </where>
+               
                 LEFT OUTER JOIN ( 
                        SELECT serviceReviewIdx, count(*) replycount FROM service_review_reply_7 GROUP BY serviceReviewIdx
                  ) tbreply  ON s.servicereviewidx = tbreply.servicereviewidx 
                 LEFT OUTER JOIN ( 
                     SELECT serviceReviewIdx, count(*) likecount FROM service_review_like_7 GROUP BY serviceReviewIdx
-                 ) tblike ON s.servicereviewidx = tblike.servicereviewidx ORDER  BY serviceReviewIdx DESC
+                 ) tblike ON s.servicereviewidx = tblike.servicereviewidx 
+                 <where>
+                         <if test="searchValue != null and searchValue != ''">
+			                  <include refid="where-list"/>
+		                 </if>
+	               </where>
+	               
+              ORDER  BY serviceReviewIdx DESC
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start}

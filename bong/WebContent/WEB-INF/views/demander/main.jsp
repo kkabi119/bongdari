@@ -23,11 +23,27 @@
 <script type="text/javascript">
 
 /* 처음에는 mainResult가 닫혀있음 */
-$(function() {
+/* $(function() {
 	$("#mainResult").hide();
 });
+ */
+ 
+ function searchMainList() {
+		var f=document.searchForm2;
+		f.action="<%=cp%>/main/demander/mainResult";
+		f.submit(); 
+	}
 
-function cityList() {
+ 
+ <%--  function searchMainList(demanderName,demanderValue) {
+	  var url="<%=cp%>/main/demander/mainResult";
+		$.post(url, {demanderName:demanderName, demanderValue:demanderValue}, function(data){
+			$("#mainResult").html(data);
+			
+		});
+	}
+   --%>
+<%-- function cityList() {
 	var snum=$("#sido").val();
 	if(snum=="") {
 		$("#city option").each(function() {
@@ -60,9 +76,9 @@ function cityList() {
 	    	alert(e.responseText);
 	    }
 	});
-}
+} --%>
 
-function result() {
+/* function result() {
 	var snum=$("#sido").val();
 	var cnum=$("#city").val();
 	var sido=$("#sido :selected").text();
@@ -74,15 +90,11 @@ function result() {
 	var s=sido+":"+snum+", "+city+":"+cnum;
 	alert(s);
 } 
+ */
 
-function searchList() {
-	var f=document.searchForm;
-	f.action="<%=cp%>/main/demander/searchList";
-	f.submit();
-}
 
 /* 메인result div */
-$(function mainResult() {
+<%-- $(function mainResult() {
 	$("#searchBtn").click(function() {
 		url="<%=cp%>/main/demander/mainResult";
 		$.post(url, {}, function(data){ 	
@@ -96,9 +108,10 @@ $(function mainResult() {
 			$("#listClosed").val("0");
 		}
 	});
-});
+});  --%>
 </script>
 <div style="margin: 50px auto 10px; height: 200px;" align="center">
+ 
 	<div class="row4">
 		<div class="col-md-12">
 			<ul id="tab2" class="nav nav-pills">
@@ -107,11 +120,13 @@ $(function mainResult() {
 				<li><a href="#tab2-item3" data-toggle="tab" >수요처 이름</a></li>
 
 			</ul>
+		<form name="searchForm2" method="post" class="form-inline">	
 			<div class="tab-content" style="background: #F6F6F6; height: 100px;
 			border-radius: 7px 7px 7px 7px ;margin-top:5px; ">
+	
 			<!-- 지역 검색 -->
 				<div class="tab-pane fade active in" id="tab2-item1">
-					
+				 
 					시도선택<select id="sido" onchange="cityList();" class="selectField"
 						name="sido">
 						<option value="">::시도선택::</option>
@@ -122,7 +137,7 @@ $(function mainResult() {
 						<option value="">::도시선택::</option>
 					</select> <br> 수요처 명<input type="text" name="demandName"
 						class="textField"> <input type="button" value="검색"
-						id="searchBtn" onclick="searchList();" class="btn"> 
+						id="searchBtn"  class="btn"> 
 					<table>
 						<tr>
 							<td></td>
@@ -131,30 +146,32 @@ $(function mainResult() {
 				</div>
 			<!-- 분야 검색 -->
 				<div class="tab-pane fade" id="tab2-item2">
-					
-					<select id="demandType" class="selectField" 
+					<select name="demanderType" class="selectField" 
 					style="height: 30px; width: 160px; border-radius: 5px 5px 5px 5px;">
-						<option value="">::시설 분야::</option></select>
-					<input type="button" value="검색" 
+						<option value="">선택</option>
+						<option value="silver">노인</option>
+						<option value="adult">일반 성인</option>
+						</select>
+					<input type="button" value="검색" onclick="searchMainList(demanderType,demanderName);"
 					id="searchBtn" class="btn">
-
 				</div>
 			<!-- 수요처 검색 -->
 				<div class="tab-pane fade" id="tab2-item3">
-					<input type="text" name="demandName" class="textField" style="border-radius: 5px 5px 5px 5px;">
-					<input type="button" value="검색 " 
-					id="searchBtn" class="btn">
+					<input type="text" name="demanderName" class="textField" style="border-radius: 5px 5px 5px 5px;">
+					<input type="button" value="검색 " onclick="searchMainList(demanderType,demanderName);"
+					id="searchBtn" class="btn btn-default btn-sm wbtn">
 				</div>
-
-			</div>
+		</div>
+	</form>
 		</div>
 	</div>
-</div>
+	
 
+</div>
 <!-- 검색결과는 ajax써서 jsp따로 빼야할 듯! -->
 
 <div id="mainResult"></div>
-<%-- <div style="margin: 100px auto 10px; width: 1000px" align="center" >
+<div style="margin: 100px auto 10px; width: 1000px" align="center" >
 <div class="row" style="margin-left:15px;">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">
@@ -162,7 +179,7 @@ $(function mainResult() {
  					<div class="bodyFrame2">
           				<h3  style="font-size:30px;"> 검색결과<span style="margin-left:10px;color:gray; font-size:15px;">다음과 같은 수요처가 있습니다.</span> </h3>
     					<div style="clear: both; height: 30px; line-height: 30px;">
-            				<div style="float: left; color:#3897f0;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 전체    개 <span style="color:#777;">(1/10 페이지)</span> </div>
+            				<div style="float: left; color:#3897f0;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 전체    ${dataCount}개 <span style="color:#777;">(${page}/${total_page} 페이지)</span> </div>
             			
         				</div> 
         		<!-- <hr style="margin-bottom:10px; margin-top:0px; border:1px solid gray;"> -->
@@ -177,30 +194,23 @@ $(function mainResult() {
                         				<th class="text-center" style="width:105px; font-weight:500;">봉사 분야</th>
                         				<th class="text-center" style="width:110px; font-weight:500;">지역</th>
                         				<th class="text-center" style="width:150px;font-weight:500;">전화번호</th>
-                        				<th class="text-center" style="width:75px; ;font-weight:500;">인원</th>
+                        			
                         				
                     				</tr>
                 				</thead>
                 				
                 				<tbody>
+                				<c:forEach var="sdto" items="${searchList}">
 									<tr>
-                        				<td class="text-center">1</td>
-                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/demander/index/main">희망 복지관</a></td>
-                       				 	<td class="text-center" >보육</td>
-                       				 	<td class="text-center">중랑구 산천역</td>
-                       				 	<td class="text-center" style="">010-1111-1111</a></td>
-                        				<td class="text-center" style="">10명</td>
+                        				<td class="text-center">${sdto.listNum}</td>
+                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/demander/${sdto.serviceIdx}/main">${sdto.serviceName}</a></td>
+                       				 	<td class="text-center" >${sdto.themeName}</td>
+                       				 	<td class="text-center">${sdto.serviceAddr}</td>
+                       				 	<td class="text-center" style="">${sdto.serviceTel}</td>
+                        				
                         				
             						</tr>
-            						
-            						<tr>
-                        				<td class="text-center">2</td>
-                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/demander/index/main">소망 복지관</a></td>
-                       				 	<td class="text-center" >보육</td>
-                       				 	<td class="text-center">덕양구 삼송역</td>
-                       				 	<td class="text-center" style="">010-2222-2222</td>
-                        				<td class="text-center" style="">20명</td>
-            						</tr>
+            					</c:forEach>	
             						
             						
                 				</tbody>
@@ -216,29 +226,12 @@ $(function mainResult() {
 </c:if>
         				</div>        
         
-        				<div style="clear: both;">
-        					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/bbs/list';">새로고침</button>
-        					</div>
-        					<div style="float: left; width: 60%; text-align: center;">
-        		     			<form name="searchForm" method="post" class="form-inline">
-						  			<select class="form-control input-sm" name="searchKey" style="height:32px">
-						      			<option value="subject">제목</option>
-						      			<option value="userName">작성자</option>
-						      			<option value="content">내용</option>
-						      			<option value="created">등록일</option>
-						  			</select>
-						  			<input type="text" class="form-control input-sm input-search" name="searchValue" placeholder="검색" style="width:50%; height:32px;">
-						  			<button type="button" class="btn btn-success" onclick="searchList();" style="background-color: #3897f0; border:none;"><span class="glyphicon glyphicon-search" ></span> 검색</button>
-        		     			</form>
-        					</div>
-        					
-        				</div>
+        				
         			</div>
         		</div>
         	</div>
         </div>
-	</div>
-	</div> --%>
+	</div> 
+	</div> 
 	
 

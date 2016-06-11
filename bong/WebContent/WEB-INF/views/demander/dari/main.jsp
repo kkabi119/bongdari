@@ -262,7 +262,7 @@ background-color: #4FCCCD;
 
             </div>
             
-            <div class="blog-pagination">
+        <!--     <div class="blog-pagination">
                         <ul class="pagination">
                           <li><a href="#">left</a></li>
                           <li><a href="#">1</a></li>
@@ -276,7 +276,7 @@ background-color: #4FCCCD;
                           <li><a href="#">9</a></li>
                           <li><a href="#">right</a></li>
                         </ul>
-                    </div>
+                    </div> -->
                  </div>
      <script>
     $('.carousel').carousel({
