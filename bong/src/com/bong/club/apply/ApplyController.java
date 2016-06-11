@@ -1,19 +1,19 @@
 package com.bong.club.apply;
 
 import java.io.File;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bong.common.FileManager;
 import com.bong.common.MyUtil;
 import com.bong.member.Member;
 import com.bong.member.SessionInfo;
@@ -131,6 +130,7 @@ public class ApplyController {
         mav.addObject("dataCount", dataCount);
         mav.addObject("total_page", total_page);
         mav.addObject("paging", myUtil.paging(current_page, total_page, urlList));
+        mav.addObject("clubSeq", clubSeq);
         
 		return mav;
 	}
@@ -192,12 +192,17 @@ public class ApplyController {
 		                    "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
 		}
 		
+		// 승인 여부 확인할 때 쓰는 변수
+		int enabled=service.clubApprovalCheck(map);
+		
 		ModelAndView mav = new ModelAndView(".four.club.dari.apply.article.봉다리 개인페이지");
 		mav.addObject("dto", dto);
 		mav.addObject("preReadDto", preReadDto);
 		mav.addObject("nextReadDto", nextReadDto);
 		mav.addObject("page", page);
 		mav.addObject("params", params);
+		mav.addObject("enabled", enabled);
+		mav.addObject("clubSeq", clubSeq);
 		
 		return mav;
 	}
@@ -506,13 +511,14 @@ public class ApplyController {
 			}
 			
 			// 봉사신청한 회원리스트 모달창 
-			@RequestMapping(value="/club/{clubSeq}/apply/applyList1")
+			@RequestMapping(value="/club/{clubSeq}/apply/applyList")
 			public ModelAndView applyList1(HttpSession session, 
 					@RequestParam(value="num") int clubApplyIdx,
-					@RequestParam(value="page") String page	,@PathVariable int clubSeq ) throws Exception {
+					@RequestParam(value="enabled") int enabled,
+					@PathVariable int clubSeq
+					) throws Exception {
 				
 				// 봉사신청한 같은 동아리의 회원을 dto에 담아와야함 
-				SessionInfo info=(SessionInfo)session.getAttribute("member");
 				
 				ModelAndView mav = new ModelAndView("/club/dari/apply/applyList");
 				
@@ -546,10 +552,175 @@ public class ApplyController {
 					}
 				}
 				
+				String club_id=service.clubIdCheck(clubSeq);
+				List<Member> original_list = service.readApplyList(map);
+				mav.addObject("myList", original_list);
+				mav.addObject("enabled", enabled);
 				mav.addObject("list", date_list);
 				mav.addObject("n",n);
+				mav.addObject("clubApplyIdx", clubApplyIdx);
+				mav.addObject("clubUserId", club_id); // 클럽 아이디 임시로 넘김
 				return mav;
 			}
+			
+			// 봉사신청하기  
+				@RequestMapping(value="/club/{clubSeq}/apply/applyRegister")
+				public ModelAndView applyRegister(HttpSession session, 
+						@RequestParam(value="num") int clubApplyIdx,
+						@RequestParam(value="page") String page,
+						@PathVariable int clubSeq
+						) throws Exception {
+					SessionInfo info=(SessionInfo)session.getAttribute("member");
+								
+					if(info==null) {
+						return new ModelAndView("redirect:/member/login");
+					}
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("clubSeq", clubSeq);
+					map.put("clubApplyIdx", clubApplyIdx);
+					
+					ModelAndView mav = new ModelAndView("/club/dari/apply/applyRegister");
+					List<String> listWeek = new ArrayList<String>();
+					List<Object> listDays = new ArrayList<Object>();
+					List<Apply> tempDate = null;
+					// 시작날짜, 끝 날짜, 요일 가져오기
+					Apply dto = null;
+					dto= service.readApplyOriginal(map);
+					tempDate = service.readApplyVolunData(dto.getVolunIdx());
+					List<String> dateArray = new ArrayList<String>();
+					 
+					// 이렇게까지 해야하나...
+					Iterator<Apply> it=tempDate.iterator();				        
+				        while(it.hasNext()) {
+				            Apply data = it.next();
+				            dateArray.add(data.getStartDay());
+				        }
+				        
+					DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+					
+					// 사이 날짜 구하기 참고 : http://bugnote.tistory.com/26
+					int startYear = Integer.parseInt(dto.getStartDay().substring(0,4));
+			        int startMonth= Integer.parseInt(dto.getStartDay().substring(5,7));
+			        int startDate = Integer.parseInt(dto.getStartDay().substring(8,10));
+			        int endYear = Integer.parseInt(dto.getEndDay().substring(0,4));
+			        int endMonth= Integer.parseInt(dto.getEndDay().substring(5,7));
+			        int endDate = Integer.parseInt(dto.getEndDay().substring(8,10));
+			        Calendar calStart = Calendar.getInstance();
+			        Calendar calEnd = Calendar.getInstance();
+			        // Calendar의 Month는 0부터 시작하므로 -1 해준다.
+			        // Calendar의 기본 날짜를 startDt로 셋팅해준다.
+			        calStart.set(startYear, startMonth -1, startDate, 0, 0, 0);
+			        calEnd.set(endYear, endMonth -1, endDate, 0, 0, 1);
+			        
+			        // 달력의 시작 일과 끝 일을 일요일과 토요일로 맞춰준다.
+			        if(calStart.get(Calendar.DAY_OF_WEEK)!=1){
+			        	calStart.add(Calendar.DATE, -(calStart.get(Calendar.DAY_OF_WEEK))+1);
+			        }
+			        if(calEnd.get(Calendar.DAY_OF_WEEK)!=7){
+			        	calEnd.add(Calendar.DATE, (7-(calEnd.get(Calendar.DAY_OF_WEEK))));
+			        }
+			        
+			        String theDate = "";
+			        int flag=0;
+						while(true){
+							while(true){
+								for(int i=0;i<dateArray.size();i++){
+									if(dateArray.get(i).equals(sdFormat.format(calStart.getTime()))){
+										switch(calStart.get(Calendar.DATE)){
+										case 1 : theDate = "<label id='"+sdFormat.format(calStart.getTime())+"' onclick = 'dateInput("+'"'+sdFormat.format(calStart.getTime())+'"'+")' style='font-size:20pt; color : green; cursor:pointer;'>"+Integer.toString(calStart.get(Calendar.MONTH)+1)+"월 "+Integer.toString(calStart.get(Calendar.DATE))+"</label>"; break;
+										default : theDate = "<label id='"+sdFormat.format(calStart.getTime())+"' onclick = 'dateInput("+'"'+sdFormat.format(calStart.getTime())+'"'+")' style='font-size:20pt; color : green; cursor:pointer;'>"+Integer.toString(calStart.get(Calendar.DATE))+"</label>"; break;
+										}
+										flag=1;
+									}
+								}
+								if(flag==0){
+									switch(calStart.get(Calendar.DATE)){
+									case 1 : theDate = Integer.toString(calStart.get(Calendar.MONTH)+1)+"월 "+Integer.toString(calStart.get(Calendar.DATE)); break;
+									default : theDate = Integer.toString(calStart.get(Calendar.DATE)); break;
+									}
+								}
+								listWeek.add(theDate);
+								calStart.add(Calendar.DATE, 1);
+								flag=0;
+								if(calStart.get(Calendar.DAY_OF_WEEK)==1){
+									break;
+								}
+							}
+							listDays.add(listWeek);
+							listWeek = new ArrayList<String>();
+							if(calStart.after(calEnd)){
+								break;
+							}
+						}
+					
+					
+					mav.addObject("list", listDays);
+					mav.addObject("startDay", dto.getStartDay());
+					mav.addObject("endDay", dto.getEndDay());
+					mav.addObject("checkDate", dateArray);
+					mav.addObject("clubApplyIdx", clubApplyIdx);
+					mav.addObject("clubSeq", clubSeq);
+					return mav;
+				}
+				
+				// 동아리원이 봉사 신청시 리스트에 날짜 추가
+				@RequestMapping(value="/club/{clubSeq}/apply/applyOk")
+				@ResponseBody
+				public void applyOk(
+						HttpSession session,
+						@RequestParam(value="checkDateList") String[] checkDateList,
+						@RequestParam(value="clubApplyIdx") int clubApplyIdx,
+						@PathVariable int clubSeq
+						) throws Exception{
+					SessionInfo info=(SessionInfo)session.getAttribute("member");
+					
+					Apply dto = new Apply();
+					dto.setClub_seq(clubSeq);
+					dto.setClubApplyIdx(clubApplyIdx);
+					dto.setUserIdx(info.getUserIdx());
+					for(int i=0;i<checkDateList.length;i++){
+						dto.setHopeDate(checkDateList[i]);
+						service.insertMemList(dto);
+					}
+					return ;
+				}
+				
+				// 동아리원이 봉사 취소시 리스트 삭제
+				@RequestMapping(value="/club/{clubSeq}/apply/deleteCheckOk")
+				@ResponseBody
+				public void applyDeleteCheckOk(
+						HttpSession session,
+						@RequestParam(value="deleteCheckList") String[] deleteCheckList,
+						@RequestParam(value="clubApplyIdx") int clubApplyIdx,
+						@PathVariable int clubSeq
+						) throws Exception{
+					SessionInfo info=(SessionInfo)session.getAttribute("member");
+					
+					Apply dto = new Apply();
+					dto.setClubApplyIdx(clubApplyIdx);
+					dto.setUserIdx(info.getUserIdx());
+					for(int i=0;i<deleteCheckList.length;i++){
+						dto.setHopeDate(deleteCheckList[i]);
+						dto.setClub_seq(clubSeq);
+						service.deleteMemList(dto);
+					}
+					return ;
+				}
+				
+				// 동아리장이 봉사신청 수요처로 넘기기 // enabled를 3으로 수정해준다. 승인 대기상태
+				@RequestMapping(value="/club/{clubSeq}/apply/applyCheckOk")
+				@ResponseBody
+				public void applyPass(
+						@RequestParam(value="clubApplyIdx") int clubApplyIdx,
+						@PathVariable int clubSeq
+						) throws Exception{
+					Map<String, Object> map = new HashMap<>();
+					map.put("clubApplyIdx", clubApplyIdx);
+					map.put("clubSeq", clubSeq);
+					service.applyCheckOk(map);
+					
+					return ;
+				}
 }
 	
 	

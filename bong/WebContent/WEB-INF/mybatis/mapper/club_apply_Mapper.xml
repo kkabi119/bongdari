@@ -267,4 +267,41 @@
 		GROUP BY userIdx; 
 	</select>
 	
+	<!-- 동아리에서 봉사 신청하기 -->
+	
+	<select id="readApplyOriginal" parameterType="map" resultType="com.bong.club.apply.Apply">
+	SELECT vb.volunIdx, startDay, endDay, volunDays FROM volun_bbs vb
+	JOIN club_apply_${clubSeq} ca ON vb.volunIdx=ca.volunIdx
+	WHERE ca.clubApplyIdx=#{clubApplyIdx}
+	</select>
+	
+	<select id="readApplyVolunData" parameterType="Integer" resultType="com.bong.club.apply.Apply">
+	SELECT TO_CHAR(volDate, 'YYYY-MM-DD') as startDay FROM volun_bbs vb JOIN memnumperdate mn ON 
+	vb.volunIdx=mn.volunIdx WHERE vb.volunIdx=#{volunIdx}
+	</select>
+	
+	<insert id="insertMemList" parameterType="com.bong.club.apply.Apply">
+		INSERT INTO club_apply_memlist_${clubSeq}(userIdx, clubApplyIdx, hopeDate) VALUES(#{userIdx}, #{clubApplyIdx}, #{hopeDate})
+	</insert>
+	
+	<delete id="deleteMemList" parameterType="com.bong.club.apply.Apply">
+		DELETE FROM club_apply_memlist_${clubSeq} WHERE userIdx=#{userIdx} AND clubApplyIdx=#{clubApplyIdx} AND hopeDate=#{hopeDate}
+	</delete>
+	
+	<!-- 승인 여부 확인하기 -->
+	<select id="clubApprovalCheck" parameterType="map" resultType="Integer">
+		SELECT enabled FROM club_apply_${clubSeq}
+	  	WHERE clubApplyIdx=#{clubApplyIdx}
+	</select>
+	
+	<!-- 수요처로 신청목록 넘기기 -->
+	<update id="applyCheckOk" parameterType="Integer">
+		UPDATE club_apply_${clubSeq} SET enabled=3 WHERE clubApplyIdx=#{clubApplyIdx}
+	</update>
+	
+	<!-- 동아리 클럽장 확인하기 -->
+	<select id="clubIdCheck" parameterType="Integer" resultType="String">
+		SELECT userId FROM clubinfo WHERE clubIdx=#{clubSeq}
+	</select>
+	
 </mapper>

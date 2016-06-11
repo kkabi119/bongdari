@@ -88,6 +88,66 @@ width:300px;
 }
 </style>
 
+<script type="text/javascript">
+var deleteCheckList=[];
+function deleteDate(theDate){
+	if($("#checked_"+theDate).val()==0){
+		$("#checked_"+theDate).each(function(){
+			$("#checked_"+theDate).attr("style", "text-decoration: line-through; font-size:15pt; margin-bottom:10px;");
+			deleteCheckList.push(theDate);
+			$("#checked_"+theDate).val(1);
+		});
+	} else {
+		$("#checked_"+theDate).each(function(){
+			$("#checked_"+theDate).attr("style", "font-size:15pt; margin-bottom:10px;");
+			deleteCheckList.splice(theDate, 1);
+			$("#checked_"+theDate).val(0);
+		});
+	}
+}
+
+function deleteCheckOk(){
+	if(deleteCheckList.length==0){
+		alert("선택된 날짜가 없습니다.");
+	} else {
+		var url="<%=cp%>/club/${clubSeq}/apply/deleteCheckOk";
+		var params="deleteCheckList="+deleteCheckList+"&clubApplyIdx="+${clubApplyIdx};
+   	 	$.ajax({
+	         type:"POST",
+	         url:url,
+	         data:params,
+	         success:function(){
+	        	 alert("성공");
+	        	 reLoad();
+	         },
+	         error:function(e){
+	             alert(e.responseText);
+	         }
+	     });
+		$('#applyListModal').modal('hide');
+	}
+}
+
+function applyCheckOk(){
+	var url="<%=cp%>/club/${clubSeq}/apply/applyCheckOk";
+	var params="clubApplyIdx="+${clubApplyIdx};
+	 	$.ajax({
+         type:"POST",
+         url:url,
+         data:params,
+         success:function(){
+        	 alert("성공");
+        	 reLoad();
+         },
+         error:function(e){
+             alert(e.responseText);
+         }
+     });
+	$('#applyListModal').modal('hide');
+}
+</script>
+
+
 <div class="container" style="width:100%; margin-bottom:-35px;">
 
 
@@ -130,7 +190,29 @@ width:300px;
 	</c:forEach>
 	
 </table>
-	<button type="button" class="btn btn-success" data-dismiss="modal" style="padding: 10px 15px; background-color: #3897f0; border:none;float:right;">
+<c:if test="${enabled==0}">
+<div class="col-md-12">
+	<label class="col-md-12" style="margin-bottom:10px;">내가 신청한 날짜</label>
+	<c:forEach var="mdto" items="${myList}">
+		<c:if test="${sessionScope.member.userIdx==mdto.userIdx}">
+			<div id="checked_${mdto.hopeDate}" class="col-md-3" style="font-size:15pt; margin-bottom:10px;">${mdto.hopeDate}<a onclick='deleteDate("${mdto.hopeDate}");'>X</a></div>
+		</c:if>
+	</c:forEach>
+</div>
+</c:if>
+<div>
+	<button type="button" class="btn btn-success" data-dismiss="modal" style="padding: 10px 15px; background-color: #3897f0; border:none; float:right;">
 		 닫기
 	 </button>
+	 <c:if test="${enabled==0}">
+	<button type="button" onclick="deleteCheckOk();" class="btn btn-success" style="margin-right:10px; padding: 10px 15px; background-color: #3897f0; border:none;float:right;">
+		 취소하기
+	 </button>
+	 </c:if>
+	 <c:if test="${sessionScope.member.userId==clubUserId && enabled==0}">
+	 <button type="button" onclick="applyCheckOk();" class="btn btn-success" style="margin-right:10px; padding: 10px 15px; background-color: #3897f0; border:none;float:right;">
+		 수요처로 목록 넘기기(마감)
+	 </button>
+	 </c:if>
+</div>
 </div><br /><br />

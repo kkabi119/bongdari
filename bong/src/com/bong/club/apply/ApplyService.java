@@ -39,6 +39,15 @@ public interface ApplyService {
 	public List<Member> readApplyList(Map<String, Object> map);
 	public List<Member> readApplyList_date(Map<String, Object> map);
 	
+	public Apply readApplyOriginal(Map<String, Object> map);
+	public List<Apply> readApplyVolunData(int volunIdx);
+	public int insertMemList(Apply dto);
+	public int deleteMemList(Apply dto);
+	public int clubApprovalCheck(Map<String, Object> map);
+	public int applyCheckOk(Map<String, Object> map);
+	public String clubIdCheck(int clubSeq);
+	
+	
 	
 	
 }

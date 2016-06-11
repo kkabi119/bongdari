@@ -74,16 +74,34 @@ padding-top: 13px;
 </style>
 
 <script type="text/javascript">
+function reLoad(){
+	location.reload();
+}
+
 $(function(){
 	$("#listBtn_apply").click(function(){
+		
+		 
+		var num = "${dto.clubApplyIdx}";
+		var enabled = "${enabled}";
+		var params = "num="+num+"&enabled="+enabled;
+		var url = "<%=cp%>/club/${clubSeq}/apply/applyList?"+params;
+		$('#applyListModal .modal-body').load(url,function(){
+			 
+				$('#applyListModal .modal-title').html('우리동아리 신청리스트');
+				$('#applyListModal').modal('show');
+			});		
+	});
+	
+	$("#listBtn_register").click(function(){
 		 
 		var num = "${dto.clubApplyIdx}";
 		var page = "${page}";
 		var params = "num="+num+"&page="+page;
-	
-		$('#applyListModal .modal-body').load( "<%=cp%>/club/${clubSeq}/apply/applyList1?"+params, function() {
+		var url = "<%=cp%>/club/${clubSeq}/apply/applyRegister?"+params;
+		$('#applyListModal .modal-body').load(url, function() {
 			 
-				$('#applyListModal .modal-title').html('우리동아리 신청리스트');
+				$('#applyListModal .modal-title').html('봉사 신청하기');
 				$('#applyListModal').modal('show');
 			});		
 	});
@@ -370,22 +388,33 @@ function deleteApply() {
                             </td>
                         </tr>
                         <tr>
-                      	  <td colspan="7" style="border-top:none; ">
-                       
+                      	  <c:if test="${enabled==0}">
+                      	  		<td colspan="7" style="border-top:none; ">
                        			  <a class="test1" href="#" style="color:white; ">
 	                       			<span style="margin-left:40%; align:center; background-color: #7ECAF1; " class="icon-wrapper" data-toggle="buttons">
 	                                	 	
-	                                	 	<img Id="listBtn"style=" width:35px; height:35px; background-size:cover; "src="<%=cp%>/res/images/myclub/edit.png" alt="">
+	                                	 	<img Id="listBtn_register"style=" width:35px; height:35px; background-size:cover; "src="<%=cp%>/res/images/myclub/edit.png" alt="">
 	                                	 	
 	                          		</span>
 	                          		
-                          		</a>
-                          		<span style="background-color: #7ECAF1; align:center; margin-left:50px;"class="icon-wrapper"  data-toggle="buttons">
+                          		  </a>
                                 	<a style="color:white; "id="listBtn_apply" >
-                                		 <img  style=" width:35px; height:35px; background-size:cover; "src="<%=cp%>/res/images/myclub/list (2).png" alt="">
+	                          		  <span style="background-color: #7ECAF1; align:center; margin-left:50px;"class="icon-wrapper"  data-toggle="buttons">
+	                                		 <img  style=" width:35px; height:35px; background-size:cover; "src="<%=cp%>/res/images/myclub/list (2).png" alt="">
+	                          		  </span>
 									</a>
-                          		</span>
-                  		  </td>
+ 	                 		  </td>
+                       		</c:if>
+                       		<c:if test="${enabled!=0}">
+                      	  		<td colspan="7" style="border-top:none; ">
+                       			  <a id="listBtn_apply" class="test1" href="#" style="color:white; margin-left:45%;">
+	                       			<span style="background-color: #7ECAF1; align:center;"class="icon-wrapper"  data-toggle="buttons">
+                                		 <img  style=" width:35px; height:35px; background-size:cover; "src="<%=cp%>/res/images/myclub/list (2).png" alt="">
+                          		  </span>
+                          		  </a>
+                          		  
+ 	                 		  </td>
+                       		</c:if>
                         </tr>   
                           <tr height="40" style="border:none;">
                 	    </tr>

@@ -4,7 +4,7 @@ public class Apply {
 	
 	private int clubApplyIdx, volunIdx, clubIdx, listNum;
 	
-	private String clubDate, subject, content, serviceName,startDay,endDay,startTime, endTime;
+	private String clubDate, subject, content, serviceName,startDay,endDay,startTime, endTime, hopeDate;
 	private String progress, place, volunteer_type, volunDays, tsubject, tsubject_parent;
 	private String created, modified;
 	private String saveFileName, originalFileName;
@@ -16,8 +16,19 @@ public class Apply {
 	private int clubSeq;
 	
 	
-		
 	
+	public String getHopeDate() {
+		return hopeDate;
+	}
+	public void setHopeDate(String hopeDate) {
+		this.hopeDate = hopeDate;
+	}
+	public int getClubSeq() {
+		return clubSeq;
+	}
+	public void setClubSeq(int clubSeq) {
+		this.clubSeq = clubSeq;
+	}
 	public int getUserId() {
 		return userId;
 	}

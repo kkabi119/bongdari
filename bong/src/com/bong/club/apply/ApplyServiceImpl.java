@@ -300,7 +300,94 @@ public class ApplyServiceImpl implements ApplyService {
 		
 		return list;
 	}
+	
+	/*Ãß°¡*/
+	
+	@Override
+	public Apply readApplyOriginal(Map<String, Object> map) {
+		Apply dto=null;
+		
+		try {
+			
+			dto=dao.getReadInformation("clubApply.readApplyOriginal", map);
+		
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return dto;
+	}
+	
+	@Override
+	public List<Apply> readApplyVolunData(int volunIdx) {
+		
+		List<Apply> list=null;
+		
+		try {
+			
+			list=dao.getListInformation("clubApply.readApplyVolunData", volunIdx);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+	
+	@Override
+	public int insertMemList(Apply dto) {
+		int result=0;
+		try {
+			result=dao.insertInformation("clubApply.insertMemList", dto);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+	
+	@Override
+	public int deleteMemList(Apply dto) {
+		int result=0;
+		try {
+			result=dao.deleteInformation("clubApply.deleteMemList", dto);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
 
+	@Override
+	public int clubApprovalCheck(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.getIntValue("clubApply.clubApprovalCheck", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+	
+	@Override
+	public int applyCheckOk(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.getIntValue("clubApply.applyCheckOk", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public String clubIdCheck(int clubSeq) {
+		String clubId="";
+		try {
+			clubId=dao.getReadInformation("clubApply.clubIdCheck", clubSeq);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return clubId;
+	}
 }
 
 	
