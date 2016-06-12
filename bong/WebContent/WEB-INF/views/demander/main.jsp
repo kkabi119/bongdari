@@ -219,7 +219,7 @@
 
         				<div class="paging" style="text-align: center; min-height: 30px; line-height: 30px;">
 <c:if test="${dataCount==0 }">
-                  등록된 게시물이 없습니다.
+                 검색 결과가 없습니다. 
 </c:if>
 <c:if test="${dataCount!=0 }">
                 ${paging}
