@@ -15,16 +15,6 @@ public class DemanderServiceImpl implements DemanderService {
 	@Autowired
 	private bongDAO dao;
 	
-	@Override
-	public Demander deMainProfile(Map<String, Object> map) {
-		Demander dto=null;
-		try {
-			dto=dao.getReadInformation("deMain.deMainProfile", map);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return dto;
-	}
 
 	//수요처 전체검색리스트의 데이터카운트
 	@Override
