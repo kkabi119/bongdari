@@ -60,11 +60,29 @@
 	
 	function joinClub(){
 				
-		var url = "<%=cp%>/club/${clubSeq}/joinClub";
-
+		
 	  	location.href=url;
 		  	
 	}
+	
+	$(function(){
+		$("#joinClub").click(function(){			 
+/* 			var num = "${dto.clubApplyIdx}";
+			var enabled = "${enabled}";
+			
+			var params = "num="+num+"&enabled="+enabled;
+ */			
+			var url = "<%=cp%>/club/${clubSeq}/joinClub";
+
+			$('#joinClubModal .modal-body').load(url,function(){
+				
+					$('#joinClubModal .modal-title').html('가입신청');
+					
+					$('#joinClubModal').modal('show'); 
+				});		
+		})
+	});
+
 	
 	</script>
                 <div class="col-md-3 col-sm-5">
@@ -111,9 +129,11 @@
                                 <li><a id="introduce" href=""></a></li>
                             </ul>
                              <hr style="margin-bottom:10px; margin-top:15px; border:2px solid #ccc;">
+                             <c:if test="${authority==null}">
                              <button type="button" class="btn btn-default" 
                              			style="width:100%;border-radius:0px; padding:15px 25px ; margin-bottom:0px; background-color:#3897f0; color:white; border:none;"
-                      			 onclick="joinClub();">가입하기</button>
+                      			 id="joinClub">가입하기</button>
+                      		 </c:if>
                         </div>
                         <div class="sidebar-item categories">
                             <ul class="nav navbar-stacked" >
@@ -130,3 +150,19 @@
                         </div>
                     </div>
                 </div>
+                
+                
+                
+<!-- 가입신청 버튼 클릭 후 뜨는 모달창 -->
+	<div class="modal fade" id="joinClubModal" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" style="width:600px; top:120px;">
+	    <div class="modal-content" style="border-radius:3px;">
+	      <div class="modal-header" style="background:#3897f0; color:white;">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	        	<span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="scheduleModalLabel" style="font-family: 나눔고딕, 맑은 고딕, sans-serif; font-weight: bold;">가입신청</h4>
+	      </div>
+	      <div class="modal-body"> </div>
+	    </div>
+	  </div>
+	</div>

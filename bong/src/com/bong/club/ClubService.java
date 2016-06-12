@@ -3,6 +3,8 @@ package com.bong.club;
 import java.util.List;
 import java.util.Map;
 
+import com.bong.member.Member;
+
 public interface ClubService {
 	public int insertClub(ClubInfo dto, String pathname);
 	
@@ -31,4 +33,9 @@ public interface ClubService {
 	public int dropClubTable(int clubSeq);
 	
 	public JoinClub joinClubEnabled(Map<String, Object> map);
+	public int JoinApply(Map<String, Object> map);
+
+	public String readAuthority(Map<String, Object> map);
+
+	public List<Member> joinClubList(Map<String, Object> map);
 }

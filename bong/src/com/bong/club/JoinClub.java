@@ -5,7 +5,14 @@ public class JoinClub {
 	private int joinCount;
 	private String memAddr;
 	private String authority;
+	private String clubAddr;
 	
+	public String getClubAddr() {
+		return clubAddr;
+	}
+	public void setClubAddr(String clubAddr) {
+		this.clubAddr = clubAddr;
+	}
 	public int getJoinCount() {
 		return joinCount;
 	}

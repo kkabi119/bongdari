@@ -142,6 +142,7 @@
 	
 	<select id="readClubInfoSmall" parameterType="map" resultType="com.bong.club.ClubInfo">
 		SELECT clubidx AS clubSeq, userId, c.parent groupNum ,clubname, introduce, clubBirth, city,
+		
 			closed, c.subject, g.subject groupSubject, photoFilename, c.themeNum, c.parent groupNum 
 			FROM ClubInfo b 
 			JOIN theme c ON b.themeNum=c.themeNum 
@@ -532,15 +533,33 @@
 	    DROP TABLE b_${value}_photo PURGE
 	</update>
 	
-	<select id="joinClubEnabled" parameterType="map">
+	<select id="joinClubEnabled" parameterType="map" resultType="com.bong.club.JoinClub">
 	
-		select m.userAddr, (select count(*) from joinclub where userIdx=#{userIdx}) joinCount, j.authority
-		from memberInfo m
-  			   join (select authority,userIdx from joinclub where clubIdx=${clubSeq} and userIdx=#{userIdx}) j 
-    		   on m.USERIDX =j.USERIDX;
 	
+  select m.userAddr, (select count(*) from joinclub where userIdx=#{userIdx} ) joinCount,
+  (select authority from joinclub where clubIdx=${clubSeq} and userIdx=#{userIdx}) authority,
+(select clubAddr from clubInfo where CLUBIDX=${clubSeq}) clubAddr
+from memberInfo m where userIdx=${userIdx}
 	
 	</select>
 	
+	<!-- 가입신청한 회원을 "가입대기"로 변경 -->
+	<insert id="joinApply" parameterType="map" >
+	   insert into joinClub(joinclubIdx,clubIdx, userIdx, authority) 
+	   values(joinclub_seq.NEXTVAL,${clubSeq},#{userIdx},'가입대기')
+	</insert>
+	<!-- 동아리에 들어올 때 해당동아리에서의 회원권한 가져오기 (일반/관리자/가입대기 등) -->
+	<select id="readAuthority" parameterType="map" resultType="String">
+	select authority
+	from joinclub 
+	where clubIdx=${clubSeq} and userIdx=#{userIdx}
+	</select>
+	
+	<select id="joinClubList" parameterType="map" resultType="com.bong.member.Member">
+	SELECT userName, userAddr,TO_CHAR(joinDate,'YYYY-MM-DD/HH24:MI' ) joinDate,m.USERGENDER,TRUNC( MONTHS_BETWEEN( SYSDATE, userbirth)/12) as age
+	FROM joinclub j join memberInfo m on m.userIdx=j.userIdx
+	WHERE clubIdx=${clubSeq} and authority='가입대기'
+   
+	</select>
 	
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
+import com.bong.member.Member;
 
 @Service("club.clubService")
 public class ClubServiceImpl  implements ClubService {
@@ -279,6 +280,44 @@ public class ClubServiceImpl  implements ClubService {
 			System.out.println(e.toString());
 		}
 		return dto;
+	}
+
+	@Override
+	public int JoinApply(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.insertInformation("club.joinApply", map);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public String readAuthority(Map<String, Object> map) {
+		String result="";
+		try {
+			result=dao.getReadInformation("club.readAuthority", map);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public List<Member> joinClubList(Map<String, Object> map) {
+		List<Member> list=null;
+		try {
+			//게시물 가져오기
+			list=dao.getListInformation("club.joinClubList", map);
+		
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return list;
 	}
 	
 	

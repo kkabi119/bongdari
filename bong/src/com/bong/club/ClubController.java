@@ -3,6 +3,7 @@ package com.bong.club;
 import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bong.club.notice.Notice;
 import com.bong.club.notice.NoticeService;
 import com.bong.common.MyUtil;
+import com.bong.member.Member;
 import com.bong.member.SessionInfo;
 
 @Controller("club.clubContoller")
@@ -83,13 +85,23 @@ public class ClubController {
 	@RequestMapping(value="/club/{clubSeq}/left")
 	@ResponseBody
 	public Map<String, Object> clubLeft(
+			HttpSession session,
 			@PathVariable int clubSeq
 			) throws Exception {
 		
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("clubSeq", clubSeq);
 		ClubInfo dto=clubService.readClubInfoSmall(map);
+	
+		//회원권한 가져오기 
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		
+		map.put("userIdx",info.getUserIdx());
+		String authority=clubService.readAuthority(map);
+		System.out.println("authority:"+authority);
+		
 		map.put("dto", dto);
+		map.put("authority", authority);
 		return map;
 	}
 	
@@ -149,6 +161,7 @@ public class ClubController {
 		mav.addObject("paging", util.paging(current_page, total_page, urlList));
 		return mav;
 	}
+	
 	
 	@RequestMapping(value="/club/created", method=RequestMethod.GET)
 	public ModelAndView clubCreatedForm(HttpSession session) throws Exception {
@@ -373,9 +386,10 @@ public class ClubController {
 		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
-		int enabled=3; // 0이면 3개이상가입, 1이면 같은 지역이 아님
+		int enabled=0; // 0: 가입가능 / 1: 3개이상가입해서 불가 / 2: 같은 지역이 아님 /3: 이미 가입신청을 했거나 회원인 경우
+							// 가입신청을 누르면 해당 userIdx는 joinclub의 authority에 '가입대기'로 insert됨 + enabled가 3으로 바뀐다
 		
-		ModelAndView mav=new ModelAndView(".four.club.dari.japply.클럽 회원가입 ");
+		ModelAndView mav=new ModelAndView("/club/japply");
 		mav.addObject("clubSeq",clubSeq);
 		
 		//가입가능한 회원인지 확인
@@ -385,23 +399,59 @@ public class ClubController {
 		map.put("clubSeq",clubSeq);
 		
 		JoinClub joclub=clubService.joinClubEnabled(map);
+		System.out.println(" getAuthority:"+ joclub.getAuthority()+" joincount:"+ joclub.getJoinCount());
 		
-		if(joclub.getJoinCount() >3){
-			enabled=0;
+		// 3개에 가입햇다면
+		if(joclub.getJoinCount() >=3){
+			enabled=1; // 가입불가
 		}
-		if(joclub.getMemAddr()!="클럽의 활동지역을 가져와서 비교해야함 "){
-			enabled=1;
+		
+		joclub.setMemAddr("서울"); // 주소를 아직 못짤라서 임시로 이러케 확인하는 걸로 함
+		System.out.println(joclub.getMemAddr()+joclub.getClubAddr());
+		
+		if(! joclub.getMemAddr().equals(joclub.getClubAddr())){
+			enabled=2; // 지역이 같지않으므로 가입 불가
+		}
+		if(joclub.getAuthority()!=null )
+		{ //authority의 default값을 비회원/ 가입을 누르면 -승인대기/ 가입 후 일반 으로 변경
+			enabled=3; //이미 가입신청한 회원
 		}
 		
-		
-		
+		// 가입신청리스트로 값을 넘기는 mapper
+		if(enabled==0){
+			clubService.JoinApply(map);		
+			System.out.println("가입신청완료");
+		}
+		mav.addObject("enabled",enabled);
 		return mav;
 	}
 	
-	
-	
-	
+	@RequestMapping(value="/club/{clubSeq}/manage/joinClubList")
+	public ModelAndView joinClubList(
+			@PathVariable int clubSeq
+			,HttpSession session)
+		throws Exception {		
+		
+		ModelAndView mav=new ModelAndView("/club/manage/joinClubList");
+		
+		// 해당 레코드 가져 오기
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clubSeq",clubSeq);
+		
+		List<Member> list = clubService.joinClubList(map);
+						
+		int n=0; //listnum 
+		for(int i=0; i<list.size(); i++) {
+			n++;
+			list.get(i).setListNum(n);
+		}
+		
+		mav.addObject("list", list);
+		mav.addObject("n",n);
+		mav.addObject("clubSeq",clubSeq);
+				
+		return mav;
+	}	
 }
 
 	
-

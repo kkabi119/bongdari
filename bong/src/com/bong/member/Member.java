@@ -17,8 +17,15 @@ public class Member {
 	private String age;
 	private int  listNum;
 	private String hopeDate;
+	private String joinDate; //동아리 가입신청 날짜
 	
 
+	public String getJoinDate() {
+		return joinDate;
+	}
+	public void setJoinDate(String joinDate) {
+		this.joinDate = joinDate;
+	}
 	public String getHopeDate() {
 		return hopeDate;
 	}
