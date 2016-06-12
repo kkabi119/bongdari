@@ -89,40 +89,34 @@
 
 </style>
 <script type="text/javascript">
-$(function(){
-	$("#showList").hide();
-	
-});
 
-$(function(){
-	$("#listBtn").click(function(){
+function listButton(volunIdx){
 		url="<%=cp%>/demander/${demander_seq}/admin/tab1/showList";
 		$.post(url, {}, function(data){ 	
-			$("#showList").html(data);
+			$("#showList_"+volunIdx).html(data);
 		});	
-		if($("#showList").is(':visible')) {
-			$("#showList").hide("fast");
+		if($("#showList_"+volunIdx).is(':visible')) {
+			$("#showList_"+volunIdx).hide("fast");
 			$("#listClosed").val("1");
 		} else {
-			$("#showList").show("fast");
+			$("#showList_"+volunIdx).show("fast");
 			$("#listClosed").val("0");
 		}
-	});
-	
-	$("#approval").click(function(){
+}
+
+function approvalButton(volunIdx){	
 		url="<%=cp%>/demander/${demander_seq}/admin/tab1/eval";
 		$.post(url, {}, function(data){ 	
-			$("#showList").html(data);
+			$("#showList_"+volunIdx).html(data);
 		});	
-		if($("#showList").is(':visible')) {
-			$("#showList").hide("fast");
+		if($("#showList_"+volunIdx).is(':visible')) {
+			$("#showList_"+volunIdx).hide("fast");
 			$("#listClosed").val("1");
 		} else {
-			$("#showList").show("fast");
+			$("#showList_"+volunIdx).show("fast");
 			$("#listClosed").val("0");
 		}
-	});
-});
+}
 
 </script>
 	<!-- Page Heading/Breadcrumbs -->
@@ -138,6 +132,7 @@ $(function(){
 
 	<!-- Project One -->
 		<!-- 사진 -->
+	<c:forEach var="dto" items="${list}">
 	<div class="row2" style="">
 		<div class="col-md-4">
 			<div class="carousel2">
@@ -153,9 +148,9 @@ $(function(){
 		<div class="col1">
 			<div style="height:80%; ">
 				<h4><span style="font-weight:normal; ;border-radius:100px; border:1px solid orange; background-color:#FFF; color:orange;"class="label label-default">
-						활동완료</span>
+						${dto.progress}</span>
 				</h4>
-				<h3 style="margin-top:15px">착한 걸음 6분 릴레이 캠페인 자원봉사자 모집  </h3>
+				<h3 style="margin-top:15px">${dto.subject}  </h3>
 				<div style=" height:88%;  overflow:hidden ;">
 					 <div class="table-responsive" style="margin-top:6px; font-size:13px;">
 						
@@ -165,7 +160,7 @@ $(function(){
 	                        	 			봉사일 |
 	                        	 	</span>
 	                        	</span>
-	                            <span  style="border: none; text-align: left; width:40%;">2016-03-22 ~ 2016-03-25</span>
+	                            <span  style="border: none; text-align: left; width:40%;">${dto.startDay} ~ ${dto.endDay}</span>
 	                            
 	                         	<span style="border: none; text-align: left;  padding-left:16px;">
 	                        	 	<span style="font-size:13px; font-weight:normal; background:none; color:gray;"class="label label-default">
@@ -197,7 +192,7 @@ $(function(){
 	                        	 			장소 |
 	                        	 	</span>
 	                        	</span>
-	                            <span style=" border: none; text-align: left; width:35%; ; ">서울특별시 노원구 삼양동 종합복지센터 장암역 1번출구 <a href="#" > [지도]</a> </span>
+	                            <span style=" border: none; text-align: left; width:35%; ; ">${dto.place} <a href="#" > [지도]</a> </span>
 	                            
 	                    <!--       <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
 	                        	 	<span style="font-size:13px;  font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
@@ -215,11 +210,11 @@ $(function(){
 				<button class="btn btn btn-info" style="color:white;" >공고보기
 				</button>
 				
-				<button id="listBtn" class="btn btn btn-default" style="margin-left:10px; color:gray;" >
+				<button id="listBtn" onclick="listButton(${dto.volunIdx});" class="btn btn btn-default" style="margin-left:10px; color:gray;" >
 					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 참여자
 				</button>
 				
-				<button id="approval" class="btn btn btn-default" style="margin-left:10px; color:gray;" >
+				<button id="approval" onclick="approvalButton(${dto.volunIdx});" class="btn btn btn-default" style="margin-left:10px; color:gray;" >
 					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 평가하기
 				</button>
 				
@@ -230,400 +225,19 @@ $(function(){
 	</div>
 	<!-- /.row -->
 	<div>
-<hr style="margin-left:43px; margin-top:0px; margin-bottom:-1px; width:98%; border-top:1px solid #DADADA;">
+		<hr style="margin-left:43px; margin-top:0px; margin-bottom:-1px; width:98%; border-top:1px solid #DADADA;">
 	</div>
 	
-	<div id="showList" style="width:100%; margin-left:45px; padding:25px; padding-left:30px; padding-bottom:65px;">
+	<div id="showList_${dto.volunIdx}" style="width:100%; margin-left:45px; padding:25px; padding-left:30px; padding-bottom:65px;" hidden="hidden">
 			
-	</div>
-<!-- Project two -->
-			<!-- 사진 -->
-	<div class="row2" style="">
-		<div class="col-md-4">
-			<div class="carousel2">
-				<div class="carousel-inner">
-					<div class="item active">
-						<div class="fill"
-							style="background-image:url('<%=cp%>/res/images/demander/20160513194133.png');"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-			<!-- 글 -->
-		<div class="col1">
-			<div style="height:80%; ">
-				<h4><span style="font-weight:normal; ;border-radius:100px; border:1px solid orange; background-color:#FFF; color:orange;"class="label label-default">
-						활동완료</span>
-				</h4>
-				<h3 style="margin-top:15px">착한 걸음 6분 릴레이 캠페인 자원봉사자 모집  </h3>
-				<div style=" height:88%;  overflow:hidden ;">
-					 <div class="table-responsive" style="margin-top:6px; font-size:15px;">
-						
-						 <div style="margin-bottom:6px; ">
-	                        	<span style="border: none; text-align: left;padding-right:0px; ">
-	                        	 	<span style="font-weight:normal;background:none; color:gray;"class="label label-default">
-	                        	 			봉사일 |
-	                        	 	</span>
-	                        	</span>
-	                            <span  style="border: none; text-align: left; width:40%;">2016-03-22 ~ 2016-03-25</span>
-	                            
-	                         	<span style="border: none; text-align: left;  padding-left:16px;">
-	                        	 	<span style=" font-weight:normal; background:none; color:gray;"class="label label-default">
-	                        	 			분야 |
-	                        	 	</span>
-	                        	</span>
-	                            <span style="border: none;  width:100%; text-align: left;padding-left:-30px; ">문화체육 > 행사보조</span>
-	                        
-	                        </div>
-	                        <div style="margin-bottom:6px; ">
-	                             <span style="border: none; text-align: left; width:6%;  ">
-	                        	 	<span style="font-weight:normal; margin-bottom:5px; background:none; color:gray;"class="label label-default">
-	                        	 			모집일 |
-	                        	 	</span>
-	                        	</span>
-	                            <span style=" border: none; text-align: left; width:35%; height:45px; ">2016-03-22 ~ 2016-03-25</span>
-	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
-	                        	 	<span style="font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
-											신청자 |          	 			
-	                        	 	</span>
-	                        	</span>
-	                            <span style="border: none;  text-align: left; ">16 / 10명</span>
-	                        </div>
-	                        
-						<div >
-	                             <span style="border: none; text-align: left; width:6%;  ">
-	                        	 	<span style="font-weight:normal; margin-bottom:5px; background:none; color:gray;"class="label label-default">
-	                        	 			모집일 |
-	                        	 	</span>
-	                        	</span>
-	                            <span style=" border: none; text-align: left; width:35%; ; ">2016-03-22 ~ 2016-03-25</span>
-	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
-	                        	 	<span style=" font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
-											신청자 |          	 			
-	                        	 	</span>
-	                        	</span>
-	                            <span style="border: none;  text-align: left; ">16 / 10명</span>
-	                        </div>
-						</div>
-				</div>
-		
-			</div>
-			<div class="btnList" style="clear:both; margin-left:8px; margin-top:15px;float:left;">
-				
-				<a class="btn btn btn-info" style="color:white;  " 
-					href="<%=cp%>/demander/${demander_seq}/review/article">공고보기
-				</a>
-				
-				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/${demander_seq}/review/article">
-					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 참여자
-				</a>
-			</div>
-			
-		</div>
-		
-	</div>
-	<!-- /.row -->
-	<div>
-<hr style="margin-left:30px; margin-top:0px; margin-bottom:-1px; width:100%; border-top:1px solid #DADADA;">
 	</div>
 	
-<!-- Project One -->
-		<!-- 사진 -->
-	<div class="row2" style="">
-		<div class="col-md-4">
-			<div class="carousel2">
-				<div class="carousel-inner">
-					<div class="item active">
-						<div class="fill"
-							style="background-image:url('<%=cp%>/res/images/demander/20160513194133.png');"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-			<!-- 글 -->
-		<div class="col1">
-			<div style="height:80%; ">
-				<h4><span style="font-weight:normal; ;border-radius:100px; border:1px solid orange; background-color:#FFF; color:orange;"class="label label-default">
-						활동완료</span>
-				</h4>
-				<h3 style="margin-top:15px">착한 걸음 6분 릴레이 캠페인 자원봉사자 모집  </h3>
-				<div style=" height:88%;  overflow:hidden ;">
-					 <div class="table-responsive" style="margin-top:6px; font-size:15px;">
-						
-						 <div style="margin-bottom:6px; ">
-	                        	<span style="border: none; text-align: left;padding-right:0px; ">
-	                        	 	<span style="font-weight:normal;background:none; color:gray;"class="label label-default">
-	                        	 			봉사일 |
-	                        	 	</span>
-	                        	</span>
-	                            <span  style="border: none; text-align: left; width:40%;">2016-03-22 ~ 2016-03-25</span>
-	                            
-	                         	<span style="border: none; text-align: left;  padding-left:16px;">
-	                        	 	<span style=" font-weight:normal; background:none; color:gray;"class="label label-default">
-	                        	 			분야 |
-	                        	 	</span>
-	                        	</span>
-	                            <span style="border: none;  width:100%; text-align: left;padding-left:-30px; ">문화체육 > 행사보조</span>
-	                        
-	                        </div>
-	                        <div style="margin-bottom:6px; ">
-	                             <span style="border: none; text-align: left; width:6%;  ">
-	                        	 	<span style="font-weight:normal; margin-bottom:5px; background:none; color:gray;"class="label label-default">
-	                        	 			모집일 |
-	                        	 	</span>
-	                        	</span>
-	                            <span style=" border: none; text-align: left; width:35%; height:45px; ">2016-03-22 ~ 2016-03-25</span>
-	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
-	                        	 	<span style="font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
-											신청자 |          	 			
-	                        	 	</span>
-	                        	</span>
-	                            <span style="border: none;  text-align: left; ">16 / 10명</span>
-	                        </div>
-	                        
-						<div >
-	                             <span style="border: none; text-align: left; width:6%;  ">
-	                        	 	<span style="font-weight:normal; margin-bottom:5px; background:none; color:gray;"class="label label-default">
-	                        	 			모집일 |
-	                        	 	</span>
-	                        	</span>
-	                            <span style=" border: none; text-align: left; width:35%; ; ">2016-03-22 ~ 2016-03-25</span>
-	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
-	                        	 	<span style=" font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
-											신청자 |          	 			
-	                        	 	</span>
-	                        	</span>
-	                            <span style="border: none;  text-align: left; ">16 / 10명</span>
-	                        </div>
-						</div>
-				</div>
-		
-			</div>
-			<div class="btnList" style="clear:both; margin-left:8px; margin-top:15px;float:left;">
-				
-				<a class="btn btn btn-info" style="color:white;  " 
-					href="<%=cp%>/demander/${demander_seq}/review/article">공고보기
-				</a>
-				
-				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/${demander_seq}/review/article">
-					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 참여자
-				</a>
-			</div>
-			
-		</div>
-		
-	</div>
-	<!-- /.row -->
-	<div>
-<hr style="margin-left:30px; margin-top:0px; margin-bottom:-1px; width:100%; border-top:1px solid #DADADA;">
-	</div>
-	
-	<!-- Project One -->
-			<!-- 사진 -->
-	<div class="row2" style="">
-		<div class="col-md-4">
-			<div class="carousel2">
-				<div class="carousel-inner">
-					<div class="item active">
-						<div class="fill"
-							style="background-image:url('<%=cp%>/res/images/demander/20160513194133.png');"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-			<!-- 글 -->
-		<div class="col1">
-			<div style="height:80%; ">
-				<h4><span style="font-weight:normal; ;border-radius:100px; border:1px solid orange; background-color:#FFF; color:orange;"class="label label-default">
-						활동완료</span>
-				</h4>
-				<h3 style="margin-top:15px">착한 걸음 6분 릴레이 캠페인 자원봉사자 모집  </h3>
-				<div style=" height:88%;  overflow:hidden ;">
-					 <div class="table-responsive" style="margin-top:6px; font-size:15px;">
-						
-						 <div style="margin-bottom:6px; ">
-	                        	<span style="border: none; text-align: left;padding-right:0px; ">
-	                        	 	<span style="font-weight:normal;background:none; color:gray;"class="label label-default">
-	                        	 			봉사일 |
-	                        	 	</span>
-	                        	</span>
-	                            <span  style="border: none; text-align: left; width:40%;">2016-03-22 ~ 2016-03-25</span>
-	                            
-	                         	<span style="border: none; text-align: left;  padding-left:16px;">
-	                        	 	<span style=" font-weight:normal; background:none; color:gray;"class="label label-default">
-	                        	 			분야 |
-	                        	 	</span>
-	                        	</span>
-	                            <span style="border: none;  width:100%; text-align: left;padding-left:-30px; ">문화체육 > 행사보조</span>
-	                        
-	                        </div>
-	                        <div style="margin-bottom:6px; ">
-	                             <span style="border: none; text-align: left; width:6%;  ">
-	                        	 	<span style="font-weight:normal; margin-bottom:5px; background:none; color:gray;"class="label label-default">
-	                        	 			모집일 |
-	                        	 	</span>
-	                        	</span>
-	                            <span style=" border: none; text-align: left; width:35%; height:45px; ">2016-03-22 ~ 2016-03-25</span>
-	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
-	                        	 	<span style="font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
-											신청자 |          	 			
-	                        	 	</span>
-	                        	</span>
-	                            <span style="border: none;  text-align: left; ">16 / 10명</span>
-	                        </div>
-	                        
-						<div >
-	                             <span style="border: none; text-align: left; width:6%;  ">
-	                        	 	<span style="font-weight:normal; margin-bottom:5px; background:none; color:gray;"class="label label-default">
-	                        	 			모집일 |
-	                        	 	</span>
-	                        	</span>
-	                            <span style=" border: none; text-align: left; width:35%; ; ">2016-03-22 ~ 2016-03-25</span>
-	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
-	                        	 	<span style=" font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
-											신청자 |          	 			
-	                        	 	</span>
-	                        	</span>
-	                            <span style="border: none;  text-align: left; ">16 / 10명</span>
-	                        </div>
-						</div>
-				</div>
-		
-			</div>
-			<div class="btnList" style="clear:both; margin-left:8px; margin-top:15px;float:left;">
-				
-				<a class="btn btn btn-info" style="color:white;  " 
-					href="<%=cp%>/demander/${demander_seq}/review/article">공고보기
-				</a>
-				
-				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/${demander_seq}/review/article">
-					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 참여자
-				</a>
-			</div>
-			
-		</div>
-		
-	</div>
-	<!-- /.row -->
-	<div>
-<hr style="margin-left:30px; margin-top:0px; margin-bottom:-1px; width:100%; border-top:1px solid #DADADA;">
-	</div>
-	
-	<!-- Project One -->
-			<!-- 사진 -->
-	<div class="row2" style="">
-		<div class="col-md-4">
-			<div class="carousel2">
-				<div class="carousel-inner">
-					<div class="item active">
-						<div class="fill"
-							style="background-image:url('<%=cp%>/res/images/demander/20160513194133.png');"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-			<!-- 글 -->
-		<div class="col1">
-			<div style="height:80%; ">
-				<h4><span style="font-weight:normal; ;border-radius:100px; border:1px solid orange; background-color:#FFF; color:orange;"class="label label-default">
-						활동완료</span>
-				</h4>
-				<h3 style="margin-top:15px">착한 걸음 6분 릴레이 캠페인 자원봉사자 모집  </h3>
-				<div style=" height:88%;  overflow:hidden ;">
-					 <div class="table-responsive" style="margin-top:6px; font-size:15px;">
-						
-						 <div style="margin-bottom:6px; ">
-	                        	<span style="border: none; text-align: left;padding-right:0px; ">
-	                        	 	<span style="font-weight:normal;background:none; color:gray;"class="label label-default">
-	                        	 			봉사일 |
-	                        	 	</span>
-	                        	</span>
-	                            <span  style="border: none; text-align: left; width:40%;">2016-03-22 ~ 2016-03-25</span>
-	                            
-	                         	<span style="border: none; text-align: left;  padding-left:16px;">
-	                        	 	<span style=" font-weight:normal; background:none; color:gray;"class="label label-default">
-	                        	 			분야 |
-	                        	 	</span>
-	                        	</span>
-	                            <span style="border: none;  width:100%; text-align: left;padding-left:-30px; ">문화체육 > 행사보조</span>
-	                        
-	                        </div>
-	                        <div style="margin-bottom:6px; ">
-	                             <span style="border: none; text-align: left; width:6%;  ">
-	                        	 	<span style="font-weight:normal; margin-bottom:5px; background:none; color:gray;"class="label label-default">
-	                        	 			모집일 |
-	                        	 	</span>
-	                        	</span>
-	                            <span style=" border: none; text-align: left; width:35%; height:45px; ">2016-03-22 ~ 2016-03-25</span>
-	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
-	                        	 	<span style="font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
-											봉사자 |          	 			
-	                        	 	</span>
-	                        	</span>
-	                            <span style="border: none;  text-align: left; ">16 / 10명</span>
-	                        </div>
-	                        
-						<div >
-	                             <span style="border: none; text-align: left; width:6%;  ">
-	                        	 	<span style="font-weight:normal; margin-bottom:5px; background:none; color:gray;"class="label label-default">
-	                        	 			봉사자유형 |
-	                        	 	</span>
-	                        	</span>
-	                            <span style=" border: none; text-align: left; width:35%; ; ">성인</span>
-	                            
-	                          <span style="border: none; text-align: left; width:6%;padding-left:16px; ">
-	                        	 	<span style=" font-weight:normal; margin-bottom:5px;background:none; color:gray;"class="label label-default">
-											신청자 |          	 			
-	                        	 	</span>
-	                        	</span>
-	                            <span style="border: none;  text-align: left; ">16 / 10명</span>
-	                        </div>
-						</div>
-				</div>
-		
-			</div>
-			<div class="btnList" style="clear:both; margin-left:8px; margin-top:15px;float:left;">
-				
-				<a class="btn btn btn-info" style="color:white;  " 
-					href="<%=cp%>/demander/${demander_seq}/review/article">공고보기
-				</a>
-				
-				<a class="btn btn btn-default" style="margin-left:10px; color:gray;" href="<%=cp%>/demander/${demander_seq}/review/article">
-					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 참여자
-				</a>
-			</div>
-			
-		</div>
-		
-	</div>
-	<!-- /.row -->
-	<div>
-<hr style="margin-left:30px; margin-top:0px; margin-bottom:-1px; width:100%; border-top:1px solid #DADADA;">
-	</div>
+	</c:forEach>
 	
 	<!-- /.row -->
 	
 	<!-- Pagination -->
-	<div class="row text-center">
-		<div class="col-lg-12">
-			<ul class="pagination">
-				<li><a href="#">&laquo;</a></li>
-				<li class="active"><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">&raquo;</a></li>
-			</ul>
-		</div>
-	</div>
+	${paging}
 	<!-- /.row -->
 
 	<!-- 검색 -->

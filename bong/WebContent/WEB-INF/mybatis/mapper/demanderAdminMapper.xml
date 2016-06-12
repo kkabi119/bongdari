@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dAdmin">
+
+
+<!-- 수요처 메인 -->
+
+<!-- 수요처인덱스메인 프로필 -->
+<select id="deMainProfile" parameterType="map" resultType="com.bong.demander.admin.Dadmin">
+		SELECT serviceIdx,serviceName,serviceBirth,serviceTel,
+		serviceIntro,serviceAddr,serviceEmail,serviceImg,serviceImgName,
+		subject as themeName
+		FROM serviceInfo s JOIN theme t ON s.themenum=t.themenum
+		WHERE serviceIdx=${demander_seq}
+</select>
+
+<select id="volunCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM volun_bbs WHERE serviceIdx=#{demander_seq}
+</select>
+
+<select id="volunList" parameterType="map" resultType="com.bong.demander.admin.Dadmin">
+		SELECT volunIdx, subject, content, startDay, endDay, startTime, endTime,
+		place, progress, volunteer_type, volunDays, themeNum FROM volun_bbs WHERE serviceIdx=#{demander_seq}
+</select>
+
+</mapper>

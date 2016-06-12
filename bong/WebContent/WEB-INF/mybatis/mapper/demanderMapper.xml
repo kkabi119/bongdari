@@ -112,7 +112,7 @@
 		  SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
 			     SELECT serviceReviewIdx, subject,content
-			        FROM service_review_7
+			        FROM service_review_${demander_seq}
 	                ORDER BY serviceReviewIdx DESC
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}

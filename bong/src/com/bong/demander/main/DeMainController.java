@@ -38,6 +38,7 @@ public class DeMainController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("demander_seq", demander_seq);
 		
+		/*수요처 메인 프로필*/
 		DeMain mainProfile=mainService.deMainProfile(map);
 		
 		
@@ -49,13 +50,15 @@ public class DeMainController {
 		List<DeReview> revList=reviewService.listDeReviewSmall(map);
 		//List<DeReview> revPhoto=reviewService.listDeReview(map);
 		
+		
+		//메인에 띄울 사진 첫슬라이드
 		Map<String, Object> map1 = new HashMap<String, Object>();
 		map1.put("demander_seq", demander_seq);
 		map1.put("start", 1);
 		map1.put("end", 4);
 		List<DeReview> revPhoto1=reviewService.listDeReviewSmall(map1);
 		
-		
+		//메인에 띄울 사진 두번째 슬라이드
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("demander_seq", demander_seq);
 		map2.put("start", 5);

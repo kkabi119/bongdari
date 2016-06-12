@@ -1,6 +1,6 @@
-package com.bong.demander;
+package com.bong.demander.admin;
 
-public class Demander {
+public class Dadmin {
 
 	//프로필 관련
 	private int serviceIdx;

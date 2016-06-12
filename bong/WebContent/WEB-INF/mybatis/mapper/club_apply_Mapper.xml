@@ -251,7 +251,7 @@
 	<select id="readApplyList" parameterType="Integer" resultType="com.bong.member.Member">
 
 		SELECT userName, userBirth, userGender, userAddr, m.userIdx, userTel, userEmail, 
-				  SUBSTR (hopedate,1,10) hopedate , memImg, MEMIMGNAME,
+				  TO_CHAR(hopedate,'yyyy-MM-dd') hopedate , memImg, MEMIMGNAME,
 				TRUNC( MONTHS_BETWEEN( SYSDATE, userbirth)/12) as age
 		FROM memberInfo m JOIN club_apply_memlist_${clubSeq} li ON m.userIdx=li.userIdx	
 		WHERE li.clubApplyIdx=#{clubApplyIdx}
