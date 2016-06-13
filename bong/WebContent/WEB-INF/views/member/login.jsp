@@ -18,7 +18,7 @@ li,ul,body,input{margin:0; padding:0; list-style:none}
 #login-form{width:350px; background:#FFF; margin:0 auto; margin-top:70px; background:#f8f8f8; overflow:hidden; border-radius:7px}
 .form-header{display:table; clear:both}
 .form-header label{display:block; cursor:pointer; z-index:999}
-.form-header li{margin:0; line-height:60px; width:175px; text-align:center; background:#eee; font-size:18px; float:left; transition:all 600ms ease}
+.form-header li{margin:0; line-height:60px; width:350px; text-align:center; background:#eee; font-size:18px; float:left; transition:all 600ms ease}
 /*section*/
 .section-out{width:700px; float:left; transition:all 600ms ease}
 .section-out:after{content:''; clear:both; display:table}
@@ -36,7 +36,7 @@ li,ul,body,input{margin:0; padding:0; list-style:none}
 .input:focus:valid{border-color:green}
 .input:focus:valid+.icon{border-color:green}
 #check,#check1{top:1px; position:relative}
-.btn{border:none; outline:none; background:#0099CC; border-bottom:solid 4px #006699; font-family: 'Ropa Sans', sans-serif; margin:0 auto;  height:40px; width:49%; padding:5 10px; border-radius:3px; font-size:16px; color:#FFF}
+.btn{border:none; outline:none; background:#0099CC; border-bottom:solid 4px #006699; font-family: 'Ropa Sans', sans-serif; margin:0 auto;  height:40px; width:30%; padding:5 10px; border-radius:3px; font-size:16px; color:#FFF}
 
 .social-login{padding:15px 20px; background:#f1f1f1; border-top:solid 2px #e8e8e8; text-align:right}
 .social-login a{display:inline-block; height:35px; text-align:center; line-height:35px; width:35px; margin:0 3px; text-decoration:none; color:#FFFFFF}
@@ -117,12 +117,10 @@ function demanderJoin(){
 <div id="login-form">
 
 <input type="radio" checked id="login" name="switch" class="hide">
-<input type="radio" id="demander" name="switch" class="hide">
 
 <div>
 <ul class="form-header">
-<li><label for="login"><i class="fa fa-lock"></i> 일반회원</label></li>
-<li><label for="demander"><i class="fa fa-credit-card"></i> 수요처</label></li>
+<li><label for="login"><i class="fa fa-lock"></i> 회원 로그인</label></li>
 </ul>
 </div>
 
@@ -133,26 +131,13 @@ function demanderJoin(){
 <ul class="ul-list">
 <li><input type="text" required class="input" placeholder="아이디" name="userId" id="userId" onkeydown="enter(userPwd)"/><span class="icon"><i class="fa fa-user"></i></span></li>
 <li><input type="password" required class="input" placeholder="비밀번호" name="userPwd" id="userPwd"  onkeydown="enter(login)"/><span class="icon"><i class="fa fa-lock"></i></span></li>
-<li><input type="button" onclick="memberLogin()" name="login" value="LOGIN" class="btn">&nbsp;<input type="button" onclick="join()" value="JOIN" class="btn"></li>
+<li><input type="button" onclick="memberLogin()" name="login" value="로그인" class="btn">&nbsp;<input type="button" onclick="join()" value="일반" class="btn">&nbsp;<input type="button" onclick="demanderJoin()" value="수요처" class="btn"></li>
+
 </ul>
 </form>
 </div>
 
 <!-- <li><span class="remember"><input type="checkbox" id="check"> <label for="check">Remember Me</label></span><span class="remember"><a href="">Forget Password</a></span></li> -->
-
-</section>
-
-<section class="demander-section">
-<div class="login">
-<form name="demanderLoginForm" method="post">
-<ul class="ul-list">
-<li><input type="text" required class="input" placeholder="수요처아이디" name="serviceId" id="serviceId"/><span class="icon"><i class="fa fa-user"></i></span></li>
-<li><input type="password" required class="input" placeholder="비밀번호" name="servicePwd" id="servicePwd"/><span class="icon"><i class="fa fa-lock"></i></span></li>
-<li><input type="button"  onclick="demanderLogin()" value="DEMANDERLOGIN" class="btn" class="btn">&nbsp;<input type="button" onclick="demanderJoin()" value="DEMANDERJOIN " class="btn"></li>
-</ul>
-</form>
-</div>
-
 </section>
 </div>
 

@@ -12,6 +12,7 @@ import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
 import com.bong.mypage.MyApply;
 
+
 @Service("member.memberService")
 public class MemberServiceImpl implements MemberService{
 	
@@ -39,6 +40,13 @@ public class MemberServiceImpl implements MemberService{
 					String [] s=dto.getUserEmail().split("@");
 					dto.setEmail1(s[0]);
 					dto.setEmail2(s[1]);
+				}
+			}
+			if(dto!=null){
+				if(dto.getUserAddr()!=null){
+					String [] s=dto.getUserAddr().split(",");
+					dto.setAddr1(s[0]);
+					dto.setAddr2(s[1]);
 				}
 			}
 		} catch (Exception e) {
@@ -79,6 +87,13 @@ public class MemberServiceImpl implements MemberService{
 					dto.setEmail2(s[1]);
 				}
 			}
+			if(dto!=null){
+				if(dto.getUserAddr()!=null){
+					String [] s=dto.getUserAddr().split(",");
+					dto.setAddr1(s[0]);
+					dto.setAddr2(s[1]);
+				}
+			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -108,7 +123,13 @@ public class MemberServiceImpl implements MemberService{
 					dto.setEmail2(s[1]);
 				}
 			}
-			
+			if(dto!=null){
+				if(dto.getUserAddr()!=null){
+					String [] s=dto.getUserAddr().split(",");
+					dto.setAddr1(s[0]);
+					dto.setAddr2(s[1]);
+				}
+			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -126,6 +147,11 @@ public class MemberServiceImpl implements MemberService{
 					dto.getTel2() != null && dto.getTel2().length()!=0 &&
 					dto.getTel3() != null && dto.getTel3().length()!=0)
 				dto.setUserTel(dto.getTel1() + "-" + dto.getTel2() + "-" + dto.getTel3());
+			
+			//주소 합쳐서 넣기
+			if(dto.getAddr1() != null && dto.getAddr1().length()!=0 &&
+					dto.getAddr2() != null && dto.getAddr2().length()!=0 )
+				dto.setUserAddr(dto.getAddr1() + "," + dto.getAddr2());
 			
 			//이메일 합쳐서 데이터 넣기
 			if(dto.getEmail1() != null && dto.getEmail1().length()!=0 &&
@@ -174,6 +200,10 @@ public class MemberServiceImpl implements MemberService{
 			    dto.setMemImg(memImg);
 			    dto.setMemImgname(dto.getUploads().getOriginalFilename());
 			}
+			//주소 합쳐서 넣기
+			if(dto.getAddr1() != null && dto.getAddr1().length()!=0 &&
+					dto.getAddr2() != null && dto.getAddr2().length()!=0 )
+				dto.setUserAddr(dto.getAddr1() + "," + dto.getAddr2());
 			
 		    result=dao.updateInformation("member.updatePwd", dto);
 		    result=dao.updateInformation("member.updateMember2", dto);
@@ -320,7 +350,16 @@ public class MemberServiceImpl implements MemberService{
 		} 
 		return result;
 	}
-
+        	@Override
+        	public List<Member>listAddr(Map<String, Object> map) {
+        		List<Member> list = null;
+        		try {
+        			list=dao.getListInformation("member.searchAddr", map);
+        		} catch (Exception e) {
+        		  System.out.println(e.toString());
+        		}
+        		return list;
+        	}
 
 
 

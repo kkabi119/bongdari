@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.bong.mypage.MyApply;
 
+
 public interface MemberService {
 	
 	public Member readMember1(int userIdx);
@@ -12,6 +13,7 @@ public interface MemberService {
 	public Member readMemberInfo(String userIdx);
 	public int readCheckId(String userId);
 	
+	public List<Member> listAddr(Map<String, Object> map);
 	public int insertMember(Member dto, String pathname) throws Exception;
 	
 	public int updateMember2(Member dto, String pathname);
