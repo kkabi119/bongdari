@@ -104,11 +104,11 @@ $(document).ready(function($) {
                                 
                             </ul>
                         </li>                    
-                        <li class="dropdown"><a href="">수요처 <i class="fa fa-angle-down"></i></a>
-                            <ul role="menu" class="sub-menu">
+                        <li><a href="<%=cp%>/main/demander">수요처 </a>
+                           <%--  <ul role="menu" class="sub-menu">
                                 <li><a href="<%=cp%>/main/demander">수요처 전체 메인</a></li>
                                 <li><a href="<%=cp%>/main/searchDemander">수요처 검색</a></li>
-                            </ul>
+                            </ul> --%>
                         </li>
                         
                         <li class="dropdown"><a href="">고객센터 <i class="fa fa-angle-down"></i></a>
