@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -477,6 +478,53 @@ public class ClubController {
 		mav.addObject("n",n);
 		mav.addObject("clubSeq",clubSeq);
 				
+		return mav;
+	}	
+	
+	@RequestMapping(value="/club/{clubSeq}/manage/joinClubOk")
+	public ModelAndView joinClubOk(
+			@PathVariable int clubSeq
+			,HttpSession session
+			,@RequestParam(value="selectUser",defaultValue="") String selectUser)
+		throws Exception {		
+				
+		System.out.println(selectUser);
+
+		String[] strs = selectUser.split(",");
+  		   
+		      int[] intArray = new int[strs.length];
+		      for (int i = 0; i < strs.length; i++) {
+		         String numberAsString = strs[i];
+		         intArray[i] = Integer.parseInt(numberAsString);
+		      }
+		
+		      List<Integer> intList = new ArrayList<Integer>();
+		      
+		  	Map<String, Object> map = new HashMap<String, Object>();
+		  	map.put("usridx", strs);
+			map.put("clubSeq",clubSeq);
+			clubService.joinClubOk(map);
+			
+		/*	map.put("intList",intList);*/
+			
+/*			clubService.joinClubOk(map);
+		      for (int index = 0; index < intArray.length; index++)
+		      {
+		    		clubService.joinClubOk(map);
+		          intList.add(intArray[index]);
+		      }
+*/		      /*
+		ArrayList<Integer> selectUser1 = new ArrayList<Integer>();
+		selectUser1 = new ArrayList(Arrays.asList(intArray));*/
+					  
+		ModelAndView mav=new ModelAndView("/club/manage/joinClubList");
+		
+		/*Map<String, Object> map = new HashMap<String, Object>();
+		map.put("clubSeq",clubSeq);
+		map.put("intList",intList);*/
+		
+		clubService.joinClubOk(map);
+		
 		return mav;
 	}	
 }

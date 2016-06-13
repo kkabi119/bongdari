@@ -639,4 +639,13 @@
    
 	</select>
 	
+	<update id="joinClubOk" parameterType="map">
+		<!-- UPDATE Joinclub SET authority='일반' WHERE clubIdx=${clubSeq} and userIdx IN(${intList}) -->
+		
+		UPDATE Joinclub SET authority='일반' WHERE clubIdx=${clubSeq} and userIdx IN 
+		<foreach collection="usridx" item="item" index="index" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</update>
+	
 </mapper>

@@ -95,10 +95,11 @@ width:300px;
 
 function joinClubOk(){
 	
-	 var f=document.joinClubForm;
-	f.action="<%=cp%>/club/${clubSeq}/joinClubOk";
-
-	alert(f.$("input[type=checkbox]").val());
+	var f=document.joinClubForm;
+	f.action="<%=cp%>/club/${clubSeq}/manage/joinClubOk";
+	f.submit();
+	
+//	alert($("input[type=checkbox]").val());
 	
 	<%-- var url="<%=cp%>/club/${clubSeq}/apply/applyCheckOk";
 	
@@ -120,7 +121,6 @@ function joinClubOk(){
      });
 	$('#applyListModal').modal('hide'); --%>
 	
-	f.submit();
 }
 
 
@@ -135,7 +135,7 @@ function joinClubOk(){
   <tr style="" >
   	<th  width="5%;" data-toggle="buttons" id="allSelect">
 						<label class="btn btn-default" style="width:20px;; height:20px; padding:0px;">
-						<input type="checkbox" autocomplete="off" name="selectUser">
+						<input type="checkbox" autocomplete="off" name="selectUser1">
 						<span class="glyphicon glyphicon-ok"></span>
 					</label>		
 			</th> 
