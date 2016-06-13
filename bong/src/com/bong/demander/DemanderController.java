@@ -39,7 +39,7 @@ public class DemanderController {
 		return mav;
 	}
 
-	/*검색버튼 눌렀을때 mainResult.jsp가 ajax로 삽입*/
+	/*수요처 전체페이지=검색페이지*/
 	/*이 컨드롤러에서 검색결과도 보여주는 list 처리 */
 	@RequestMapping(value="/main/demander/mainResult")
 	public ModelAndView mainResult(
@@ -48,7 +48,7 @@ public class DemanderController {
 			@RequestParam(value="demanderType",defaultValue="") String demanderType,
 			@RequestParam(value="demanderName",defaultValue="") String demanderName
 			) throws Exception {
-		System.out.println("******controller**"+demanderName+":"+demanderType);
+		System.out.println("******demanderName:"+demanderName+"demanderType:"+demanderType);
 		String cp = req.getContextPath();
 		
    	    
