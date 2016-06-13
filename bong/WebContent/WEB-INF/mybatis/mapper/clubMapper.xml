@@ -397,6 +397,83 @@
 		DROP TABLE CLUB_REVIEW_LIKE_${value} PURGE
 	</update>
 	
+	<update id="createClubApply" parameterType="Integer">
+		CREATE TABLE club_apply_${value}(
+			clubapplyIdx NUMBER NOT NULL,
+			CLUBIDX NUMBER NOT NULL,
+			volunIdx NUMBER NOT NULL,
+			ENABLED NUMBER DEFAULT 1,
+			hitcount number default 0,
+			PRIMARY KEY(clubapplyIdx),
+			CONSTRAINTS fk_club_volunIdx_${value} FOREIGN KEY(volunIdx)
+			                  REFERENCES volun_bbs(volunIdx) ON DELETE CASCADE,
+			CONSTRAINT fk2_club_clubIdx_${value} FOREIGN KEY(clubIdx)
+			        REFERENCES clubinfo(clubIdx) ON DELETE CASCADE     
+		)
+	</update>
+	
+	<update id="dropClubApply" parameterType="Integer">
+		DROP TABLE club_apply_${value} PURGE
+	</update>
+	
+	<update id="createClubApplyR" parameterType="Integer">
+		CREATE TABLE club_applyR_${value}(
+			CARIDX	NUMBER,
+			CONTENT	CLOB,
+			CREATED	DATE DEFAULT SYSDATE,
+			USERIDX	NUMBER NOT NULL,
+			CLUBAPPLYIDX NUMBER,
+			answer NUMBER DEFAULT 0,
+			
+			PRIMARY KEY(CARIDX),
+			CONSTRAINT fk_applyR_userIdx_${value} FOREIGN KEY(userIdx)
+			                  REFERENCES memberinfo(userIdx) ON DELETE CASCADE,
+			CONSTRAINT fk_applyR_clubapplyIdx_${value} FOREIGN KEY(clubApplyIdx)
+			                  REFERENCES club_apply_${value}(clubApplyIdx) ON DELETE CASCADE
+		)
+	</update>
+	
+	<update id="dropClubApplyR" parameterType="Integer">
+		DROP TABLE club_applyR_${value} PURGE
+	</update>
+	
+	<update id="createClubApplyMemList" parameterType="Integer">
+		CREATE TABLE club_apply_memList_${value} (
+		   userIdx NUMBER NOT NULL
+		   ,clubApplyIdx NUMBER NOT NULL
+		   ,hopeDate DATE    
+		   ,PRIMARY KEY(userIdx,clubApplyIdx, hopeDate)   
+		   ,CONSTRAINT fk_c_apply_mem_userIdx_${value} FOREIGN KEY(userIdx)
+		               REFERENCES memberInfo(userIdx) 
+		   ,CONSTRAINT fk_c_apply_mem_applyIdx_${value} FOREIGN KEY(clubApplyIdx)
+		               REFERENCES club_apply_${value}(clubApplyIdx) on delete cascade               
+		 )
+	</update>
+	
+	<update id="dropClubApplyMemList" parameterType="Integer">
+		DROP TABLE club_apply_memList_${value} PURGE
+	</update>
+	
+	<update id="createClubApplyRLike" parameterType="Integer">
+		create table club_applyR_like_${value} (
+			CARIdx NUMBER NOT NULL,
+			userIdx NUMBER NOT NULL,
+			CONSTRAINT PK_club_applyR_like_${value} PRIMARY KEY (CARIdx,userIdx) ,
+			CONSTRAINT fK_club_applyR_like_${value} foreign key(CARIdx) REFERENCES
+			CLUB_APPLYR_${value}(CARIdx) ON DELETE CASCADE,
+			CONSTRAINT fK2_club_applyR_like_${value} foreign key(userIdx) REFERENCES 
+			MEMBERINFO(userIdx) ON DELETE CASCADE
+		)
+	</update>
+	
+	<update id="dropClubApplyRLike" parameterType="Integer">
+		DROP TABLE club_applyR_like_${value} PURGE
+	</update>
+	
+	
+	
+	
+	
 	
 	
 	<update id="dropBoardCategoryTable" parameterType="Long">

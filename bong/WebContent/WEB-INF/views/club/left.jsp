@@ -67,11 +67,11 @@
 	
 	$(function(){
 		$("#joinClub").click(function(){			 
-/* 			var num = "${dto.clubApplyIdx}";
+<%-- 			var num = "${dto.clubApplyIdx}";
 			var enabled = "${enabled}";
 			
 			var params = "num="+num+"&enabled="+enabled;
- */			
+ --%>		
 			var url = "<%=cp%>/club/${clubSeq}/joinClub";
 
 			$('#joinClubModal .modal-body').load(url,function(){

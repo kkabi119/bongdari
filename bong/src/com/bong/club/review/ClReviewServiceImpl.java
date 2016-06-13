@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
 import com.bong.club.apply.Reply;
+import com.bong.club.notice.Notice;
 import com.bong.club.review.ClReview;
 
 @Service("club_review.reviewService")
@@ -447,6 +448,16 @@ public class ClReviewServiceImpl implements ClReviewService {
 		}
 		return resultMap;
 	}
-	
 
+	@Override
+	public List<ClReview> listReviewSmall(Map<String, Object> map) {
+		List<ClReview> list=null;
+		try {
+			list=dao.getListInformation("club_review.listReviewSmall", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+	
 }
