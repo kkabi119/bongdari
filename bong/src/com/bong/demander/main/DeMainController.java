@@ -8,15 +8,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bong.club.ClubInfo;
+import com.bong.demander.admin.Dadmin;
+import com.bong.demander.admin.DadminService;
 import com.bong.demander.review.DeReview;
 import com.bong.demander.review.DeReviewService;
+import com.bong.member.SessionInfo;
 
 @Controller("demander.demainController")
 public class DeMainController {
@@ -26,6 +32,10 @@ public class DeMainController {
 	
 	@Autowired
 	private DeReviewService reviewService;
+	
+	@Autowired
+	private DadminService adminService;
+	
 	
 	
 	@RequestMapping(value="/demander/{demander_seq}/main")
@@ -41,7 +51,6 @@ public class DeMainController {
 		/*수요처 메인 프로필*/
 		DeMain mainProfile=mainService.deMainProfile(map);
 		
-		
 		/*후기small게시판*/
 		map.put("start", 1);
 		map.put("end", 5);
@@ -49,6 +58,9 @@ public class DeMainController {
 		//메인에 띄울 후기small게시판
 		List<DeReview> revList=reviewService.listDeReviewSmall(map);
 		//List<DeReview> revPhoto=reviewService.listDeReview(map);
+		
+		//메인에 띄울 봉사일정small게시판
+        List<Dadmin> volunList=adminService.AdminVolunListSmall(map);
 		
 		
 		//메인에 띄울 사진 첫슬라이드
@@ -89,16 +101,35 @@ public class DeMainController {
 		
 		String urlRevList=cp+"/demander/"+demander_seq+"/review/list";
 		String urlRevArticle=cp+"/demander/"+demander_seq+"/review/article?page="+1;
+		String urlVolList=cp+"/demander/"+demander_seq+"/admin/admin";
+	
 		
 		
 		ModelAndView mav = new ModelAndView(".four.demander.dari.main.각 수요처 메인");
 		mav.addObject("mainProfile", mainProfile);
 		mav.addObject("demander_seq", demander_seq);
 		mav.addObject("revList", revList);
+		mav.addObject("volunList", volunList);
 		mav.addObject("revPhoto1", revPhoto1);
 		mav.addObject("revPhoto2", revPhoto2);
 		mav.addObject("urlRevList", urlRevList);
+		mav.addObject("urlVolList", urlVolList);
 		mav.addObject("urlRevArticle", urlRevArticle);
 		return mav;
+	}
+	
+	@RequestMapping(value="/demander/{demander_seq}/left")
+	@ResponseBody
+	public Map<String, Object> clubLeft(
+			HttpSession session,
+			@PathVariable int demander_seq
+			) throws Exception {
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("demander_seq", demander_seq);
+		DeMain serviceInfo=mainService.deMainProfile(map);
+		map.put("serviceInfo", serviceInfo);
+		
+		return map;
 	}
 }

@@ -94,7 +94,7 @@
              DELETE FROM qna WHERE qnaIdx =#{qnaIdx}
       </delete>
       
-     <!--질문의 답변 읽기-->
+     <!--질문자의 인덱스-->
 	<select id="quserIdx" resultType="Integer" parameterType="com.bong.qna.Qna">
 	       SELECT c.userIdx FROM qna q JOIN checkId c ON q.useridx=c.useridx
 				WHERE groupNum=#{answer} and answer=0 

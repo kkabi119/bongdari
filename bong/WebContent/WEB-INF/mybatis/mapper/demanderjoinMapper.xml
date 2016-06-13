@@ -82,4 +82,10 @@
   <delete id="deleteAuthority" parameterType="map">
      DELETE FROM memAuthority WHERE ${field}=#{value}
   </delete>
+  	    
+    <select id="searchDemanderAddr" parameterType="map" resultType="com.bong.demanderjoin.Demanderjoin">
+   select DISTINCT category1,category2, dong2, streetname
+    from zip
+    where streetname=#{streetname}
+    </select>
 </mapper>

@@ -2,8 +2,10 @@ package com.bong.demanderjoin;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,5 +99,22 @@ public class DemanderjoinController {
 		Map<String, Object> model=new HashMap<String, Object>();
 		model.put("passed", passed);
 		return model;
+	}
+	@RequestMapping(value="/demanderjoin/zip", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView searchDemanderAddr(
+			HttpServletRequest req
+		   ,@RequestParam(value="zip", defaultValue="") String zip
+			) throws Exception{
+
+	
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("streetname", zip);
+		
+		List<Demanderjoin> list=service.listDemanderAddr(map);
+
+		ModelAndView mav= new ModelAndView("/demanderjoin/zip");
+		mav.addObject("list", list);
+		return mav;
 	}
 }

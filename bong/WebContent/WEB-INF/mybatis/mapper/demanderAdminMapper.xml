@@ -24,4 +24,18 @@
 		place, progress, volunteer_type, volunDays, themeNum FROM volun_bbs WHERE serviceIdx=#{demander_seq}
 </select>
 
+<!-- 메인에 띄울 봉사일정 small리스트 -->
+	<select id="listDeVolunSmall" parameterType="map"
+	            resultType="com.bong.demander.admin.Dadmin">
+		  SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			    SELECT volunIdx, subject FROM volun_bbs
+	         WHERE serviceIdx=${demander_seq}
+                  ORDER BY volunIdx DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	</select>
+
 </mapper>

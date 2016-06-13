@@ -49,5 +49,17 @@ public class DadminServiceImpl implements DadminService {
 		}
 		return list;
 	}
+	
+	//ºÀ»ç ¸®½ºÆ® 
+	@Override
+	public List<Dadmin> AdminVolunListSmall(Map<String, Object> map) {
+		List<Dadmin> list=null;
+		try {
+			list=dao.getListInformation("dAdmin.listDeVolunSmall", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
 
 }

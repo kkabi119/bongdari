@@ -212,4 +212,12 @@
 	<select id="readCheckId" parameterType="Integer" resultType="Integer">
 		SELECT isService FROM checkId WHERE userIdx=#{userIdx}
 	</select>
+	
+	    
+    <select id="searchAddr" parameterType="map" resultType="com.bong.member.Member">
+   select DISTINCT category1,category2, dong2, streetname
+    from zip
+    where streetname like '백련산로%'
+    </select>
+    
 </mapper>

@@ -35,6 +35,22 @@ padding:10px 0 10px 0 ;
 padding-top: 13px;
 }
 
+.labelNotice{
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #f0ad4e;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+    border-color:pink 2px;
+  
+    margin-right: 10px;
+}
+}
 </style>
 	
 	
@@ -75,10 +91,13 @@ function noticeSearchList() {
 					  <c:forEach var="dto" items="${list}">
 	                    <tr>
 	                        <td class="text-center">${dto.listNum}</td>
-	                        <td><a href="${urlArticle}&num=${dto.demanderNoticeIdx}">${dto.subject}</a></td>
+	                        <td><a href="${urlArticle}&num=${dto.demanderNoticeIdx}">
+	                        	<span class="glyphicon glyphicon-bell" style="padding:5px; color: #ef5b12;"></span>
+	                        	${dto.subject}</a></td>
 	                        <td class="text-center" style="font-weight: bold; color:#807F7F; ">${dto.userName}</td>
 	                        <td class="text-center">${dto.created}</td>
 	                        <td class="text-center">${dto.hitCount}</td> 
+	                   
 	                   
 	                    </tr>
 	                   </c:forEach>
