@@ -35,7 +35,7 @@ public class DemanderController {
 	
 	@RequestMapping(value="/main/demander")
 	public ModelAndView demanderMain() throws Exception {
-	ModelAndView mav = new ModelAndView(".layout.demander.main.수요처 전체 메인페이지");
+	ModelAndView mav = new ModelAndView(".layout.demander.main.수요처 검색");
 		return mav;
 	}
 
@@ -117,7 +117,7 @@ public class DemanderController {
             
         }
 
-        ModelAndView mav = new ModelAndView(".layout.demander.main.수요처 전체 메인페이지");
+        ModelAndView mav = new ModelAndView(".layout.demander.main.수요처 메인");
         mav.addObject("searchList", searchList); //검색결과 리스트
         mav.addObject("urlArticle", urlArticle); 
        /* mav.addObject("urlDemander", urlDemander); //검색결과의 수요처 클릭시 연결되는 페이지
@@ -129,13 +129,13 @@ public class DemanderController {
 		return mav;
 	}
 	 
-	@RequestMapping(value="/main/searchDemander")
+/*	@RequestMapping(value="/main/searchDemander")
 	public ModelAndView searchDemander() throws Exception {
 		System.out.println("***********searchDemander");
 		ModelAndView mav = new ModelAndView(".four.demander.search.수요처 검색하기");
 		return mav;
 	}
-
+*/
 
 	
 	@RequestMapping(value="/demander/{demander_seq}/calendar")

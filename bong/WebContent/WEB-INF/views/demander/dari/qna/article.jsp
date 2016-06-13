@@ -47,7 +47,7 @@
 <script type="text/javascript">
 
 function deleteQna() {
-<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
+<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId ||demander_seq==sessionScope.member.demander_seq}">
   var num = "${dto.sqnaIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
@@ -57,7 +57,7 @@ function deleteQna() {
   	location.href=url;
 </c:if>
 
-<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
+<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId &&demander_seq!=sessionScope.member.demander_seq}">
   alert("게시물을 삭제할 수  없습니다.");
 </c:if>
 }

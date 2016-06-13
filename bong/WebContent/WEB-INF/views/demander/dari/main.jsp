@@ -245,16 +245,19 @@ background-color: #4FCCCD;
                     </div>
                     <div class="panel-body">
                         <ul type="disc">
-                        <%--   <c:forEach var="dtoDocu" items="${listDocu}">
-                        	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
-                          </c:forEach> --%>
+                    
+                           <c:forEach var="volList" items="${volunList}">
+                        	<li><a href="${urlVolList}" >${volList.subject}</a></li>
+                          </c:forEach> 
+                        	<li><a href="${urlVolList}" class="btn btn-default" style="text-align: right">더보기</a></li>
+                       
                         
-                       		 <li><a href="#" >[충주] 따뜻했던 연~</a></li>
+                       		<!--  <li><a href="#" >[충주] 따뜻했던 연~</a></li>
                      	  	 <li><a href="#" >[서울] 벌써 보고 함께</a></li>
                        		 <li><a href="#" >[부산] 집에 가고 람 손~</a></li>
                        		 <li><a href="#" >[강원] 저녁 뭐 먹지?</a></li>
-                       		  <li><a href="#" >[전주] 힘들었던만큼  날</a></li>
-                        	<li>	<a href="#" class="btn btn-default" style="text-align: right">더보기</a></li>
+                       		  <li><a href="#" >[전주] 힘들었던만큼  날</a></li> -->
+                        	
                         </ul>
                     </div>
                 </div>

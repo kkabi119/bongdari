@@ -91,7 +91,7 @@
       
       <!-- 삭제 -->
       <delete id="deleteQna" parameterType="map">
-             DELETE FROM service_qna_${demander_seq} WHERE sqnaIdx =#{sqnaIdx}
+             DELETE FROM service_qna_${demander_seq} WHERE sqnaIdx =#{sqnaIdx} or answer=#{sqnaIdx}
       </delete>
       
      <!--질문의 답변 읽기-->

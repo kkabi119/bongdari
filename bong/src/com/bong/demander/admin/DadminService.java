@@ -7,5 +7,5 @@ public interface DadminService {
 	public Dadmin deMainProfile(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
 	public List<Dadmin> AdminVolunList(Map<String, Object> map);
-	
+	public List<Dadmin> AdminVolunListSmall(Map<String, Object> map);
 }
