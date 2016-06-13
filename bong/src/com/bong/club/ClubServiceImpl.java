@@ -206,9 +206,10 @@ public class ClubServiceImpl  implements ClubService {
 			dao.updateInformation("club.createClubReviewRLike", clubSeq);
 			dao.updateInformation("club.createClubReviewFile", clubSeq);
 			dao.updateInformation("club.createClubReviewLike", clubSeq);
-			/*dao.updateInformation("club.createBoardReplyLikeTable", clubSeq);
-			dao.updateInformation("club.createGuestTable", clubSeq);
-			dao.updateInformation("club.createPhotoTable", clubSeq);*/
+			dao.updateInformation("club.createClubApply", clubSeq);
+			dao.updateInformation("club.createClubApplyR", clubSeq);
+			dao.updateInformation("club.createClubApplyMemList", clubSeq);
+			dao.updateInformation("club.createClubApplyRLike", clubSeq);
 			
 			result=1;
 		} catch (Exception e) {
@@ -227,11 +228,15 @@ public class ClubServiceImpl  implements ClubService {
 			dao.updateInformation("club.dropClubFree", clubSeq);
 			dao.updateInformation("club.dropClubCalendar", clubSeq);
 			dao.updateInformation("club.dropClubCalendarSeq", clubSeq);
-			dao.updateInformation("club.dropClubReview", clubSeq);
-			dao.updateInformation("club.dropClubReviewR", clubSeq);
 			dao.updateInformation("club.dropClubReviewRLike", clubSeq);
 			dao.updateInformation("club.dropClubReviewFile", clubSeq);
 			dao.updateInformation("club.dropClubReviewLike", clubSeq);
+			dao.updateInformation("club.dropClubReviewR", clubSeq);
+			dao.updateInformation("club.dropClubApplyRLike", clubSeq);
+			dao.updateInformation("club.dropClubReview", clubSeq);
+			dao.updateInformation("club.dropClubApplyMemList", clubSeq);
+			dao.updateInformation("club.dropClubApplyR", clubSeq);
+			dao.updateInformation("club.dropClubApply", clubSeq);
 			result=1;
 		} catch (Exception e) {
 			System.out.println(e.toString());
