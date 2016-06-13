@@ -23,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bong.club.notice.Notice;
 import com.bong.club.notice.NoticeService;
+import com.bong.club.review.ClReview;
+import com.bong.club.review.ClReviewService;
 import com.bong.common.MyUtil;
 import com.bong.member.Member;
 import com.bong.member.SessionInfo;
@@ -35,6 +37,9 @@ public class ClubController {
 	
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private ClReviewService reviewService;
 	
 	@Autowired
 	private MyUtil util;
@@ -58,26 +63,45 @@ public class ClubController {
 		map.put("end", 5);
 		map.put("clubSeq", clubSeq);
 		List<Notice> listN=noticeService.listNoticeSmall(map);
+		List<ClReview> listR=reviewService.listReviewSmall(map);
+		
 		ClubInfo clubInfo=clubService.readClubInfoSmall(map);
-		 // 리스트의 번호
-        int listNum, n = 0;
-        Iterator<Notice> it=listN.iterator();
-        while(it.hasNext()) {
-            Notice data = it.next();
-            listNum = 5 - (1 + n - 1);
-            data.setListNum(listNum);
-            n++;
+		
+		 // 공지사항, 리스트의 번호
+        int listNum1, n1 = 0;
+        Iterator<Notice> it1=listN.iterator();
+        while(it1.hasNext()) {
+            Notice data1 = it1.next();
+            listNum1 = 5 - (1 + n1 - 1);
+            data1.setListNum(listNum1);
+            n1++;
+        }
+        
+     // 후기, 리스트의 번호
+        int listNum2, n2 = 0;
+        Iterator<ClReview> it2=listR.iterator();
+        while(it2.hasNext()) {
+            ClReview data2 = it2.next();
+            listNum2 = 5 - (1 + n2 - 1);
+            data2.setListNum(listNum2);
+            n2++;
         }
            
-        String urlList = cp+"/club/"+clubSeq+"/notice/list";
-        String urlArticle = cp+"/club/"+clubSeq+"/notice/article?page="+ 1;
+        String urlListN = cp+"/club/"+clubSeq+"/notice/list";
+        String urlArticleN = cp+"/club/"+clubSeq+"/notice/article?page="+ 1;
+        
+        String urlListR = cp+"/club/"+clubSeq+"/review/list";
+        String urlArticleR = cp+"/club/"+clubSeq+"/review/article?page="+ 1;
         
 		ModelAndView mav = new ModelAndView(".four.club.dari.main.동아리 메인");
 		mav.addObject("subMenu", "2");
 		mav.addObject("clubSeq", clubSeq);
 		mav.addObject("listN", listN);
-		mav.addObject("urlList", urlList);
-		mav.addObject("urlArticle", urlArticle);
+		mav.addObject("listR", listR);
+		mav.addObject("urlListN", urlListN);
+		mav.addObject("urlListR", urlListR);
+		mav.addObject("urlArticleN", urlArticleN);
+		mav.addObject("urlArticleR", urlArticleR);
 		mav.addObject("clubInfo",clubInfo);
 		
 		return mav;

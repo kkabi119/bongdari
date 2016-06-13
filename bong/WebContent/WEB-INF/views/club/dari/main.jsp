@@ -209,23 +209,21 @@
          
     
 <div class="row" style="margin-top:50px;">
-<div class="col-md-6" >
+			<div class="col-md-6" >
                 <div class="panel panel-default">
-                    <div class="panel-heading" >
-                        <h5 style="font-size:18px;"><i class="fa fa-sun-o"></i> 이달의 후기<a href="#"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
+                    <div class="panel-heading">
+                        <h5 style="font-size:18px;"><i class="fa fa-lightbulb-o"></i> 공지사항 <a href="#"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
                     </div>
                     <div class="panel-body">
                         <ul type="disc">
-                        <%--   <c:forEach var="dtoDocu" items="${listDocu}">
-                        	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
-                          </c:forEach> --%>
+                         <c:forEach var="dtoR" items="${listR}">
+                        	<%-- <li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li> --%>
+                         
                         
-                       		 <li><a href="#" >[충주] 따뜻했던 연탄봉억~</a></li>
-                     	  	 <li><a href="#" >[서울] 벌써 보고싶은 아께</a></li>
-                       		 <li><a href="#" >[부산] 집에 가고 싶은 ~</a></li>
-                       		 <li><a href="#" >[강원] 저녁 뭐 먹지?</a></li>
-                       		 <li><a href="#" >[전주] 힘들었던만큼날</a></li>
-                        	<li><a href="#" class="btn btn-default" style="text-align: right">더보기</a></li>
+                       		 <li><a href="${urlArticleR}+&num=${dtoR.clubReviewIdx}" >${dtoR.subject}</a></li>
+                       	 </c:forEach> 
+                     	  	 
+                        	<li><a href="${urlListR}" class="btn btn-default" style="text-align: right">더보기</a></li>
                         </ul>
                     </div>
                 </div>
@@ -242,24 +240,18 @@
                         	<%-- <li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li> --%>
                          
                         
-                       		 <li><a href="${urlArticle}+&num=${dtoN.clubNoticeIdx}" >${dtoN.subject}</a></li>
+                       		 <li><a href="${urlArticleN}+&num=${dtoN.clubNoticeIdx}" >${dtoN.subject}</a></li>
                        	 </c:forEach> 
                      	  	 
-                        	<li><a href="${urlList}" class="btn btn-default" style="text-align: right">더보기</a></li>
+                        	<li><a href="${urlListN}" class="btn btn-default" style="text-align: right">더보기</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             </div>
-            <div id="map-container">
-                <h2 class="page-header">Google Map</h2>
-                <div id="gmap"></div>
-            </div><!--/#map-container-->
      <script>
     $('.carousel').carousel({
         interval: 5000 //changes the speed
     })
     </script>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-    <script type="text/javascript" src="<%=cp%>/res/js/gmaps.js"></script>
