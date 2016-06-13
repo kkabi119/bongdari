@@ -129,10 +129,10 @@
                                 <li><a id="introduce" href=""></a></li>
                             </ul>
                              <hr style="margin-bottom:10px; margin-top:15px; border:2px solid #ccc;">
-                             <c:if test="${authority==null}">
-                             <button type="button" class="btn btn-default" 
-                             			style="width:100%;border-radius:0px; padding:15px 25px ; margin-bottom:0px; background-color:#3897f0; color:white; border:none;"
-                      			 id="joinClub">가입하기</button>
+                             <c:if test="${authority.equals('')}">
+	                             <button type="button" class="btn btn-default" 
+	                             			style="width:100%;border-radius:0px; padding:15px 25px ; margin-bottom:0px; background-color:#3897f0; color:white; border:none;"
+	                      			 id="joinClub">가입하기</button>
                       		 </c:if>
                         </div>
                         <div class="sidebar-item categories">

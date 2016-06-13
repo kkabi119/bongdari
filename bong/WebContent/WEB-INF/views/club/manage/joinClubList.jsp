@@ -6,6 +6,7 @@
 	String cp=request.getContextPath();
 %>
 
+
 <style type="text/css">
  .table-hover{
  	margin-bottom:15px;
@@ -88,11 +89,17 @@ width:300px;
 }
 </style>
 
+
 <script type="text/javascript">
 
 
 function joinClubOk(){
-	alert($("input[name=selectUser]").val());
+	
+	 var f=document.joinClubForm;
+	f.action="<%=cp%>/club/${clubSeq}/joinClubOk";
+
+	alert(f.$("input[type=checkbox]").val());
+	
 	<%-- var url="<%=cp%>/club/${clubSeq}/apply/applyCheckOk";
 	
 	 var checkArray = new Array();  
@@ -112,6 +119,8 @@ function joinClubOk(){
          }
      });
 	$('#applyListModal').modal('hide'); --%>
+	
+	f.submit();
 }
 
 
@@ -120,8 +129,7 @@ function joinClubOk(){
 
 <div class="container" style="width:100%; margin-bottom:-35px;">
 
-
-<form id="joinClubSeq">
+<form method=post action="submit"  name="joinClubForm">
 <table class="table table-bordered table-striped table-hover" style="background-color:white; border-radius:3px;">
 <tr><td colspan="7" style="text-align:left;"> &nbsp; &nbsp;&nbsp;&nbsp;현재 총 <span style="color:orange; font-weight:bold;">${n}명</span>이 가입을 신청하였습니다</td></tr>
   <tr style="" >

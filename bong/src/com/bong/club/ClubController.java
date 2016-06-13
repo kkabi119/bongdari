@@ -122,6 +122,7 @@ public class ClubController {
 		
 		map.put("userIdx",info.getUserIdx());
 		String authority=clubService.readAuthority(map);
+		
 		System.out.println("authority:"+authority);
 		
 		map.put("dto", dto);
@@ -421,6 +422,7 @@ public class ClubController {
 		map.put("userIdx", info.getUserIdx());
 		map.put("userId", info.getUserId());
 		map.put("clubSeq",clubSeq);
+		System.out.println("userIdx="+info.getUserIdx());
 		
 		JoinClub joclub=clubService.joinClubEnabled(map);
 		System.out.println(" getAuthority:"+ joclub.getAuthority()+" joincount:"+ joclub.getJoinCount());
@@ -446,6 +448,7 @@ public class ClubController {
 			clubService.JoinApply(map);		
 			System.out.println("가입신청완료");
 		}
+		System.out.println("enabled:"+enabled);
 		mav.addObject("enabled",enabled);
 		return mav;
 	}
