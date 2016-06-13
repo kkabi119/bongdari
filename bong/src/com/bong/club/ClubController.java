@@ -487,44 +487,37 @@ public class ClubController {
 			,HttpSession session
 			,@RequestParam(value="selectUser",defaultValue="") String selectUser)
 		throws Exception {		
-				
+		
 		System.out.println(selectUser);
 
 		String[] strs = selectUser.split(",");
   		   
-		      int[] intArray = new int[strs.length];
-		      for (int i = 0; i < strs.length; i++) {
-		         String numberAsString = strs[i];
-		         intArray[i] = Integer.parseInt(numberAsString);
-		      }
+		int[] intArray = new int[strs.length];
+		for (int i = 0; i < strs.length; i++) {
+		     String numberAsString = strs[i];
+		     intArray[i] = Integer.parseInt(numberAsString);
+		}
 		
-		      List<Integer> intList = new ArrayList<Integer>();
+		 List<Integer> intList = new ArrayList<Integer>();
 		      
 		  	Map<String, Object> map = new HashMap<String, Object>();
 		  	map.put("usridx", strs);
 			map.put("clubSeq",clubSeq);
 			clubService.joinClubOk(map);
-			
-		/*	map.put("intList",intList);*/
-			
-/*			clubService.joinClubOk(map);
-		      for (int index = 0; index < intArray.length; index++)
-		      {
-		    		clubService.joinClubOk(map);
-		          intList.add(intArray[index]);
-		      }
-*/		      /*
-		ArrayList<Integer> selectUser1 = new ArrayList<Integer>();
-		selectUser1 = new ArrayList(Arrays.asList(intArray));*/
-					  
-		ModelAndView mav=new ModelAndView("/club/manage/joinClubList");
+							  
+		ModelAndView mav=new ModelAndView("redirect:/club/{clubSeq}/manage/joinClubList");
 		
-		/*Map<String, Object> map = new HashMap<String, Object>();
-		map.put("clubSeq",clubSeq);
-		map.put("intList",intList);*/
+		List<Member> list = clubService.joinClubList(map);
 		
-		clubService.joinClubOk(map);
+		int n=0; //listnum 
+		for(int i=0; i<list.size(); i++) {
+			n++;
+			list.get(i).setListNum(n);
+		}
 		
+		mav.addObject("list", list);
+		mav.addObject("n",n);
+		mav.addObject("clubSeq",clubSeq);
 		return mav;
 	}	
 }

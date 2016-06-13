@@ -91,15 +91,36 @@ width:300px;
 
 
 <script type="text/javascript">
-
+function reLoad(){
+	location.reload();
+}
 
 function joinClubOk(){
 	
-	var f=document.joinClubForm;
+	<%-- var f=document.joinClubForm;
 	f.action="<%=cp%>/club/${clubSeq}/manage/joinClubOk";
-	f.submit();
+	f.submit(); --%>
 	
-//	alert($("input[type=checkbox]").val());
+	$.ajax ({
+        type: 'POST', 
+        url: "<%=cp%>/club/${clubSeq}/manage/joinClubOk", // 호출 URL
+        data:  $("#joinClubForm").serialize() , 
+// 파라메터 정보 전달  form에 있는 name들을 한번에 보낼 수 있음 우왕귿귿
+        success:function(data){
+        	var url="<%=cp%>/club/${clubSeq}/manage/joinClubList";
+        	$.get(url, {}, function(data){
+        		var id="#tabContent2";
+        		$(id).html(data);
+        	});
+        },
+        error:function(e) {
+          // alert(e.responseText);
+        }
+      });
+	
+	
+	
+	
 	
 	<%-- var url="<%=cp%>/club/${clubSeq}/apply/applyCheckOk";
 	
@@ -129,7 +150,7 @@ function joinClubOk(){
 
 <div class="container" style="width:100%; margin-bottom:-35px;">
 
-<form method=post action="submit"  name="joinClubForm">
+<form method=post action="submit"  name="joinClubForm" id="joinClubForm">
 <table class="table table-bordered table-striped table-hover" style="background-color:white; border-radius:3px;">
 <tr><td colspan="7" style="text-align:left;"> &nbsp; &nbsp;&nbsp;&nbsp;현재 총 <span style="color:orange; font-weight:bold;">${n}명</span>이 가입을 신청하였습니다</td></tr>
   <tr style="" >
