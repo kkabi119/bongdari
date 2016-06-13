@@ -433,7 +433,7 @@ public class ClubController {
 		throws Exception {		
 		
 		ModelAndView mav=new ModelAndView("/club/manage/joinClubList");
-		
+		//어레이리스트로 바꾼다 - where절을 in을 써서 
 		// 해당 레코드 가져 오기
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("clubSeq",clubSeq);

@@ -556,7 +556,7 @@ from memberInfo m where userIdx=${userIdx}
 	</select>
 	
 	<select id="joinClubList" parameterType="map" resultType="com.bong.member.Member">
-	SELECT userName, userAddr,TO_CHAR(joinDate,'YYYY-MM-DD/HH24:MI' ) joinDate,m.USERGENDER,TRUNC( MONTHS_BETWEEN( SYSDATE, userbirth)/12) as age
+	SELECT j.userIdx,userName, userAddr,TO_CHAR(joinDate,'YYYY-MM-DD/HH24:MI' ) joinDate,m.USERGENDER,TRUNC( MONTHS_BETWEEN( SYSDATE, userbirth)/12) as age
 	FROM joinclub j join memberInfo m on m.userIdx=j.userIdx
 	WHERE clubIdx=${clubSeq} and authority='가입대기'
    

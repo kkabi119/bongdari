@@ -139,7 +139,6 @@
                             <ul class="nav navbar-stacked" >
                             <li><h3 class="nav navbar-stacked lefthead">Categories</h3></li>
                                 <li  class="navbar-stacked-item3"><a href="<%=cp%>/club/${clubSeq}/notice/list">공지사항</a></li>
-                               
                                 <li  class="navbar-stacked-item5"><a href="<%=cp%>/club/${clubSeq}/free/list">자유게시판</a></li>
                                 <li  class="navbar-stacked-item6"><a href="<%=cp%>/club/${clubSeq}/review/list">후기/포토게시판</a></li>
                                 <li  class="navbar-stacked-item7"><a href="<%=cp%>/club/${clubSeq}/apply/list">봉사신청게시판</a></li>

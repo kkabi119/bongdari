@@ -116,8 +116,7 @@ $(document).ready(function($) {
                                 <li><a href="<%=cp%>/notice/list">공지사항</a></li>
                                 <li><a href="<%=cp%>/qna/list">질문하기</a></li>                 
                             </ul>
-                        </li>                         
-                        <li><a href="shortcodes.html ">Shortcodes</a></li>                    
+                        </li>                                         
                     </ul>
                 </div>
                 <div class="search">
