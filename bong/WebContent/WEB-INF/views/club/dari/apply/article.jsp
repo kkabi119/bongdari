@@ -80,7 +80,6 @@ function reLoad(){
 
 $(function(){
 	$("#listBtn_apply").click(function(){
-		
 		 
 		var num = "${dto.clubApplyIdx}";
 		var enabled = "${enabled}";

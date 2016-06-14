@@ -537,7 +537,7 @@ public class ApplyController {
 						if(list.get(i).getUserIdx()==date_list.get(date_list.size()-1).getUserIdx()) {
 							
 							date_list.get(date_list.size()-1).setHopeDate(
-												date_list.get(date_list.size()-1).getHopeDate()+", "+ list.get(i).getHopeDate().substring(5));
+												date_list.get(date_list.size()-1).getHopeDate()+" "+ list.get(i).getHopeDate().substring(5));
 							
 						}
 						else {							

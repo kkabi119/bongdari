@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Member {
 	private String userPwd, userId, userName, userBirth, userAddr, userJob, userGender, userEmail;
+	private String addr1,addr2;
 	private String email1, email2;
 	private String created_date, modify_date, last_login;
 	private String userTel, tel1, tel2, tel3;
@@ -17,8 +18,58 @@ public class Member {
 	private String age;
 	private int  listNum;
 	private String hopeDate;
+	private String joinDate; //동아리 가입신청 날짜
+	private String zip, category1, category2, dong2, streetname;
+    
 	
-
+	public String getAddr1() {
+		return addr1;
+	}
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
+	}
+	public String getAddr2() {
+		return addr2;
+	}
+	public void setAddr2(String addr2) {
+		this.addr2 = addr2;
+	}
+	public String getCategory1() {
+		return category1;
+	}
+	public void setCategory1(String category1) {
+		this.category1 = category1;
+	}
+	public String getCategory2() {
+		return category2;
+	}
+	public void setCategory2(String category2) {
+		this.category2 = category2;
+	}
+	public String getDong2() {
+		return dong2;
+	}
+	public void setDong2(String dong2) {
+		this.dong2 = dong2;
+	}
+	public String getStreetname() {
+		return streetname;
+	}
+	public void setStreetname(String streetname) {
+		this.streetname = streetname;
+	}
+	public String getZip() {
+		return zip;
+	}
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+	public String getJoinDate() {
+		return joinDate;
+	}
+	public void setJoinDate(String joinDate) {
+		this.joinDate = joinDate;
+	}
 	public String getHopeDate() {
 		return hopeDate;
 	}

@@ -139,6 +139,19 @@
 		WHERE r.clubreviewidx=#{num}
 	</select>
 	
+	<!-- 메인용 글리스트 -->
+	<select id="listReviewSmall" parameterType="map" resultType="com.bong.club.review.ClReview">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			     SELECT clubreviewIdx, subject,content
+			        FROM club_review_${clubSeq}
+	                ORDER BY clubreviewIdx DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	</select>
+	
 	<!-- 조회수 증가 -->
 	<update id="hitCountClReview" parameterType="map">
 		UPDATE club_review_${clubSeq} SET hitCount=hitCount+1 WHERE clubreviewidx = #{num}

@@ -46,9 +46,9 @@
 	</insert>
 	
 	<insert id="insertClubInfo" parameterType="com.bong.club.ClubInfo">
-	    INSERT INTO clubInfo(clubIdx, userId, themeNum, clubname, introduce, closed, city, photoFilename)
+	    INSERT INTO clubInfo(clubIdx, userId, themeNum, clubname, introduce, closed, clubAddr, photoFilename)
 	      VALUES (#{clubSeq}, #{userId}, #{themeNum}, 
-	                #{clubname}, #{introduce}, 1,#{city}, #{photoFilename, jdbcType=VARCHAR})
+	                #{clubname}, #{introduce}, 1,#{clubAddr}, #{photoFilename, jdbcType=VARCHAR})
 	</insert>
 	
 	<insert id="insertJoinClub" parameterType="com.bong.club.ClubInfo">
@@ -58,7 +58,7 @@
 	
 	<!-- 동아리 정보 수정 -->
 	<update id="updateClubInfo" parameterType="com.bong.club.ClubInfo">
-	    UPDATE ClubInfo SET themeNum=#{themeNum}, clubname=#{clubname}, introduce=#{introduce}, city=#{city}, photoFilename=#{photoFilename}
+	    UPDATE ClubInfo SET themeNum=#{themeNum}, clubname=#{clubname}, introduce=#{introduce}, clubAddr=#{clubAddr}, photoFilename=#{photoFilename}
 	    WHERE clubIdx=#{clubSeq}
 	</update>
 	
@@ -141,12 +141,13 @@
 	</select>
 	
 	<select id="readClubInfoSmall" parameterType="map" resultType="com.bong.club.ClubInfo">
-		SELECT clubidx AS clubSeq, userId, c.parent groupNum ,clubname, introduce, clubBirth, city,
+		SELECT clubidx AS clubSeq, userId, c.parent groupNum ,clubname, introduce, clubBirth, clubAddr,
+		
 			closed, c.subject, g.subject groupSubject, photoFilename, c.themeNum, c.parent groupNum 
 			FROM ClubInfo b 
 			JOIN theme c ON b.themeNum=c.themeNum 
 			JOIN ( SELECT themeNum, subject FROM theme WHERE parent IS NULL ) g ON c.parent = g.themeNum
-			WHERE clubIdx=${clubSeq}  
+			WHERE clubIdx=${clubSeq}
 	</select>
 	
 	<select id="readClubInfoSession" parameterType="map" resultType="String">
@@ -396,6 +397,83 @@
 		DROP TABLE CLUB_REVIEW_LIKE_${value} PURGE
 	</update>
 	
+	<update id="createClubApply" parameterType="Integer">
+		CREATE TABLE club_apply_${value}(
+			clubapplyIdx NUMBER NOT NULL,
+			CLUBIDX NUMBER NOT NULL,
+			volunIdx NUMBER NOT NULL,
+			ENABLED NUMBER DEFAULT 1,
+			hitcount number default 0,
+			PRIMARY KEY(clubapplyIdx),
+			CONSTRAINTS fk_club_volunIdx_${value} FOREIGN KEY(volunIdx)
+			                  REFERENCES volun_bbs(volunIdx) ON DELETE CASCADE,
+			CONSTRAINT fk2_club_clubIdx_${value} FOREIGN KEY(clubIdx)
+			        REFERENCES clubinfo(clubIdx) ON DELETE CASCADE     
+		)
+	</update>
+	
+	<update id="dropClubApply" parameterType="Integer">
+		DROP TABLE club_apply_${value} PURGE
+	</update>
+	
+	<update id="createClubApplyR" parameterType="Integer">
+		CREATE TABLE club_applyR_${value}(
+			CARIDX	NUMBER,
+			CONTENT	CLOB,
+			CREATED	DATE DEFAULT SYSDATE,
+			USERIDX	NUMBER NOT NULL,
+			CLUBAPPLYIDX NUMBER,
+			answer NUMBER DEFAULT 0,
+			
+			PRIMARY KEY(CARIDX),
+			CONSTRAINT fk_applyR_userIdx_${value} FOREIGN KEY(userIdx)
+			                  REFERENCES memberinfo(userIdx) ON DELETE CASCADE,
+			CONSTRAINT fk_applyR_clubapplyIdx_${value} FOREIGN KEY(clubApplyIdx)
+			                  REFERENCES club_apply_${value}(clubApplyIdx) ON DELETE CASCADE
+		)
+	</update>
+	
+	<update id="dropClubApplyR" parameterType="Integer">
+		DROP TABLE club_applyR_${value} PURGE
+	</update>
+	
+	<update id="createClubApplyMemList" parameterType="Integer">
+		CREATE TABLE club_apply_memList_${value} (
+		   userIdx NUMBER NOT NULL
+		   ,clubApplyIdx NUMBER NOT NULL
+		   ,hopeDate DATE    
+		   ,PRIMARY KEY(userIdx,clubApplyIdx, hopeDate)   
+		   ,CONSTRAINT fk_c_apply_mem_userIdx_${value} FOREIGN KEY(userIdx)
+		               REFERENCES memberInfo(userIdx) 
+		   ,CONSTRAINT fk_c_apply_mem_applyIdx_${value} FOREIGN KEY(clubApplyIdx)
+		               REFERENCES club_apply_${value}(clubApplyIdx) on delete cascade               
+		 )
+	</update>
+	
+	<update id="dropClubApplyMemList" parameterType="Integer">
+		DROP TABLE club_apply_memList_${value} PURGE
+	</update>
+	
+	<update id="createClubApplyRLike" parameterType="Integer">
+		create table club_applyR_like_${value} (
+			CARIdx NUMBER NOT NULL,
+			userIdx NUMBER NOT NULL,
+			CONSTRAINT PK_club_applyR_like_${value} PRIMARY KEY (CARIdx,userIdx) ,
+			CONSTRAINT fK_club_applyR_like_${value} foreign key(CARIdx) REFERENCES
+			CLUB_APPLYR_${value}(CARIdx) ON DELETE CASCADE,
+			CONSTRAINT fK2_club_applyR_like_${value} foreign key(userIdx) REFERENCES 
+			MEMBERINFO(userIdx) ON DELETE CASCADE
+		)
+	</update>
+	
+	<update id="dropClubApplyRLike" parameterType="Integer">
+		DROP TABLE club_applyR_like_${value} PURGE
+	</update>
+	
+	
+	
+	
+	
 	
 	
 	<update id="dropBoardCategoryTable" parameterType="Long">
@@ -532,15 +610,42 @@
 	    DROP TABLE b_${value}_photo PURGE
 	</update>
 	
-	<select id="joinClubEnabled" parameterType="map">
+	<select id="joinClubEnabled" parameterType="map" resultType="com.bong.club.JoinClub">
 	
-		select m.userAddr, (select count(*) from joinclub where userIdx=#{userIdx}) joinCount, j.authority
-		from memberInfo m
-  			   join (select authority,userIdx from joinclub where clubIdx=${clubSeq} and userIdx=#{userIdx}) j 
-    		   on m.USERIDX =j.USERIDX;
-	
+		  select m.userAddr, (select count(*) from joinclub where userIdx=#{userIdx} ) joinCount,
+		  (select authority from joinclub where clubIdx=${clubSeq} and userIdx=#{userIdx}) authority,
+		(select clubAddr from clubInfo where CLUBIDX=${clubSeq}) clubAddr
+		from memberInfo m where userIdx=${userIdx}
 	
 	</select>
 	
+	<!-- 가입신청한 회원을 "가입대기"로 변경 -->
+	<insert id="joinApply" parameterType="map" >
+	   insert into joinClub(joinclubIdx,clubIdx, userIdx, authority) 
+	   values(joinclub_seq.NEXTVAL,${clubSeq},#{userIdx},'가입대기')
+	</insert>
+	<!-- 동아리에 들어올 때 해당동아리에서의 회원권한 가져오기 (일반/관리자/가입대기 등) -->
+	<select id="readAuthority" parameterType="map" resultType="String">
+	select authority
+	from joinclub 
+	where clubIdx=${clubSeq} and userIdx=#{userIdx}
+	</select>
+	
+	<select id="joinClubList" parameterType="map" resultType="com.bong.member.Member">
+	SELECT j.userIdx,userName, userAddr,TO_CHAR(joinDate,'YYYY-MM-DD/HH24:MI' ) joinDate
+			  ,m.USERGENDER,TRUNC( MONTHS_BETWEEN( SYSDATE, userbirth)/12) as age
+	FROM joinclub j join memberInfo m on m.userIdx=j.userIdx
+	WHERE clubIdx=${clubSeq} and authority='가입대기'
+   
+	</select>
+	
+	<update id="joinClubOk" parameterType="map">
+		<!-- UPDATE Joinclub SET authority='일반' WHERE clubIdx=${clubSeq} and userIdx IN(${intList}) -->
+		
+		UPDATE Joinclub SET authority='일반' WHERE clubIdx=${clubSeq} and userIdx IN 
+		<foreach collection="usridx" item="item" index="index" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</update>
 	
 </mapper>

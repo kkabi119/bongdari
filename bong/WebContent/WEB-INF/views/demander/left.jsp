@@ -13,6 +13,16 @@
 	}
 </style>
 
+<script type="text/javascript">
+$(function(){
+	
+	var url="<%=cp%>/demander/${demander_seq}/left";
+	$.post(url, {}, function(data){
+		var demanderName=data.serviceInfo.serviceName;
+		$("#demanderName").html(demanderName);
+	}, "JSON");
+});
+</script>
                 <div class="col-md-3 col-sm-5" style="width:width:22%;">
                     <div class="sidebar blog-sidebar">
                     	<!-- 코멘트 쓰려면 쓰기 없어도 됨 -->

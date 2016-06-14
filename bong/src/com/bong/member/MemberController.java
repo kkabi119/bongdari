@@ -1,9 +1,14 @@
 package com.bong.member;
 
 import java.io.File;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bong.common.MyUtil;
+
 @Controller("member.memberController")
 public class MemberController {
 	
 	@Autowired
 	private MemberService service;
-	
+	@Autowired
+	private MyUtil myUtil;
 	/*//로그인 및 로그아웃
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
 	public ModelAndView loginForm() throws Exception {
@@ -115,5 +123,21 @@ public class MemberController {
 		
 		return model;
 	}
+	@RequestMapping(value="/member/zip", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView searchAddr(
+			HttpServletRequest req
+		   ,@RequestParam(value="zip", defaultValue="") String zip
+			) throws Exception{
+
 	
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("streetname", zip);
+		
+		List<Member> list =service.listAddr(map);
+
+		ModelAndView mav= new ModelAndView("/member/zip");
+		mav.addObject("list", list);
+		return mav;
+	}
 }

@@ -27,7 +27,7 @@
 	}
 	.post-comment .pull-left img{
 		margin-right:40px;
-		border:1px solid #ccc;
+		border-left: white; 
 	}
 	
 </style>
@@ -203,8 +203,9 @@ function deleteReplyAnswer(replyNum, answer) {
 
    						<li class="media">
                                             <div class="post-comment" style="">
-                                                <a class="pull-left" href="#" >
-                                                    <img style=" width:137px; height:127px; background-size:cover; "class="media-object" src="<%=cp%>/res/images/blogdetails/2.png" alt="">
+                                                <a class="pull-left" >
+                                                    <img style="border-radius:100%; width:137px; height:127px; background-size:cover;"class="media-object" 
+                                                    src="<%=cp%>/res/images/demander/user.png" alt="">
                                                 </a>
                                                 <div class="media-body" style="padding-bottom: 0px">
                                                     <span><i class="fa fa-user"></i><a href="#">${Rdto.userName}</a></span>

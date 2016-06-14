@@ -230,7 +230,8 @@ public class QnaController {
 			return new ModelAndView("redirect:/demander/"+demander_seq+"/qna/list?page=" + page);
 		}
 
-		if (!info.getUserId().equals(dto.getUserId()) && !info.getUserId().equals("admin")) {
+		if (!info.getUserId().equals(dto.getUserId()) && !info.getUserId().equals("admin") 
+				&& demander_seq!=info.getDemander_seq()) {
 			return new ModelAndView("redirect:/demander/"+demander_seq+"/qna/list?page=" + page);
 		}
 

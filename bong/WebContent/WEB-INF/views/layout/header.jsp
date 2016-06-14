@@ -88,7 +88,7 @@ $(document).ready(function($) {
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a href="<%=cp%>/">Home</a></li>
-                        <li class="dropdown"><a href="<%=cp%>/main/club">동아리 <i class="fa fa-angle-down"></i></a>
+                        <li class="dropdown"><a href="<%=cp%>/club/main">동아리 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                     <c:if test="${sessionScope.member.isService==0}">    
                             <c:if test="${sessionScope.member.clubIdx==0}">
@@ -104,11 +104,11 @@ $(document).ready(function($) {
                                 
                             </ul>
                         </li>                    
-                        <li class="dropdown"><a href="">수요처 <i class="fa fa-angle-down"></i></a>
-                            <ul role="menu" class="sub-menu">
+                        <li><a href="<%=cp%>/main/demander">수요처 </a>
+                           <%--  <ul role="menu" class="sub-menu">
                                 <li><a href="<%=cp%>/main/demander">수요처 전체 메인</a></li>
                                 <li><a href="<%=cp%>/main/searchDemander">수요처 검색</a></li>
-                            </ul>
+                            </ul> --%>
                         </li>
                         
                         <li class="dropdown"><a href="">고객센터 <i class="fa fa-angle-down"></i></a>
@@ -116,8 +116,7 @@ $(document).ready(function($) {
                                 <li><a href="<%=cp%>/notice/list">공지사항</a></li>
                                 <li><a href="<%=cp%>/qna/list">질문하기</a></li>                 
                             </ul>
-                        </li>                         
-                        <li><a href="shortcodes.html ">Shortcodes</a></li>                    
+                        </li>                                         
                     </ul>
                 </div>
                 <div class="search">

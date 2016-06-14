@@ -14,22 +14,30 @@
 		WHERE serviceIdx=${demander_seq}
 </select>
 
-<!-- 
-	public int dataCount(Map<String, Object> map);
-	public List<Demander> deSearchList(Map<String, Object> map); -->
-
-
-<!-- 검색 -->
 
 
 <!-- 수요처 검색결과 list관련 -->
 	<sql id="where-list">
+	  <if test="sido.length()!=0 and addr.length()==0">
+	      DBMS_LOB.INSTR(serviceAddr,#{sido}) &gt; 0 
+	  </if>
+	  <if test="sido.length()!=0 and addr.length()!=0">
+	      DBMS_LOB.INSTR(serviceAddr,#{sido}) &gt; 0 AND
+	      DBMS_LOB.INSTR(serviceAddr,#{addr}) &gt; 0
+	  </if>
+	   <if test="demanderType=='disabled'">
+	     subject='장애인'
+	  </if>
 	  <if test="demanderType=='silver'">
 	      subject='노인'
 	  </if>
-	  <if test="demanderType=='adult'">
-	     subject='일반성인'
+	  <if test="demanderType=='child'">
+	     subject='아동'
 	  </if>
+	  <if test="demanderType=='etc'">
+	     subject='기타'
+	  </if>
+	  
 	  <if test="demanderName.length()!=0">
 	      DBMS_LOB.INSTR(serviceName, #{demanderName}) &gt; 0 
 	  </if>
@@ -41,7 +49,7 @@
 	            resultType="Integer">
 	  SELECT NVL(COUNT(*), 0) FROM serviceInfo s JOIN theme t ON s.themenum=t.themenum
 	     <where>
-	     	<if test="demanderType!=null or demanderName!='' or demanderName!=null">
+	     	<if test="demanderType!=null or demanderName!=null or sido!=null">
 	     	    <include refid="where-list"/>
 	     	</if>
 	     </where>   
@@ -58,7 +66,7 @@
 			        ,subject as themeName
 					FROM serviceInfo s JOIN theme t ON s.themenum=t.themenum
 	             <where>
-	     	<if test="demanderType!=null or demanderName!='' or demanderName!=null">
+	     	<if test="demanderType!=null or demanderName!=null or sido!=null">
 	     	    <include refid="where-list"/>
 	     	</if>
 	     </where>   

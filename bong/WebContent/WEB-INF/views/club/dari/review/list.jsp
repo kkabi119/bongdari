@@ -168,7 +168,7 @@ hr:LAST-CHILD {
          <div style="block; margin-top:28px; width:93%;  height:50px;overflow:hidden; text-overflow:elevation; color:gray; ">
 	      <div style="font-size:15px !important; line-height: 20px ; font-weight: 400  ! important; 
 	      				 font-family: 'NanumGothic', '나눔고딕',' Malgun Gothic', 'sans-serif'  ! important;  ! important">
-	  			  <%--  ${dto.content} --%>
+	  			 ${dto.content} ...
 	     
 		    </div><span>...</span> 
 		 
@@ -194,9 +194,7 @@ hr:LAST-CHILD {
 	                ${paging}
 	</c:if>
 </div>
-
-
-
+sfsdf
 <!-- 검색 -->
    <div style="clear: both; border-radius:0px;">
       <div style="float: left; width: 20%; min-width: 85px;">

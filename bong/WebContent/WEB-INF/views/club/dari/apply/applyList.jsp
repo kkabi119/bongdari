@@ -89,7 +89,9 @@ width:300px;
 </style>
 
 <script type="text/javascript">
+
 var deleteCheckList=[];
+
 function deleteDate(theDate){
 	if($("#checked_"+theDate).val()==0){
 		$("#checked_"+theDate).each(function(){

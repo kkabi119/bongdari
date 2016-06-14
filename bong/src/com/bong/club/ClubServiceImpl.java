@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
+import com.bong.member.Member;
 
 @Service("club.clubService")
 public class ClubServiceImpl  implements ClubService {
@@ -205,9 +206,10 @@ public class ClubServiceImpl  implements ClubService {
 			dao.updateInformation("club.createClubReviewRLike", clubSeq);
 			dao.updateInformation("club.createClubReviewFile", clubSeq);
 			dao.updateInformation("club.createClubReviewLike", clubSeq);
-			/*dao.updateInformation("club.createBoardReplyLikeTable", clubSeq);
-			dao.updateInformation("club.createGuestTable", clubSeq);
-			dao.updateInformation("club.createPhotoTable", clubSeq);*/
+			dao.updateInformation("club.createClubApply", clubSeq);
+			dao.updateInformation("club.createClubApplyR", clubSeq);
+			dao.updateInformation("club.createClubApplyMemList", clubSeq);
+			dao.updateInformation("club.createClubApplyRLike", clubSeq);
 			
 			result=1;
 		} catch (Exception e) {
@@ -226,11 +228,15 @@ public class ClubServiceImpl  implements ClubService {
 			dao.updateInformation("club.dropClubFree", clubSeq);
 			dao.updateInformation("club.dropClubCalendar", clubSeq);
 			dao.updateInformation("club.dropClubCalendarSeq", clubSeq);
-			dao.updateInformation("club.dropClubReview", clubSeq);
-			dao.updateInformation("club.dropClubReviewR", clubSeq);
 			dao.updateInformation("club.dropClubReviewRLike", clubSeq);
 			dao.updateInformation("club.dropClubReviewFile", clubSeq);
 			dao.updateInformation("club.dropClubReviewLike", clubSeq);
+			dao.updateInformation("club.dropClubReviewR", clubSeq);
+			dao.updateInformation("club.dropClubApplyRLike", clubSeq);
+			dao.updateInformation("club.dropClubReview", clubSeq);
+			dao.updateInformation("club.dropClubApplyMemList", clubSeq);
+			dao.updateInformation("club.dropClubApplyR", clubSeq);
+			dao.updateInformation("club.dropClubApply", clubSeq);
 			result=1;
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -279,6 +285,57 @@ public class ClubServiceImpl  implements ClubService {
 			System.out.println(e.toString());
 		}
 		return dto;
+	}
+
+	@Override
+	public int JoinApply(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.insertInformation("club.joinApply", map);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public String readAuthority(Map<String, Object> map) {
+		String result="";
+		try {
+			result=dao.getReadInformation("club.readAuthority", map);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public List<Member> joinClubList(Map<String, Object> map) {
+		List<Member> list=null;
+		try {
+			//게시물 가져오기
+			list=dao.getListInformation("club.joinClubList", map);
+		
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int joinClubOk(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.updateInformation("club.joinClubOk", map);
+			System.out.println("성공 result="+result);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+		
 	}
 	
 	

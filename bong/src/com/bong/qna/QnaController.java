@@ -26,6 +26,8 @@ public class QnaController {
    private QnaService service;
    @Autowired
    private MyUtil myUtil;
+   
+   //리스트
    @RequestMapping(value="/qna/list")
    public ModelAndView qnaList(
 		   HttpServletRequest req
@@ -119,6 +121,7 @@ public class QnaController {
 	  
 	   return new ModelAndView("redirect:/qna/list");	   
    }
+   // 글보기
    @RequestMapping(value= "/qna/article")
    public ModelAndView qnaArticle(
 		   HttpSession session
@@ -160,6 +163,8 @@ public class QnaController {
 	   mav.addObject("params", params);	   
 	   return mav;
    }
+   
+   //수정하기
    @RequestMapping(value="/qna/update", method=RequestMethod.GET)
    public ModelAndView updateForm(
 		   HttpSession session
@@ -191,6 +196,7 @@ public class QnaController {
      
      return "redirect:/qna/list?page="+page;
    }
+   //글 삭제
    @RequestMapping(value="/qna/delete")
    public ModelAndView delete(
 		   HttpSession session
@@ -210,12 +216,13 @@ public class QnaController {
 	   
 	   if(!info.getUserId().equals(dto.getUserId()) && !info.getUserId().equals("admin")){
 		   return new ModelAndView("redirect:/qna/list?page="+page);
-	   }
+	   } // 작성자가 아니거나 관리자가아니라면 글 삭제 못하도록 
 	   
 	   service.deleteQna(map);
 	   
 	   return new ModelAndView("redirect:/qna/list?page="+page);
    }
+   //답변 작성
    @RequestMapping(value="/qna/reply", method=RequestMethod.GET)
    public ModelAndView replyForm(
 		   HttpSession session

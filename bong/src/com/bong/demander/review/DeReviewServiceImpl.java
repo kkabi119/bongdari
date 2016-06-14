@@ -70,7 +70,7 @@ public class DeReviewServiceImpl implements DeReviewService {
 		}
 		return list;
 	}
-	
+	//수요처 index메인: 미니게시판-후기 
 	@Override
 	public List<DeReview> listDeReviewSmall(Map<String, Object> map){
 		List<DeReview> list=null;

@@ -127,17 +127,29 @@
 			<!-- 지역 검색 -->
 				<div class="tab-pane fade active in" id="tab2-item1">
 				 
-					시도선택<select id="sido" onchange="cityList();" class="selectField"
-						name="sido">
+					<select id="sido"  class="selectField"
+						name="sido" style="margin-right: 10px; height: 30px; width: 100px;">
 						<option value="">::시도선택::</option>
-						<c:forEach var="dto" items="${list}">
-							<option value="${dto.snum}">${dto.sido}</option>
-						</c:forEach>
-					</select> 도시선택<select id="city" class="selectField" name="city">
-						<option value="">::도시선택::</option>
-					</select> <br> 수요처 명<input type="text" name="demandName"
-						class="textField"> <input type="button" value="검색"
-						id="searchBtn"  class="btn"> 
+						<option value="서울특별시">서울특별시</option>
+						<option value="인천광역시">인천광역시</option>
+						<option value="세종특별자치시">세종특별자치시</option>
+						<option value="경기도">경기도</option>
+						<option value="강원도">강원도</option>
+						<option value="대구광역시">대구광역시</option>
+						<option value="부산광역시">부산광역시</option>
+						<option value="울산광역시">울산광역시</option>
+						<option value="경상남도">경상남도</option>
+						<option value="경상북도">경상북도</option>
+						<option value="전라남도">전라남도</option>
+						<option value="광주광역시">광주광역시</option>
+						<option value="충청남도">충청남도</option>
+						<option value="충청북도">충청북도</option>
+						<option value="대전광역시">대전광역시</option>
+					</select> 
+						<input type="text" class="textField" name="addr" style="margin-right: 10px;">
+						<input type="button" value="검색" onclick="searchMainList();"
+						id="searchBtn" class="btn">
+					
 					<table>
 						<tr>
 							<td></td>
@@ -147,19 +159,21 @@
 			<!-- 분야 검색 -->
 				<div class="tab-pane fade" id="tab2-item2">
 					<select name="demanderType" class="selectField" 
-					style="height: 30px; width: 160px; border-radius: 5px 5px 5px 5px;">
-						<option value="">선택</option>
+					style="height: 30px; width: 160px; border-radius: 5px 5px 5px 5px; margin-right: 10px;">
+						<option value="">::분야 선택::</option>
+						<option value="disabled">장애인</option>
 						<option value="silver">노인</option>
-						<option value="adult">일반 성인</option>
+						<option value="child">아동</option>
+						<option value="etc">기타</option>
 						</select>
-					<input type="button" value="검색" onclick="searchMainList(demanderType,demanderName);"
+					<input type="button" value="검색" onclick="searchMainList();"
 					id="searchBtn" class="btn">
 				</div>
 			<!-- 수요처 검색 -->
 				<div class="tab-pane fade" id="tab2-item3">
-					<input type="text" name="demanderName" class="textField" style="border-radius: 5px 5px 5px 5px;">
-					<input type="button" value="검색 " onclick="searchMainList(demanderType,demanderName);"
-					id="searchBtn" class="btn btn-default btn-sm wbtn">
+					<input type="text" class="textField" name="demanderName" style="margin-right: 10px;">
+					<input type="button" value="검색" onclick="searchMainList();"
+					id="searchBtn" class="btn">
 				</div>
 		</div>
 	</form>
@@ -182,7 +196,7 @@
             				<div style="float: left; color:#3897f0;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 전체    ${dataCount}개 <span style="color:#777;">(${page}/${total_page} 페이지)</span> </div>
             			
         				</div> 
-        		<!-- <hr style="margin-bottom:10px; margin-top:0px; border:1px solid gray;"> -->
+        		
         		
         				<div class="table-responsive" style="clear: both; "> <!-- 테이블 반응형 -->
             				<table class="table table-hover" style="overflow:hidden;" >

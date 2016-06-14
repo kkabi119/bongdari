@@ -58,11 +58,10 @@
                 <div class="row">
                     <div class="action">
                             <h1 style="margin-bottom: 0px">
-                            
                             <c:if test="${clubSeq!=null}">
                           	  <a id="clubname" style="float:left; padding-right: 10px" href="<%=cp%>/club/${clubSeq}/main"></a>
                           	  </c:if>
-                          	  <c:if test="${demander_seq!=null}">
+                          	<c:if test="${demander_seq!=null}">
                           	  <a id="demanderName" style="float:left; padding-right: 10px" href="<%=cp%>/demander/${demander_seq}/main"></a>
                           	  </c:if>
                           	  <div><tiles:insertAttribute name="title"/></div>

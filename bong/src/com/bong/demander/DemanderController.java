@@ -35,20 +35,24 @@ public class DemanderController {
 	
 	@RequestMapping(value="/main/demander")
 	public ModelAndView demanderMain() throws Exception {
-	ModelAndView mav = new ModelAndView(".layout.demander.main.수요처 전체 메인페이지");
+	ModelAndView mav = new ModelAndView(".layout.demander.main.수요처 검색");
 		return mav;
 	}
 
-	/*검색버튼 눌렀을때 mainResult.jsp가 ajax로 삽입*/
+	/*수요처 전체페이지=검색페이지*/
 	/*이 컨드롤러에서 검색결과도 보여주는 list 처리 */
 	@RequestMapping(value="/main/demander/mainResult")
 	public ModelAndView mainResult(
 			HttpServletRequest req,
 			@RequestParam(value="page",defaultValue="1") int current_page,
+			@RequestParam(value="sido",defaultValue="") String sido,
+			@RequestParam(value="addr",defaultValue="") String addr,
 			@RequestParam(value="demanderType",defaultValue="") String demanderType,
 			@RequestParam(value="demanderName",defaultValue="") String demanderName
 			) throws Exception {
-		System.out.println("******controller**"+demanderName+":"+demanderType);
+		
+		System.out.println("******sido:"+sido+"/addr:"+addr);
+		System.out.println("******ggdemanderName:"+demanderName+"/demanderType:"+demanderType);
 		String cp = req.getContextPath();
 		
    	    
@@ -65,6 +69,8 @@ public class DemanderController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("demanderType", demanderType);
         map.put("demanderName", demanderName);
+        map.put("sido", sido);
+        map.put("addr", addr);
        
         dataCount = mainService.dataCount(map);
         
@@ -117,7 +123,7 @@ public class DemanderController {
             
         }
 
-        ModelAndView mav = new ModelAndView(".layout.demander.main.수요처 전체 메인페이지");
+        ModelAndView mav = new ModelAndView(".layout.demander.main.수요처 메인");
         mav.addObject("searchList", searchList); //검색결과 리스트
         mav.addObject("urlArticle", urlArticle); 
        /* mav.addObject("urlDemander", urlDemander); //검색결과의 수요처 클릭시 연결되는 페이지
@@ -129,13 +135,13 @@ public class DemanderController {
 		return mav;
 	}
 	 
-	@RequestMapping(value="/main/searchDemander")
+/*	@RequestMapping(value="/main/searchDemander")
 	public ModelAndView searchDemander() throws Exception {
 		System.out.println("***********searchDemander");
 		ModelAndView mav = new ModelAndView(".four.demander.search.수요처 검색하기");
 		return mav;
 	}
-
+*/
 
 	
 	@RequestMapping(value="/demander/{demander_seq}/calendar")

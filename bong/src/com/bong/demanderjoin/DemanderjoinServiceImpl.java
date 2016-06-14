@@ -39,6 +39,14 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 					dto.setEmail2(s[1]);
 				}
 			}
+			
+			if(dto!=null){
+				if(dto.getServiceAddr()!=null){
+					String [] s=dto.getServiceAddr().split(",");
+					dto.setAddr1(s[0]);
+					dto.setAddr2(s[1]);
+				}
+			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -77,6 +85,14 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 					dto.setEmail2(s[1]);
 				}
 			}
+			
+			if(dto!=null){
+				if(dto.getServiceAddr()!=null){
+					String [] s=dto.getServiceAddr().split(",");
+					dto.setAddr1(s[0]);
+					dto.setAddr2(s[1]);
+				}
+			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -104,6 +120,13 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 					dto.setEmail2(s[1]);
 				}
 			}
+			if(dto!=null){
+				if(dto.getServiceAddr()!=null){
+					String [] s=dto.getServiceAddr().split(",");
+					dto.setAddr1(s[0]);
+					dto.setAddr2(s[1]);
+				}
+			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -122,8 +145,10 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 			if(dto.getEmail1() != null && dto.getEmail1().length()!=0 &&
 					dto.getEmail2() != null && dto.getEmail2().length()!=0 )
 				dto.setServiceEmail(dto.getEmail1() + "@" + dto.getEmail2());
-			
-			
+			//주소 합쳐서 넣기
+			if(dto.getAddr1() != null && dto.getAddr1().length()!=0 &&
+					dto.getAddr2() != null && dto.getAddr2().length()!=0 )
+				dto.setServiceAddr(dto.getAddr1() + "," + dto.getAddr2());
 			
 			int memSeq = dao.getIntValue("member.memberSeq");
 			dto.setUserIdx(memSeq);			
@@ -163,12 +188,18 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 			if(dto.getEmail1() != null && dto.getEmail1().length()!=0 &&
 					dto.getEmail2() != null && dto.getEmail2().length()!=0 )
 				dto.setServiceEmail(dto.getEmail1() + "@" + dto.getEmail2());
+			
            // 이미지 파일 넣기
 		    if(dto.getUploads()!=null && !dto.getUploads().isEmpty()){
 				String serviceImg=fileManager.doFileUpload(dto.getUploads(), pathname);
 			    dto.setServiceImg(serviceImg);
-			    dto.setServiceImgname(dto.getUploads().getOriginalFilename());
+			    dto.setServiceImgname(dto.getUploads().getOriginalFilename());    
 			}
+		    
+		    //주소 합쳐서 넣기
+		    if(dto.getAddr1() != null && dto.getAddr1().length()!=0 &&
+		    		dto.getAddr2() != null && dto.getAddr2().length()!=0 )
+		    	dto.setServiceAddr(dto.getAddr1() + "," + dto.getAddr2());
 			result=dao.updateInformation("demanderjoin.updatePwd", dto);
 			result=dao.updateInformation("demanderjoin.updateDemander2", dto);
 		} catch (Exception e) {
@@ -211,6 +242,16 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 			System.out.println(e.toString());
 		}
 		return result;
+	}
+	@Override
+	public List<Demanderjoin> listDemanderAddr(Map<String, Object> map) {
+		List<Demanderjoin> list = null;
+		try {
+			list=dao.getListInformation("demanderjoin.searchDemanderAddr", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
 	}
 
 

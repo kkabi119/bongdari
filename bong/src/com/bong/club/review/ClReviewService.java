@@ -3,7 +3,7 @@ package com.bong.club.review;
 import java.util.List;
 import java.util.Map;
 
-import com.bong.club.apply.Reply;
+import com.bong.club.notice.Notice;
 
 public interface ClReviewService {
 	public int insertClReview(ClReview dto, String path);
@@ -22,6 +22,7 @@ public interface ClReviewService {
 	public ClReview readFile(Map<String, Object> map);
 	public int deleteFile(Map<String, Object> map);
 	
+	public List<ClReview> listReviewSmall(Map<String, Object> map);	
 	
 	public int stateLike(ClReview dto);
 	public int insertLike(ClReview dto);

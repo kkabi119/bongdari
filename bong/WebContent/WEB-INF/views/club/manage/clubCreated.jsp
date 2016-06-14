@@ -96,10 +96,10 @@ function themeList() {
             return;
         }
         
-    	str = f.city.value;
+    	str = f.clubAddr.value;
         if(!str) {
             alert("지역를 선택 하세요. ");
-            f.city.focus();
+            f.clubAddr.focus();
             return;
         }
  
@@ -188,25 +188,25 @@ function themeList() {
     <div class="form-group">
         <label class="col-sm-2 control-label">지역</label>
         <div class="col-sm-7">
-            <select name="city" class="form-control" style="width: 222px;">
+            <select name="clubAddr" class="form-control" style="width: 222px;">
 			                <option value="">:: 선택 ::</option>
-			                <option value="서울" ${dto.city=="서울" ? "selected='selected'" : ""}>서울</option>
-			                <option value="부산" ${dto.city=="부산" ? "selected='selected'" : ""}>부산</option>
-			                <option value="대구" ${dto.city=="대구" ? "selected='selected'" : ""}>대구</option>
-			                <option value="인천" ${dto.city=="인천" ? "selected='selected'" : ""}>인천</option>
-			                <option value="광주" ${dto.city=="광주" ? "selected='selected'" : ""}>광주</option>
-			                <option value="대전" ${dto.city=="대전" ? "selected='selected'" : ""}>대전</option>
-			                <option value="울산" ${dto.city=="울산" ? "selected='selected'" : ""}>울산</option>
-			                <option value="세종" ${dto.city=="세종" ? "selected='selected'" : ""}>세종</option>
-			                <option value="강원" ${dto.city=="강원" ? "selected='selected'" : ""}>강원</option>
-			                <option value="경기" ${dto.city=="경기" ? "selected='selected'" : ""}>경기</option>
-			                <option value="충남" ${dto.city=="충남" ? "selected='selected'" : ""}>충남</option>
-			                <option value="충북" ${dto.city=="충북" ? "selected='selected'" : ""}>충북</option>
-			                <option value="전남" ${dto.city=="전남" ? "selected='selected'" : ""}>전남</option>
-			                <option value="전북" ${dto.city=="전북" ? "selected='selected'" : ""}>전북</option>
-			                <option value="경남" ${dto.city=="경남" ? "selected='selected'" : ""}>경남</option>
-			                <option value="경북" ${dto.city=="경북" ? "selected='selected'" : ""}>경북</option>
-			                <option value="제주" ${dto.city=="제주" ? "selected='selected'" : ""}>제주</option>
+			                <option value="서울" ${dto.clubAddr=="서울" ? "selected='selected'" : ""}>서울</option>
+			                <option value="부산" ${dto.clubAddr=="부산" ? "selected='selected'" : ""}>부산</option>
+			                <option value="대구" ${dto.clubAddr=="대구" ? "selected='selected'" : ""}>대구</option>
+			                <option value="인천" ${dto.clubAddr=="인천" ? "selected='selected'" : ""}>인천</option>
+			                <option value="광주" ${dto.clubAddr=="광주" ? "selected='selected'" : ""}>광주</option>
+			                <option value="대전" ${dto.clubAddr=="대전" ? "selected='selected'" : ""}>대전</option>
+			                <option value="울산" ${dto.clubAddr=="울산" ? "selected='selected'" : ""}>울산</option>
+			                <option value="세종" ${dto.clubAddr=="세종" ? "selected='selected'" : ""}>세종</option>
+			                <option value="강원" ${dto.clubAddr=="강원" ? "selected='selected'" : ""}>강원</option>
+			                <option value="경기" ${dto.clubAddr=="경기" ? "selected='selected'" : ""}>경기</option>
+			                <option value="충남" ${dto.clubAddr=="충남" ? "selected='selected'" : ""}>충남</option>
+			                <option value="충북" ${dto.clubAddr=="충북" ? "selected='selected'" : ""}>충북</option>
+			                <option value="전남" ${dto.clubAddr=="전남" ? "selected='selected'" : ""}>전남</option>
+			                <option value="전북" ${dto.clubAddr=="전북" ? "selected='selected'" : ""}>전북</option>
+			                <option value="경남" ${dto.clubAddr=="경남" ? "selected='selected'" : ""}>경남</option>
+			                <option value="경북" ${dto.clubAddr=="경북" ? "selected='selected'" : ""}>경북</option>
+			                <option value="제주" ${dto.clubAddr=="제주" ? "selected='selected'" : ""}>제주</option>
 			            </select>
         <p class="help-block">주활동 지역을 선택해주세요</p>
      </div>

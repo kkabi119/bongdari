@@ -182,6 +182,26 @@ function imageDelete() {
 		},"json");
 	}
 }
+
+function searchDemanderAddr() {
+    $("#modalZip").val("");
+	$("#modalDemanderAddr").modal("show");	
+}
+
+
+function modalSearchDemanderAddr() {
+	var zipp = $("#modalDemanderZip").val();
+	var url = "<%=cp%>/demanderjoin/zip";
+	$.post(url, {zip:zipp},function(data){
+		$("#resultZip").html(data);
+	});
+
+}
+
+function selectDemanderZip(zip){
+	$("#modalDemanderAddr").modal("hide");
+	$("#addr1").val(zip);
+}
 </script>
 
 
@@ -327,8 +347,10 @@ function imageDelete() {
     <div class="form-group">
         <label class="col-sm-2 control-label" for="serviceAddr">주소</label>
         <div class="col-sm-7">
-            <input class="form-control" id="serviceAddr" name="serviceAddr" type="text" placeholder="기본주소" value="${dto.serviceAddr}">
-            
+             <input class="form-control" id="addr1" name="addr1" type="text" placeholder="기본주소" value="${dto.addr1}" readonly="readonly">
+            <input class="form-control" id="addr2" name="addr2" type="text" placeholder="상세주소" value="${dto.addr2}">
+         <button type="button" onclick="searchDemanderAddr()" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;">
+                  주소검색<span class="glyphicon glyphicon-ok"></span></button>
         </div>
     </div>
     <div class="form-group">
@@ -386,4 +408,37 @@ function imageDelete() {
         </footer>
 
     </div>
+    
+    <div id="modalDemanderAddr" class="modal fade" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h2 id="myModalLabel" class="modal-title text-center fc-orange"
+					style="font-family: sans-serif, 나눔고딕, 맑은 고딕; font-weight: bold;">주소
+					검색</h2>
+			</div>
+			<div class="modal-body">
+				<form name="modalSearchForm" method="post">
+					<div class="form-group">
+						<label class="control-label" for="modalDemanderZip">도로명을 입력해주세요</label> <input
+							class="form-control" id="modalDemanderZip" name="zip" type="text"
+							placeholder="도로명">
+					</div>
+					<div id="resultZip"></div>
+					<div class="form-group">
+						<button class="btn btn-lg btn-primary btn-block" type="button"
+							onclick="modalSearchDemanderAddr();">
+							검색<span class="glyphicon glyphicon-ok"></span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
     <!-- /.container -->
