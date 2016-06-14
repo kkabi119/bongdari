@@ -130,9 +130,11 @@ public class DadminController {
 	
 	@RequestMapping(value="/demander/{demander_seq}/admin/tab1/showList")
 	public ModelAndView showList(
+			@RequestParam(value="volunIdx") int volunIdx,
 			@PathVariable int demander_seq
 			) throws Exception {
 		ModelAndView mav = new ModelAndView("/demander/dari/admin/appliedMembers");
+		mav.addObject("volunIdx", volunIdx);
 		return mav;
 	}
 	
