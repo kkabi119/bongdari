@@ -17,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>봉다리</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<%=cp%>/res/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
