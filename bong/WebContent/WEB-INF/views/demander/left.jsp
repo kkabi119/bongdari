@@ -56,24 +56,23 @@ $(function(){
                                 </div>
                             </div>
                         </div> --%>
-                        <div class="sidebar-item categories">
+                        <div class="sidebar-item categories" style="margin-top: 50px;">
                             <h3>Categories</h3>
-                            <ul class="nav navbar-stacked">
-                                <li><a href="<%=cp%>/main/demander">수요처 전체메인<span class="pull-right"></span></a></li>
+                            <ul class="nav navbar-stacked" >
+                                <%-- <li><a href="<%=cp%>/main/demander">수요처 전체메인<span class="pull-right"></span></a></li> --%>
                                 <li class="active"><a href="<%=cp%>/demander/${demander_seq}/main">수요처메인<span class="pull-right"></span></a></li>
                                 <li><a href="<%=cp%>/demander/${demander_seq}/notice/list">공지사항<span class="pull-right"></span></a></li>
-                                <li><a href="<%=cp%>/demander/${demander_seq}/schedule">수요처 일정(달력/신청)<span class="pull-right"></span></a></li>
-                                <li><a href="<%=cp%>/demander/${demander_seq}/qna/list">수요처QnA<span class="pull-right"></span></a></li>
-                               <%--  <li><a href="<%=cp%>/demander/${demander_seq}/photo">포토게시판<span class="pull-right"></span></a></li> --%>
-                                <li><a href="<%=cp%>/demander/${demander_seq}/review/list">후기게시판<span class="pull-right"></span></a></li>
-							<%--<li><a href="<%=cp%>/demander/${demander_seq}/schedule">일정등록페이지<span class="pull-right"></span></a></li> --%>
+                                <li><a href="<%=cp%>/demander/${demander_seq}/schedule">일정게시판<span class="pull-right"></span></a></li>
+                                <li><a href="<%=cp%>/demander/${demander_seq}/qna/list">QnA<span class="pull-right"></span></a></li>
                               
-                                <li><a href="<%=cp%>/demander/${demander_seq}/bookmark">관심등록 동아리<span class="pull-right"></span></a></li>
+                                <li><a href="<%=cp%>/demander/${demander_seq}/review/list">후기게시판<span class="pull-right"></span></a></li>
+							
+                               <%--  <li><a href="<%=cp%>/demander/${demander_seq}/bookmark">관심등록 동아리<span class="pull-right"></span></a></li> --%>
                                 <li><a href="<%=cp%>/demander/${demander_seq}/guest">방명록<span class="pull-right"></span></a></li>
                                 <li><a href="<%=cp%>/demander/${demander_seq}/admin/admin">관리자페이지<span class="pull-right"></span></a></li>
                             </ul>
                         </div>
-                     
+                    <!--  
                         <div class="sidebar-item tag-cloud">
                             <h3>Tag Cloud</h3>
                             <ul class="nav nav-pills">
@@ -84,7 +83,7 @@ $(function(){
                                 <li><a href="#">Business</a></li>
                                 <li><a href="#">Product</a></li>
                             </ul>
-                        </div> 
+                        </div>  -->
                       <%--   <div class="sidebar-item popular">
                             <h3>Latest Photos</h3>
                             <ul class="gallery">

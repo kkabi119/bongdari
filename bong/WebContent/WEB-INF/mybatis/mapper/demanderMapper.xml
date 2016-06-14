@@ -83,14 +83,14 @@
                SELECT s.servicereviewidx, c.useridx, userid, c.username, subject, CONTENT ,
                          to_char(s.created, 'YYYY-MM-DD') created ,hitcount,
                          nvl(replycount, 0) replycount, nvl(likecount, 0) likecount
-                FROM service_review_7 s
+                FROM service_review_${demander_seq} s
                 JOIN checkid c ON s.useridx=c.useridx
                
                 LEFT OUTER JOIN ( 
-                       SELECT serviceReviewIdx, count(*) replycount FROM service_review_reply_7 GROUP BY serviceReviewIdx
+                       SELECT serviceReviewIdx, count(*) replycount FROM service_review_reply_${demander_seq} GROUP BY serviceReviewIdx
                  ) tbreply  ON s.servicereviewidx = tbreply.servicereviewidx 
                 LEFT OUTER JOIN ( 
-                    SELECT serviceReviewIdx, count(*) likecount FROM service_review_like_7 GROUP BY serviceReviewIdx
+                    SELECT serviceReviewIdx, count(*) likecount FROM service_review_like_${demander_seq} GROUP BY serviceReviewIdx
                  ) tblike ON s.servicereviewidx = tblike.servicereviewidx 
                  <where>
                          <if test="searchValue != null and searchValue != ''">
@@ -260,10 +260,10 @@
 		        (
 				      (
 					     SELECT srridx, r.serviceReviewIdx, r.userIdx, userid,
-               c.userName, r.content, r.created, answer
+               				c.userName, r.content, r.created, answer
 					        FROM service_review_reply_${demander_seq} r 
 			                JOIN service_review_${demander_seq} s ON r.serviceReviewIdx=s.serviceReviewIdx
-			                JOIN checkId c ON s.useridx=c.useridx
+			                JOIN checkId c ON r.useridx=c.useridx
 			                WHERE r.serviceReviewIdx=#{serviceReviewIdx} AND answer=0
 			           ) tbreply
 			           LEFT OUTER JOIN
