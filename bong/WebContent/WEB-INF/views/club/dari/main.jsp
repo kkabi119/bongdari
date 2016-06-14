@@ -8,14 +8,18 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 <style type="text/css">
-.row{
+/*  .row{
 	margin-left: 15px
+}  */
+
+.col-md-9{
+	margin-left:45px;
+	width:74%;
 }
-		
 </style>
 
-	<div class="row">
-		<div class="col-md-12 col-sm-12">
+	<div class="row" class="carousel slide wow fadeIn" data-ride="carousel" data-wow-duration="400ms" data-wow-delay="400ms">
+		<div class="col-md-12 col-sm-12" >
 			<img src="<%=cp%>/uploads/club/${clubSeq}/${clubInfo.photoFilename}" style="width:100%; height:400px">
     
     </div>
@@ -31,7 +35,15 @@
                         <li data-target="#team-carousel" data-slide-to="0" class="active"></li>
                         <li data-target="#team-carousel" data-slide-to="1"></li>
                     </ol>
-                            
+                  
+                  <hr style="border-top:3px solid #eee; width:98%; color: #777; ">
+	
+	 <h2 style="margin-top:10px; margin-left:20px; margin-bottom:20px; font-weight:500; text-align:center;" class="title wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">
+	 		우리의 최근 봉사 </h2>
+	<!--  <h2 style="margin-top:6px;  margin-left:20px;font-weight:bold;" class="title wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">
+	 나누는 마음을 행동으로
+	 </h2> -->
+                  
                <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active">
@@ -64,21 +76,21 @@
                     </div>
                     
                              <!-- Controls -->
-                    <a class="left team-carousel-control hidden-xs" href="#team-carousel" data-slide="prev">left</a>
-                    <a class="right team-carousel-control hidden-xs" href="#team-carousel" data-slide="next">right</a>
+                    <a style="left:-20px;" class="left team-carousel-control hidden-xs" href="#team-carousel" data-slide="prev">left</a>
+                    <a style="right:-20px;" class="right team-carousel-control hidden-xs" href="#team-carousel" data-slide="next">right</a>
                 </div>
             </div>
        
     </section>
          
-    
+      <hr style="border-top:3px solid #eee; width:98%; color: #777; ">
 <div class="row" style="margin-top:50px;">
-			<div class="col-md-6" >
+			<div class="col-md-6" style="width:45%; margin-right:65px;" >
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5 style="font-size:18px;"><i class="fa fa-lightbulb-o"></i> 후기게시판 <a href="#"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
+                        <h5 style="font-size:18px;"><i class="fa fa-lightbulb-o"></i> 봉사 후기 <a href="${urlListR}"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" style="border-bottom:2px solid #999; ">
                         <ul type="disc">
                          <c:forEach var="dtoR" items="${listR}">
                         	<%-- <li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li> --%>
@@ -86,19 +98,18 @@
                         
                        		 <li><a href="${urlArticleR}+&num=${dtoR.clubReviewIdx}" >${dtoR.subject}</a></li>
                        	 </c:forEach> 
-                     	  	 
-                        	<li><a href="${urlListR}" class="btn btn-default" style="text-align: right">더보기</a></li>
+                     	  
                         </ul>
                     </div>
                 </div>
             </div>
             
-            <div class="col-md-6" >
+            <div class="col-md-6" style="width:45%; " >
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5 style="font-size:18px;"><i class="fa fa-lightbulb-o"></i> 공지사항 <a href="#"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
+                        <h5 style="font-size:18px;"><i class="fa fa-lightbulb-o"></i> 공지사항 <a href="${urlListN}"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" style="border-bottom:2px solid #999; ">
                         <ul type="disc">
                          <c:forEach var="dtoN" items="${listN}">
                         	<%-- <li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li> --%>
@@ -107,7 +118,7 @@
                        		 <li><a href="${urlArticleN}+&num=${dtoN.clubNoticeIdx}" >${dtoN.subject}</a></li>
                        	 </c:forEach> 
                      	  	 
-                        	<li><a href="${urlListN}" class="btn btn-default" style="text-align: right">더보기</a></li>
+                        	
                         </ul>
                     </div>
                 </div>

@@ -98,7 +98,7 @@ $(document).ready(function($) {
                                 <li><a href="<%=cp%>/club/${dto.clubSeq}/main">${dto.clubname}</a></li>
                    </c:forEach>
                     </c:if>
-                                <li><a href="<%=cp%>/main/searchClub">동아리 검색하기</a></li>
+                                <li><a href="<%=cp%>/club/clubSearch">동아리 검색하기</a></li>
                                 
                             </ul>
                         </li>                    
