@@ -363,7 +363,7 @@ public class NoticeController {
 			return new ModelAndView("redirect:/club/{clubSeq}/notice/list?page="+page);
 		}
 		
-		if(! info.getUserId().equals(dto.getUserId()) && ! info.getUserId().equals("admin")) {
+		if(info.getUserIdx()!=dto.getUserIdx() && ! info.getUserId().equals("admin")) {
 			return new ModelAndView("redirect:/club/{clubSeq}/notice/list?page="+page);
 		}
 		
