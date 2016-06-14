@@ -574,6 +574,16 @@ public class ClubController {
 		return mav;
 	}	
 	
+	@RequestMapping(value="/club/clubSearch")
+	public ModelAndView clubSearch()
+		throws Exception {		
+					  
+		ModelAndView mav=new ModelAndView(".layout.club.clubMain.클럽메인");
+		
+		return mav;
+	}	
+	
+	
 }
 
 	

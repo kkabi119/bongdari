@@ -100,7 +100,7 @@ $(document).ready(function($) {
                    </c:forEach>
                    </c:if>
                     </c:if>
-                                <li><a href="<%=cp%>/main/searchClub">동아리 검색하기</a></li>
+                                <li><a href="<%=cp%>/club/clubSearch">동아리 검색하기</a></li>
                                 
                             </ul>
                         </li>                    
