@@ -14,6 +14,7 @@ public interface AdminService {
 	public int demanderCount(Map<String, Object> map);
 	
 	public Demander demanderArticle(String serviceIdx);
+	public Club clubArticle(int clubIdx);
 	
 	public int createDemanderTable(String serviceIdx);
 	
