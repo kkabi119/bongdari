@@ -2,6 +2,13 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="demanderjoin">
+<!-- 	
+	동아리 카테고리 중분류
+	<select id="listClubTheme" parameterType="Integer" resultType="com.bong.demanderjoin.ClubTheme">
+	SELECt t2.subject FROM theme t1
+   JOIN theme t2 ON t1.themenum=t2.parent
+    WHERE t1.themenum = #{themenum}
+	</select> -->
   <!-- 수요처 정보 추가 -->
   <select id="demanderjoinSeq" resultType="Integer">
     SELECT service_seq.NEXTVAL FROM DUAL
@@ -20,9 +27,9 @@
   <insert id="insertDemanderjoinInfo" parameterType="com.bong.demanderjoin.Demanderjoin">
     INSERT INTO serviceInfo
     (serviceIdx, serviceName, serviceBirth, serviceTel,serviceIntro,
-     serviceAddr, serviceEmail, serviceImg, serviceImgname, userIdx, enabled)
+     serviceAddr, serviceEmail, serviceImg, serviceImgname, userIdx,themeNum, enabled)
      VALUES(#{serviceIdx},#{serviceName},#{serviceBirth}
-     ,#{serviceTel},#{serviceIntro},#{serviceAddr},#{serviceEmail},#{serviceImg, jdbcType=VARCHAR},#{serviceImgname, jdbcType=VARCHAR}, #{userIdx},0)
+     ,#{serviceTel},#{serviceIntro},#{serviceAddr},#{serviceEmail},#{serviceImg, jdbcType=VARCHAR},#{serviceImgname, jdbcType=VARCHAR},#{themeNum}, #{userIdx},0)
   </insert>
     <!-- 아이디 중복 체크 -->
     <select id="readDemanderCheck" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="String">

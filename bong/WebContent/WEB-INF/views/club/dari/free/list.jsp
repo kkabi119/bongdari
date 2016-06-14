@@ -30,7 +30,7 @@ function nextPage(page){
         		    	<button type="button" class="btn btn-lg btn-info" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/free/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
         			</div>
                     <div class="timeline-date text-center" style="clear:both">
-                        <a href="#" class="btn btn-common uppercase" style="border-color: #0099AE; background-color: #FFFFFF">May 2016</a>
+                        <a href="#" class="btn btn-common uppercase" style="border-color: #0099AE; background-color: #FFFFFF">June 2016</a>
                     </div>
              		
                 <div class="timeline-date text-center">

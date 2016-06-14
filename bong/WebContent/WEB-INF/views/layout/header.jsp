@@ -91,12 +91,14 @@ $(document).ready(function($) {
                             <c:if test="${sessionScope.member.clubIdx==0}">
                                 <li><a href="<%=cp%>/club/me">동아리 개설하기</a></li>
                             </c:if>
-                   <c:if test="${sessionScope.member.clubIdx>0}">
+                   <c:if test="${not empty sessionScope.member.clubname}">
                                 <li><a href="<%=cp%>/club/${sessionScope.member.clubIdx}/main">내가 만든 동아리</a></li>
                     </c:if>
+                    <c:if test="${not empty clubList}">
                    <c:forEach var="dto" items="${clubList}">        
                                 <li><a href="<%=cp%>/club/${dto.clubSeq}/main">${dto.clubname}</a></li>
                    </c:forEach>
+                   </c:if>
                     </c:if>
                                 <li><a href="<%=cp%>/club/clubSearch">동아리 검색하기</a></li>
                                 

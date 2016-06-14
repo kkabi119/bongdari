@@ -352,6 +352,7 @@ public class FreeController {
 			HttpSession session,	
 			Free dto, 
 			@PathVariable int clubSeq,
+			@RequestParam(value="num") int num,
 			@RequestParam(value="page") String page
 			) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
@@ -364,6 +365,7 @@ public class FreeController {
 	
 		// 수정 하기
 		dto.setClubIdx(clubSeq);
+		dto.setClubFreeIdx(num);
 		service.updateFree(dto, path);
 		
 		return new ModelAndView("redirect:/club/"+clubSeq+"/free/list?page="+page);

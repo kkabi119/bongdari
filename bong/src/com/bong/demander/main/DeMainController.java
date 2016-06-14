@@ -105,7 +105,7 @@ public class DeMainController {
 	
 		
 		
-		ModelAndView mav = new ModelAndView(".four.demander.dari.main.각 수요처 메인");
+		ModelAndView mav = new ModelAndView(".four.demander.dari.main.");
 		mav.addObject("mainProfile", mainProfile);
 		mav.addObject("demander_seq", demander_seq);
 		mav.addObject("revList", revList);
