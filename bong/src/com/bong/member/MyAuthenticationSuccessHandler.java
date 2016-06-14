@@ -79,6 +79,7 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 		
 		map.put("clubSeq", clubIdx);
 		ClubInfo clubinfo=clubService.readClubInfoSmall(map);
+		if(clubinfo!=null)
 		info.setClubname(clubinfo.getClubname());
 		
 		

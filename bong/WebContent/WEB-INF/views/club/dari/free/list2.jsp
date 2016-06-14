@@ -42,13 +42,13 @@ function nextPage(){
                                 </c:if>
                                 <c:if test="${empty dto.listImageName}">
                                     <div class="post-thumb">
-                                        <img src="<%=cp%>/res/images/iphone7.jpg">
+                                        <img src="<%=cp%>/res/images/clubfree/no-photo.png">
                                     </div>      
                                 </c:if>
                                 </div>
                                 <div class="post-content overflow">
                                     <h2 class="post-title bold"><a href="${urlArticle}&num=${dto.clubFreeIdx}">${dto.subject}</a></h2>
-                                    <h3 class="post-author"><a href="#">Posted by ${dto.userName}${page}</a></h3>
+                                    <h3 class="post-author"><a href="#">Posted by ${dto.userName}</a></h3>
                                     <p>${dto.content}[...]</p>
                                     <a href="${urlArticle}&num=${dto.clubFreeIdx}" class="read-more">View More</a>
                                     <div class="post-bottom overflow">
