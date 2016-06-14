@@ -18,6 +18,9 @@
 #header .navbar-nav.navbar-right >li a{
 	font-weight: 500;
 }
+.social-icons ul li a{
+	font-size:16px;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function($) {
@@ -43,21 +46,21 @@ $(document).ready(function($) {
                    <div class="social-icons pull-right">
                         <ul class="nav nav-pills">
                             <c:if test="${sessionScope.member.isService==0}">
-                           <span style="color:blue; padding-right: 5px">${sessionScope.member.userName}</span>회원님 <i></i>
+                           <span style="color:#00aeef; font-weight:bold; padding-right: 4px"> &nbsp;&nbsp;${sessionScope.member.userName}</span>회원님 <i></i>
                            <li><a href="<%=cp%>/member/logout"><i class="fa fa-sign-out"> Logout</i></a></li>
                             </c:if>
                             <c:if test="${sessionScope.member.isService==1}">
-                           <span style="color:blue; padding-right: 5px">${sessionScope.member.userName}</span>수요처님 <i></i>
+                           <span style="color:#00aeef; font-weight:bold;  padding-right: 4px"> &nbsp;&nbsp;${sessionScope.member.userName}</span>수요처님 <i></i>
                            <li><a href="<%=cp%>/member/logout"><i class="fa fa-sign-out"> Logout</i></a></li>
                             </c:if>
                             <c:if test="${empty sessionScope.member && empty sessionScope.demanderjoin}">
                             <li><a href="<%=cp%>/member/login"><i class="fa fa-sign-in"> Login</i></a></li>
                             </c:if>
                             <c:if test="${sessionScope.member.isService==0}">
-                            <li style="padding-right: 10px"><a href="<%=cp%>/member/index/myPage"><i class="glyphicon glyphicon-user">MyPage</i></a></li>
+                            <li style="padding-right: 5px ;"><a href="<%=cp%>/member/index/myPage"><i class="glyphicon glyphicon-user"> MyPage</i></a></li>
                             </c:if>
                             <c:if test="${sessionScope.member.isService==1}">
-                            <li><a href="<%=cp%>/demander/${sessionScope.member.demander_seq}/main"><i class="glyphicon glyphicon-user">수요처페이지</i></a></li>
+                            <li  style="padding-right: 5px ;"><a href="<%=cp%>/demander/${sessionScope.member.demander_seq}/main"><i class="glyphicon glyphicon-user"> 수요처페이지</i></a></li>
                             </c:if>
                              <c:if test="${sessionScope.member.userId=='admin'}">
                             <li><a href="<%=cp%>/admin"><i class="glyphicon glyphicon-cog">Admin</i></a></li>
