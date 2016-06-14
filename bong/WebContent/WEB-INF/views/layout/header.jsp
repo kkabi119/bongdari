@@ -88,7 +88,7 @@ $(document).ready(function($) {
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a href="<%=cp%>/">Home</a></li>
-                        <li class="dropdown"><a href="<%=cp%>/main/club">동아리 <i class="fa fa-angle-down"></i></a>
+                        <li class="dropdown"><a href="<%=cp%>/club/main">동아리 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                     <c:if test="${sessionScope.member.isService==0}">    
                             <c:if test="${sessionScope.member.clubIdx==0}">

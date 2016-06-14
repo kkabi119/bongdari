@@ -564,6 +564,16 @@ public class ClubController {
 		mav.addObject("clubSeq",clubSeq);
 		return mav;
 	}	
+	
+	@RequestMapping(value="/club/main")
+	public ModelAndView clubMain()
+		throws Exception {		
+					  
+		ModelAndView mav=new ModelAndView(".layout.club.clubMain.클럽메인");
+		
+		return mav;
+	}	
+	
 }
 
 	

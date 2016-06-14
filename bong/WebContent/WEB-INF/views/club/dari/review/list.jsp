@@ -194,9 +194,7 @@ hr:LAST-CHILD {
 	                ${paging}
 	</c:if>
 </div>
-
-
-
+sfsdf
 <!-- 검색 -->
    <div style="clear: both; border-radius:0px;">
       <div style="float: left; width: 20%; min-width: 85px;">
