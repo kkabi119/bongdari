@@ -5,13 +5,10 @@
 
 <!-- 동아리 검색결과 list관련 -->
 	<sql id="where-list">
-	  <if test="sido.length()!=0 and addr.length()==0">
+	  <if test="sido.length()!=0">
 	      DBMS_LOB.INSTR(clubAddr,#{sido}) &gt; 0 
 	  </if>
-	  <if test="sido.length()!=0 and addr.length()!=0">
-	      DBMS_LOB.INSTR(clubAddr,#{sido}) &gt; 0 AND
-	      DBMS_LOB.INSTR(clubAddr,#{addr}) &gt; 0
-	  </if>
+	
 	   <if test="clubType=='disabled'">
 	     subject='장애인'
 	  </if>

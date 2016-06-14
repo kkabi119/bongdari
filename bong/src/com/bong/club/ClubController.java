@@ -58,12 +58,11 @@ public class ClubController {
 			HttpServletRequest req,
 			@RequestParam(value="page",defaultValue="1") int current_page,
 			@RequestParam(value="sido",defaultValue="") String sido,
-			@RequestParam(value="addr",defaultValue="") String addr,
 			@RequestParam(value="clubType",defaultValue="") String clubType,
 			@RequestParam(value="clubName",defaultValue="") String clubName
 			) throws Exception {
 		
-		System.out.println("******sido:"+sido+"/addr:"+addr);
+		System.out.println("******sido:"+sido);
 		System.out.println("******clubType:"+clubType+"/clubName:"+clubName);
 		String cp = req.getContextPath();
 		
@@ -82,7 +81,7 @@ public class ClubController {
         map.put("clubType", clubType);
         map.put("clubName", clubName);
         map.put("sido", sido);
-        map.put("addr", addr);
+     
        
         dataCount = clubService.clubSearchdataCount(map);
         

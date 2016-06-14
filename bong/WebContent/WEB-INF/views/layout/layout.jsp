@@ -52,7 +52,7 @@
 							<h1>
 								<tiles:insertAttribute name="title"/>
 							</h1>
-							<p>Blog with right sidebar</p>
+							
 						</div>
 					</div>
 				</div>

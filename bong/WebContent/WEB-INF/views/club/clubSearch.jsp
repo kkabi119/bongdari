@@ -144,7 +144,7 @@
 						<option value="충청북도">충청북도</option>
 						<option value="대전광역시">대전광역시</option>
 					</select> 
-						<input type="text" class="textField" name="addr" style="margin-right: 10px;">
+						<!-- <input type="text" class="textField" name="addr" style="margin-right: 10px;"> -->
 						<input type="button" value="검색" onclick="searchMainList();"
 						id="searchBtn" class="btn">
 					
