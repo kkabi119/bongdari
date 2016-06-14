@@ -121,7 +121,7 @@
 
 			</ul>
 		<form name="searchForm2" method="post" class="form-inline">	
-			<div class="tab-content" style="background: #F6F6F6; height: 100px;
+			<div class="tab-content" style="background: #F6F6F6; height: 100px; 
 			border-radius: 7px 7px 7px 7px ;margin-top:5px; ">
 	
 			<!-- 지역 검색 -->
@@ -184,7 +184,7 @@
 </div>
 
 
-<div style="margin: 100px auto 10px; width: 1000px" align="center" >
+<div style="margin: auto; width: 1000px" align="center" ><!-- margin: 100px auto 10px; -->
 <div class="row" style="margin-left:15px;">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">
