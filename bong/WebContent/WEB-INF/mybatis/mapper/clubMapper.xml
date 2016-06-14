@@ -155,18 +155,9 @@
 	</select>
 	
 	<!-- 개인 동아리의 메인 화면에 출력할 정보 -->
-	<select id="readClubInfoHome" parameterType="Long" resultType="com.bong.club.ClubInfo">
-	    SELECT b.ClubSeq, userId, nickName, b.themeNum, c.parent groupNum
-	                ,title, introduce, visitorCount, created, photoFilename
-	                ,c.subject, g.subject groupSubject
-	           FROM ClubInfo b
-	           JOIN ClubProfile p ON b.ClubSeq = p.ClubSeq
-	           JOIN theme c ON b.themeNum=c.themeNum
-               JOIN (
-                         SELECT themeNum, subject FROM theme
-                         WHERE parent IS NULL
-                       ) g ON c.parent = g.themeNum
-	           WHERE b.ClubSeq=#{ClubSeq}
+	<select id="readJoinedClub" parameterType="Integer" resultType="com.bong.club.ClubInfo">
+	   SELECT clubname, i.clubIdx AS clubSeq FROM joinclub j
+			JOIN clubinfo i ON i.clubIdx=j.clubIdx where userIdx=#{userIdx}
 	</select>
 	
 	<!-- 테이블 생성 및 삭제  -->

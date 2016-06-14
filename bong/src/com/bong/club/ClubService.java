@@ -38,6 +38,7 @@ public interface ClubService {
 	public String readAuthority(Map<String, Object> map);
 
 	public List<Member> joinClubList(Map<String, Object> map);
+	public List<ClubInfo> readJoinedClub(int userIdx);
 
 	public int joinClubOk(Map<String, Object> map);
 }

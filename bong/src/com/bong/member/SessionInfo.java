@@ -5,13 +5,19 @@ import org.springframework.web.multipart.MultipartFile;
 public class SessionInfo {
 	private int userIdx;
 	private String userId;
-	private String userName;
+	private String userName, clubname;
 	private int clubIdx, isService, demander_seq;
 	private int memberLevel;
 	private String memImgname;
 	private MultipartFile memImg;
 	
 	
+	public String getClubname() {
+		return clubname;
+	}
+	public void setClubname(String clubname) {
+		this.clubname = clubname;
+	}
 	public int getDemander_seq() {
 		return demander_seq;
 	}

@@ -2,6 +2,7 @@ package com.bong.member;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
+import com.bong.club.ClubInfo;
 import com.bong.club.ClubService;
 import com.bong.demanderjoin.Demanderjoin;
 import com.bong.demanderjoin.DemanderjoinService;
@@ -74,7 +76,14 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 				
 		int clubIdx=clubService.ReadClubInfoSession(map);
 		info.setClubIdx(clubIdx);
-
+		
+		map.put("clubSeq", clubIdx);
+		ClubInfo clubinfo=clubService.readClubInfoSmall(map);
+		info.setClubname(clubinfo.getClubname());
+		
+		
+		List<ClubInfo> list=clubService.readJoinedClub(info.getUserIdx());
+		session.setAttribute("clubList", list);
 		session.setAttribute("member", info);	
 
 		super.onAuthenticationSuccess(req, resp, authentication);

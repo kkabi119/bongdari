@@ -337,6 +337,17 @@ public class ClubServiceImpl  implements ClubService {
 		return result;
 		
 	}
+
+	@Override
+	public List<ClubInfo> readJoinedClub(int userIdx) {
+		List<ClubInfo> list=null;
+		try {
+			list=dao.getListInformation("club.readJoinedClub", userIdx);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
 	
 	
 	
