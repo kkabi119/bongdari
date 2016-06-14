@@ -227,17 +227,12 @@ public class NoticeController {
 		if(info==null) {
 			return new ModelAndView("redirect:/member/login");
 		}
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("num", num);
 		map.put("clubSeq", clubSeq);
 		Notice dto = (Notice) service.readNotice(map);
 		
 		if(dto==null) {
-			return new ModelAndView("redirect:/notice/list?page="+page);
-		}
-			
-		if(! info.getUserId().equals(dto.getUserId())) {
 			return new ModelAndView("redirect:/notice/list?page="+page);
 		}
 		
@@ -368,7 +363,7 @@ public class NoticeController {
 			return new ModelAndView("redirect:/club/{clubSeq}/notice/list?page="+page);
 		}
 		
-		if(! info.getUserId().equals(dto.getUserId()) && ! info.getUserId().equals("admin")) {
+		if(info.getUserIdx()!=dto.getUserIdx() && ! info.getUserId().equals("admin")) {
 			return new ModelAndView("redirect:/club/{clubSeq}/notice/list?page="+page);
 		}
 		

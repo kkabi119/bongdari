@@ -45,10 +45,14 @@ public class DemanderController {
 	public ModelAndView mainResult(
 			HttpServletRequest req,
 			@RequestParam(value="page",defaultValue="1") int current_page,
+			@RequestParam(value="sido",defaultValue="") String sido,
+			@RequestParam(value="addr",defaultValue="") String addr,
 			@RequestParam(value="demanderType",defaultValue="") String demanderType,
 			@RequestParam(value="demanderName",defaultValue="") String demanderName
 			) throws Exception {
-		System.out.println("******demanderName:"+demanderName+"demanderType:"+demanderType);
+		
+		System.out.println("******sido:"+sido+"/addr:"+addr);
+		System.out.println("******ggdemanderName:"+demanderName+"/demanderType:"+demanderType);
 		String cp = req.getContextPath();
 		
    	    
@@ -65,6 +69,8 @@ public class DemanderController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("demanderType", demanderType);
         map.put("demanderName", demanderName);
+        map.put("sido", sido);
+        map.put("addr", addr);
        
         dataCount = mainService.dataCount(map);
         

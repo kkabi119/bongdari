@@ -157,7 +157,7 @@ function deleteReply(replyNum, page) {
 
 //-------------------------------------
 function deleteNotice() {
-<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userIdx==dto.userIdx}">
+<c:if test="${sessionScope.member.userIdx=='3' || sessionScope.member.userIdx==dto.userIdx}">
   var num = "${dto.clubNoticeIdx}";
   var page = "${page}";
   var params = "num="+num+"&page="+page;
@@ -166,7 +166,7 @@ function deleteNotice() {
   if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	location.href=url;
 </c:if>    
-<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userIdx!=dto.userIdx}">
+<c:if test="${sessionScope.member.userIdx!='3' && sessionScope.member.userIdx!=dto.userIdx}">
   alert("게시물을 삭제할 수  없습니다.");
 </c:if>
 } 

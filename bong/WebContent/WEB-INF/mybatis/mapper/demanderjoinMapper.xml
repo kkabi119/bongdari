@@ -86,6 +86,6 @@
     <select id="searchDemanderAddr" parameterType="map" resultType="com.bong.demanderjoin.Demanderjoin">
    select DISTINCT category1,category2, dong2, streetname
     from zip
-    where streetname=#{streetname}
+    where instr(streetname, #{streetname}) &gt; 0
     </select>
 </mapper>

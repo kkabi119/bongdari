@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Home | Triangle</title>
+    <title>봉다리</title>
     <!-- Custom CSS -->
     <link href="<%=cp %>/res/css/modern-business.css" rel="stylesheet">
     <link href="<%=cp%>/res/css/bootstrap.min.css" rel="stylesheet">
