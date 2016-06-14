@@ -21,7 +21,7 @@
                                                     <li class="post-comment reply">
                                                     
                                                         <a class="pull-left" href="#">
-                                                            <img style=" width:117px; height:107px; background-size:cover; "class="media-object" src="<%=cp%>/res/images/blogdetails/1.png" alt="">
+                                                            <img style=" width:117px; height:107px; background-size:cover; "class="media-object" src="<%=cp%>/res/images/demander/user(1).png" alt="">
                                                         </a>
                                                         <div class="media-body" style="padding-bottom: 10px">
                                                             <span><i class="fa fa-user"></i><a href="#">${Adto.userName}</a></span>
