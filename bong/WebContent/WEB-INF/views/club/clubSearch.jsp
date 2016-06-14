@@ -126,7 +126,7 @@
 				<div class="tab-pane fade active in" id="tab2-item1">
 				 
 					<select id="sido"  class="selectField"
-						name="sido" style="margin-right: 10px; height: 30px; width: 100px;">
+						name="sido" style="margin-right: 10px; height: 40px; width: 150px;">
 						<option value="">::시도선택::</option>
 						<option value="서울특별시">서울특별시</option>
 						<option value="인천광역시">인천광역시</option>
