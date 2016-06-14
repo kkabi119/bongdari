@@ -43,11 +43,18 @@
 			var city=data.dto.city;
 			var category=data.dto.groupSubject+" > "+data.dto.subject;
 			var clubname=data.dto.clubname;
-			
+			var authority=data.authority;
 			$("#introduce").html(introduce);
 			$("#city").html(city);
 			$("#category").html(category);
 			$("#clubname").html(clubname);
+			
+			if(authority=="null"||authority=="") {
+				$("#joinBtn").show();
+			}else{
+				$("#joinBtn").hide();
+			}
+			
 		}, "JSON");
 	});
 	
@@ -129,11 +136,10 @@
                                 <li><a id="introduce" href=""></a></li>
                             </ul>
                              <hr style="margin-bottom:10px; margin-top:15px; border:2px solid #ccc;">
-                             <c:if test="${authority.equals('')}">
-	                             <button type="button" class="btn btn-default" 
-	                             			style="width:100%;border-radius:0px; padding:15px 25px ; margin-bottom:0px; background-color:#3897f0; color:white; border:none;"
+	                             <button type="button" class="btn btn-default"  id="joinBtn"
+	                             			style="width:100%;border-radius:0px; padding:15px 25px ; margin-bottom:0px; background-color:#3897f0; color:white; border:none;
+	                             				display:none;"
 	                      			 id="joinClub">가입하기</button>
-                      		 </c:if>
                         </div>
                         <div class="sidebar-item categories">
                             <ul class="nav navbar-stacked" >

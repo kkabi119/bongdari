@@ -165,12 +165,13 @@ hr:LAST-CHILD {
          <h5 style="font-size:14px;"><img Id="listBtn"style=" width:15px; height:15px; background-size:cover; "src="<%=cp%>/res/images/myclub/heart.png" alt="">
 	                                	 	&nbsp; ${dto.likeCount}</h5> 
          
-         <div style="block; margin-top:28px; width:93%;  height:50px;overflow:hidden; text-overflow:elevation; color:gray; ">
-	      <div style="font-size:15px !important; line-height: 20px ; font-weight: 400  ! important; 
-	      				 font-family: 'NanumGothic', '나눔고딕',' Malgun Gothic', 'sans-serif'  ! important;  ! important">
-	  			 ${dto.content} ...
-	     
-		    </div><span>...</span> 
+         <div style="block; margin-top:28px; width:93%;  height:50px;overflow:hidden;color:gray; ">
+	      	<div style="font-size:15px; line-height: 20px ; font-weight: 400 ;
+	      				 font-family: 'NanumGothic', '나눔고딕',' Malgun Gothic', 'sans-serif' ">
+	  		<%--  ${dto.content} --%>
+	     	
+		    </div>
+		    <span>...</span> 
 		 
         </div>
       </div>
@@ -194,7 +195,6 @@ hr:LAST-CHILD {
 	                ${paging}
 	</c:if>
 </div>
-sfsdf
 <!-- 검색 -->
    <div style="clear: both; border-radius:0px;">
       <div style="float: left; width: 20%; min-width: 85px;">
@@ -217,8 +217,7 @@ sfsdf
             </button>
          </form>
       </div>
-      <div
-         style="float: left; width: 20%; min-width: 85px; text-align: right;">
+      <div style="float: left; width: 20%; min-width: 85px; text-align: right;">
          <button type="button" class="btn btn-warning" style="background-color: #00aeef; border:none;"
             onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/review/create';">
             <span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기

@@ -7,8 +7,15 @@ public class Reply {
 	private int answerCount;
 	private int likeCount;
 	private int clubSeq;
+	private String saveFilename;
 	
 	
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+	public void setSaveFilename(String saveFileName) {
+		this.saveFilename = saveFileName;
+	}
 	public int getClubSeq() {
 		return clubSeq;
 	}

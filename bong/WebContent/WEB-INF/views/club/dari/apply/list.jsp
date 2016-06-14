@@ -8,6 +8,10 @@
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 <style type="text/css">
+
+.btn {
+	padding: 10px 15px;
+}
 .col-md-9{
 	margin-top:-30px;
 
@@ -57,7 +61,7 @@ function searchList() {
           				<h3  style="font-size:30px;"> 봉사 신청<span style="margin-left:10px;color:gray; font-size:15px;">  봉사를 신청할 수 있는 게시판입니다</span> </h3>
  <c:if test="${dataCount!=0 }">    					
     					<div style="clear: both; height: 30px; line-height: 30px;">
-            				<div style="float: left; color:#3897f0;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
+            				<div style="float: left; color:#00aeef;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
             					전체 ${dataCount}개 <span style="color:#777;">(${page}/${total_page}  페이지)</span> </div>
         				</div> 
         		<!-- <hr style="margin-bottom:10px; margin-top:0px; border:1px solid gray;"> -->
@@ -115,6 +119,36 @@ function searchList() {
         				</div>
   </c:if>
 
+
+<!-- 검색 -->
+   <div style="clear: both; border-radius:0px;">
+      <div style="float: left; width: 20%; min-width: 85px;">
+         <button type="button" class="btn btn-default " style=" color: gray; border:1px solid gray; margin-left:30px;" 
+            onclick="javascript:location.href='<%=cp%>/demander/${clubSeq}/review/list';">새로고침</button>
+      </div>
+      <div style="float: left; width: 60%; height:41px; text-align: center; margin-top:0px; padding-top:0px;">
+         <form name="searchForm" method="post" class="form-inline" style=" ">
+            <select class="form-control input-sm" name="searchKey" style="height:40px; margin-top:-2px; border:1px solid #00aeef; border-radius:0px;">
+               <option value="subject">제목</option>
+               <option value="userName">작성자</option>
+               <option value="content">내용</option>
+               <option value="created">등록일</option>
+            </select> 
+            <input type="text" class="search-form" style="margin-top:0px; margin-left:-5px; border-radius:0px; "
+               name="searchValue">
+            <button type="button" class="btn btn-warning btn-sm wbtn" style="background-color: #00aeef; border:2px solid #00aeef; margin-top:-2px; "
+               onclick="searchList();">
+               <span class="glyphicon glyphicon-search"></span> 
+            </button>
+         </form>
+      </div>
+      <div style="float: left; width: 20%; min-width: 85px; text-align: right;">
+         <button type="button" class="btn btn-warning" style="background-color: #00aeef; border:none;"
+            onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/review/create';">
+            <span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기
+         </button>
+      </div>
+   </div>
 <!------------------------------------------------ paging 처리  ----------------------------------------------------------->
 <div class="paging" style="text-align: center; min-height: 30px; line-height: 30px;">
 <c:if test="${dataCount==0 }">
@@ -123,26 +157,9 @@ function searchList() {
 <c:if test="${dataCount!=0 }">
                 ${paging}
 </c:if>
-        				</div>        
+</div>        
         
-        				<div style="clear: both;">
-        					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/club/${club_seq}/apply/list?page=${page}';">새로고침</button>
-        					</div>
-        					<div style="float: left; width: 60%; text-align: center;">
-        		     			<form name="searchForm" method="post" class="form-inline">
-						  			<select class="form-control input-sm" name="searchKey" style="height:32px">
-						      			<option value="subject">제목</option>
-						      			<option value="serviceName">수요처</option>
-						      			<option value="content">내용</option>
-						      			<option value="created">등록일</option>
-						  			</select>
-						  			<input type="text" class="form-control input-sm input-search" name="searchValue" placeholder="검색" style="width:50%; height:32px;">
-						  			<button type="button" class="btn btn-success" onclick="searchList();" style="background-color: #3897f0; border:none;"><span class="glyphicon glyphicon-search" ></span> 검색</button>
-        		     			</form>
-        					</div>
-        					
-        				</div>
+        				
         			</div>
         		</div>
         	</div>

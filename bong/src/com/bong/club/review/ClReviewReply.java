@@ -3,7 +3,7 @@ package com.bong.club.review;
 public class ClReviewReply {
 	//replyNum 에 srridx(serviceReviewReplyIndex 값이 들어간다 )
 	private int replyNum, num, listNum;
-	private String userId, userName, content, created;
+	private String userId, userName, content, created, saveFilename;
 	private int answer,userIdx;
 	private int replyLike;
 	
@@ -13,6 +13,13 @@ public class ClReviewReply {
 	private int clubSeq;
 
 	
+	
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
 	public int getClubSeq() {
 		return clubSeq;
 	}

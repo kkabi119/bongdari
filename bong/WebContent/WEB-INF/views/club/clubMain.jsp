@@ -29,14 +29,18 @@
 	
 		background-color:#3897f0;
 	}
+	
+	.img-responsive{
+		height:260px;
+	}
 </style>
 
     <!-- Header Carousel -->
     <!--  우수단원 소개란 시작 -->
-	 <h1 style="margin-top:30px" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">오월의 베스트 포토 </h1>
+	 <h1 style="margin-top:30px" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">오월의 베스트 후기 </h1>
       <h1 style="font-weight:bold; margin-top:-6px;" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">따뜻한 마음을 그리다</h1>
       <p style="color:gray; font-size:16px; margin-bottom:25px;" class="text-center wow fadeInDown" data-wow-duration="400ms" data-wow-delay="400ms"> 
-      			이번 달을 빛낸 이달의 우수포토를 소개합니다! 댓글과 하트로 칭찬해주세용</p>
+      			이번 달을 빛낸 이달의 우수후기를 소개합니다! 댓글과 하트로 칭찬해주세요</p>
               
     <header id="myCarousel" class="carousel slide" style="width:100%;">
         <!-- Indicators -->
@@ -62,7 +66,7 @@
                 </div>
             </div>
             <div class="item">
-                <div class="fill" style="background-image:url('<%=cp%>/res/images/mainslide/mountain.jpg');"></div>
+                <div class="fill" style="background-image:url('<%=cp%>/res/images/mainslide/h1.jpg');"></div>
                 <div class="carousel-caption">
                     <h2></h2>
                 </div>
@@ -87,12 +91,12 @@
 		<h2>이달의 우수단원</h2>
 	</div> -->
 	<!--  우수단원 소개란 시작 -->
-	 <h1 style="margin-top:60px" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">오월의 우수단원 </h1>
+	 <h1 style="margin-top:60px" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">유월의 우수단원 </h1>
 	 <h1 style="margin-top:-6px;font-weight:bold;" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">
 	 나누는 마음을 행동으로
 	 </h1>
                 <p style="color:gray; font-size:16px; "class="text-center wow fadeInDown" data-wow-duration="400ms" data-wow-delay="400ms">
-                	 5월을 빛낸 이달의 우수 봉다리단원을 소개합니다! 댓글과 하트로 칭찬해주세용
+                	 5월을 빛낸 이달의 우수 봉다리단원을 소개합니다! 댓글과 하트로 칭찬해주세요
                 </p>
               <br>     
      <section id="team">
@@ -112,7 +116,7 @@
                                 <div class="team-single-wrapper">
                                     <div class="team-single">
                                         <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/1.jpg" class="img-responsive" alt="">
+                                            <img src="<%=cp%>/res/images/aboutus/n1.jpg" class="img-responsive" alt="" >
                                         </div>
                                         <div class="social-profile">
                                             <ul class="nav nav-pills">
@@ -123,8 +127,8 @@
                                         </div>
                                     </div>
                                     <div style="text-align:center;"class="person-info">
-                                        <h2>이 제훈</h2>
-                                        <p>서울북부 &amp; 으쌰아</p>
+                                        <h2>최 양희</h2>
+                                        <p>서울북부 &amp; 희망나눔 </p>
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +136,7 @@
                                 <div class="team-single-wrapper">
                                     <div class="team-single">
                                         <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/2.jpg" class="img-responsive" alt="">
+                                            <img src="<%=cp%>/res/images/aboutus/n7.jpg" class="img-responsive" alt="">
                                         </div>
                                         <div class="social-profile">
                                             <ul class="nav nav-pills">
@@ -143,7 +147,7 @@
                                         </div>
                                     </div>
                                    <div style="text-align:center;"class="person-info">
-                                        <h2>최 양희</h2>
+                                        <h2>이 제훈</h2>
                                         <p>부산북부 &amp; 따뜻따뜻</p>
                                     </div>
                                 </div>
@@ -152,7 +156,7 @@
                                 <div class="team-single-wrapper">
                                     <div class="team-single">
                                         <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/3.jpg" class="img-responsive" alt="">
+                                            <img src="<%=cp%>/res/images/aboutus/n3.jpg" class="img-responsive" alt="">
                                         </div>
                                         <div class="social-profile">
                                             <ul class="nav nav-pills">
@@ -172,7 +176,7 @@
                                 <div class="team-single-wrapper">
                                     <div class="team-single">
                                         <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/1.jpg" class="img-responsive" alt="">
+                                            <img src="<%=cp%>/res/images/aboutus/n8.jpg" class="img-responsive" alt="">
                                         </div>
                                         <div class="social-profile">
                                             <ul class="nav nav-pills">
@@ -194,7 +198,27 @@
                                 <div class="team-single-wrapper">
                                     <div class="team-single">
                                         <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/4.jpg" class="img-responsive" alt="">
+                                            <img src="<%=cp%>/res/images/aboutus/n4.jpg" class="img-responsive" alt="">
+                                        </div>
+                                        <div class="social-profile">
+                                            <ul class="nav nav-pills">
+                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="person-info">
+                                        <h2>박 보영</h2>
+                                        <p>부산북부 &amp; 좋아요봉사</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-xs-6">
+                                <div class="team-single-wrapper">
+                                    <div class="team-single">
+                                        <div class="person-thumb">
+                                            <img src="<%=cp%>/res/images/aboutus/n5.jpg" class="img-responsive" alt="">
                                         </div>
                                         <div class="social-profile">
                                             <ul class="nav nav-pills">
@@ -214,7 +238,7 @@
                                 <div class="team-single-wrapper">
                                     <div class="team-single">
                                         <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/3.jpg" class="img-responsive" alt="">
+                                            <img src="<%=cp%>/res/images/aboutus/n2.jpg" class="img-responsive" alt="">
                                         </div>
                                         <div class="social-profile">
                                             <ul class="nav nav-pills">
@@ -234,27 +258,7 @@
                                 <div class="team-single-wrapper">
                                     <div class="team-single">
                                         <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/2.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="person-info">
-                                        <h2>John Doe</h2>
-                                        <p>CEO &amp; Developer</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/1.jpg" class="img-responsive" alt="">
+                                            <img src="<%=cp%>/res/images/aboutus/n9.jpg" class="img-responsive" alt="">
                                         </div>
                                         <div class="social-profile">
                                             <ul class="nav nav-pills">

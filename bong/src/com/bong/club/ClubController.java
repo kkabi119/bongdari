@@ -153,7 +153,7 @@ public class ClubController {
 	}
 	@RequestMapping(value="/club/{clubSeq}/left")
 	@ResponseBody
-	public Map<String, Object> clubLeft(
+	public Map<String, Object> clubLeft_smallInfo(
 			HttpSession session,
 			@PathVariable int clubSeq
 			) throws Exception {
@@ -481,8 +481,8 @@ public class ClubController {
 		System.out.println(joclub.getMemAddr()+joclub.getClubAddr());
 		
 		if(! joclub.getMemAddr().equals(joclub.getClubAddr())){
-			enabled=2; // 지역이 같지않으므로 가입 불가
-		}
+		/*	enabled=2; // 지역이 같지않으므로 가입 불가 로 하려고햇는데 복잡하니까 패스
+*/		}
 		if(joclub.getAuthority()!=null )
 		{ //authority의 default값을 비회원/ 가입을 누르면 -승인대기/ 가입 후 일반 으로 변경
 			enabled=3; //이미 가입신청한 회원

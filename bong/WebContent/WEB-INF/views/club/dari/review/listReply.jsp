@@ -173,7 +173,8 @@ function deleteReplyAnswer(replyNum, answer) {
    						<li class="media">
                                             <div class="post-comment" style="">
                                                 <a class="pull-left" href="#" >
-                                                    <img style="border-radius:100%; width:120px; height:120px; background-size:cover; "class="media-object" src="<%=cp%>/res/images/blogdetails/2.png" alt="">
+                                                    <img style="border-radius:100%; width:120px; height:120px; background-size:cover; "class="media-object" 
+                                                    		src="<%=cp%>/uploads/memImg/${Rdto.saveFilename}" alt="">
                                                 </a>
                                                 <div class="media-body" style="padding-bottom: 0px">
                                                     <span><i class="fa fa-user"></i><a href="#">${Rdto.userName}</a></span>

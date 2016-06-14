@@ -12,8 +12,17 @@ public class ClubInfo {
 	private MultipartFile uploads;
 	private String photoFilename;
 	private int isUserName, isCity;
+	private String authority;
 	
 	
+	
+	
+	public String getAuthority() {
+		return authority;
+	}
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
 	public String getClubAddr() {
 		return clubAddr;
 	}

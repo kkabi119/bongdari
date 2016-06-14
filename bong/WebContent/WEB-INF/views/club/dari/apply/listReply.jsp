@@ -110,7 +110,7 @@ function sendReplyAnswer(num, replyNum) {
 	var params="num="+num;
 	params+="&content="+content;
 	params+="&answer="+replyNum;
-	alert("ddd");
+
 	$.ajax({
 		
 		type:"POST"
@@ -172,10 +172,11 @@ function deleteReplyAnswer(replyNum, answer) {
    						<li class="media">
                                             <div class="post-comment" style="">
                                                 <a class="pull-left" href="#" >
-                                                    <img style="border-radius:100%;  width:127px; height:127px; background-size:cover; "class="media-object" src="<%=cp%>/res/images/blogdetails/2.png" alt="">
+                                                    <img style="border-radius:100%;  width:127px; height:127px; background-size:cover; "class="media-object" 
+                                                    	 src="<%=cp%>/uploads/memImg/${Rdto.saveFilename}" alt="">
                                                 </a>
                                                 <div class="media-body" style="padding-bottom: 0px">
-                                                    <span><i class="fa fa-user"></i><a href="#">${Rdto.userName}</a></span>
+                                                    <span style="color: gray;"><i class="fa fa-user"></i><a href="#">${Rdto.userName}</a></span>
                                                   
                                                       <c:if test="${sessionScope.member.userIdx==Rdto.userIdx || sessionScope.member.userIdx==3}">   
 		     											<span style="margin-right:0px; float:right; ">

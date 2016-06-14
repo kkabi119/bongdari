@@ -109,12 +109,12 @@ public class clreviewController {
 	            
 	            content=data.getContent().replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>","");
 	            
-	            if(content.length()<80){
+	            if(content.length()<60){
 	            	 data.setContent(content);
 	                 n++;
 	            }
 	            else {
-		            content=content.substring(0, 80);
+		            content=content.substring(0, 60);
 		            data.setContent(content);
 		            System.out.println("content+"+content);
 		            n++;

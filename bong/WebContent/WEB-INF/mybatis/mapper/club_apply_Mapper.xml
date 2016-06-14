@@ -51,7 +51,9 @@
 					                    LEFT OUTER JOIN
 								        (
 								             SELECT clubApplyIdx, count(*) replycount
-					                         FROM club_applyR_${clubSeq} tbreply GROUP BY clubApplyIdx
+					                         FROM club_applyR_${clubSeq} tbreply
+					                         WHERE answer=0
+					                         GROUP BY clubApplyIdx
 								        ) tbreply ON a.clubApplyIdx = tbreply.clubApplyIdx
                     <where>
                          <if test="searchValue != null and searchValue != ''">
@@ -159,11 +161,11 @@
 		    SELECT ROWNUM rnum, tb.* FROM (
 		        SELECT tbreply.CARIDX as replyNum, clubApplyIdx as num, tbreply.userIdx, tbreply.userName 
 		                    ,content, created, tbreply.answer, tblike.likeCount
-		                    ,NVL(answerCount, 0) answerCount
+		                    ,NVL(answerCount, 0) answerCount,memImg AS saveFilename
 		        FROM
 		        (
 				      (
-					     SELECT CARIDX, r.clubApplyIdx, r.userIdx, m.userName, r.content, r.created, answer
+					     SELECT CARIDX, r.clubApplyIdx, r.userIdx, m.userName, r.content, r.created, answer,memImg
 					        FROM club_applyR_${clubSeq} r
 			                JOIN club_apply_${clubSeq} a ON r.clubApplyIdx=a.clubApplyIdx
 			                JOIN memberInfo m ON r.userIdx=m.userIdx
@@ -210,7 +212,7 @@
 	
 	<!-- 대댓글 리스트 -->
 	<select id="listReplyAnswer" resultType="com.bong.club.apply.Reply" parameterType="Integer">
-     SELECT CARIDX AS replyNum, clubApplyIdx AS num, tbreply.userIdx, m.userName, content, created, answer
+     SELECT CARIDX AS replyNum, clubApplyIdx AS num, tbreply.userIdx, m.userName, content, created, answer,memImg AS saveFilename
 	          FROM club_applyR_${clubSeq} tbreply 
 	    		      JOIN memberInfo m ON tbreply.userIdx=m.userIdx
               WHERE answer=#{answer}
