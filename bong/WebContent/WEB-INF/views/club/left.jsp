@@ -40,7 +40,7 @@
 		$.post(url, {}, function(data){
 			
 			var introduce=data.dto.introduce;
-			var city=data.dto.city;
+			var city=data.dto.clubAddr;
 			var category=data.dto.groupSubject+" > "+data.dto.subject;
 			var clubname=data.dto.clubname;
 			

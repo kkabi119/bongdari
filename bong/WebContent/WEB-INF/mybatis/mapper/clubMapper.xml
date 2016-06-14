@@ -48,7 +48,7 @@
 	<insert id="insertClubInfo" parameterType="com.bong.club.ClubInfo">
 	    INSERT INTO clubInfo(clubIdx, userId, themeNum, clubname, introduce, closed, clubAddr, photoFilename)
 	      VALUES (#{clubSeq}, #{userId}, #{themeNum}, 
-	                #{clubname}, #{introduce}, 1,#{city}, #{photoFilename, jdbcType=VARCHAR})
+	                #{clubname}, #{introduce}, 1,#{clubAddr}, #{photoFilename, jdbcType=VARCHAR})
 	</insert>
 	
 	<insert id="insertJoinClub" parameterType="com.bong.club.ClubInfo">
@@ -58,7 +58,7 @@
 	
 	<!-- 동아리 정보 수정 -->
 	<update id="updateClubInfo" parameterType="com.bong.club.ClubInfo">
-	    UPDATE ClubInfo SET themeNum=#{themeNum}, clubname=#{clubname}, introduce=#{introduce}, clubAddr=#{city}, photoFilename=#{photoFilename}
+	    UPDATE ClubInfo SET themeNum=#{themeNum}, clubname=#{clubname}, introduce=#{introduce}, clubAddr=#{clubAddr}, photoFilename=#{photoFilename}
 	    WHERE clubIdx=#{clubSeq}
 	</update>
 	
@@ -147,7 +147,7 @@
 			FROM ClubInfo b 
 			JOIN theme c ON b.themeNum=c.themeNum 
 			JOIN ( SELECT themeNum, subject FROM theme WHERE parent IS NULL ) g ON c.parent = g.themeNum
-			WHERE clubIdx=${clubSeq}  
+			WHERE clubIdx=${clubSeq}
 	</select>
 	
 	<select id="readClubInfoSession" parameterType="map" resultType="String">

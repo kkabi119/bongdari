@@ -40,7 +40,7 @@
                                 <div class="team-single-wrapper">
                                     <div class="team-single"  >
                                         <div class="person-thumb" >            
-                                             <img src="${dto.listImageName}" style="height:200px; width:200px; background-size:cover;" > 
+                                             <img src="${dto.listImageName}" style="height:190px; width:190px; background-size:cover;" > 
                                         </div>
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@
                                 <div class="team-single-wrapper">
                                     <div class="team-single">
                                         <div class="person-thumb">
-                                            <img src="${dto2.listImageName}" style="height:200px; width:200px; background-size:cover;"><!-- class="img-responsive" alt="" -->
+                                            <img src="${dto2.listImageName}" style="height:190px; width:190px; background-size:cover;"><!-- class="img-responsive" alt="" -->
                                         </div>
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@
 			<div class="col-md-6" >
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5 style="font-size:18px;"><i class="fa fa-lightbulb-o"></i> 공지사항 <a href="#"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
+                        <h5 style="font-size:18px;"><i class="fa fa-lightbulb-o"></i> 후기게시판 <a href="#"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
                     </div>
                     <div class="panel-body">
                         <ul type="disc">
