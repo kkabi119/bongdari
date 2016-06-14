@@ -95,6 +95,9 @@ public class clreviewController {
 	        // 리스트의 번호
 	        int listNum, n = 0;
 	        Iterator<ClReview> it=list.iterator();
+	        
+	        String content=null; //글 미리보기 를 담을 변수
+	        
 	        while(it.hasNext()) {
 	        	ClReview data = it.next();
 	            listNum = dataCount - (start + n - 1);
@@ -103,8 +106,19 @@ public class clreviewController {
 	            match=pattern.matcher(data.getContent());
 	            if(match.find())
 	            	data.setListImageName(match.group(1));
-	           
-	            n++;
+	            
+	            content=data.getContent().replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>","");
+	            
+	            if(content.length()<80){
+	            	 data.setContent(content);
+	                 n++;
+	            }
+	            else {
+		            content=content.substring(0, 80);
+		            data.setContent(content);
+		            System.out.println("content+"+content);
+		            n++;
+	            }
 	        }
 	        
 	        String params = "";

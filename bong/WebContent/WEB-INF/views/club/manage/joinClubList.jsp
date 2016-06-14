@@ -105,7 +105,7 @@ function joinClubOk(){
         type: 'POST', 
         url: "<%=cp%>/club/${clubSeq}/manage/joinClubOk", // 호출 URL
         data:  $("#joinClubForm").serialize() , 
-// 파라메터 정보 전달  form에 있는 name들을 한번에 보낼 수 있음 우왕귿귿
+		// 파라메터 정보 전달  form에 있는 name들을 한번에 보낼 수 있음 우왕귿귿
         success:function(data){
         	var url="<%=cp%>/club/${clubSeq}/manage/joinClubList";
         	$.get(url, {}, function(data){
