@@ -3,8 +3,8 @@ package com.bong.club;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ClubInfo {
-	private int clubSeq;
-	private String userId, nickName, userName;
+	private int clubSeq,listNum;
+	private String userId, nickName, userName,themeName;
 	private int groupNum, themeNum, userIdx;
 	private String introduce, clubname, city,  clubBirth, clubAddr;
 	private String groupSubject, subject;
@@ -138,6 +138,19 @@ public class ClubInfo {
 	}
 	public void setPhotoFilename(String photoFilename) {
 		this.photoFilename = photoFilename;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
+	
+	public String getThemeName() {
+		return themeName;
+	}
+	public void setThemeName(String themeName) {
+		this.themeName = themeName;
 	}
 	
 	

@@ -12,9 +12,7 @@
 
 <style type="text/css">
  .row4 {
-/* 	margin-top: 20px;
-	margin-bottom: 60px;
-	margin-left: 20px; */
+
 	height: 400px;
 	width: 600px;
 } 
@@ -30,7 +28,7 @@
  
  function searchMainList() {
 		var f=document.searchForm2;
-		f.action="<%=cp%>/main/demander/mainResult";
+		f.action="<%=cp%>/club/clubSearch";
 		f.submit(); 
 	}
 
@@ -117,7 +115,7 @@
 			<ul id="tab2" class="nav nav-pills">
 				<li class="active"><a href="#tab2-item1" data-toggle="tab">지역</a></li>
 				<li><a href="#tab2-item2" data-toggle="tab" >분야</a></li>
-				<li><a href="#tab2-item3" data-toggle="tab" >수요처 이름</a></li>
+				<li><a href="#tab2-item3" data-toggle="tab" >동아리 이름</a></li>
 
 			</ul>
 		<form name="searchForm2" method="post" class="form-inline">	
@@ -158,7 +156,7 @@
 				</div>
 			<!-- 분야 검색 -->
 				<div class="tab-pane fade" id="tab2-item2">
-					<select name="demanderType" class="selectField" 
+					<select name="clubType" class="selectField" 
 					style="height: 30px; width: 160px; border-radius: 5px 5px 5px 5px; margin-right: 10px;">
 						<option value="">::분야 선택::</option>
 						<option value="disabled">장애인</option>
@@ -169,9 +167,9 @@
 					<input type="button" value="검색" onclick="searchMainList();"
 					id="searchBtn" class="btn">
 				</div>
-			<!-- 수요처 검색 -->
+			<!-- 동아리 검색 -->
 				<div class="tab-pane fade" id="tab2-item3">
-					<input type="text" class="textField" name="demanderName" style="margin-right: 10px;">
+					<input type="text" class="textField" name="clubName" style="margin-right: 10px;">
 					<input type="button" value="검색" onclick="searchMainList();"
 					id="searchBtn" class="btn">
 				</div>
@@ -185,7 +183,7 @@
 <!-- 검색결과는 ajax써서 jsp따로 빼야할 듯! -->
 
 <div id="mainResult"></div>
-<div style="margin: 100px auto 10px; width: 1000px" align="center" >
+<div style="margin: auto; width: 1000px" align="center" >
 <div class="row" style="margin-left:15px;">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">
@@ -203,26 +201,21 @@
                 				<thead style="min-width:100%; font-size:15px; background-color:#DFE6E8; color:#555; ">
                     				<tr >
                         				<th class="text-center" style="width: 60px; font-weight:500;  ">번호</th>
-                        				<th class="text-center"colspan="4" style="white-space: nowrap;  font-weight:500; ">
-                        				수요처 이름</th>
+                        				<th class="text-center" style="white-space: nowrap;  font-weight:500; ">
+                        				동아리 이름</th>
                         				<th class="text-center" style="width:105px; font-weight:500;">봉사 분야</th>
-                        				<th class="text-center" style="width:110px; font-weight:500;">지역</th>
-                        				<th class="text-center" style="width:150px;font-weight:500;">전화번호</th>
-                        			
+                        				<th class="text-center" style="width:200px; font-weight:500;">지역</th>
                         				
                     				</tr>
                 				</thead>
-                				
                 				<tbody>
                 				<c:forEach var="sdto" items="${searchList}">
 									<tr>
                         				<td class="text-center">${sdto.listNum}</td>
-                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/demander/${sdto.serviceIdx}/main">${sdto.serviceName}</a></td>
+                        				<td class="text-center" ><a href="<%=cp%>/club/${sdto.clubSeq}/main">${sdto.clubname}</a></td>
                        				 	<td class="text-center" >${sdto.themeName}</td>
-                       				 	<td class="text-center">${sdto.serviceAddr}</td>
-                       				 	<td class="text-center" style="">${sdto.serviceTel}</td>
-                        				
-                        				
+                       				 	<td class="text-center">${sdto.clubAddr}</td>
+                       				 
             						</tr>
             					</c:forEach>	
             						
@@ -231,14 +224,7 @@
             				</table>
         				</div>
 
-        				<div class="paging" style="text-align: center; min-height: 30px; line-height: 30px;">
-<c:if test="${dataCount==0 }">
-                 검색 결과가 없습니다. 
-</c:if>
-<c:if test="${dataCount!=0 }">
-                ${paging}
-</c:if>
-        				</div>        
+        				     
         
         				
         			</div>

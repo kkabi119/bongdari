@@ -46,6 +46,107 @@ public class ClubController {
 	@Autowired
 	private MyUtil util;
 	
+	@RequestMapping(value="/club/clubSearchMain")
+	public ModelAndView demanderMain() throws Exception {
+	ModelAndView mav = new ModelAndView(".layout.club.clubSearch.동아리 검색");
+		return mav;
+	}
+	
+	//동아리 검색 컨트롤러 
+	@RequestMapping(value="/club/clubSearch")
+	public ModelAndView mainResult(
+			HttpServletRequest req,
+			@RequestParam(value="page",defaultValue="1") int current_page,
+			@RequestParam(value="sido",defaultValue="") String sido,
+			@RequestParam(value="addr",defaultValue="") String addr,
+			@RequestParam(value="clubType",defaultValue="") String clubType,
+			@RequestParam(value="clubName",defaultValue="") String clubName
+			) throws Exception {
+		
+		System.out.println("******sido:"+sido+"/addr:"+addr);
+		System.out.println("******clubType:"+clubType+"/clubName:"+clubName);
+		String cp = req.getContextPath();
+		
+   	    
+		int numPerPage = 10;  // 한 화면에 보여주는 게시물 수
+		int total_page = 0;
+		int dataCount = 0;
+   	    
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
+			clubName = URLDecoder.decode(clubName, "utf-8");
+		}
+		
+        // 전체 페이지 수
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("clubType", clubType);
+        map.put("clubName", clubName);
+        map.put("sido", sido);
+        map.put("addr", addr);
+       
+        dataCount = clubService.clubSearchdataCount(map);
+        
+        if(dataCount != 0)
+            total_page = util.pageCount(numPerPage,  dataCount) ;
+
+        // 다른 사람이 자료를 삭제하여 전체 페이지수가 변화 된 경우
+        if(total_page < current_page) 
+            current_page = total_page;
+
+        // 리스트에 출력할 데이터를 가져오기
+        int start = (current_page - 1) * numPerPage + 1;
+        int end = current_page * numPerPage;
+        map.put("start", start);
+        map.put("end", end);
+
+        // 글 리스트
+        List<ClubInfo> searchList = clubService.clubSearchList(map);
+
+        // 리스트의 번호 ,해당 수요처의 seq 
+        int listNum = 0;
+        int n=0;
+        Iterator<ClubInfo> it=searchList.iterator();
+     
+        while(it.hasNext()) {
+        	ClubInfo data = it.next();
+        	 n++;
+        	 listNum=n;
+        	// listNum = dataCount - (start + n - 1);
+            data.setListNum(listNum);
+            }
+     
+        String params = "";
+        String urlList = cp+"/club/clubSearch";
+        String urlArticle = cp+"club/clubSearch?page=" + current_page;
+      
+        
+        //동아리 분야 :select option 처리 
+        if(clubType.length()!=0) {
+        	params = "clubType="+clubType ;
+        	             
+        }
+        //동아리 명: input text처리 
+        if(clubName.length()!=0) {
+        	params = "clubName=" + URLEncoder.encode(clubName, "utf-8");	
+        }
+        
+        if(params.length()!=0) {
+            urlList = cp+"club/clubSearch?" + params;
+        }
+
+        ModelAndView mav = new ModelAndView(".layout.club.clubSearch.동아리 검색");
+        mav.addObject("searchList", searchList); //검색결과 리스트
+        mav.addObject("urlArticle", urlArticle); 
+        mav.addObject("page", current_page);
+        mav.addObject("dataCount", dataCount);
+        mav.addObject("total_page", total_page);
+        mav.addObject("paging", util.paging(current_page, total_page, urlList));	
+       
+		return mav;
+	}
+	
+	
+	
 	@RequestMapping(value="/club/{clubSeq}/main")
 	public ModelAndView myClubMain(
 			HttpServletRequest req,
@@ -574,15 +675,7 @@ public class ClubController {
 		return mav;
 	}	
 	
-	@RequestMapping(value="/club/clubSearch")
-	public ModelAndView clubSearch()
-		throws Exception {		
-					  
-		ModelAndView mav=new ModelAndView(".layout.club.clubMain.클럽메인");
-		
-		return mav;
-	}	
-	
+
 	
 }
 

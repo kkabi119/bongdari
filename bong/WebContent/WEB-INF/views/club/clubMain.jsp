@@ -287,8 +287,11 @@
      																					  <!--  우수단원 소개란 끝 -->    
      <hr><br>
       																					 <!--  이달의 우수 후기 시작 -->
-      																					 
-      	 <h1 style=" font-weight:bold;" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">
+      
+ 
+      			
+      			
+	 <h1 style=" font-weight:bold;" class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">
       	 	이 달의 봉다리 News
       	 </h1>
           <p style="color:gray; font-size:16px; "class="text-center wow fadeInDown" data-wow-duration="400ms" data-wow-delay="400ms">
@@ -305,9 +308,9 @@
                     </div>
                     <div class="panel-body" style="border-bottom:2px solid #999; ">
                         <ul type="disc" style="margin-bottom:6px; ">
-                        <%--   <c:forEach var="dtoDocu" items="${listDocu}">
+                          <c:forEach var="dtoDocu" items="${listDocu}">
                         	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
-                          </c:forEach> --%>
+                          </c:forEach>
                          <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
                        		 <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
                      	  	 <li><a href="#" >[서울] 벌써 보고싶은 아이들과 함께</a></li>
@@ -327,9 +330,9 @@
                     </div>
                  <div class="panel-body" style="border-bottom:2px solid #999; ">
                         <ul type="disc" style="margin-bottom:6px; ">
-                        <%--   <c:forEach var="dtoDocu" items="${listDocu}">
+                          <c:forEach var="dtoDocu" items="${listDocu}">
                         	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
-                          </c:forEach> --%>
+                          </c:forEach>
                          <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
                        		 <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
                      	  	 <li><a href="#" >[서울] 벌써 보고싶은 아이들과 함께</a></li>
@@ -349,9 +352,9 @@
                     </div>
                     <div class="panel-body" style="border-bottom:2px solid #999; ">
                         <ul type="disc" style="margin-bottom:6px; ">
-                        <%--   <c:forEach var="dtoDocu" items="${listDocu}">
+                          <c:forEach var="dtoDocu" items="${listDocu}">
                         	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
-                          </c:forEach> --%>         
+                          </c:forEach>         
                            <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>               
                        		 <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
                      	  	 <li><a href="#" >[서울] 벌써 보고싶은 아이들과 함께</a></li>
@@ -364,7 +367,7 @@
                 </div>
             </div>
             </div>
-       <!--  이달의 우수 후기 끝-->
+       <!--  이달의 우수 후기 끝--> 
           <br><br>
           <hr>
     <script>
