@@ -58,8 +58,8 @@
           WHERE userIdx=#{userIdx}
     </update>
     <!-- 나의 봉사신청현황 리스트 (전체보기) -->
-    <select id="myApplyList" resultType="com.bong.mypage.MyApply" parameterType="map">
-    SELECT * FROM (
+  <select id="myApplyList" resultType="com.bong.mypage.MyApply" parameterType="map">
+   <!--    SELECT * FROM (
 		    SELECT ROWNUM rNum, tb.* FROM (
     SELECT vb.volunIdx, vbm.userIdx,0.clubIdx, vb.subject,vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_Type, vb.volunDays, vbm.hopeDate,vb.themenum  
     FROM volun_bbs vb
@@ -81,7 +81,18 @@
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start}
-	]]>
+	]]> -->    
+
+    SELECT vb.volunIdx, cam.userIdx, clubIdx, vb.subject, vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_type, vb.volunDays, cam.hopeDate ,vb.themenum
+    FROM club_apply_52 ca
+     LEFT OUTER JOIN club_apply_memlist_52 cam ON ca.clubApplyIdx=cam.clubApplyIdx
+     LEFT OUTER JOIN volun_bbs vb ON vb.volunIdx=ca.volunIdx where userIdx=#{userIdx}
+         <if test="searchValue != null and searchValue != ''">
+         AND
+	     <include refid="where-list"/>
+		 </if>
+     ORDER BY userIdx DESC
+
     </select>
     <!-- 글개수 -->
 	<select id="dataCount" parameterType="map"  resultType="Integer">
@@ -217,7 +228,7 @@
     <select id="searchAddr" parameterType="map" resultType="com.bong.member.Member">
    select DISTINCT category1,category2, dong2, streetname
     from zip
-    where streetname like '백련산로%'
+     where instr(streetname, #{streetname}) &gt; 0
     </select>
     
 </mapper>
