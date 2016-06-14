@@ -115,7 +115,7 @@
                             <td colspan="3" class="td3">
                                 ${dto.originalFilename}
                                 <c:if test="${not empty dto.originalFilename}">
-                                    | <a href="<%=cp%>/bbs/deleteFile?num=${dto.num}&page=${page}">삭제</a>
+                                    | <a href="<%=cp%>/bbs/deleteFile?num=${dto.clubNoticeIdx}&page=${page}">삭제</a>
                                 </c:if>
                             </td>
                         </tr>
