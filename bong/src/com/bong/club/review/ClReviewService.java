@@ -22,8 +22,7 @@ public interface ClReviewService {
 	public ClReview readFile(Map<String, Object> map);
 	public int deleteFile(Map<String, Object> map);
 	
-	public List<ClReview> listReviewSmall(Map<String, Object> map);
-	
+	public List<ClReview> listReviewSmall(Map<String, Object> map);	
 	
 	public int stateLike(ClReview dto);
 	public int insertLike(ClReview dto);
