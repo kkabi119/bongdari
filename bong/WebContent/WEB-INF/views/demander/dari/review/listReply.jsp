@@ -204,13 +204,13 @@ function deleteReplyAnswer(replyNum, answer) {
    						<li class="media">
                                             <div class="post-comment" style="">
                                                 <a class="pull-left" >
-                                                    <img style="border-radius:100%; width:137px; height:127px; background-size:cover;"class="media-object" 
-                                                    src="<%=cp%>/res/images/demander/user.png" alt="">
+                                                    <img style="border-radius:100%; width:130px; height:130px; background-size:cover;"class="media-object" 
+                                                    src="<%=cp%>/res/images/demander/user128.png" alt="">
                                                 </a>
                                                 <div class="media-body" style="padding-bottom: 0px">
                                                     <span><i class="fa fa-user"></i><a href="#">${Rdto.userName}</a></span>
                                                   
-                                                      <c:if test="${sessionScope.member.userIdx==Rdto.userIdx|| sessionScope.member.userId=='admin'}">   
+                                                      <c:if test="${sessionScope.member.userIdx==Rdto.userIdx|| sessionScope.member.userId=='admin' ||demander_seq==sessionScope.member.demander_seq}">   
 		     											<span style="margin-right:0px; float:right; ">
 		     												<a class="btn btn-default" onclick='deleteReply("${Rdto.replyNum}", "${pageNo}");' style="margin-top:-8px;color:#C03035; border:none;">
 		     													삭제

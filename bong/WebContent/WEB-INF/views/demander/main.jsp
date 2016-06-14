@@ -182,9 +182,8 @@
 	
 
 </div>
-<!-- 검색결과는 ajax써서 jsp따로 빼야할 듯! -->
 
-<div id="mainResult"></div>
+
 <div style="margin: 100px auto 10px; width: 1000px" align="center" >
 <div class="row" style="margin-left:15px;">
 		<div class="col-md-12 col-sm-12">
@@ -203,21 +202,20 @@
                 				<thead style="min-width:100%; font-size:15px; background-color:#DFE6E8; color:#555; ">
                     				<tr >
                         				<th class="text-center" style="width: 60px; font-weight:500;  ">번호</th>
-                        				<th class="text-center"colspan="4" style="white-space: nowrap;  font-weight:500; ">
+                        				<th class="text-center" style="white-space: nowrap;  font-weight:500; ">
                         				수요처 이름</th>
                         				<th class="text-center" style="width:105px; font-weight:500;">봉사 분야</th>
-                        				<th class="text-center" style="width:110px; font-weight:500;">지역</th>
+                        				<th class="text-center" style="width:400px; font-weight:500;">지역</th>
                         				<th class="text-center" style="width:150px;font-weight:500;">전화번호</th>
                         			
                         				
                     				</tr>
                 				</thead>
-                				
                 				<tbody>
                 				<c:forEach var="sdto" items="${searchList}">
 									<tr>
                         				<td class="text-center">${sdto.listNum}</td>
-                        				<td class="text-center" colspan="4" ><a href="<%=cp%>/demander/${sdto.serviceIdx}/main">${sdto.serviceName}</a></td>
+                        				<td class="text-center" ><a href="<%=cp%>/demander/${sdto.serviceIdx}/main">${sdto.serviceName}</a></td>
                        				 	<td class="text-center" >${sdto.themeName}</td>
                        				 	<td class="text-center">${sdto.serviceAddr}</td>
                        				 	<td class="text-center" style="">${sdto.serviceTel}</td>
@@ -225,7 +223,6 @@
                         				
             						</tr>
             					</c:forEach>	
-            						
             						
                 				</tbody>
             				</table>
