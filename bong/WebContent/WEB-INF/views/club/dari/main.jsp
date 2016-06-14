@@ -30,173 +30,37 @@
                     <ol class="carousel-indicators visible-xs">
                         <li data-target="#team-carousel" data-slide-to="0" class="active"></li>
                         <li data-target="#team-carousel" data-slide-to="1"></li>
-                    </ol>        
+                    </ol>
+                            
                <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active">
-                            <div class="col-sm-3 col-xs-6">
+         <c:forEach var="dto" items="${revPhoto1}">
+                 <div class="col-sm-3 col-xs-6" >
+                                <div class="team-single-wrapper">
+                                    <div class="team-single"  >
+                                        <div class="person-thumb" >            
+                                             <img src="${dto.listImageName}" style="height:200px; width:200px; background-size:cover;" > 
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+        </c:forEach> 
+                         </div>
+                   
+                         <div class="item">
+        <c:forEach var="dto2" items="${revPhoto2}"><!-- style="height: 300px; width: 300px; background-size:cover; -->
+                 <div class="col-sm-3 col-xs-6" >
                                 <div class="team-single-wrapper">
                                     <div class="team-single">
                                         <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/1.jpg" class="img-responsive" alt="">
+                                            <img src="${dto2.listImageName}" style="height:200px; width:200px; background-size:cover;"><!-- class="img-responsive" alt="" -->
                                         </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div style="text-align:center;"class="person-info">
-                                        <h2>이 제훈</h2>
-                                        <p>서울북부 &amp; 으쌰아</p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/2.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                   <div style="text-align:center;"class="person-info">
-                                        <h2>최 양희</h2>
-                                        <p>부산북부 &amp; 따뜻따뜻</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/3.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                   <div style="text-align:center;"class="person-info">
-                                        <h2>안 선경</h2>
-                                        <p>강원북부 &amp; 위너맘</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/1.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div style="text-align:center;"class="person-info">
-                                        <h2>조 일환</h2>
-                                        <p>서울남부 &amp; 호주형</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/4.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="person-info">
-                                        <h2>John Doe</h2>
-                                        <p>CEO &amp; Developer</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/3.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="person-info">
-                                        <h2>John Doe</h2>
-                                        <p>CEO &amp; Developer</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/2.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="person-info">
-                                        <h2>John Doe</h2>
-                                        <p>CEO &amp; Developer</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <div class="team-single-wrapper">
-                                    <div class="team-single">
-                                        <div class="person-thumb">
-                                            <img src="<%=cp%>/res/images/aboutus/1.jpg" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="social-profile">
-                                            <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="person-info">
-                                        <h2>John Doe</h2>
-                                        <p>CEO &amp; Developer</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                  </div>
+     	</c:forEach>
+                    </div>
                     </div>
                     
                              <!-- Controls -->

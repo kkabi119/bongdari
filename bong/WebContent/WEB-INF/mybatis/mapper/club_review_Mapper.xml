@@ -143,7 +143,7 @@
 	<select id="listReviewSmall" parameterType="map" resultType="com.bong.club.review.ClReview">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-			     SELECT clubreviewIdx, subject
+			     SELECT clubreviewIdx, subject,content
 			        FROM club_review_${clubSeq}
 	                ORDER BY clubreviewIdx DESC
 	<![CDATA[

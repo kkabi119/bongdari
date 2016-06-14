@@ -46,7 +46,7 @@
 	</insert>
 	
 	<insert id="insertClubInfo" parameterType="com.bong.club.ClubInfo">
-	    INSERT INTO clubInfo(clubIdx, userId, themeNum, clubname, introduce, closed, city, photoFilename)
+	    INSERT INTO clubInfo(clubIdx, userId, themeNum, clubname, introduce, closed, clubAddr, photoFilename)
 	      VALUES (#{clubSeq}, #{userId}, #{themeNum}, 
 	                #{clubname}, #{introduce}, 1,#{city}, #{photoFilename, jdbcType=VARCHAR})
 	</insert>
@@ -58,7 +58,7 @@
 	
 	<!-- 동아리 정보 수정 -->
 	<update id="updateClubInfo" parameterType="com.bong.club.ClubInfo">
-	    UPDATE ClubInfo SET themeNum=#{themeNum}, clubname=#{clubname}, introduce=#{introduce}, city=#{city}, photoFilename=#{photoFilename}
+	    UPDATE ClubInfo SET themeNum=#{themeNum}, clubname=#{clubname}, introduce=#{introduce}, clubAddr=#{city}, photoFilename=#{photoFilename}
 	    WHERE clubIdx=#{clubSeq}
 	</update>
 	
@@ -141,7 +141,7 @@
 	</select>
 	
 	<select id="readClubInfoSmall" parameterType="map" resultType="com.bong.club.ClubInfo">
-		SELECT clubidx AS clubSeq, userId, c.parent groupNum ,clubname, introduce, clubBirth, city,
+		SELECT clubidx AS clubSeq, userId, c.parent groupNum ,clubname, introduce, clubBirth, clubAddr,
 		
 			closed, c.subject, g.subject groupSubject, photoFilename, c.themeNum, c.parent groupNum 
 			FROM ClubInfo b 

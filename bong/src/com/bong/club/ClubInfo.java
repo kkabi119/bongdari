@@ -6,13 +6,20 @@ public class ClubInfo {
 	private int clubSeq;
 	private String userId, nickName, userName;
 	private int groupNum, themeNum, userIdx;
-	private String introduce, clubname, city,  clubBirth;
+	private String introduce, clubname, city,  clubBirth, clubAddr;
 	private String groupSubject, subject;
 	private int  closed;
 	private MultipartFile uploads;
 	private String photoFilename;
 	private int isUserName, isCity;
 	
+	
+	public String getClubAddr() {
+		return clubAddr;
+	}
+	public void setClubAddr(String clubAddr) {
+		this.clubAddr = clubAddr;
+	}
 	public int getUserIdx() {
 		return userIdx;
 	}

@@ -4,11 +4,12 @@ import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -72,9 +73,9 @@ public class ClubController {
         int listNum1, n1 = 0;
         Iterator<Notice> it1=listN.iterator();
         while(it1.hasNext()) {
-            Notice data1 = it1.next();
+            Notice data = it1.next();
             listNum1 = 5 - (1 + n1 - 1);
-            data1.setListNum(listNum1);
+            data.setListNum(listNum1);
             n1++;
         }
         
@@ -82,17 +83,56 @@ public class ClubController {
         int listNum2, n2 = 0;
         Iterator<ClReview> it2=listR.iterator();
         while(it2.hasNext()) {
-            ClReview data2 = it2.next();
+            ClReview data = it2.next();
             listNum2 = 5 - (1 + n2 - 1);
-            data2.setListNum(listNum2);
+            data.setListNum(listNum2);
             n2++;
         }
-           
+        
+        
+      //메인에 띄울 사진 첫슬라이드
+      		Map<String, Object> mapPho1 = new HashMap<String, Object>();
+      		mapPho1.put("clubSeq", clubSeq);
+      		mapPho1.put("start", 1);
+      		mapPho1.put("end", 4);
+      		List<ClReview> revPhoto1=reviewService.listReviewSmall(mapPho1);
+      		
+      		//메인에 띄울 사진 두번째 슬라이드
+      		Map<String, Object> mapPho2 = new HashMap<String, Object>();
+      		mapPho2.put("clubSeq", clubSeq);
+      		mapPho2.put("start", 5);
+      		mapPho2.put("end", 8);
+      		List<ClReview> revPhoto2=reviewService.listReviewSmall(mapPho2);
+      		
+      	    Pattern pattern=Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
+      		  
+      	    Matcher match;    
+      	    
+      		Iterator<ClReview> it3=revPhoto1.iterator();
+      		while(it3.hasNext()){
+      			ClReview data= it3.next();
+      			match=pattern.matcher(data.getContent());
+      	            if(match.find())
+      	            	data.setListImageName(match.group(1));
+      		}
+      		
+      		Iterator<ClReview> it4=revPhoto2.iterator();
+      		while(it4.hasNext()){
+      			ClReview data= it4.next();
+      			match=pattern.matcher(data.getContent());
+      	            if(match.find())
+      	            	data.setListImageName(match.group(1));
+      		}
+      		
+      		
         String urlListN = cp+"/club/"+clubSeq+"/notice/list";
         String urlArticleN = cp+"/club/"+clubSeq+"/notice/article?page="+ 1;
         
         String urlListR = cp+"/club/"+clubSeq+"/review/list";
         String urlArticleR = cp+"/club/"+clubSeq+"/review/article?page="+ 1;
+        
+        String urlRevList=cp+"/club/"+clubSeq+"/review/list";
+		String urlRevArticle=cp+"/club/"+clubSeq+"/review/article?page="+1;
         
 		ModelAndView mav = new ModelAndView(".four.club.dari.main.동아리 메인");
 		mav.addObject("subMenu", "2");
@@ -103,6 +143,10 @@ public class ClubController {
 		mav.addObject("urlListR", urlListR);
 		mav.addObject("urlArticleN", urlArticleN);
 		mav.addObject("urlArticleR", urlArticleR);
+		mav.addObject("revPhoto1", revPhoto1);
+		mav.addObject("revPhoto2", revPhoto2);
+		mav.addObject("urlRevList", urlRevList);
+		mav.addObject("urlRevArticle", urlRevArticle);
 		mav.addObject("clubInfo",clubInfo);
 		
 		return mav;
