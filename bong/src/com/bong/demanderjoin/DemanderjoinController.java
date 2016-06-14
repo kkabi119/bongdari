@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bong.club.ClubTheme;
 import com.bong.member.Member;
 
 @Controller(value="demanderjoin.demanderjoinController")
@@ -76,10 +77,20 @@ public class DemanderjoinController {
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+File.separator+"uploads"+File.separator+"serviceImg";
 		
-		service.insertDemanderjoin(dto,pathname);
+		int result=service.insertDemanderjoin(dto,pathname);
 		
-		ModelAndView mav = new ModelAndView(".layout.member.login.로그인");
+		ModelAndView mav=new ModelAndView();
 		
+		if(result==1) {
+			StringBuffer sb=new StringBuffer();
+			sb.append(dto.getServiceName()+ "님의 회원 가입이 정상적으로 처리되었습니다.<br>");
+			sb.append("메인화면으로 이동하여 로그인 하시기 바랍니다.<br>");
+			
+			mav.setViewName(".layout.demanderjoin.complete.회원가입성공");
+			mav.addObject("message", sb.toString());
+		} else {
+            mav.setViewName("/demanderjoin/register");
+		}
 		return mav;
 	}
 	
@@ -117,4 +128,17 @@ public class DemanderjoinController {
 		mav.addObject("list", list);
 		return mav;
 	}
+	
+/*	@RequestMapping(value = "/demanderjoin/themeList", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> themeList(@RequestParam int themeNum) throws Exception {
+		// AJAX(JSON)-동아리 생성 및 수정할 때 그룹별 주제(중분류)
+		
+		List<ClubTheme> listTheme = DemanderjoinService.listClubTheme(themeNum);
+
+		Map<String, Object> model = new HashMap<>();
+		model.put("listTheme", listTheme);
+
+		return model;
+	}*/
 }

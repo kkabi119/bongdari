@@ -154,7 +154,7 @@ background-color: #4FCCCD;
                         	 	<span style="color:#969494; font-weight: bold;">주소</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
-                   			 ${mainProfile.serviceAddr}<a href="#">&nbsp;&nbsp;[지도]</a>
+                   			 ${mainProfile.serviceAddr}
                         	</td>
                         </tr>
                </table>
@@ -230,9 +230,9 @@ background-color: #4FCCCD;
                     <div class="panel-body">
                         <ul type="disc">
                            <c:forEach var="revList" items="${revList}">
-                        	<li><a href="${urlRevArticle}&num=${revList.serviceReviewIdx}" >${revList.subject}</a></li>
+                        	<li style="padding-bottom: 2px;"><a href="${urlRevArticle}&num=${revList.serviceReviewIdx}" >${revList.subject}</a></li>
                           </c:forEach> 
-                        	<li><a href="${urlRevList}" class="btn btn-default" style="text-align: right">더보기</a></li>
+                        	<li style="padding-top: 3px;"><a href="${urlRevList}" class="btn btn-default" style="text-align: right">더보기</a></li>
                         </ul>
                     </div>
                 </div>
@@ -247,17 +247,10 @@ background-color: #4FCCCD;
                         <ul type="disc">
                     
                            <c:forEach var="volList" items="${volunList}">
-                        	<li><a href="${urlVolList}" >${volList.subject}</a></li>
+                        	<li style="padding-bottom: 2px;"><a href="${urlVolList}" >${volList.subject}</a></li>
                           </c:forEach> 
-                        	<li><a href="${urlVolList}" class="btn btn-default" style="text-align: right">더보기</a></li>
+                        	<li style="padding-top: 3px;"><a href="${urlVolList}" class="btn btn-default" style="text-align: right">더보기</a></li>
                        
-                        
-                       		<!--  <li><a href="#" >[충주] 따뜻했던 연~</a></li>
-                     	  	 <li><a href="#" >[서울] 벌써 보고 함께</a></li>
-                       		 <li><a href="#" >[부산] 집에 가고 람 손~</a></li>
-                       		 <li><a href="#" >[강원] 저녁 뭐 먹지?</a></li>
-                       		  <li><a href="#" >[전주] 힘들었던만큼  날</a></li> -->
-                        	
                         </ul>
                     </div>
                 </div>

@@ -14,7 +14,11 @@
 $(function(){
 	$('.fileinput').fileinput();
 });
-
+function enter(where){
+	if(event.keyCode == 13){
+		where.focus();
+	}
+}
 //아이디 중복 검사
 function userIdCheck() {
 	var userId=$("#userId").val();
@@ -384,7 +388,7 @@ function selectZip(zip){
       <c:if test="${mode=='created'}">
             <button type="submit" name="sendButton" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;">
                   회원가입<span class="glyphicon glyphicon-ok"></span></button>
-            <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/member/login';" style="margin-right:20px; height:40px; width:130px;">
+            <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/member/complete';" style="margin-right:20px; height:40px; width:130px;">
                   가입취소 <span class="glyphicon glyphicon-remove"></span></button>
        </c:if>
    <c:if test="${mode=='update'}">
@@ -406,18 +410,6 @@ function selectZip(zip){
   </div>
  </div>
 
- <div class="container">
-<!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12"  style="margin-left: 50px;">
-                    <p>Copyright &copy; SIST Comm 2016</p>
-                </div>
-            </div>
-        </footer>
-
-    </div>
-
 <div id="modalAddr" class="modal fade" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -436,12 +428,12 @@ function selectZip(zip){
 					<div class="form-group">
 						<label class="control-label" for="modalZip">도로명을 입력해주세요</label> <input
 							class="form-control" id="modalZip" name="zip" type="text"
-							placeholder="도로명">
+							placeholder="도로명" onkeydown="enter(search)">
 					</div>
 					<div id="resultZip"></div>
 					<div class="form-group">
 						<button class="btn btn-lg btn-primary btn-block" type="button"
-							onclick="modalSearchAddr();">
+							name="search" onclick="modalSearchAddr();">
 							검색<span class="glyphicon glyphicon-ok"></span>
 						</button>
 					</div>

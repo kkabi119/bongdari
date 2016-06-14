@@ -3,10 +3,13 @@ package com.bong.demanderjoin;
 import java.util.List;
 import java.util.Map;
 
+import com.bong.club.ClubTheme;
 import com.bong.member.Member;
 
 public interface DemanderjoinService {
-   
+	
+/*  public List<Demanderjoin> listClubTheme(int themeNum);
+  public List<ClubTheme> listClubThemeAll();*/
   public Demanderjoin readDemanderjoin1(int serviceIdx);
   public Demanderjoin readDemanderjoinLogin(String userIdx);
   public Demanderjoin readDemanderCheck(String userId);

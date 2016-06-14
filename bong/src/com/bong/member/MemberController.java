@@ -85,23 +85,20 @@ public class MemberController {
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+File.separator+"uploads"+File.separator+"memImg";
 		
-		service.insertMember(dto,pathname);
+		int result=service.insertMember(dto,pathname);
 		
-		ModelAndView mav=new ModelAndView(".layout.member.login.로그인");
-			
-		/*if(result==1) {
+		ModelAndView mav=new ModelAndView();
+		if(result==1) {
 			StringBuffer sb=new StringBuffer();
 			sb.append(dto.getUserName()+ "님의 회원 가입이 정상적으로 처리되었습니다.<br>");
 			sb.append("메인화면으로 이동하여 로그인 하시기 바랍니다.<br>");
-				
-			mav.setViewName("/member/login");
+			
+			mav.setViewName(".layout.member.complete.회원가입성공");
 			mav.addObject("message", sb.toString());
-			mav.addObject("title", "회원 가입");
 		} else {
-			mav.setViewName("member/register");
-			mav.addObject("mode", "created");
-			mav.addObject("message", "아이디 중복으로 회원가입이 실패했습니다.");
-		}*/
+            mav.setViewName("/member/register");
+		}
+			
 		return mav;
 	}	
      //아이디 중복 검사

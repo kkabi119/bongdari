@@ -97,9 +97,11 @@ public class DemanderController {
      
         while(it.hasNext()) {
         	Demander data = it.next();
-            listNum = dataCount - (start + n - 1);
+        	 n++;
+        	 listNum=n;
+        	// listNum = dataCount - (start + n - 1);
             data.setListNum(listNum);
-            n++;
+           
             
             }
      
@@ -123,7 +125,7 @@ public class DemanderController {
             
         }
 
-        ModelAndView mav = new ModelAndView(".layout.demander.main.수요처 메인");
+        ModelAndView mav = new ModelAndView(".layout.demander.main.수요처 검색");
         mav.addObject("searchList", searchList); //검색결과 리스트
         mav.addObject("urlArticle", urlArticle); 
        /* mav.addObject("urlDemander", urlDemander); //검색결과의 수요처 클릭시 연결되는 페이지

@@ -43,12 +43,18 @@ public class NoticeController {
 	@RequestMapping(value="/club/{clubSeq}/notice/list")
 	public ModelAndView clubNoticeList(
 			HttpServletRequest req,
+			HttpSession session,
 			@PathVariable int clubSeq,
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue
 			) throws Exception {
 		String cp=req.getContextPath();
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return new ModelAndView("redirect:/member/login");
+		}
 		
 		int numPerPage   = 10;  // 한 화면에 보여주는 게시물 수
 		int total_page = 0;
@@ -155,7 +161,8 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/club/{clubSeq}/notice/article")
-	public ModelAndView readClubNotice(HttpSession session,
+	public ModelAndView readClubNotice(
+			HttpSession session,
 			@PathVariable int clubSeq,
 			@RequestParam(value="num") int num,
 			@RequestParam(value="page") String page,
