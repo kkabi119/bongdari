@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bong.club.ClubTheme;
 import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
 import com.bong.member.Member;
@@ -253,6 +254,23 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 		}
 		return list;
 	}
+/*
+	@Override
+	public List<Demanderjoin> listClubTheme(int themeNum) {
+		List<Demanderjoin> list=null;
+		
+		try {
+			list=dao.getListInformation("demanderjoin.listClubTheme", themeNum);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+	@Override
+	public List<ClubTheme> listClubThemeAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}*/
 
 
 

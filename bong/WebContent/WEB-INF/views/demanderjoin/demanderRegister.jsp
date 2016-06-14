@@ -15,7 +15,11 @@ $(function(){
 	$('.fileinput').fileinput();
 });
 
-
+function enter(where){
+	if(event.keyCode == 13){
+		where.focus();
+	}
+}
 //아이디 중복 검사
 function serviceIdCheck() {
 	var userId=$("#userId").val();
@@ -202,6 +206,48 @@ function selectDemanderZip(zip){
 	$("#modalDemanderAddr").modal("hide");
 	$("#addr1").val(zip);
 }
+
+<%-- function themeList() {
+	var groupNum=$("#groupNum").val();
+	if(groupNum=="") {
+		$("#themeNum option").each(function() {
+			$("#themeNum option:eq(0)").remove();
+		});
+
+		$("#themeNum").append("<option value=''>:: 중분류 ::</option>");
+		return false;
+	}
+	
+	var url="<%=cp%>/demanderjoin/themeList";
+	var params="groupNum="+groupNum;
+	
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:params
+		,dataType:"json"
+		,success:function(data){
+			$("#themeNum option").each(function() {
+				$("#themeNum option:eq(0)").remove();
+			});
+
+			 $("#themeNum").append("<option value=''>:: 중분류 ::</option>");
+			 
+			 var cn="${dto.themeNum}";
+			 var s;
+			 
+			 for(var idx=0; idx<data.listTheme.length; idx++) {
+				 s="";
+				 if(cn==data.listTheme[idx].themeNum)
+					 s=" selected='selected'";
+				 $("#themeNum").append("<option value='"+data.listTheme[idx].themeNum+"' " + s +">"+data.listTheme[idx].subject+"</option>");
+			 }
+		}
+	    ,error:function(e) {
+	    	alert(e.responseText);
+	    }
+	});
+} --%>
 </script>
 
 
@@ -309,7 +355,25 @@ function selectDemanderZip(zip){
          </table>
          </div>
     </div>
-    
+<%--           <div class="form-group" style="margin-bottom:0px;">
+        <label class="col-sm-2 control-label" for="userId">주제</label>
+        <div class="col-sm-7">
+            <select name="groupNum" id="groupNum" class="form-control" onchange="themeList();" style="float:left; width:20%;margin-right: 10px">
+			  <option value="">:: 대분류 ::</option>
+	          <option value="1" ${vo.themeNum==dto.groupNum ? "selected='selected'" : ""}>장애인</option>
+	          <option value="2" ${vo.themeNum==dto.groupNum ? "selected='selected'" : ""}>노인</option>
+	          <option value="3" ${vo.themeNum==dto.groupNum ? "selected='selected'" : ""}>아동</option>
+	          <option value="4" ${vo.themeNum==dto.groupNum ? "selected='selected'" : ""}>기타</option>
+			</select>
+			<select name="themeNum" id="themeNum" class="form-control" style="float:left; width:20%;">
+			     <option value="">:: 중분류 ::</option>
+			   	<c:forEach var="vo" items="${listGroup}">
+			          <option value="${vo.themeNum}" ${vo.themeNum==dto.groupNum ? "selected='selected'" : ""}>${vo.subject}</option>
+			    </c:forEach>
+			 </select>
+			  <p style="clear:both" class="help-block"> 주요활동분야 혹은 관심분야를 지정해주세요</p>
+        </div>
+    </div> --%>
     <div class="form-group" >
         <label class="col-sm-2 control-label" for="tel1">기관번호</label>
         <div class="col-sm-7">
@@ -427,12 +491,12 @@ function selectDemanderZip(zip){
 					<div class="form-group">
 						<label class="control-label" for="modalDemanderZip">도로명을 입력해주세요</label> <input
 							class="form-control" id="modalDemanderZip" name="zip" type="text"
-							placeholder="도로명">
+							placeholder="도로명" onkeydown="enter(search)">
 					</div>
 					<div id="resultZip"></div>
 					<div class="form-group">
 						<button class="btn btn-lg btn-primary btn-block" type="button"
-							onclick="modalSearchDemanderAddr();">
+							name="search" onclick="modalSearchDemanderAddr();">
 							검색<span class="glyphicon glyphicon-ok"></span>
 						</button>
 					</div>

@@ -9,13 +9,19 @@ public class Demanderjoin {
   private String email1, email2;
   private String serviceIntro,serviceImgname,serviceImg;
   private MultipartFile uploads;
-  private int serviceIdx, isService, userIdx,enabled;
+  private int serviceIdx, isService, userIdx,enabled,themeNum;
   private String authority;
   private String userId, userPwd;
   private String addr1, addr2;
   private String zip, category1, category2, dong2, streetname;
   
   
+public int getThemeNum() {
+	return themeNum;
+}
+public void setThemeNum(int themeNum) {
+	this.themeNum = themeNum;
+}
 public String getAddr1() {
 	return addr1;
 }

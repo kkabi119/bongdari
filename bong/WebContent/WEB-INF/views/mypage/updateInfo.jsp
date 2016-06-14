@@ -14,7 +14,11 @@
 $(function(){
 	$('.fileinput').fileinput();
 });
-
+function enter(where){
+	if(event.keyCode == 13){
+		where.focus();
+	}
+}
 function updateInfo() {
    var f = document.memberUpdateForm;
    var str;
@@ -392,12 +396,12 @@ function selectZip(zip){
 					<div class="form-group">
 						<label class="control-label" for="modalZip">도로명을 입력해주세요</label> <input
 							class="form-control" id="modalZip" name="zip" type="text"
-							placeholder="도로명">
+							placeholder="도로명" onkeydown="enter(search)">
 					</div>
 					<div id="resultZip"></div>
 					<div class="form-group">
 						<button class="btn btn-lg btn-primary btn-block" type="button"
-							onclick="modalSearchAddr();">
+							name="search" onclick="modalSearchAddr();">
 							검색<span class="glyphicon glyphicon-ok"></span>
 						</button>
 					</div>
