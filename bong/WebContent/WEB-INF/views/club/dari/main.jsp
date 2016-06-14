@@ -39,7 +39,7 @@
                   <hr style="border-top:3px solid #eee; width:98%; color: #777; ">
 	
 	 <h2 style="margin-top:10px; margin-left:20px; margin-bottom:20px; font-weight:500; text-align:center;" class="title wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">
-	 		우리의 최근 봉사 </h2>
+	 		우리의 <span style="font-weight:bold;">최근활동 </span> </h2>
 	<!--  <h2 style="margin-top:6px;  margin-left:20px;font-weight:bold;" class="title wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">
 	 나누는 마음을 행동으로
 	 </h2> -->
@@ -76,8 +76,8 @@
                     </div>
                     
                              <!-- Controls -->
-                    <a style="left:-20px;" class="left team-carousel-control hidden-xs" href="#team-carousel" data-slide="prev">left</a>
-                    <a style="right:-20px;" class="right team-carousel-control hidden-xs" href="#team-carousel" data-slide="next">right</a>
+                    <a style="left:-20px; margin-top:53px;" class="left team-carousel-control hidden-xs" href="#team-carousel" data-slide="prev">left</a>
+                    <a style="right:-20px; margin-top:53px" class="right team-carousel-control hidden-xs" href="#team-carousel" data-slide="next">right</a>
                 </div>
             </div>
        

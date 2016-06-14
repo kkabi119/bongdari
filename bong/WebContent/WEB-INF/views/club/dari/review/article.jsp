@@ -407,7 +407,7 @@ function updateReview() {
                                       
                   					
                                     <div style="float:right; padding-top: 10px;padding-bottom: 10px;">
-                      					<button type="button" class="btn btn-warning" style="padding:10px 15px ; color:white; border:none;" onclick="updateReview();"> 수정 <span class="fa fa-pencil"></span></button>
+                      					<button type="button" class="btn btn-warning" style="padding:10px 15px ; background:#3897f0; color:white; border:none;" onclick="updateReview();"> 수정 <span class="fa fa-pencil"></span></button>
                   					</div>
                   					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
                       					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="deleteReview();"> 삭제 <span class="fa fa-times"></span></button>
