@@ -37,5 +37,39 @@
 	    ) WHERE rnum >= #{start}
 	]]>
 	</select>
+<!-- 동아리 봉사신청 테이블 전부 검색 -->
+<select id="searchTable" resultType="com.bong.demander.admin.Dadmin">
+		<![CDATA[SELECT table_name as clubApplyTable FROM tabs WHERE (INSTR(table_name, 'CLUB_APPLY_', 1, 1)>0) AND (INSTR(table_name, 'CLUB_APPLY_M', 1, 1)<1)]]>
+</select>
 
+<select id="clubApplyCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(clubApplyIdx) FROM ${clubApplyTable} WHERE volunIdx=#{volunIdx} AND enabled=0
+</select>
+
+<select id="volunClub" parameterType="map" resultType="com.bong.demander.admin.Dadmin">
+		SELECT clubName, clubApplyIdx, ca.clubIdx, volunIdx, enabled FROM ${clubApplyTable} ca
+		JOIN clubinfo ci ON ca.clubIdx=ci.clubIdx
+		WHERE volunIdx=#{volunIdx} AND enabled=0 
+</select>
+
+<select id="clubMemberList" parameterType="map" resultType="com.bong.demander.admin.Dadmin">
+		SELECT DISTINCT(cam.userIdx), userName, userBirth, userAddr, userGender, userTel, userEmail, userJob FROM club_Apply_${clubIdx} ca
+		JOIN club_Apply_memlist_${clubIdx} cam ON ca.clubApplyIdx=cam.clubApplyIdx
+		JOIN memberinfo mi ON cam.userIdx=mi.userIdx
+		WHERE ca.volunIdx=3
+</select>
+
+<select id="clubInfoView" parameterType="Integer" resultType="com.bong.demander.admin.Dadmin">
+		SELECT clubIdx, clubName, clubBirth, clubAddr, userId, introduce, themeNum, photoFileName as memImg FROM clubinfo
+		WHERE clubIdx = #{clubIdx}
+</select>
+
+<select id="memberInfoView" parameterType="Integer" resultType="com.bong.demander.admin.Dadmin">
+		SELECt userName, TO_CHAR(userBirth, 'yyyy-MM-dd') userBirth, userAddr, userGender,
+		userTel, userEmail, userJob, TO_CHAR(created_date, 'yyyy-MM-dd') created_date, memimg, memimgname FROM memberInfo
+		WHERE userIdx = #{userIdx}
+</select>
 </mapper>
+
+
+	

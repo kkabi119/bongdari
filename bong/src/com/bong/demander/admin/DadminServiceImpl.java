@@ -61,5 +61,72 @@ public class DadminServiceImpl implements DadminService {
 		}
 		return list;
 	}
+	@Override
+	public List<Dadmin> searchTable() {
+		List<Dadmin> list=null;
+		try {
+			list = dao.getListInformation("dAdmin.searchTable");
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+
+	@Override
+	public Dadmin AdminClubVolun(Map<String, Object> map) {
+		Dadmin dto=null;
+		try {
+			dto = dao.getReadInformation("dAdmin.volunClub", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+
+	@Override
+	public int clubApplyCount(Map<String, Object> map) {
+		int result = 0;
+		try {
+			result = dao.getIntValue("dAdmin.clubApplyCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public List<Dadmin> clubMemberList(Map<String, Object> map) {
+		List<Dadmin> list = null;
+		try {
+			list = dao.getListInformation("dAdmin.clubMemberList", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+
+	@Override
+	public Dadmin clubInfoView(int clubIdx) {
+		Dadmin dto = null;
+		try {
+			dto = dao.getReadInformation("dAdmin.clubInfoView", clubIdx);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+
+	@Override
+	public Dadmin memberInfoView(int clubIdx) {
+		Dadmin dto = null;
+		try {
+			dto = dao.getReadInformation("dAdmin.memberInfoView", clubIdx);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+	
+	
 
 }

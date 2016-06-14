@@ -92,29 +92,37 @@
 
 function listButton(volunIdx){
 		url="<%=cp%>/demander/${demander_seq}/admin/tab1/showList";
-		$.post(url, {}, function(data){ 	
+		$.post(url, {volunIdx:volunIdx}, function(data){
 			$("#showList_"+volunIdx).html(data);
 		});	
 		if($("#showList_"+volunIdx).is(':visible')) {
-			$("#showList_"+volunIdx).hide("fast");
-			$("#listClosed").val("1");
+			if($("#showList_"+volunIdx).val()=="0"){
+				$("#showList_"+volunIdx).hide("fast");
+				$("#showList_"+volunIdx).val("0");
+			} else {
+				$("#showList_"+volunIdx).val("0");
+			}
 		} else {
 			$("#showList_"+volunIdx).show("fast");
-			$("#listClosed").val("0");
+			$("#showList_"+volunIdx).val("0");
 		}
 }
 
 function approvalButton(volunIdx){	
 		url="<%=cp%>/demander/${demander_seq}/admin/tab1/eval";
-		$.post(url, {}, function(data){ 	
+		$.post(url, {volunIdx:volunIdx}, function(data){ 	
 			$("#showList_"+volunIdx).html(data);
 		});	
 		if($("#showList_"+volunIdx).is(':visible')) {
-			$("#showList_"+volunIdx).hide("fast");
-			$("#listClosed").val("1");
+			if($("#showList_"+volunIdx).val()=='1'){
+				$("#showList_"+volunIdx).hide("fast");
+				$("#showList_"+volunIdx).val("1");
+			} else {
+				$("#showList_"+volunIdx).val("1");
+			}
 		} else {
 			$("#showList_"+volunIdx).show("fast");
-			$("#listClosed").val("0");
+			$("#showList_"+volunIdx).val("1");
 		}
 }
 

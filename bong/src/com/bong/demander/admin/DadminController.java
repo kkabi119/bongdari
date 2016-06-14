@@ -3,6 +3,7 @@ package com.bong.demander.admin;
 import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -143,49 +144,114 @@ public class DadminController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/demander/{demander_seq}/admin/tab3", method=RequestMethod.GET)
-	public ModelAndView tab3(
-			HttpSession session,
-			@PathVariable int demander_seq
-			) throws Exception {
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+File.separator+"uploads"+File.separator+"serviceImg";
-		//세션에 있는 수요처 정보 가져오기
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
+	   @RequestMapping(value="/demander/{demander_seq}/admin/tab3", method=RequestMethod.GET)
+	   public ModelAndView tab3(
+	         HttpSession session,
+	         @PathVariable int demander_seq
+	         ) throws Exception {
+	      String root=session.getServletContext().getRealPath("/");
+	      String pathname=root+File.separator+"uploads"+File.separator+"serviceImg";
+	      //세션에 있는 수요처 정보 가져오기
+	      SessionInfo info=(SessionInfo)session.getAttribute("member");
 
-		if(info==null){
-			return new ModelAndView("redirect:/member/login");
+	      if(info==null){
+	         return new ModelAndView("redirect:/member/login");
+	      }
+	      
+	      Demanderjoin dto=service.readDemanderjoinInfo(Integer.toString(info.getUserIdx()));
+	      if(dto==null){
+	         session.invalidate();
+	         return new ModelAndView("redirect:/");
+	      }
+
+	      //수정폼
+	   ModelAndView mav = new ModelAndView("/demander/dari/admin/demanderUpdate");
+	       mav.addObject("mode", "update");
+	      mav.addObject("dto", dto);
+	      return mav;
+	   }
+	   
+	   @RequestMapping(value="/demander/{demander_seq}/admin/tab3", method=RequestMethod.POST)
+	   @ResponseBody
+	   public ModelAndView demanderUpdateSubmit(
+	         HttpSession session
+	         ,Demanderjoin dto,
+	         @PathVariable int demander_seq
+	         ){
+	      String root=session.getServletContext().getRealPath("/");
+	      String pathname=root+File.separator+"uploads"+File.separator+"serviceImg";
+	      
+	      SessionInfo info=(SessionInfo)session.getAttribute("member");
+	      dto.setUserIdx(info.getUserIdx());
+	      service.updateDemander2(dto, pathname);
+	      
+	      ModelAndView mav=new ModelAndView("redirect:/demander/"+demander_seq+"/admin/admin");
+	       
+	      return mav;
+	   }
+	
+	@RequestMapping(value="/demander/admin/eachInfo")
+	@ResponseBody
+	public ModelAndView eachInfo(
+			@RequestParam(value="volunIdx") int volunIdx
+			) throws Exception{
+		Map<String, Object> map = new HashMap<>();
+		map.put("volunIdx", volunIdx);
+		List<Dadmin> list = adminService.searchTable();
+		List<Dadmin> volunList = new ArrayList<>();
+		for(Dadmin name : list){
+			map.put("clubApplyTable", name.getClubApplyTable());
+			if(adminService.clubApplyCount(map)!=0)
+			{
+				name = adminService.AdminClubVolun(map);
+				volunList.add(name);
+			}
 		}
+		ModelAndView mav = new ModelAndView("/demander/dari/admin/eachInfo");
+		mav.addObject("volunList", volunList);
+		return mav;
+	}
+	
+	@RequestMapping(value="/demander/admin/eachClubMember")
+	@ResponseBody
+	public ModelAndView eachClubMember(
+			@RequestParam(value="clubApplyIdx") int clubApplyIdx,
+			@RequestParam(value="volunIdx") int volunIdx,
+			@RequestParam(value="clubIdx") int clubIdx
+			) throws Exception{
+		Map<String, Object> map = new HashMap<>();
+		map.put("clubApplyIdx", clubApplyIdx);
+		map.put("volunIdx", volunIdx);
+		map.put("clubIdx", clubIdx);
+		List<Dadmin> list = null;
+		list = adminService.clubMemberList(map);
 		
-		Demanderjoin dto=service.readDemanderjoinInfo(Integer.toString(info.getUserIdx()));
-		if(dto==null){
-			session.invalidate();
-			return new ModelAndView("redirect:/");
-		}
-
-		//수정폼
-	ModelAndView mav = new ModelAndView("/demander/dari/admin/demanderUpdate");
-	    mav.addObject("mode", "update");
+		ModelAndView mav = new ModelAndView("/demander/dari/admin/eachClubMember");
+		mav.addObject("list", list);
+		return mav;
+	}
+	
+	@RequestMapping(value="/demander/admin/clubInfoView")
+	@ResponseBody
+	public ModelAndView clubInfoView(
+			@RequestParam(value="clubIdx") int clubIdx
+			) throws Exception{
+		Dadmin dto = adminService.clubInfoView(clubIdx);
+		
+		ModelAndView mav = new ModelAndView("/demander/dari/admin/clubInfoView");
 		mav.addObject("dto", dto);
 		return mav;
 	}
 	
-	@RequestMapping(value="/demander/{demander_seq}/admin/tab3", method=RequestMethod.POST)
+	@RequestMapping(value="/demander/admin/memberInfoView")
 	@ResponseBody
-	public ModelAndView demanderUpdateSubmit(
-			HttpSession session
-		   ,Demanderjoin dto,
-		   @PathVariable int demander_seq
-		   ){
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+File.separator+"uploads"+File.separator+"serviceImg";
-		
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		dto.setUserIdx(info.getUserIdx());
-		service.updateDemander2(dto, pathname);
-		
-		ModelAndView mav=new ModelAndView("redirect:/demander/"+demander_seq+"/admin/admin");
-	    
+	public ModelAndView memberInfoView(
+			@RequestParam(value="userIdx") int userIdx
+			) throws Exception{
+		Dadmin dto = adminService.memberInfoView(userIdx);
+		ModelAndView mav = new ModelAndView("/demander/dari/admin/memberInfoView");
+		mav.addObject("dto", dto);
 		return mav;
+		
 	}
 }
