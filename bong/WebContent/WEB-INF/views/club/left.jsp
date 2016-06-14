@@ -49,7 +49,7 @@
 			$("#category").html(category);
 			$("#clubname").html(clubname);
 			
-			if(authority=="null"||authority=="") {
+			if(authority==null ||authority=="") {
 				$("#joinBtn").show();
 			}else{
 				$("#joinBtn").hide();
@@ -139,7 +139,7 @@
 	                             <button type="button" class="btn btn-default"  id="joinBtn"
 	                             			style="width:100%;border-radius:0px; padding:15px 25px ; margin-bottom:0px; background-color:#3897f0; color:white; border:none;
 	                             				display:none;"
-	                      			 id="joinClub">가입하기</button>
+	                      		>가입하기</button>
                         </div>
                         <div class="sidebar-item categories">
                             <ul class="nav navbar-stacked" >
