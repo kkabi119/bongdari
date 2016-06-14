@@ -56,7 +56,7 @@
 		SELECT DISTINCT(cam.userIdx), userName, userBirth, userAddr, userGender, userTel, userEmail, userJob FROM club_Apply_${clubIdx} ca
 		JOIN club_Apply_memlist_${clubIdx} cam ON ca.clubApplyIdx=cam.clubApplyIdx
 		JOIN memberinfo mi ON cam.userIdx=mi.userIdx
-		WHERE ca.volunIdx=3
+		WHERE ca.volunIdx=#{volunIdx}
 </select>
 
 <select id="clubInfoView" parameterType="Integer" resultType="com.bong.demander.admin.Dadmin">
