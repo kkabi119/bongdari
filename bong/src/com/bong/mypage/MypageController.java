@@ -94,7 +94,13 @@ public class MypageController {
 		dto.setUserIdx(info.getUserIdx());
 		service.updateMember2(dto, pathname);
 		
-		ModelAndView mav=new ModelAndView("redirect:/member/index/myPage");
+		ModelAndView mav=new ModelAndView(".layout.member.complete.회원정보수정");
+		
+		StringBuffer sb=new StringBuffer();
+		sb.append(dto.getUserName()+ "님의 회원정보가 정상적으로 변경되었습니다.<br>");
+		sb.append("메인화면으로 이동 하시기 바랍니다.<br>");
+		
+		mav.addObject("message", sb.toString());
 		
 		return mav;
 	}
@@ -252,7 +258,14 @@ public class MypageController {
            
           
            
-           ModelAndView mav = new ModelAndView("/member/login");
+           ModelAndView mav=new ModelAndView(".layout.member.complete.회원탈퇴");
+			
+			StringBuffer sb=new StringBuffer();
+			sb.append(dto.getUserName()+ "님의 회원 탈퇴 처리가 정상적으로 처리되었습니다.<br>");
+			sb.append("메인화면으로 이동 하시기 바랍니다.<br>");
+			
+			
+			mav.addObject("message", sb.toString());
            
            return mav;
 	}

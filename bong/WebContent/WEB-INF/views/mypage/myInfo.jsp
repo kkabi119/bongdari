@@ -148,6 +148,3 @@ padding-top: 13px;
       </div>
       </div>
       </div>
-        					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/member/index/deleteMember';">회원탈퇴</button>
-        					</div>

@@ -187,7 +187,14 @@ public class DadminController {
 	      dto.setUserIdx(info.getUserIdx());
 	      service.updateDemander2(dto, pathname);
 	      
-	      ModelAndView mav=new ModelAndView("redirect:/demander/"+demander_seq+"/admin/admin");
+	    ModelAndView mav=new ModelAndView(".layout.demanderjoin.complete.회원정보수정");
+		
+		StringBuffer sb=new StringBuffer();
+		sb.append(dto.getServiceName()+ "님의 회원정보가 정상적으로 변경되었습니다.<br>");
+		sb.append("메인화면으로 이동 하시기 바랍니다.<br>");
+		
+		mav.addObject("message", sb.toString());
+		
 	       
 	      return mav;
 	   }

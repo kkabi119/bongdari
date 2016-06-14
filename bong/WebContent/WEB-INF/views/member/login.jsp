@@ -131,7 +131,7 @@ function demanderJoin(){
 <ul class="ul-list">
 <li><input type="text" required class="input" placeholder="아이디" name="userId" id="userId" onkeydown="enter(userPwd)"/><span class="icon"><i class="fa fa-user"></i></span></li>
 <li><input type="password" required class="input" placeholder="비밀번호" name="userPwd" id="userPwd"  onkeydown="enter(login)"/><span class="icon"><i class="fa fa-lock"></i></span></li>
-<li><input type="button" onclick="memberLogin()" name="login" value="로그인" class="btn">&nbsp;<input type="button" onclick="join()" value="일반" class="btn">&nbsp;<input type="button" onclick="demanderJoin()" value="수요처" class="btn"></li>
+<li><input type="button" onclick="memberLogin()" name="login" value="로그인" class="btn">&nbsp;<input type="button" onclick="join()" value="일반가입" class="btn">&nbsp;<input type="button" onclick="demanderJoin()" value="수요처가입" class="btn"></li>
 
 </ul>
 </form>
