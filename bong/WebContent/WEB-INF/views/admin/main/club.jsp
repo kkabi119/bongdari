@@ -19,52 +19,12 @@
 } 
 </style>
 <script type="text/javascript">
-function cityList() {
-	var snum=$("#sido").val();
-	if(snum=="") {
-		$("#city option").each(function() {
-			$("#city option:eq(0)").remove();
-		});
-
-		$("#city").append("<option value=''>::도시선택::</option>");
-		return false;
-	}
-	var url="<%=cp%>/main/demander";
-	var params="snum="+snum;
-	
-	$.ajax({
-		type:"post"
-		,url:url
-		,data:params
-		,dataType:"json"
-		,success:function(data){
-			$("#city option").each(function() {
-				$("#city option:eq(0)").remove();
-			});
-
-			 $("#city").append("<option value=''>::도시선택::</option>");
-			 
-			 for(var idx=0; idx<data.list.length; idx++) {
-				 $("#city").append("<option value='"+data.list[idx].cnum+"'>"+data.list[idx].city+"</option>");
-			 }
-		}
-	    ,error:function(e) {
-	    	alert(e.responseText);
-	    }
-	});
-}
-
-function result() {
-	var snum=$("#sido").val();
-	var cnum=$("#city").val();
-	var sido=$("#sido :selected").text();
-	var city=$("#city :selected").text();
-
-	if(! snum || !cnum)
-		return false;
-	
-	var s=sido+":"+snum+", "+city+":"+cnum;
-	alert(s);
+function detail(clubIdx){
+	$.get("<%=cp%>/admin/clubDetail",{clubIdx:clubIdx}, function(data) {
+	    $('#scheduleModal .modal-title').html('동아리 정보');
+	    $('#scheduleModal .modal-body').html(data);
+		$('#scheduleModal').modal('show');
+	});	
 }
 </script>
 <!-- 검색결과는 ajax써서 jsp따로 빼야할 듯! -->
@@ -87,9 +47,9 @@ function result() {
                         				<th class="text-center" style="width:50px; font-weight:500;">번호</th>
                         				<th class="text-center" style="width:100px; font-weight:500;">동아리 이름</th>
                         				<th class="text-center" style="width:105px; font-weight:500;">개설일</th>
-                        				<th class="text-center" style="width:105px; font-weight:500;">봉사 분야</th>
-                        				<th class="text-center" style="width:105px; font-weight:500;">봉사시간 총합</th>
-                        				<th class="text-center" style="width:105px; font-weight:500;">NoShow 총합</th>
+                        				<th class="text-center" style="width:125px; font-weight:500;">봉사 분야</th>
+                        				<th class="text-center" style="width:95px; font-weight:500;">봉사시간</th>
+                        				<th class="text-center" style="width:95px; font-weight:500;">NoShow</th>
                         				<th class="text-center" style="width:110px; font-weight:500;">지역</th>
                         				<th class="text-center" style="width:75px; ;font-weight:500;">인원</th>
                         				
@@ -100,7 +60,7 @@ function result() {
                 				<c:forEach var="dto" items="${list}">
 									<tr>
                         				<td class="text-center">${dto.rNum}</td>
-                        				<td class="text-center"><a href="<%=cp%>/admin/appDetail">${dto.clubName}</a></td>
+                        				<td class="text-center"><a href="#" onclick="detail('${dto.clubIdx}')">${dto.clubName}</a></td>
                        				 	<td class="text-center">${dto.clubBirth}</td>
                        				 	<td class="text-center">${dto.lSubject}&nbsp;>&nbsp;${dto.sSubject}</td>
                        				 	<td class="text-center">${dto.total_Hours}</td>
@@ -147,3 +107,14 @@ function result() {
 	</div>
 	
 
+<div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" style="width:600px;">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="scheduleModalLabel" style="font-family: 나눔고딕, 맑은 고딕, sans-serif; font-weight: bold;">일정</h4>
+	      </div>
+	      <div class="modal-body"></div>
+	    </div>
+	  </div>
+	</div>

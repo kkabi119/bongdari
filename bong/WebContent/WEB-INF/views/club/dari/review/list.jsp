@@ -146,15 +146,16 @@ hr:LAST-CHILD {
       </div>
       
       <div class="col1">
-        <div style="margin-top:5px; max-height:45px;  overflow:hidden; white-space:nowrap; width:90%  ">
-        	<span style="font-weight:600; color:#757575; font-size: 14pt;line-height: 24px; max-height:37px; margin-top:5px;	">
-         	  <a href="${urlArticle}&num=${dto.clubReviewIdx}" style="color:#4E4E4E; max-height:37px;  overflow:hidden; width:90%; ">
-         	  	${dto.subject} ...
+        <div style="margin-top:5px; max-height:50px;  width:410px; ">
+        	<span style="font-weight:600; color:#757575; font-size: 14pt;line-height: 24px; max-height:37px; margin-top:5px;	width:80%; text-overflow:ellipsis;overflow:hidden;">
+         	  <a href="${urlArticle}&num=${dto.clubReviewIdx}" style="color:#4E4E4E; max-height:37px;  overflow:hidden; ">
+         	  	${dto.subject}
 	         </a>
 	         </span>
 	         <span class="item-title" style='color:#f0ad4e; font-size:14pt; font-weight: bold;'>(${dto.replyCount})</span>
-         	         
-         </div>
+         	     
+	    </div>    
+         
          
           <hr style="margin-top:4px; border:1px solid #ddd; margin-bottom:5px;">
          <h5 style="font-size:14px;margin-top:10px;line-height: 14px;"> 
@@ -162,13 +163,13 @@ hr:LAST-CHILD {
          		&nbsp;&nbsp;|&nbsp;&nbsp; 조회수  ${dto.hitCount} &nbsp;&nbsp;|&nbsp;&nbsp;  작성일 &nbsp; ${dto.created}&nbsp;&nbsp;|&nbsp;&nbsp;No. ${dto.listNum} 
         </h5>
          
-         <h5 style="font-size:14px;"><img Id="listBtn"style=" width:15px; height:15px; background-size:cover; "src="<%=cp%>/res/images/myclub/heart.png" alt="">
+         <h5 style="font-size:14px;"><img Id="listBtn"style=" width:17px; height:17px; background-size:cover; "src="<%=cp%>/res/images/myclub/heart.png" alt="">
 	                                	 	&nbsp; ${dto.likeCount}</h5> 
          
          <div style="block; margin-top:28px; width:93%;  height:50px;overflow:hidden;color:gray; ">
 	      	<div style="font-size:15px; line-height: 20px ; font-weight: 400 ;
 	      				 font-family: 'NanumGothic', '나눔고딕',' Malgun Gothic', 'sans-serif' ">
-	  		<%--  ${dto.content} --%>
+	  	 	 <%-- ${dto.content}  --%>
 	     	
 		    </div>
 		    <span>...</span> 

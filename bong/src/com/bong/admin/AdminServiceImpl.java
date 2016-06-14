@@ -113,5 +113,16 @@ public class AdminServiceImpl implements AdminService{
 		}
 		return 1;
 	}
+
+	@Override
+	public Club clubArticle(int clubIdx) {
+		Club dto = null;
+		try {
+			dto = dao.getReadInformation("admin.clubArticle", clubIdx);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
 	
 }

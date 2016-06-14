@@ -376,15 +376,15 @@
 
 		<div class="form-group">
 			<label class="col-md-2 control-label">수요처 장소</label>
-			<div class="col-md-10" id="schUserName">
-				<input class="form-control" name="place" type="text" value="서울특별시 노원구 삼양동 종합복지센터 장암역 1번출구">
+			<div class="col-md-10" id="schServiceAddr">
+				<p class="form-control-static">서울특별시 노원구 삼양동 종합복지센터 장암역 1번출구</p>
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label class="col-md-2 control-label">파일 업로드</label>
 			<div class="col-md-10" id="schUserName">
-				<p class="form-control-static">파일 업로드 하는곳</p>
+				<p class="form-control-static"><input type="file" name="upload" class="form-control input-sm"></p>
 			</div>
 		</div>
 		

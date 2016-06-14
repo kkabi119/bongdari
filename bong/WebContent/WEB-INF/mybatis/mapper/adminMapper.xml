@@ -68,7 +68,7 @@
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
 		        SELECT tot.*, ct2.subject as lSubject, ct1.subject as sSubject  FROM
-     					 (SELECT clubName, TO_CHAR(clubBirth, 'YYYY-MM-DD') clubBirth, clubAddr, userId, closed, introduce, themeNum,                  
+     					 (SELECT clubName, TO_CHAR(clubBirth, 'YYYY-MM-DD') clubBirth, SUBSTR(clubAddr, 1, 2) as clubAddr, userId, closed, introduce, themeNum, ci.clubIdx,               
 			          	NVL(cvl.total_hours, 0) total_hours, NVL(cvl.total_NoShow, 0) total_NoShow, NVL(jc.member, 0) member FROM clubinfo ci
 			         	LEFT OUTER JOIN (SELECT SUM(clubhours) total_hours, SUM(clubnoshow) total_noshow, clubIdx FROM clubVolList
 						GROUP BY clubIdx) cvl ON ci.clubIdx=cvl.clubIdx
@@ -100,7 +100,7 @@
 		SELECT * FROM(
 			SELECT ROWNUM rnum, tb.* FROM(
 					SELECT si.serviceIdx, ci.userId, si.serviceName, TO_CHAR(si.serviceBirth, 'YYYY-MM-DD') serviceBirth,
-				       si.serviceTel, si.serviceAddr, si.serviceEmail, ci.isService,
+				       si.serviceTel,  SUBSTR(si.serviceAddr, 1, 2) as serviceAddr, si.serviceEmail, ci.isService,
 				       t2.subject lSubject, t1.subject sSubject
 				       FROM checkId ci
                		   JOIN serviceInfo si ON ci.userIdx=si.userIdx
@@ -116,13 +116,27 @@
 	<!-- 수요처 승인요청 상세 리스트-->
 	<select id="demanderArticle" resultType="com.bong.admin.Demander"
 			parameterType="Integer">
-					SELECT serviceIdx, userId as serviceId, serviceName, serviceEmail, TO_CHAR(serviceBirth, 'YYYY-MM-DD') serviceBirth, serviceTel, serviceIntro, serviceAddr,
+					SELECT serviceIdx, userId as serviceId, serviceName, serviceEmail, TO_CHAR(serviceBirth, 'YYYY-MM-DD') serviceBirth, serviceTel, serviceIntro, 
+					SUBSTR(serviceAddr, 1, 2) serviceAddr,
 			        serviceImg, tt.lSubject, tt.sSubject, TO_CHAR(created_date, 'YYYY-MM-DD') created_date FROM serviceInfo si
 					LEFT OUTER JOIN checkId ci ON ci.userIdx=si.userIdx
 					LEFT OUTER JOIN (SELECT t1.themeNum, t2.subject as lSubject, t1.subject as sSubject FROM theme t1
 			        LEFT OUTER JOIN theme t2 ON t1.parent=t2.themeNum) tt ON si.themeNum=tt.themeNum
 			        WHERE serviceIdx = #{serviceIdx}
 	
+	</select>
+	
+	<select id="clubArticle" parameterType="Integer" resultType="com.bong.admin.Club">
+		SELECT tot.*, ct2.subject as lSubject, ct1.subject as sSubject  FROM
+     					 (SELECT clubName, TO_CHAR(clubBirth, 'YYYY-MM-DD') clubBirth, clubAddr, userId, closed, introduce, themeNum, ci.clubIdx, photoFileName as img,               
+			          	NVL(cvl.total_hours, 0) total_hours, NVL(cvl.total_NoShow, 0) total_NoShow, NVL(jc.member, 0) member FROM clubinfo ci
+			         	LEFT OUTER JOIN (SELECT SUM(clubhours) total_hours, SUM(clubnoshow) total_noshow, clubIdx FROM clubVolList
+						GROUP BY clubIdx) cvl ON ci.clubIdx=cvl.clubIdx
+          				LEFT OUTER JOIN (SELECT COUNT(userIdx) member, clubIdx FROM joinclub
+						GROUP BY clubIdx) jc ON ci.clubIdx=jc.clubIdx) tot
+			            LEFT OUTER JOIN theme ct1 ON tot.themenum=ct1.themenum
+			            LEFT OUTER JOIN theme ct2 ON ct1.parent=ct2.themenum
+                  WHERE clubIdx = #{clubIdx}
 	</select>
 	
 	<!-- 수요처 동적쿼리로 테이블 생성해주기 -->

@@ -226,6 +226,7 @@ public class adminController {
 			selectUri = ".admin4.main.approval";
 		
 		ModelAndView mav = new ModelAndView(selectUri);
+		mav.addObject("switching", switching);
 		mav.addObject("list", list);
 		mav.addObject("page", current_page);
 		mav.addObject("dataCount", dataCount);
@@ -269,5 +270,26 @@ public class adminController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/admin/clubDetail")
+	@ResponseBody
+	public ModelAndView clubDetail(
+			@RequestParam(value="clubIdx") int clubIdx
+			) throws Exception {
+		Club dto = aService.clubArticle(clubIdx);
+		ModelAndView mav = new ModelAndView("/admin/main/clubDetail");
+		mav.addObject("dto", dto);
+		return mav;
+	}
+	
+	@RequestMapping(value="/admin/demanderDetail")
+	@ResponseBody
+	public ModelAndView demanderDetail(
+			@RequestParam(value="serviceIdx") String serviceIdx
+			) throws Exception {
+		Demander dto = aService.demanderArticle(serviceIdx);
+		ModelAndView mav = new ModelAndView("/admin/main/demanderDetail");
+		mav.addObject("dto", dto);
+		return mav;
+	}
 	
 }

@@ -64,7 +64,7 @@
                           	<c:if test="${demander_seq!=null}">
                           	  <a id="demanderName" style="float:left; padding-right: 10px" href="<%=cp%>/demander/${demander_seq}/main"></a>
                           	  </c:if>
-                          	  <div><tiles:insertAttribute name="title"/></div>
+                          	<%--   <div><tiles:insertAttribute name="title"/></div> --%>
                             </h1>
                     </div>
                 </div>

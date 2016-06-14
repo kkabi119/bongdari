@@ -79,11 +79,11 @@
 	<div id="wrapper">
 
 		<!-- 네비 탑 -->
-		<header id="header">
+		<header id="header" style="height:145px;">
 			<tiles:insertAttribute name="header" />
 		</header>
 		<!-- /네비 탑 -->
-
+<div id=mainContent> 
 		<div class="container">
 		<!-- 왼쪽 네비 -->
 		<tiles:insertAttribute name="left" />
@@ -95,7 +95,7 @@
 		</div>
 		<!-- /메인화면 -->
 		</div>
-		
+		</div>
 	</div>
 
 </body>
