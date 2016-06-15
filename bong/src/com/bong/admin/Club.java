@@ -2,9 +2,15 @@ package com.bong.admin;
 
 public class Club {
 	private int rNum, listNum;
-	private String clubName, clubBirth, clubAddr, userId, prologue, introduce, lSubject, sSubject;
+	private String clubName, clubBirth, clubAddr, userId, prologue, introduce, lSubject, sSubject, img;
 	private int typeIdx, closed, themeNum, total_Hours, total_NoShow, member, clubIdx;
 	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 	public String getlSubject() {
 		return lSubject;
 	}

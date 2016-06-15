@@ -41,4 +41,8 @@ public interface ClubService {
 	public List<ClubInfo> readJoinedClub(int userIdx);
 
 	public int joinClubOk(Map<String, Object> map);
+	
+	//동아리 검색페이지
+	public int clubSearchdataCount(Map<String, Object> map);
+	public List<ClubInfo> clubSearchList(Map<String, Object> map);
 }

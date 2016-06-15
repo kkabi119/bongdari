@@ -348,6 +348,28 @@ public class ClubServiceImpl  implements ClubService {
 		}
 		return list;
 	}
+
+	@Override
+	public int clubSearchdataCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.getIntValue("clubSearch.clubSearchdataCount",map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public List<ClubInfo> clubSearchList(Map<String, Object> map) {
+		List<ClubInfo> list=null;
+		try {
+			list=dao.getListInformation("clubSearch.clubSearchList", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
 	
 	
 	

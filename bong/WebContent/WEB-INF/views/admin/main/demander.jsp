@@ -19,105 +19,14 @@
 } 
 </style>
 <script type="text/javascript">
-function cityList() {
-	var snum=$("#sido").val();
-	if(snum=="") {
-		$("#city option").each(function() {
-			$("#city option:eq(0)").remove();
-		});
-
-		$("#city").append("<option value=''>::도시선택::</option>");
-		return false;
-	}
-	var url="<%=cp%>/main/demander";
-	var params="snum="+snum;
-	
-	$.ajax({
-		type:"post"
-		,url:url
-		,data:params
-		,dataType:"json"
-		,success:function(data){
-			$("#city option").each(function() {
-				$("#city option:eq(0)").remove();
-			});
-
-			 $("#city").append("<option value=''>::도시선택::</option>");
-			 
-			 for(var idx=0; idx<data.list.length; idx++) {
-				 $("#city").append("<option value='"+data.list[idx].cnum+"'>"+data.list[idx].city+"</option>");
-			 }
-		}
-	    ,error:function(e) {
-	    	alert(e.responseText);
-	    }
-	});
-}
-
-function result() {
-	var snum=$("#sido").val();
-	var cnum=$("#city").val();
-	var sido=$("#sido :selected").text();
-	var city=$("#city :selected").text();
-
-	if(! snum || !cnum)
-		return false;
-	
-	var s=sido+":"+snum+", "+city+":"+cnum;
-	alert(s);
+function detail(serviceIdx){
+	$.get("<%=cp%>/admin/demanderDetail",{serviceIdx:serviceIdx}, function(data) {
+	    $('#scheduleModal .modal-title').html('수요처 정보');
+	    $('#scheduleModal .modal-body').html(data);
+		$('#scheduleModal').modal('show');
+	});	
 }
 </script>
-<!-- 지도보기는 나중에 -->
-<%-- <div style="margin: 50px auto 10px; height: 200px;" align="center">
-	<div class="row4">
-		<div class="col-md-12">
-			<ul id="tab2" class="nav nav-pills">
-				<li class="active"><a href="#tab2-item1" data-toggle="tab">지도로 찾기</a></li>
-				<li><a href="#tab2-item2" data-toggle="tab" >분야로 찾기</a></li>
-
-			</ul>
-			<div class="tab-content" style="background: #F6F6F6; height: 200px;
-			border-radius: 7px 7px 7px 7px ;margin-top:5px; ">
-				<div class="tab-pane fade active in" id="tab2-item1">
-					<div style="color: blue">지역별 검색</div>
-					시도선택<select id="sido" onchange="cityList();" class="selectField"
-						name="sido">
-						<option value="">::시도선택::</option>
-						<c:forEach var="dto" items="${list}">
-							<option value="${dto.snum}">${dto.sido}</option>
-						</c:forEach>
-					</select> 도시선택<select id="city" class="selectField" name="city">
-						<option value="">::도시선택::</option>
-					</select> <br> 수요처 명<input type="text" name="demandName"
-						class="textField"> <input type="button" value=" 확인 "
-						onclick="result();" class="btn"> 
-					<table>
-						<tr>
-							<td></td>
-						</tr>
-					</table>	
-				</div>
-				<div class="tab-pane fade" id="tab2-item2">
-					<div style="color: blue">분야별 검색</div>
-					시설유형<select id="demandType" class="selectField">
-						<option value="">::시설유형::</option>
-					</select> 수요처 명<input type="text" name="demandName" class="textField">
-					<input type="button" value=" 확인 " onclick="result();" class="btn">
-
-				</div>
-				<div class="tab-pane fade" id="tab2-item2">
-					<div style="color: blue">분야별 검색</div>
-					시설유형<select id="demandType" class="selectField">
-						<option value="">::시설유형::</option>
-					</select> 수요처 명<input type="text" name="demandName" class="textField">
-					<input type="button" value=" 확인 " onclick="result();" class="btn">
-
-				</div>
-
-			</div>
-		</div>
-	</div>
-</div> --%>
 
 <!-- 검색결과는 ajax써서 jsp따로 빼야할 듯! -->
 <div class="row" style="margin-left:15px;">
@@ -151,7 +60,7 @@ function result() {
                 					<c:forEach var="dto" items="${list}">
 									<tr>
                         				<td class="text-center">${dto.rNum}</td>
-                        				<td class="text-center"><a href="<%=cp%>/main/articleDemander">${dto.serviceName}</a></td>
+                        				<td class="text-center"><a href="#" onclick="detail('${dto.serviceIdx}')">${dto.serviceName}</a></td>
                        				 	<td class="text-center" >${dto.lSubject}>${dto.sSubject}</td>
                        				 	<td class="text-center">${dto.serviceAddr}</td>
                        				 	<td class="text-center" style="">${dto.serviceTel}</a></td>
@@ -198,4 +107,14 @@ function result() {
         </div>
 	</div>
 	
-
+<div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" style="width:600px;">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="scheduleModalLabel" style="font-family: 나눔고딕, 맑은 고딕, sans-serif; font-weight: bold;">일정</h4>
+	      </div>
+	      <div class="modal-body"></div>
+	    </div>
+	  </div>
+	</div>

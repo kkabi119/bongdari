@@ -110,7 +110,7 @@
 	});
 });  --%>
 </script>
-<div style="margin: 50px auto 10px; height: 200px;" align="center">
+<div style="margin: 50px auto 10px; height: 200px; width:800px;" align="center">
  
 	<div class="row4">
 		<div class="col-md-12">
