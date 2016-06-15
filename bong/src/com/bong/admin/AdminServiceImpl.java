@@ -125,4 +125,15 @@ public class AdminServiceImpl implements AdminService{
 		return dto;
 	}
 	
+	@Override
+	public Member memberArticle(int userIdx) {
+		Member dto = null;
+		try {
+			dto = dao.getReadInformation("admin.memberArticle", userIdx);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+	
 }

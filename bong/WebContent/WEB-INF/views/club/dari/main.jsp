@@ -96,7 +96,7 @@
                         	<%-- <li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li> --%>
                          
                         
-                       		 <li><a href="${urlArticleR}+&num=${dtoR.clubReviewIdx}" >${dtoR.subject}</a></li>
+                       		 <li style="line-height:30px; font-weight:600; font-size:15px; overflow:hidden; width:90%; "><a style="color:#464646;" href="${urlArticleR}+&num=${dtoR.clubReviewIdx}" >${dtoR.subject}</a></li>
                        	 </c:forEach> 
                      	  
                         </ul>
@@ -115,7 +115,7 @@
                         	<%-- <li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li> --%>
                          
                         
-                       		 <li><a href="${urlArticleN}+&num=${dtoN.clubNoticeIdx}" >${dtoN.subject}</a></li>
+                       		 <li style="line-height:30px; font-weight:600; font-size:15px;overflow:hidden; width:90%; "><a style="color:#464646;" href="${urlArticleN}+&num=${dtoN.clubNoticeIdx}" >${dtoN.subject}</a>...</li>
                        	 </c:forEach> 
                      	  	 
                         	

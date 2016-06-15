@@ -114,6 +114,13 @@ $(document).ready(function($) {
                             </ul> --%>
                         </li>
                         
+                        <li><a href="<%=cp%>/main/volunList">전체봉사게시판 </a>
+                           <%--  <ul role="menu" class="sub-menu">
+                                <li><a href="<%=cp%>/main/demander">수요처 전체 메인</a></li>
+                                <li><a href="<%=cp%>/main/searchDemander">수요처 검색</a></li>
+                            </ul> --%>
+                        </li>
+                        
                         <li class="dropdown"><a href="">고객센터 <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li><a href="<%=cp%>/notice/list">공지사항</a></li>

@@ -5,6 +5,17 @@
 <%
 	String cp=request.getContextPath();
 %>
+
+<script type="text/javascript">
+function memberDetail(userIdx){
+	$.get("<%=cp%>/admin/memberDetail",{userIdx:userIdx}, function(data) {
+	    $('#scheduleModal .modal-title').html('멤버 정보');
+	    $('#scheduleModal .modal-body').html(data);
+		$('#scheduleModal').modal('show');
+	});	
+}
+</script>
+
 <div class="row" style="margin-left:15px;">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">
@@ -47,7 +58,7 @@
                         				<td class="text-center" style="">${dto.userNoShow}번</td>
                         				<td class="text-center" style="">${dto.created_date}</td>
                         				<td class="text-center" style="">${dto.last_Login}</td>
-                        				<td class="text-center" style="">상세정보</td>                        				
+                        				<td class="text-center" onclick="memberDetail(${dto.userIdx});" style="">상세정보</td>                        				
             						</tr>
             					</c:forEach>
                 				</tbody>
@@ -85,4 +96,16 @@
         		</div>
         	</div>
         </div>
+	</div>
+	
+	<div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" style="width:600px;">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="scheduleModalLabel" style="font-family: 나눔고딕, 맑은 고딕, sans-serif; font-weight: bold;">일정</h4>
+	      </div>
+	      <div class="modal-body"></div>
+	    </div>
+	  </div>
 	</div>

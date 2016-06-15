@@ -107,20 +107,13 @@ public class clreviewController {
 	            if(match.find())
 	            	data.setListImageName(match.group(1));
 	            
-	            content=data.getContent().replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>","");
-	      
-
-	            if(content.length()<60){
-	            	 data.setContent(content);
-	                 n++;
-	            }
-	            else {
-	            	
-		            content=content.substring(0, 60);
-		            data.setContent(content);
-		            System.out.println("content+"+content);
-		            n++;
-	            }
+	           content=data.getContent().replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>","");
+	           content=content.replaceAll("<p>&nbsp;</p>", ""); //태그가 너무 많아서 미리보기할때 글이 안떳다 그래서 가장 많은 p태그를 없애줌
+	           content=content.replaceAll("<br>", " ");
+	           data.setContent(content); //content 변수로 미리보기 하는게 아니라 그냥 dto안의 content로 찍는당
+	           System.out.println("content:"+content);
+		       n++;
+	            
 	        }
 	        
 	        String params = "";

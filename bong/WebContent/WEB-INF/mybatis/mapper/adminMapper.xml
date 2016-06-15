@@ -139,6 +139,14 @@
                   WHERE clubIdx = #{clubIdx}
 	</select>
 	
+	<select id="memberArticle" parameterType="Integer" resultType="com.bong.admin.Member">
+		  SELECT userId, mi.userName, TO_CHAR(userBirth, 'yyyy-MM-dd') userBirth, userAddr, userGender, userTel, userEmail, 
+		  userJob, userLevel, userVolNum, userNoShow, userScore, mi.enabled,
+		  TO_CHAR(created_date, 'yyyy-MM-dd') created_date, TO_CHAR(last_login, 'yyyy-MM-dd') last_login, memImg FROM memberinfo mi
+      	  JOIN checkId ci ON ci.userIdx=mi.userIdx
+		  WHERE mi.userIdx = #{userIdx}
+	</select>
+	
 	<!-- 수요처 동적쿼리로 테이블 생성해주기 -->
 	
 	<!-- 수요처 승인시 enabled를 1로 바꿔준다. -->
