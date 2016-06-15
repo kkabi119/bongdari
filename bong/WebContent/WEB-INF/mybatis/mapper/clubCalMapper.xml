@@ -22,7 +22,7 @@
 			SELECT * FROM
 			(SELECT vb.volunIdx as num,  subject as title, color,  'true' as allday, TO_CHAR(volDate, 'YYYY-MM-DD') as startDay, TO_CHAR(volDate, 
 			'YYYY-MM-DD') as endDay, startTime, endTime FROM volun_bbs vb JOIN memnumperdate mn ON vb.volunIdx=mn.volunIdx
-			JOIN club_apply ca ON vb.volunIdx=ca.volunIdx
+			JOIN club_apply_${clubSeq} ca ON vb.volunIdx=ca.volunIdx
         <![CDATA[
 			WHERE (ca.clubIdx=#{clubSeq} AND enabled=1 AND startDay>=#{start} AND startDay<=#{end}) ORDER BY startDay 
 			ASC, num DESC)
@@ -30,7 +30,7 @@
 			SELECT * FROM
 			(SELECT num, title, color,  allDay, To_char(startDay,'YYYY-MM-DD') as startday, TO_CHAR(endday, 
 			'YYYY-MM-DD') as endDay, startTime, 
-			endTime FROM club_sch_52 s JOIN memberInfo m ON s.userIdx=m.userIdx 
+			endTime FROM club_sch_${clubSeq} s JOIN memberInfo m ON s.userIdx=m.userIdx 
 			WHERE s.userIdx = #{userIdx} AND ((startDay>=#{start} AND startDay<=#{end}) OR (endDay>=#{start} AND 
 			endDay<=#{end})) ORDER BY startDay ASC, num DESC)
 			)
@@ -45,6 +45,7 @@
        ]]> 
    	  </where>
              ORDER BY startDay ASC, num DESC
+             
     </select>
  
     <!-- 일정 상세 정보 -->

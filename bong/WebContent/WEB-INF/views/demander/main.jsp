@@ -204,7 +204,7 @@
                         				<th class="text-center" style="width: 60px; font-weight:500;  ">번호</th>
                         				<th class="text-center" style="white-space: nowrap;  font-weight:500; ">
                         				수요처 이름</th>
-                        				<th class="text-center" style="width:105px; font-weight:500;">봉사 분야</th>
+                        				<th class="text-center" style="width:120px; font-weight:500;">봉사 분야</th>
                         				<th class="text-center" style="width:400px; font-weight:500;">지역</th>
                         				<th class="text-center" style="width:150px;font-weight:500;">전화번호</th>
                         			
@@ -216,7 +216,7 @@
 									<tr>
                         				<td class="text-center">${sdto.listNum}</td>
                         				<td class="text-center" ><a href="<%=cp%>/demander/${sdto.serviceIdx}/main">${sdto.serviceName}</a></td>
-                       				 	<td class="text-center" >${sdto.themeName}</td>
+                       				 	<td class="text-center" >${sdto.lSubject} > ${sdto.sSubject}</td>
                        				 	<td class="text-center">${sdto.serviceAddr}</td>
                        				 	<td class="text-center" style="">${sdto.serviceTel}</td>
                         				

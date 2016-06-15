@@ -15,6 +15,7 @@ public interface AdminService {
 	
 	public Demander demanderArticle(String serviceIdx);
 	public Club clubArticle(int clubIdx);
+	public Member memberArticle(int userIdx);
 	
 	public int createDemanderTable(String serviceIdx);
 	

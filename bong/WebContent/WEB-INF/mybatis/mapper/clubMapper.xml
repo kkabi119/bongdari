@@ -58,7 +58,10 @@
 	
 	<!-- 동아리 정보 수정 -->
 	<update id="updateClubInfo" parameterType="com.bong.club.ClubInfo">
-	    UPDATE ClubInfo SET themeNum=#{themeNum}, clubname=#{clubname}, introduce=#{introduce}, clubAddr=#{clubAddr}, photoFilename=#{photoFilename}
+	    UPDATE ClubInfo SET themeNum=#{themeNum}, clubname=#{clubname}, introduce=#{introduce}, clubAddr=#{clubAddr}
+	    <if test="photoFilename!=null">
+	     ,photoFilename=#{photoFilename}
+	     </if>
 	    WHERE clubIdx=#{clubSeq}
 	</update>
 	

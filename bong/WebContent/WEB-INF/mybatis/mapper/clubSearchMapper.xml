@@ -10,16 +10,16 @@
 	  </if>
 	
 	   <if test="clubType=='disabled'">
-	     subject='장애인'
+	     t2.subject='장애인'
 	  </if>
 	  <if test="clubType=='silver'">
-	      subject='노인'
+	       t2.subject='노인'
 	  </if>
 	  <if test="clubType=='child'">
-	     subject='아동'
+	      t2.subject='아동'
 	  </if>
 	  <if test="clubType=='etc'">
-	     subject='기타'
+	      t2.subject='기타'
 	  </if>
 	  <if test="clubName.length()!=0">
 	      DBMS_LOB.INSTR(clubName, #{clubName}) &gt; 0 
@@ -30,7 +30,10 @@
 <!-- 동아리 검색 결과 dataCount-->
 <select id="clubSearchdataCount" parameterType="map"
 	            resultType="Integer">
-	  SELECT NVL(COUNT(*), 0) FROM clubinfo c JOIN theme t ON c.themenum=t.themenum
+	  SELECT NVL(COUNT(*), 0)
+   					FROM  clubinfo c     
+  					 LEFT OUTER JOIN theme t1 ON c.themenum=t1.themenum            
+   					 LEFT OUTER JOIN theme t2 ON t1.PARENT=t2.themenum   
 	     <where>
 	     	<if test="clubType!=null or clubName!=null or sido!=null">
 	     	    <include refid="where-list"/>
@@ -45,8 +48,10 @@
 	            resultType="com.bong.club.ClubInfo">
 		  SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-			      SELECT clubIdx as clubSeq,clubname,clubAddr ,subject AS themeName
-					FROM clubInfo c JOIN theme t ON c.themenum=t.themenum
+			      SELECT c.clubidx as clubseq, c.clubname, clubaddr, t2.subject lsubject, t1.subject ssubject  
+   					FROM  clubinfo c     
+  					 LEFT OUTER JOIN theme t1 ON c.themenum=t1.themenum            
+   					 LEFT OUTER JOIN theme t2 ON t1.PARENT=t2.themenum    
 	             <where>
 	     	<if test="clubType!=null or clubName!=null or sido!=null">
 	     	    <include refid="where-list"/>

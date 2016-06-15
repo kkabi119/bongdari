@@ -292,4 +292,15 @@ public class adminController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/admin/memberDetail")
+	@ResponseBody
+	public ModelAndView memberDetail(
+			@RequestParam(value="userIdx") int userIdx
+			) throws Exception {
+		Member dto = aService.memberArticle(userIdx);
+		ModelAndView mav = new ModelAndView("/admin/main/memberDetail");
+		mav.addObject("dto", dto);
+		return mav;
+	}
+	
 }
