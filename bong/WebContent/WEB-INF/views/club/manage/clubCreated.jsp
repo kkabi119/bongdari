@@ -190,24 +190,24 @@ function themeList() {
         <div class="col-sm-7">
             <select name="clubAddr" class="form-control" style="width: 222px;">
 			                <option value="">:: 선택 ::</option>
-			                <option value="서울" ${dto.clubAddr=="서울" ? "selected='selected'" : ""}>서울</option>
-			                <option value="부산" ${dto.clubAddr=="부산" ? "selected='selected'" : ""}>부산</option>
-			                <option value="대구" ${dto.clubAddr=="대구" ? "selected='selected'" : ""}>대구</option>
-			                <option value="인천" ${dto.clubAddr=="인천" ? "selected='selected'" : ""}>인천</option>
-			                <option value="광주" ${dto.clubAddr=="광주" ? "selected='selected'" : ""}>광주</option>
-			                <option value="대전" ${dto.clubAddr=="대전" ? "selected='selected'" : ""}>대전</option>
-			                <option value="울산" ${dto.clubAddr=="울산" ? "selected='selected'" : ""}>울산</option>
-			                <option value="세종" ${dto.clubAddr=="세종" ? "selected='selected'" : ""}>세종</option>
-			                <option value="강원" ${dto.clubAddr=="강원" ? "selected='selected'" : ""}>강원</option>
-			                <option value="경기" ${dto.clubAddr=="경기" ? "selected='selected'" : ""}>경기</option>
-			                <option value="충남" ${dto.clubAddr=="충남" ? "selected='selected'" : ""}>충남</option>
-			                <option value="충북" ${dto.clubAddr=="충북" ? "selected='selected'" : ""}>충북</option>
-			                <option value="전남" ${dto.clubAddr=="전남" ? "selected='selected'" : ""}>전남</option>
-			                <option value="전북" ${dto.clubAddr=="전북" ? "selected='selected'" : ""}>전북</option>
-			                <option value="경남" ${dto.clubAddr=="경남" ? "selected='selected'" : ""}>경남</option>
-			                <option value="경북" ${dto.clubAddr=="경북" ? "selected='selected'" : ""}>경북</option>
-			                <option value="제주" ${dto.clubAddr=="제주" ? "selected='selected'" : ""}>제주</option>
-			            </select>
+			                <option value="서울특별시" ${dto.clubAddr=="서울특별시" ? "selected='selected'" : ""}>서울특별시</option>
+			                <option value="부산광역시" ${dto.clubAddr=="부산광역시" ? "selected='selected'" : ""}>부산광역시</option>
+			                <option value="대구광역시" ${dto.clubAddr=="대구광역시" ? "selected='selected'" : ""}>대구광역시</option>
+			                <option value="인천광역시" ${dto.clubAddr=="인천광역시" ? "selected='selected'" : ""}>인천광역시</option>
+			                <option value="광주광역시" ${dto.clubAddr=="광주광역시" ? "selected='selected'" : ""}>광주광역시</option>
+			                <option value="대전광역시" ${dto.clubAddr=="대전광역시" ? "selected='selected'" : ""}>대전광역시</option>
+			                <option value="울산광역시" ${dto.clubAddr=="울산광역시" ? "selected='selected'" : ""}>울산광역시</option>
+			                <option value="세종특별자치시" ${dto.clubAddr=="세종특별자치시" ? "selected='selected'" : ""}>세종특별자치시</option>
+			                <option value="강원도" ${dto.clubAddr=="강원도" ? "selected='selected'" : ""}>강원도</option>
+			                <option value="경기도" ${dto.clubAddr=="경기도" ? "selected='selected'" : ""}>경기도</option>
+			                <option value="충청남도" ${dto.clubAddr=="충청남도" ? "selected='selected'" : ""}>충청남도</option>
+			                <option value="충청북도" ${dto.clubAddr=="충청북도" ? "selected='selected'" : ""}>충청북도</option>
+			                <option value="전라남도" ${dto.clubAddr=="전라남도" ? "selected='selected'" : ""}>전라남도</option>
+			                <option value="전라북도" ${dto.clubAddr=="전라북도" ? "selected='selected'" : ""}>전라북도</option>
+			                <option value="경상남도" ${dto.clubAddr=="경상남도" ? "selected='selected'" : ""}>경상남도</option>
+			                <option value="경상북도" ${dto.clubAddr=="경상북도" ? "selected='selected'" : ""}>경상북도</option>
+			                <option value="제주도" ${dto.clubAddr=="제주도" ? "selected='selected'" : ""}>제주도</option>
+			</select>
         <p class="help-block">주활동 지역을 선택해주세요</p>
      </div>
     </div>
