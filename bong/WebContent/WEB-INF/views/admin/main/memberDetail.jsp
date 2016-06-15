@@ -44,7 +44,7 @@
 				style="color: black; border-top: none; text-align: left; padding-bottom : 10px;">
 				<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;주소
 			</div>
-			<div class="col-md-8" style="text-align: left; padding-bottom : 10px;"></div>
+			<div class="col-md-8" style="text-align: left; padding-bottom : 10px;">${dto.userAddr}</div>
 			
 			<div class="col-md-3"
 				style="color: black; border-top: none; text-align: left; padding-bottom : 10px;">
