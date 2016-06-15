@@ -26,16 +26,16 @@
 	      DBMS_LOB.INSTR(serviceAddr,#{addr}) &gt; 0
 	  </if>
 	   <if test="demanderType=='disabled'">
-	     subject='장애인'
+	       t2.subject='장애인'
 	  </if>
 	  <if test="demanderType=='silver'">
-	      subject='노인'
+	       t2.subject='노인'
 	  </if>
 	  <if test="demanderType=='child'">
-	     subject='아동'
+	      t2.subject='아동'
 	  </if>
 	  <if test="demanderType=='etc'">
-	     subject='기타'
+	      t2.subject='기타'
 	  </if>
 	  
 	  <if test="demanderName.length()!=0">
@@ -44,10 +44,15 @@
 	</sql>
 	
 		
-<!-- 수요처 검색 결과 dataCount-->
+<!-- 수요처 검색 결과 dataCount--> 
+<!-- SELECT NVL(COUNT(*), 0) FROM serviceInfo s JOIN theme t ON s.themenum=t.themenum -->
 <select id="dataCount" parameterType="map"
 	            resultType="Integer">
-	  SELECT NVL(COUNT(*), 0) FROM serviceInfo s JOIN theme t ON s.themenum=t.themenum
+	  SELECT NVL(COUNT(*), 0)
+				       FROM checkId ci
+               JOIN serviceInfo si ON ci.userIdx=si.userIdx
+				       LEFT OUTER JOIN theme t1 ON si.themenum=t1.themenum
+				       LEFT OUTER JOIN theme t2 ON t1.PARENT=t2.themenum
 	     <where>
 	     	<if test="demanderType!=null or demanderName!=null or sido!=null">
 	     	    <include refid="where-list"/>
@@ -62,17 +67,21 @@
 	            resultType="com.bong.demander.Demander">
 		  SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-			     SELECT serviceIdx,serviceName,serviceAddr,serviceTel
-			        ,subject as themeName
-					FROM serviceInfo s JOIN theme t ON s.themenum=t.themenum
+			    SELECT si.serviceidx, si.servicename,
+				       si.serviceTel,  serviceAddr, 
+				       t2.subject lSubject, t1.subject sSubject
+				       FROM checkId ci
+               JOIN serviceInfo si ON ci.userIdx=si.userIdx
+				       LEFT OUTER JOIN theme t1 ON si.themenum=t1.themenum
+				       LEFT OUTER JOIN theme t2 ON t1.PARENT=t2.themenum
 	             <where>
 	     	<if test="demanderType!=null or demanderName!=null or sido!=null">
 	     	    <include refid="where-list"/>
 	     	</if>
 	     </where>   
-	                ORDER BY serviceIdx DESC
+	               
 	<![CDATA[
-	        ) tb WHERE ROWNUM <= #{end}
+	        ) tb where ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start}
 	]]>
 	</select>	

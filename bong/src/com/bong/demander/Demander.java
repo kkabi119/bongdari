@@ -9,7 +9,7 @@ public class Demander {
 	private String serviceIntro,serviceAddr,serviceMail;
 	private String serviceImg,serviceImgName;
 	private String themeName; //theme테이블과 조인해서 name가져오기
-	
+	private String lSubject,sSubject;
 	private int volunIdx;
 	private String subject, content, startDay, endDay, startTime, endTime,
 	place, progress, volunteer_type, volunDays;
@@ -147,6 +147,18 @@ public class Demander {
 	}
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
+	}
+	public String getsSubject() {
+		return sSubject;
+	}
+	public void setsSubject(String sSubject) {
+		this.sSubject = sSubject;
+	}
+	public String getlSubject() {
+		return lSubject;
+	}
+	public void setlSubject(String lSubject) {
+		this.lSubject = lSubject;
 	}
 	
 	
