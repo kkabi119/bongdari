@@ -23,11 +23,14 @@
     .tag-cloud .nav-pills li a:hover {
     background: #FFE258;
 	}
+	.categories .navbar-stacked li{
+		padding:3px;
+	}
 	
 	.sidebar h3{
 		border-bottom:3px solid #ccc;
 		margin-bottom: 10px ;
-		font-weight:bold;
+		font-weight:500;
 		color:#777
 	}
 	
@@ -143,7 +146,7 @@
 	                             				display:none;"
 	                      			 >가입하기</button>
                         </div>
-                        <div class="sidebar-item categories" style="font-weight:bold;">
+                        <div class="sidebar-item categories" style="font-weight:500;">
                             <ul class="nav navbar-stacked" >
                             <li><h3 class="nav navbar-stacked lefthead">Categories</h3></li>
                                 <li  class="navbar-stacked-item3"><a href="<%=cp%>/club/${clubSeq}/notice/list">공지사항</a></li>
