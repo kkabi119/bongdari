@@ -82,7 +82,7 @@ padding-top: 13px;
                             <td  bgcolor="#DFE6E8" style="color:black;; border-top:none; text-align: left; width:5%; height:45px; ">
                             	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;도시
                             </td>
-                            <td style="text-align: left; width:5%; height:45px; ">${clubInfo.city }</td>
+                            <td style="text-align: left; width:5%; height:45px; ">${clubInfo.clubAddr}</td>
                          
                         	<td  bgcolor="#DFE6E8" style="color:black;;border-top:none; border-top:none; text-align: left;  height:45px; ">
                          		  	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;가입회원수
@@ -104,7 +104,7 @@ padding-top: 13px;
                          <td  bgcolor="#DFE6E8" style="color:black;; border-top:none; text-align: left; width:5%; height:45px; ">
                             	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;동아리 소개
                             </td>
-                            <td colspan="3" style="text-align: left; width:5%; height:45px; ">${clubInfo.introduce }</td>
+                            <td colspan="3" style="text-align: left; width:5%; height:45px; ">${clubInfo.introduce}</td>
                         </tr>
                </table>
           </div>

@@ -203,7 +203,7 @@
                         				<th class="text-center" style="width: 60px; font-weight:500;  ">번호</th>
                         				<th class="text-center" style="white-space: nowrap;  font-weight:500; ">
                         				동아리 이름</th>
-                        				<th class="text-center" style="width:105px; font-weight:500;">봉사 분야</th>
+                        				<th class="text-center" style="width:150px; font-weight:500;">봉사 분야</th>
                         				<th class="text-center" style="width:200px; font-weight:500;">지역</th>
                         				
                     				</tr>
@@ -213,7 +213,7 @@
 									<tr>
                         				<td class="text-center">${sdto.listNum}</td>
                         				<td class="text-center" ><a href="<%=cp%>/club/${sdto.clubSeq}/main">${sdto.clubname}</a></td>
-                       				 	<td class="text-center" >${sdto.themeName}</td>
+                       				 	<td class="text-center" >${sdto.lSubject} > ${sdto.sSubject}</td>
                        				 	<td class="text-center">${sdto.clubAddr}</td>
                        				 
             						</tr>

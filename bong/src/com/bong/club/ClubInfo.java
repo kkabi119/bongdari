@@ -6,16 +6,14 @@ public class ClubInfo {
 	private int clubSeq,listNum;
 	private String userId, nickName, userName,themeName;
 	private int groupNum, themeNum, userIdx;
-	private String introduce, clubname, city,  clubBirth, clubAddr;
+	private String introduce, clubname,city,clubBirth,clubAddr;
+	private String lSubject,sSubject;
 	private String groupSubject, subject;
 	private int  closed;
 	private MultipartFile uploads;
 	private String photoFilename;
 	private int isUserName, isCity;
 	private String authority;
-	
-	
-	
 	
 	public String getAuthority() {
 		return authority;
@@ -151,6 +149,18 @@ public class ClubInfo {
 	}
 	public void setThemeName(String themeName) {
 		this.themeName = themeName;
+	}
+	public String getlSubject() {
+		return lSubject;
+	}
+	public void setlSubject(String lSubject) {
+		this.lSubject = lSubject;
+	}
+	public String getsSubject() {
+		return sSubject;
+	}
+	public void setsSubject(String sSubject) {
+		this.sSubject = sSubject;
 	}
 	
 	

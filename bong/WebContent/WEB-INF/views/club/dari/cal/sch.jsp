@@ -687,7 +687,7 @@ $(function(){
 
 <div class="bodyFrame">
     <div class="body-title">
-          <h3><span class="glyphicon glyphicon-calendar"></span> 일정관리 </h3>
+          <h2 style="color: #337ab7; font-family: 나눔고딕; "><span class="fa fa-calendar-o"></span> 우리들의 여정 </h2>
     </div>
     
     <div id="calendarHeader" style="height: 35px; line-height: 35px;">

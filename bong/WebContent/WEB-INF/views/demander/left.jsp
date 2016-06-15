@@ -60,7 +60,7 @@ $(function(){
                             <h3>Categories</h3>
                             <ul class="nav navbar-stacked" >
                                 <%-- <li><a href="<%=cp%>/main/demander">수요처 전체메인<span class="pull-right"></span></a></li> --%>
-                                <li class="active"><a href="<%=cp%>/demander/${demander_seq}/main">수요처메인<span class="pull-right"></span></a></li>
+                                <li><a href="<%=cp%>/demander/${demander_seq}/main">수요처메인<span class="pull-right"></span></a></li>
                                 <li><a href="<%=cp%>/demander/${demander_seq}/notice/list">공지사항<span class="pull-right"></span></a></li>
                                 <li><a href="<%=cp%>/demander/${demander_seq}/schedule">일정게시판<span class="pull-right"></span></a></li>
                                 <li><a href="<%=cp%>/demander/${demander_seq}/qna/list">QnA<span class="pull-right"></span></a></li>
