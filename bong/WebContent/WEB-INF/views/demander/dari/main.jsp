@@ -127,7 +127,7 @@ background-color: #4FCCCD;
                         	 	<span style="color:#969494; font-weight: bold;">봉사유형</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
-                   			${mainProfile.themeName}
+                   			${mainProfile.lSubject} &nbsp;>&nbsp; ${mainProfile.sSubject}  
                         	</td>
                         </tr>
                          <tr >

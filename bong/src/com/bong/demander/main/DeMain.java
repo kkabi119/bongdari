@@ -6,7 +6,7 @@ public class DeMain {
 	private String serviceIntro;
 	private String serviceImg;
 	private String serviceImgName;
-	private String themeName;
+	private String themeName,lSubject,sSubject;
 	private int demander_seq;
 	
 	public int getServiceIdx() {
@@ -71,6 +71,18 @@ public class DeMain {
 	}
 	public void setServiceImgName(String serviceImgName) {
 		this.serviceImgName = serviceImgName;
+	}
+	public String getlSubject() {
+		return lSubject;
+	}
+	public void setlSubject(String lSubject) {
+		this.lSubject = lSubject;
+	}
+	public String getsSubject() {
+		return sSubject;
+	}
+	public void setsSubject(String sSubject) {
+		this.sSubject = sSubject;
 	}
 
 	
