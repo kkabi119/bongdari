@@ -627,8 +627,11 @@ public class ApplyController {
 								for(int i=0;i<dateArray.size();i++){
 									if(dateArray.get(i).equals(sdFormat.format(calStart.getTime()))){
 										switch(calStart.get(Calendar.DATE)){
-										case 1 : theDate = "<label id='"+sdFormat.format(calStart.getTime())+"' onclick = 'dateInput("+'"'+sdFormat.format(calStart.getTime())+'"'+")' style='font-size:20pt; color : green; cursor:pointer;'>"+Integer.toString(calStart.get(Calendar.MONTH)+1)+"¿ù "+Integer.toString(calStart.get(Calendar.DATE))+"</label>"; break;
-										default : theDate = "<label id='"+sdFormat.format(calStart.getTime())+"' onclick = 'dateInput("+'"'+sdFormat.format(calStart.getTime())+'"'+")' style='font-size:20pt; color : green; cursor:pointer;'>"+Integer.toString(calStart.get(Calendar.DATE))+"</label>"; break;
+										case 1 : theDate = "<label id='"+sdFormat.format(calStart.getTime())+
+												"' onclick = 'dateInput("+'"'+sdFormat.format(calStart.getTime())+'"'
+												+")' style='font-size:16pt; color : green; cursor:pointer;'>"+Integer.toString(calStart.get(Calendar.MONTH)+1)+"¿ù "+Integer.toString(calStart.get(Calendar.DATE))+"</label>"; break;
+										default : theDate = "<label id='"+sdFormat.format(calStart.getTime())+
+												"' onclick = 'dateInput("+'"'+sdFormat.format(calStart.getTime())+'"'+")' style='font-size:16pt; color :#3897f0; cursor:pointer;'>"+Integer.toString(calStart.get(Calendar.DATE))+"</label>"; break;
 										}
 										flag=1;
 									}

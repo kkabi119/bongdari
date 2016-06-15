@@ -194,7 +194,8 @@ function applyCheckOk(){
 </table>
 <c:if test="${enabled==0}">
 <div class="col-md-12">
-	<label class="col-md-12" style="margin-bottom:10px;">내가 신청한 날짜</label>
+
+	<label class="col-md-12" style="margin-bottom:10px;">내가 신청한 날짜</label> 
 	<c:forEach var="mdto" items="${myList}">
 		<c:if test="${sessionScope.member.userIdx==mdto.userIdx}">
 			<div id="checked_${mdto.hopeDate}" class="col-md-3" style="font-size:15pt; margin-bottom:10px;">${mdto.hopeDate}<a onclick='deleteDate("${mdto.hopeDate}");'>X</a></div>

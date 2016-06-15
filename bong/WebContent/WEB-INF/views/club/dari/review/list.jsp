@@ -214,7 +214,8 @@ hr:LAST-CHILD {
    <div style="clear: both; border-radius:0px;">
       <div style="float: left; width: 20%; min-width: 85px;">
          <button type="button" class="btn btn-default " style=" color: gray; border:1px solid gray; margin-left:30px;" 
-            onclick="javascript:location.href='<%=cp%>/demander/${clubSeq}/review/list';">새로고침</button>
+            onclick="javascript:location.href='<%=cp%>/demander/${clubSeq}/review/list';">
+               <img Id="listBtn"style="width:18px; height:18px; background-size:cover; "src="<%=cp%>/res/images/myclub/refresh.png" alt="">&nbsp;새로고침</button>
       </div>
       <div style="float: left; width: 60%; height:41px; text-align: center; margin-top:0px; padding-top:0px;">
          <form name="searchForm" method="post" class="form-inline" style=" ">

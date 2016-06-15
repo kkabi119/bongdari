@@ -95,14 +95,14 @@ function dateInput(theDate){
 	if($("#"+theDate).val()==0){
 		$("#"+theDate).each(function(){
 			$("#"+theDate).attr("class", "fa fa-check fa-fw");
-			$("#check_"+theDate).attr("style", "font-size:15pt; margin-bottom:10px; display:block;");
+			$("#check_"+theDate).attr("style", "font-size:14pt; margin-bottom:5px; display:block; margin-top:20px; color:#777;");
 			checkDateList.push(theDate);
 			$("#"+theDate).val(1);
 		});
 	} else {
 		$("#"+theDate).each(function(){
 			$("#"+theDate).attr("class", "none");
-			$("#check_"+theDate).attr("style", "font-size:15pt; margin-bottom:10px; display:none;");
+			$("#check_"+theDate).attr("style", "margin-top:10px;font-size:14pt; margin-bottom:10px; display:none; color:#777;");
 			checkDateList.splice(theDate, 1);
 			$("#"+theDate).val(0);
 		});	
@@ -141,33 +141,39 @@ function applyOk(){
 
 
 <table class="table table-bordered table-striped table-hover" style="background-color:white; border-radius:3px;">
-<tr><td colspan="7" style="text-align:center;"> <span style="color:blue; font-weight:bold; font-size:xx-large;">${startDay} ~ ${endDay}</span> </td></tr>
+<tr><td colspan="7" style="text-align:center;">
+		 <span style="color:#747779; font-weight:bold; font-size:x-large;">
+		 	<span class="label label-warning" style="padding:6px 8px; border-radius:2px;">봉사일</span>
+		 	&nbsp; ${startDay} ~ ${endDay}</span> 
+		</td></tr>
   <tr>	
-      <th width="13%" style="color:red; vertical-align: inherit;">일</th>
+      <th width="13%" style="color:tomato; vertical-align: inherit;">일</th>
       <th width="13%" style=" vertical-align: inherit;">월</th>
       <th width="13%" style=" vertical-align: inherit;">화</th>
       <th width="13%" style=" vertical-align: inherit;">수</th>
       <th width="13%" style=" vertical-align: inherit;">목</th>
       <th width="13%" style=" vertical-align: inherit;">금</th>
-      <th width="13%" style="color:blue; vertical-align: inherit;">토</th>
+      <th width="13%" style="color:#3897f0; vertical-align: inherit;">토</th>
   </tr>
  <c:forEach var="dto" items="${list}">
 		  <tr style="height:64px;">
-		      <td style="color:red; vertical-align: inherit;">${dto[0]}</td>
+		      <td style="color:tomato; vertical-align: inherit;">${dto[0]}</td>
 		      <td style="vertical-align: inherit;">${dto[1]}</td>
 		      <td style="vertical-align: inherit;">${dto[2]}</td>
 		      <td style="vertical-align: inherit;">${dto[3]}</td>
 		      <td style="vertical-align: inherit;">${dto[4]}</td>
 		      <td style="vertical-align: inherit;">${dto[5]}</td>
-		      <td style="color:blue; vertical-align: inherit;">${dto[6]}</td>
+		      <td style="color:#3897f0; vertical-align: inherit;">${dto[6]}</td>
 		  </tr>
 </c:forEach>
 </table>
-<div class="col-md-12">
-	<label class="col-md-12" style="margin-bottom:10px;">선택한 날짜</label>
+<div class="col-md-12" style="padding:10px;border-bottom: 2px solid #ccc;">
+<span class="label label-warning" style="background-color:#fff; border:1px solid #777; padding:6px 8px; border-radius:2px; font-size:17px; color:#777;">선택한 날짜</span>
+	<div >
 	<c:forEach var="dto" items="${checkDate}">
-		<div id="check_${dto}" class="col-md-3" style="font-size:15pt; margin-bottom:10px; display:none;">${dto}</div>
+		<div id="check_${dto}" class="col-md-3" style="font-size:14px; margin-top:15px; margin-bottom:10px; display:none; color:#3897f0;  ">${dto}</div>
 	</c:forEach>
+	</div>
 </div>
 <div class="col-md-12" style="margin-top:10px;">
 	<button type="button" class="btn btn-success" data-dismiss="modal" style="padding: 10px 15px; background-color: #3897f0; border:none;float:right;">
