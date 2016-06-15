@@ -43,13 +43,13 @@
 </select>
 
 <select id="clubApplyCount" parameterType="map" resultType="Integer">
-		SELECT COUNT(clubApplyIdx) FROM ${clubApplyTable} WHERE volunIdx=#{volunIdx} AND enabled=0
+		SELECT COUNT(clubApplyIdx) FROM ${clubApplyTable} WHERE volunIdx=#{volunIdx} AND enabled=3
 </select>
 
 <select id="volunClub" parameterType="map" resultType="com.bong.demander.admin.Dadmin">
 		SELECT clubName, clubApplyIdx, ca.clubIdx, volunIdx, enabled FROM ${clubApplyTable} ca
 		JOIN clubinfo ci ON ca.clubIdx=ci.clubIdx
-		WHERE volunIdx=#{volunIdx} AND enabled=0 
+		WHERE volunIdx=#{volunIdx} AND enabled=3
 </select>
 
 <select id="clubMemberList" parameterType="map" resultType="com.bong.demander.admin.Dadmin">

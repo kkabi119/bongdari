@@ -32,7 +32,7 @@ $(document).ready(function($) {
     $window.scroll(function() {
         if ($window.scrollTop() >= distance) {
             navbar.removeClass('fixed').addClass('fixed');
-             $("#mainContent").css("padding-top", "145px");
+             $("#mainContent").css("padding-top", "115px");
         } else {
             navbar.removeClass('navbar-fixed-top');
             $("#mainContent").css("padding-top", "0px");

@@ -61,6 +61,28 @@ public class CalServiceImpl implements CalService{
 		return result;
 	}
 
+	@Override
+	public Schedule articleForm(Map<String, Object> map) {
+		Schedule dto = null;
+		try {
+			dto = dao.getReadInformation("cal.articleForm", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+
+	@Override
+	public int takeVolun(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.insertInformation("cal.takeVolun", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
 
 	
 }

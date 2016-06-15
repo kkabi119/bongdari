@@ -215,16 +215,11 @@ function approvalButton(volunIdx){
 			</div>
 			<div class="btnList" >
 				
-				<button class="btn btn btn-info" style="color:white;" >공고보기
-				</button>
 				
 				<button id="listBtn" onclick="listButton(${dto.volunIdx});" class="btn btn btn-default" style="margin-left:10px; color:gray;" >
 					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 참여자
 				</button>
 				
-				<button id="approval" onclick="approvalButton(${dto.volunIdx});" class="btn btn btn-default" style="margin-left:10px; color:gray;" >
-					<span class="glyphicon glyphicon-user " aria-hidden="true"></span> 평가하기
-				</button>
 				
 			</div>
 			

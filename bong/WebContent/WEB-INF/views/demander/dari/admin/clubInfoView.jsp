@@ -54,9 +54,3 @@
 						<div class="col-md-8" style="text-align: left;">${dto.clubAddr}</div>
 					</div>
 			<div class="col-md-12" style="float: clear; padding-top: 10px;"></div>
-			<div class="col-md-4" align="center">
-				<button type="button" class="btn btn-info"
-					onclick="javascript:location.href='<%=cp%>/club/${club_seq}/notice/created';">
-					<span class="fa fa">완료하기</span>
-				</button>
-			</div>

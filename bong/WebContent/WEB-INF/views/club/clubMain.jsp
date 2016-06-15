@@ -333,12 +333,12 @@
                           <c:forEach var="dtoDocu" items="${listDocu}">
                         	<li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li>
                           </c:forEach>
-                         <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
-                       		 <li><a href="#" >[충주] 따뜻했던 연탄봉사의 추억~</a></li>
-                     	  	 <li><a href="#" >[서울] 벌써 보고싶은 아이들과 함께</a></li>
-                       		 <li><a href="#" >[부산] 집에 가고 싶은 사람 손~</a></li>
-                       		 <li><a href="#" >[강원] 저녁 뭐 먹지?</a></li>
-                       		  <li><a href="#" >[전주] 힘들었던만큼 보람찼던 그 날</a></li>
+                         <li><a href="#" >[모집중]어르신 활동보조 자원봉사자 모집</a></li>
+                       		 <li><a href="#" >[모집중] 우리동네 산사랑 숲길체험</a></li>
+                     	  	 <li><a href="#" >[모집중] 헬로우문래 야시장 자원봉사자 모집</a></li>
+                       		 <li><a href="#" >[모집중] 아름다운가게 논현점-오후봉사자 모집</a></li>
+                       		 <li><a href="#" >[모집중] 아름다운가게 합정점-주말봉사자 모집</a></li>
+                       		  <li><a href="#" >[모집중] 상계동 자율방법 순찰 자원봉사자 모집</a></li>
                         	
                         </ul>
                     </div>

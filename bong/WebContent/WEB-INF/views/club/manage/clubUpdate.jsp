@@ -134,9 +134,9 @@ function themeList() {
 		}
 	}
 </script>
-<div class="container" role="main" style="margin-top:50px;">
+<div class="container" role="main" style="margin-top:20px;">
   <div class="bodyFrame">
-  <div style="width:600px; padding-top:35px; clear: both; margin: 0px auto;">
+  <div style="width:600px; clear: both; margin: 0px auto;">
         <div class="body-clubname">
               <h1> 동아리 정보 수정</h1>
         </div>
@@ -163,7 +163,7 @@ function themeList() {
         <label class="col-sm-2 control-label">동아리이름</label>
         <div class="col-sm-7">
             <input style="width:200px;"class="form-control" id="clubname" name="clubname" type="text" 
-                  placeholder="동아리이름"  value="${dto.clubname}" ${mode=="update" ? "readonly='readonly' style='border:none;'":""}>
+                  placeholder="동아리이름"  value="${dto.clubname}" ${mode=="update" ? "style='border:none;'":""}>
             <p class="help-block"> 의미있는 동아리의 이름을 멋있게 지어주세요</p>
         </div>
     </div>

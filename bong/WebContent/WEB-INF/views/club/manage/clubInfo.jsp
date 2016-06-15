@@ -37,71 +37,71 @@
 .table>tbody>tr>td{
 
 padding-top: 13px;
+color: #033c71;
 }
-
 </style>
 <link rel="stylesheet" href="<%=cp%>/res/css/fileinput.css" type="text/css">
 
 <script type="text/javascript" src="<%=cp%>/res/js/util.js"></script>
 <script type="text/javascript" src="<%=cp%>/res/js/fileinput.js"></script>
 
-	<div class="row" style="margin-left:15px;">
+	<div class="row">
 		<div class="col-md-12 col-sm-12">
 
-       <div class="table-responsive" style="clear: both; width: 700px; align:center; margin: auto;">
+       <div class="table-responsive" style="clear: both; width: 100%; align:center; margin: auto;">
            <div >
                <table class="table">
                     <tbody>
                        <tr style=" width: 500px;">
-                        	<td rowspan="3" bgcolor="#DFE6E8" style="color:black;;border-top:none;text-align: left; width:5%; height:45px; ">
+                        	<td rowspan="3" bgcolor="#3897f0" style="color:white;;border-top:none;text-align: left; width:5%; height:45px; ">
                                <span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;   클럽메인사진
                         	</td>
-                        	<td rowspan="3" style="text-align: left; width:5%; height:45px; ">
-                               <img src="<%=cp%>/uploads/club/${clubSeq}/${clubInfo.photoFilename}" style="width: 150px; height:150px;">
+                        	<td rowspan="3" style="text-align: left; height:45px; ">
+                               <img src="<%=cp%>/uploads/club/${clubSeq}/${clubInfo.photoFilename}" style="width: 350px; height:150px;">
                             </td>
-                            <td bgcolor="#DFE6E8" style="color:black;;border-top:none;text-align: left; width:5%; height:45px; ">
+                            <td bgcolor="#3897f0" style="color:white;;border-top:none;text-align: left; width:5%; height:45px; ">
                         	 	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;   	개설자아이디
                         	</td>
                             <td style="text-align: left; width:5%; height:45px; ">${clubInfo.userId}</td>
                             </tr>
                         <tr >
-                            <td  bgcolor="#DFE6E8" style="color:black;; border-top:none; text-align: left; width:5%; height:45px; ">
+                            <td  bgcolor="#3897f0" style="color:white;; border-top:none; text-align: left; width:5%; height:45px; ">
                             	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;동아리이름
                             </td>
                             <td style="text-align: left; width:5%; height:45px; ">${clubInfo.clubname}</td>
                          
                         	
                         <tr>
-                            <td  bgcolor="#DFE6E8" style="color:black;; border-top:none; text-align: left; width:5%; height:45px; ">
+                            <td  bgcolor="#3897f0" style="color:white;; border-top:none; text-align: left; width:5%; height:45px; ">
                             	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;동아리개설일
                             </td>
                             <td style="text-align: left; width:5%; height:45px; ">${clubInfo.clubBirth}</td>
 
                         </tr>
                          <tr>
-                            <td  bgcolor="#DFE6E8" style="color:black;; border-top:none; text-align: left; width:5%; height:45px; ">
+                            <td  bgcolor="#3897f0" style="color:white;; border-top:none; text-align: left; width:5%; height:45px; ">
                             	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;도시
                             </td>
                             <td style="text-align: left; width:5%; height:45px; ">${clubInfo.clubAddr}</td>
                          
-                        	<td  bgcolor="#DFE6E8" style="color:black;;border-top:none; border-top:none; text-align: left;  height:45px; ">
+                        	<td  bgcolor="#3897f0" style="color:white;;border-top:none; border-top:none; text-align: left;  height:45px; ">
                          		  	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;가입회원수
                            	</td>
                             <td colspan="3"  style="text-align: left; width:200px; height:45px; ">32 명</td>
                         </tr>
                          <tr>
-                            <td  bgcolor="#DFE6E8" style="color:black;; border-top:none; text-align: left; width:5%; height:45px; ">
+                            <td  bgcolor="#3897f0" style="color:white;; border-top:none; text-align: left; width:5%; height:45px; ">
                             	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;대분류
                             </td>
                             <td style="text-align: left; width:5%; height:45px; ">${clubInfo.groupSubject }</td>
                          
-                        	<td  bgcolor="#DFE6E8" style="color:black;;border-top:none; border-top:none; text-align: left;  height:45px; ">
+                        	<td  bgcolor="#3897f0" style="color:white;;border-top:none; border-top:none; text-align: left;  height:45px; ">
                          		  	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;소분류
                            	</td>
                             <td colspan="3"  style="text-align: left; width:200px; height:45px; ">${clubInfo.subject }</td>
                         </tr>
                         <tr>
-                         <td  bgcolor="#DFE6E8" style="color:black;; border-top:none; text-align: left; width:5%; height:45px; ">
+                         <td  bgcolor="#3897f0" style="color:white;; border-top:none; text-align: left; width:5%; height:45px; ">
                             	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;동아리 소개
                             </td>
                             <td colspan="3" style="text-align: left; width:5%; height:45px; ">${clubInfo.introduce}</td>
@@ -111,30 +111,30 @@ padding-top: 13px;
       </div>
  	</div>
 </div>
-	<div class="row" style="margin-left:15px;">
+	<div class="row" style="padding-top: 50px">
 		<div class="col-md-12 col-sm-12">
-       <div class="table-responsive" style="clear: both; width: 700px; align:center; margin: auto;">
+       <div class="table-responsive" style="clear: both; width: 100%; align:center; margin: auto;">
            <div >
                <table class="table">
                     <tbody>
                          <tr>
-                            <td  bgcolor="#DFE6E8" style="color:black;; border-top:none; text-align: left;  height:45px; ">
+                            <td  bgcolor="#3897f0" style="color:white; border-top:none; text-align: left; width:25%; height:45px; ">
                             	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;총 봉사시간
                             </td>
                             <td style="text-align: left;  height:45px; ">20시간</td>
                          
-                        	<td  bgcolor="#DFE6E8" style="color:black;;border-top:none; border-top:none; text-align: left;  height:45px; ">
+                        	<td  bgcolor="#3897f0" style="color:white;;border-top:none; border-top:none; text-align: left; width:25%; height:45px; ">
                          		  	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;참석률
                            	</td>
                             <td style="text-align: left;  height:45px; ">90% </td>
                         </tr>
                          <tr>
-                            <td  bgcolor="#DFE6E8" style="color:black;; border-top:none; text-align: left;  height:45px; ">
+                            <td  bgcolor="#3897f0" style="color:white;; border-top:none; text-align: left; width:25%; height:45px; ">
                             	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;획득 점수
                             </td>
                             <td style="text-align: left;  height:45px; ">500점</td>
                          
-                        	<td  bgcolor="#DFE6E8" style="color:black;;border-top:none; border-top:none; text-align: left;   height:45px; ">
+                        	<td  bgcolor="#3897f0" style="color:white;;border-top:none; border-top:none; text-align: left;width:25%;   height:45px; ">
                          		  	<span class="fa fa-hand-o-right" aria-hidden="true"></span>&nbsp;봉다리 레벨
                            	</td>
                             <td style="text-align: left;  height:45px; ">황금다리</td>

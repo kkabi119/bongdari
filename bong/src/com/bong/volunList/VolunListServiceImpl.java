@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bong.common.dao.bongDAO;
-import com.bong.demander.review.DeReview;
 
 @Service("main.volunList")
 public class VolunListServiceImpl implements VolunListService {

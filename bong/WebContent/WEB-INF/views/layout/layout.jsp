@@ -43,6 +43,7 @@
         <tiles:insertAttribute name="header"/>
     </header>
     <!--/#header-->
+ <div id=mainContent>  
 	<section id="page-breadcrumb">
 		<div class="vertical-center sun">
 			<div class="container">
@@ -69,7 +70,7 @@
     		</div>
         </div>
     </section>
-
+</div>
     <footer id="footer">
 		<tiles:insertAttribute name="footer"/>
     </footer>

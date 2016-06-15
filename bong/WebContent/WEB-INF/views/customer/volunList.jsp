@@ -23,7 +23,7 @@
 <script type="text/javascript">
  function searchMainList() {
 		var f=document.searchForm2;
-		f.action="<%=cp%>/main/demander/mainResult";
+		f.action="<%=cp%>/main/volunList";
 		f.submit(); 
 	}
 
@@ -35,7 +35,8 @@
 			<ul id="tab2" class="nav nav-pills">
 				<li class="active"><a href="#tab2-item1" data-toggle="tab">지역</a></li>
 				<li><a href="#tab2-item2" data-toggle="tab" >분야</a></li>
-				<li><a href="#tab2-item3" data-toggle="tab" >수요처 이름</a></li>
+				<li><a href="#tab2-item3" data-toggle="tab" >봉사 수요처</a></li>
+				<li><a href="#tab2-item4" data-toggle="tab" >봉사명 </a></li>
 
 			</ul>
 		<form name="searchForm2" method="post" class="form-inline">	
@@ -76,7 +77,7 @@
 				</div>
 			<!-- 분야 검색 -->
 				<div class="tab-pane fade" id="tab2-item2">
-					<select name="demanderType" class="selectField" 
+					<select name="volunType" class="selectField" 
 					style="height: 30px; width: 160px; border-radius: 5px 5px 5px 5px; margin-right: 10px;">
 						<option value="">::분야 선택::</option>
 						<option value="disabled">장애인</option>
@@ -90,6 +91,12 @@
 			<!-- 수요처 검색 -->
 				<div class="tab-pane fade" id="tab2-item3">
 					<input type="text" class="textField" name="demanderName" style="margin-right: 10px;">
+					<input type="button" value="검색" onclick="searchMainList();"
+					id="searchBtn" class="btn">
+				</div>
+		<!-- 봉사명 검색 -->
+				<div class="tab-pane fade" id="tab2-item4">
+					<input type="text" class="textField" name="volunName" style="margin-right: 10px;">
 					<input type="button" value="검색" onclick="searchMainList();"
 					id="searchBtn" class="btn">
 				</div>
@@ -121,9 +128,9 @@
                     				<tr >
                         				<th class="text-center" style="width: 60px; font-weight:500;  ">No.</th>
                         				<th class="text-center" style="width: 500px;">제목</th>
-                        				<th class="text-center" style="width:160px; font-weight:500;">수요처 이름</th>
+                        				<th class="text-center" style="width:170px; font-weight:500;">수요처 이름</th>
                         				<th class="text-center" style="width:200px; font-weight:500;">봉사기간</th>
-                        				<th class="text-center" style="width:150px;font-weight:500;">위치</th>
+                        				<th class="text-center" style="width:140px;font-weight:500;">위치</th>
                         				<th class="text-center" style="width:150px;font-weight:500;">분야</th>
                         				<th class="text-center" style="width:150px;font-weight:500;">상태</th>
                         				
