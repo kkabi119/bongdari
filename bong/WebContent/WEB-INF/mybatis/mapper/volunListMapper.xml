@@ -3,6 +3,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="volunTot">
 
+<sql id="where-list">
+	  <if test="sido.length()!=0">
+	      DBMS_LOB.INSTR(place,#{sido}) &gt; 0 
+	  </if>
+	
+	   <if test="volunType=='disabled'">
+	     ct2.subject='장애인'
+	  </if>
+	  <if test="volunType=='silver'">
+	       ct2.subject='노인'
+	  </if>
+	  <if test="volunType=='child'">
+	      ct2.subject='아동'
+	  </if>
+	  <if test="volunType=='etc'">
+	      ct2.subject='기타'
+	  </if>
+	  <if test="demanderName.length()!=0">
+	      DBMS_LOB.INSTR(si.serviceName, #{demanderName}) &gt; 0 
+	  </if>
+	  <if test="volunName.length()!=0">
+	      DBMS_LOB.INSTR(tot.subject, #{volunName}) &gt; 0 
+	  </if>
+	</sql>
+
+
 <select id="volunList" parameterType="map" resultType="com.bong.volunList.VolunList">
 SELECT * FROM (
 	SELECT ROWNUM rNum, tb.* FROM (
@@ -13,6 +39,11 @@ SELECT * FROM (
 	JOIN serviceInfo si ON tot.serviceIdx=si.serviceIdx
 	LEFT OUTER JOIN theme ct1 ON tot.themenum=ct1.themenum 
 	LEFT OUTER JOIN theme ct2 ON ct1.parent=ct2.themenum
+	<where>
+	     	<if test="volunType!=null or demanderName!=null or sido!=null or volunName!=null">
+	     	    <include refid="where-list"/>
+	     	</if>
+    </where>   
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start}
@@ -20,6 +51,18 @@ SELECT * FROM (
 </select>
 
 <select id="dataCount" parameterType="map" resultType="Integer">
-	SELECT COUNT(*) FROM volun_bbs
+	SELECT nvl(count(*),0) FROM (
+	SELECT volunIdx, subject, content, created, hitCount, serviceIdx,
+	startDay, SUBSTR(endDay, 6) as endDay, startTime, endTime, SUBSTR(place, 1, 5) as place, progress, volunteer_type, volunDays, themeNum
+	FROM volun_bbs) tot
+	JOIN serviceInfo si ON tot.serviceIdx=si.serviceIdx
+	LEFT OUTER JOIN theme ct1 ON tot.themenum=ct1.themenum 
+	LEFT OUTER JOIN theme ct2 ON ct1.parent=ct2.themenum
+	<where>
+	     	<if test="volunType!=null or demanderName!=null or sido!=null or volunName!=null">
+	     	    <include refid="where-list"/>
+	     	</if>
+    </where>   
 </select>
+
 </mapper>

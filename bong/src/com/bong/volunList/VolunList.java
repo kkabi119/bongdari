@@ -2,7 +2,9 @@ package com.bong.volunList;
 
 public class VolunList {
 
-	private String subject, content, created, startDay, endDay, startTime, endTime, place, progress, volunteer_type, volunDays, sSubject, lSubject, serviceName;
+	private String subject, content, created, startDay, endDay, 
+	startTime, endTime, place, progress, volunteer_type, volunDays, 
+	sSubject, lSubject, serviceName;
 	
 	private int volunIdx, hitCount, serviceIdx, themeNum, listNum;
 	
