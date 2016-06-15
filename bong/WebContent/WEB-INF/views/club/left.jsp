@@ -38,7 +38,7 @@
 		
 		var url="<%=cp%>/club/${clubSeq}/left";
 		$.post(url, {}, function(data){
-			
+
 			var introduce=data.dto.introduce;
 			var city=data.dto.clubAddr;
 			var category=data.dto.groupSubject+" > "+data.dto.subject;

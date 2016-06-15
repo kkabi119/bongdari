@@ -172,6 +172,7 @@ public class ClubController {
 		 // 공지사항, 리스트의 번호
         int listNum1, n1 = 0;
         Iterator<Notice> it1=listN.iterator();
+        String content=null;
         while(it1.hasNext()) {
             Notice data = it1.next();
             listNum1 = 5 - (1 + n1 - 1);

@@ -118,10 +118,18 @@ hr:LAST-CHILD {
    </div>
    <!-- /.row -->
  <c:if test="${dataCount!=0 }"> 
-			<div style="clear: both; height: 30px; line-height: 30px; margin-left:35px; margin-top:20px ; margin-bottom:3px;">
+			<div style="clear: both;  line-height: 30px; margin-left:35px; margin-top:20px ; ">
             				<div style="float: left; color:#00aeef;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
-            					전체 ${dataCount}개 <span style="color:#777;">(${page}/${total_page}  페이지)</span> </div>
+            					전체 ${dataCount}개 <span style="color:#777;">(${page}/${total_page}  페이지)</span> 
+            				 
+            				</div>
+            			<%-- 	<button type="button" class="btn btn-warning" style="background-color: #00aeef; border:none; float:right; margin-bottom:10px; height:55px; width:55px;  border-radius:100%;"
+					            onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/review/create';">
+					            <span class="glyphicon glyphicon glyphicon-pencil"></span>
+        					 </button>	 --%>
         	  <hr style="margin:0px; width:100%; border-top:3px solid #00aeef;">
+        	  
+        	  
         	</div> 
   
    <!-- Project One -->
@@ -152,25 +160,31 @@ hr:LAST-CHILD {
          	  	${dto.subject}
 	         </a>
 	         </span>
-	         <span class="item-title" style='color:#f0ad4e; font-size:14pt; font-weight: bold;'>(${dto.replyCount})</span>
+	         <span class="item-title" style='color:#f0ad4e; font-size:14pt; font-weight: bold;'></span>
          	     
 	    </div>    
          
          
-          <hr style="margin-top:4px; border:1px solid #ddd; margin-bottom:5px;">
+         <hr style="margin-top:4px; border:1px solid #ddd; margin-bottom:5px;">
          <h5 style="font-size:14px;margin-top:10px;line-height: 14px;"> 
          		작성자 <span style="font-weight: 600; color:#757575;"> ${dto.userName}</span> 
-         		&nbsp;&nbsp;|&nbsp;&nbsp; 조회수  ${dto.hitCount} &nbsp;&nbsp;|&nbsp;&nbsp;  작성일 &nbsp; ${dto.created}&nbsp;&nbsp;|&nbsp;&nbsp;No. ${dto.listNum} 
+         		&nbsp;&nbsp; |&nbsp;&nbsp;  작성일 &nbsp; <span style="font-weight: 600; color:#757575;">${dto.created}</span> &nbsp;&nbsp;
+         		|&nbsp;&nbsp;No. ${dto.listNum} 
         </h5>
          
-         <h5 style="font-size:14px;"><img Id="listBtn"style=" width:17px; height:17px; background-size:cover; "src="<%=cp%>/res/images/myclub/heart.png" alt="">
-	                                	 	&nbsp; ${dto.likeCount}</h5> 
-         
-         <div style="block; margin-top:28px; width:93%;  height:50px;overflow:hidden;color:gray; ">
-	      	<div style="font-size:15px; line-height: 20px ; font-weight: 400 ;
+         <h5 style="font-size:14px; font-weight:600; color:#757575; ">
+         		<img Id="listBtn"style=" width:17px; height:17px; background-size:cover; "src="<%=cp%>/res/images/myclub/heart.png" alt="">
+	                                	 	&nbsp; ${dto.likeCount}
+	      		<img Id="listBtn"style=" margin-left:30px; width:22px; height:20px; background-size:cover; "src="<%=cp%>/res/images/myclub/chat4.png" alt="">
+	                                	 	&nbsp; ${dto.replyCount}
+	            <img Id="listBtn"style=" margin-left:30px; width:22px; height:25px; background-size:cover; "src="<%=cp%>/res/images/myclub/eye.png" alt="">
+	                                	 	&nbsp; ${dto.hitCount}
+	      </h5> 
+     
+         <div style="block; margin-top:28px; width:93%;  height:70px;overflow:hidden;color:gray; ">
+	      	<div style="font-size:15px; line-height: 17px ; font-weight: 400 ;
 	      				 font-family: 'NanumGothic', '나눔고딕',' Malgun Gothic', 'sans-serif' ">
-	  	 	 <%-- ${dto.content}  --%>
-	     	
+	  	 	 ${dto.content}
 		    </div>
 		    <span>...</span> 
 		 
@@ -221,7 +235,7 @@ hr:LAST-CHILD {
       <div style="float: left; width: 20%; min-width: 85px; text-align: right;">
          <button type="button" class="btn btn-warning" style="background-color: #00aeef; border:none;"
             onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/review/create';">
-            <span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기
+            <span class="glyphicon glyphicon glyphicon-pencil"></span>
          </button>
       </div>
    </div>
