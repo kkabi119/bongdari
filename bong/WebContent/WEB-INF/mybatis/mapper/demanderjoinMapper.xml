@@ -27,9 +27,9 @@
   <insert id="insertDemanderjoinInfo" parameterType="com.bong.demanderjoin.Demanderjoin">
     INSERT INTO serviceInfo
     (serviceIdx, serviceName, serviceBirth, serviceTel,serviceIntro,
-     serviceAddr, serviceEmail, serviceImg, serviceImgname, userIdx,themeNum, enabled)
+     serviceAddr, serviceEmail, serviceImg, serviceImgname, userIdx,enabled)
      VALUES(#{serviceIdx},#{serviceName},#{serviceBirth}
-     ,#{serviceTel},#{serviceIntro},#{serviceAddr},#{serviceEmail},#{serviceImg, jdbcType=VARCHAR},#{serviceImgname, jdbcType=VARCHAR},#{themeNum}, #{userIdx},0)
+     ,#{serviceTel},#{serviceIntro},#{serviceAddr},#{serviceEmail},#{serviceImg, jdbcType=VARCHAR},#{serviceImgname, jdbcType=VARCHAR}, #{userIdx},0)
   </insert>
     <!-- 아이디 중복 체크 -->
     <select id="readDemanderCheck" resultType="com.bong.demanderjoin.Demanderjoin" parameterType="String">

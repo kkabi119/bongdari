@@ -14,6 +14,7 @@ $(function(){
 	tabPageView();
 });
 
+
 // 탭을 선택 한 경우
 var tabs=0;
 $(function(){
@@ -46,7 +47,6 @@ function tabPageView() {
 		$(id).html(data);
 	});
 }
-
 function searchList() {
 	var f=document.searchForm;
 	var searchKey=f.searchKey.value;
@@ -62,7 +62,24 @@ function searchList() {
 		$("#searchSelect").val(option);
 	});
 }
-  
+function sendOk() {
+    var f = document.confirmForm;
+
+	var str = f.userId.value;
+    if(!str) {
+        f.userId.focus();
+        return false;
+    }
+
+    str = f.userPwd.value;
+    if(!str) {
+        f.userPwd.focus();
+        return false;
+    }
+
+    f.action = "<%=cp%>/mypage/deleteMember";
+    f.submit();
+}
 </script>
 
 	<div>

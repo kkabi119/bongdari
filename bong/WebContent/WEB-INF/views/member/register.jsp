@@ -65,7 +65,7 @@ function register() {
    }
    
    str = f.userPwd.value;
-/*    if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
+    if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
       $("#userPwd + .help-block").html("<span style='color:red;'>비밀번호 형식을 확인해주세요! <span>");
       f.userPwd.focus();
       return false;
@@ -80,7 +80,7 @@ function register() {
    } else {
       $("#userPwdCheck + .help-block").html("비밀번호를 한번 더 입력해주세요");
    }
-    */
+    
     str = f.userName.value;
     str = $.trim(str);
 
@@ -388,7 +388,7 @@ function selectZip(zip){
       <c:if test="${mode=='created'}">
             <button type="submit" name="sendButton" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;">
                   회원가입<span class="glyphicon glyphicon-ok"></span></button>
-            <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/member/complete';" style="margin-right:20px; height:40px; width:130px;">
+            <button type="button" class="btn btn-default btn-sm wbtn"  onclick="javascript:location.href='<%=cp%>/member/login';" style="margin-right:20px; height:40px; width:130px;">
                   가입취소 <span class="glyphicon glyphicon-remove"></span></button>
        </c:if>
    <c:if test="${mode=='update'}">

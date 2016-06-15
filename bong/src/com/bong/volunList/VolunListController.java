@@ -120,7 +120,7 @@ public class VolunListController {
         }
         
 
-        ModelAndView mav = new ModelAndView(".layout.customer.volunList.봉사활동검색");
+        ModelAndView mav = new ModelAndView(".layout.customer.volunList.전체 봉사 조회");
         mav.addObject("searchList", searchList); //검색결과 리스트
         mav.addObject("urlArticle", urlArticle); 
         mav.addObject("page", current_page);
