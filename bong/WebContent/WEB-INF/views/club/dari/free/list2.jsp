@@ -34,9 +34,9 @@ function nextPage(){
                             <div class="col-sm-6 padding-left padding-top arrow-left wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="300ms">
                             </c:if>
                             <div class="single-blog timeline">
-                               <div class="single-blog-wrapper" style="height:200px">
+                               <div class="single-blog-wrapper">
                                 <c:if test="${not empty dto.listImageName}">
-                                    <div class="post-thumb">
+                                    <div class="post-thumb" style="width:100%; height:250px">
                                         ${dto.listImageName}
                                     </div>      
                                 </c:if>
