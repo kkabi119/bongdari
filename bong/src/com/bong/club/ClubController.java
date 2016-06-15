@@ -172,11 +172,18 @@ public class ClubController {
 		 // 공지사항, 리스트의 번호
         int listNum1, n1 = 0;
         Iterator<Notice> it1=listN.iterator();
-        String content=null;
+        String subject=null;
+        String subject2=null;
+        
         while(it1.hasNext()) {
             Notice data = it1.next();
             listNum1 = 5 - (1 + n1 - 1);
             data.setListNum(listNum1);
+            if(data.getSubject().length()>26){
+	            subject=data.getSubject().substring(0,26);
+	            data.setSubject(subject);
+            }
+            
             n1++;
         }
         
@@ -187,6 +194,10 @@ public class ClubController {
             ClReview data = it2.next();
             listNum2 = 5 - (1 + n2 - 1);
             data.setListNum(listNum2);
+            if(data.getSubject().length()>26){
+	            subject2=data.getSubject().substring(0,26);
+	            data.setSubject(subject2);
+            }
             n2++;
         }
         

@@ -40,8 +40,15 @@ padding:10px 0 10px 0 ;
 .table>tbody>tr>td{
 
 padding-top: 13px;
+vertical-align:inherit;
+}
+a{
+	color:#4a4a4a;
 }
 
+.pagination{
+	margin-left:130px;
+}
 </style>
 	
 <script type="text/javascript">
@@ -123,8 +130,9 @@ function searchList() {
 <!-- 검색 -->
    <div style="clear: both; border-radius:0px;">
       <div style="float: left; width: 20%; min-width: 85px;">
-         <button type="button" class="btn btn-default " style=" color: gray; border:1px solid gray; margin-left:30px;" 
-            onclick="javascript:location.href='<%=cp%>/demander/${clubSeq}/review/list';">새로고침</button>
+         <button type="button" class="btn btn-default " style=" color: gray; border:1px solid gray; margin-left:10px;" 
+            onclick="javascript:location.href='<%=cp%>/demander/${clubSeq}/review/list';">
+           <img Id="listBtn"style="width:18px; height:18px; background-size:cover; "src="<%=cp%>/res/images/myclub/refresh.png" alt="">&nbsp;새로고침</button>
       </div>
       <div style="float: left; width: 60%; height:41px; text-align: center; margin-top:0px; padding-top:0px;">
          <form name="searchForm" method="post" class="form-inline" style=" ">
@@ -145,12 +153,12 @@ function searchList() {
       <div style="float: left; width: 20%; min-width: 85px; text-align: right;">
          <button type="button" class="btn btn-warning" style="background-color: #00aeef; border:none;"
             onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/review/create';">
-            <span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기
+            <span class="glyphicon glyphicon glyphicon-pencil"></span>
          </button>
       </div>
    </div>
 <!------------------------------------------------ paging 처리  ----------------------------------------------------------->
-<div class="paging" style="text-align: center; min-height: 30px; line-height: 30px;">
+<div class="paging" style="text-align:; min-height: 30px; line-height: 30px;">
 <c:if test="${dataCount==0 }">
                   등록된 게시물이 없습니다.
 </c:if>

@@ -16,6 +16,10 @@
 	margin-left:45px;
 	width:74%;
 }
+
+li:hover{
+	color:#ddd;
+}
 </style>
 
 	<div class="row" class="carousel slide wow fadeIn" data-ride="carousel" data-wow-duration="400ms" data-wow-delay="400ms">
@@ -36,7 +40,7 @@
                         <li data-target="#team-carousel" data-slide-to="1"></li>
                     </ol>
                   
-                  <hr style="border-top:3px solid #eee; width:98%; color: #777; ">
+                  <hr style="border-top:3px solid #eee;border-bottom:25px; width:98%; color: #777; ">
 	
 	 <h2 style="margin-top:10px; margin-left:20px; margin-bottom:20px; font-weight:500; text-align:center;" class="title wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">
 	 		우리의 <span style="font-weight:bold;">최근활동 </span> </h2>
@@ -83,20 +87,24 @@
        
     </section>
          
-      <hr style="border-top:3px solid #eee; width:98%; color: #777; ">
-<div class="row" style="margin-top:50px;">
-			<div class="col-md-6" style="width:45%; margin-right:65px;" >
+      <hr style="border-top:3px solid #eee; width:98%; color: #777; border-bottom:8px; ">
+<div class="row" style="margin-top:20px;">
+			<div class="col-md-6" style="width:45%; margin-right:85px;" >
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 style="font-size:18px;"><i class="fa fa-lightbulb-o"></i> 봉사 후기 <a href="${urlListR}"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
+                    <div class="panel-heading"  style="background-color:#3897f0; border-radius:0px;">
+                        <h5 style="font-size:18px;"><i class="fa fa-lightbulb-o"></i> &nbsp;&nbsp;봉사 후기 
+                        		<a href="${urlListR}"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> 
+                       	</h5>
                     </div>
                     <div class="panel-body" style="border-bottom:2px solid #999; ">
-                        <ul type="disc">
+                        <ul type="disc" style="padding-left:0px; ">
                          <c:forEach var="dtoR" items="${listR}">
                         	<%-- <li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li> --%>
                          
                         
-                       		 <li style="line-height:30px; font-weight:600; font-size:15px; overflow:hidden; width:90%; "><a style="color:#464646;" href="${urlArticleR}+&num=${dtoR.clubReviewIdx}" >${dtoR.subject}</a></li>
+                       		 <li style="line-height:30px; font-weight:600; font-size:14px; overflow:hidden; width:90%; ">
+                       		 		<a style="color:#464646;" href="${urlArticleR}+&num=${dtoR.clubReviewIdx}" >${dtoR.subject}</a>
+                       		 </li>
                        	 </c:forEach> 
                      	  
                         </ul>
@@ -106,16 +114,15 @@
             
             <div class="col-md-6" style="width:45%; " >
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 style="font-size:18px;"><i class="fa fa-lightbulb-o"></i> 공지사항 <a href="${urlListN}"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
+                    <div class="panel-heading"  style="background-color:#3897f0; border-radius:0px;">
+                        <h5 style="font-size:18px;"><i class="fa fa-lightbulb-o"></i> &nbsp;&nbsp;공지사항 <a href="${urlListN}"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
                     </div>
                     <div class="panel-body" style="border-bottom:2px solid #999; ">
-                        <ul type="disc">
+                        <ul type="disc" style="padding-left:0px; ">
                          <c:forEach var="dtoN" items="${listN}">
                         	<%-- <li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li> --%>
-                         
-                        
-                       		 <li style="line-height:30px; font-weight:600; font-size:15px;overflow:hidden; width:90%; "><a style="color:#464646;" href="${urlArticleN}+&num=${dtoN.clubNoticeIdx}" >${dtoN.subject}</a>...</li>
+                       		 <li style="line-height:30px; font-weight:600; font-size:14px;overflow:hidden; width:90%; ">
+                       		 		<a style="color:#464646;" href="${urlArticleN}+&num=${dtoN.clubNoticeIdx}" >${dtoN.subject}</a></li>
                        	 </c:forEach> 
                      	  	 
                         	

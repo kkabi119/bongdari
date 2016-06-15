@@ -105,6 +105,19 @@ padding-top: 13px;
 	border-radius:2px;
 	padding: 9px 15px;
 }
+
+.single-blog.blog-details .post-bottom{
+	margin-top:10px;
+}
+.post-nav{
+	padding:10px;
+}
+.post-nav li a{
+	color:#6d6d6d;
+}
+.post-nav li a i{
+	color:#3897f0;
+}
 </style>
 <script type="text/javascript">
 ///////////////////////////////////////////////////////////////		댓글관련
@@ -359,60 +372,24 @@ function updateReview() {
                                     <h3 class="post-author" style=" margin-bottom:15px; "><a href="#">${dto.userName} &nbsp;&nbsp;&nbsp;| No.${dto.clubReviewIdx}	</a></h3>
                                     <div style="padding:20px 10px 20px 10px;">${dto.content}</div>
                                    
-                                    <hr style="margin-left:5px; margin-top:20px; margin-bottom:0px; width:98%; border-top:2px solid #DADADA;">
-                                    
-                                    <div class="post-bottom overflow">
+                                    <!-- <hr style="margin-left:5px; margin-top:20px; margin-bottom:0px; width:98%; border-top:2px solid #DADADA;">
+                                     -->
+                                    <div class="post-bottom overflow" >
                                                                    
-                                        <ul class="nav navbar-nav post-nav">
+                                        <ul class="nav navbar-nav post-nav" >
                                         
-                                         	<li onclick="sendLike('${dto.clubReviewIdx}')"><a href="#"><i class="fa fa-thumbs-o-up"></i>좋아요 <span id="likeCount${dto.clubReviewIdx}">${dto.likeCount}</span></a></li> 
+                                         	<li onclick="sendLike('${dto.clubReviewIdx}')"><a style="font-size:16px; font-weight:bold;" href="#"><i class="fa fa-thumbs-o-up"></i>
+                                         			<span id="likeCount${dto.clubReviewIdx}">${dto.likeCount}</span></a></li> 
                                                                                         
-                                            <li><a href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
+                                            <li><a style="font-size:16px; font-weight:bold;" href="#"><i class="fa fa-clock-o"></i>${dto.created}</a></li>
                                         </ul>
                                     </div>
                                     
                                    <%--   <c:forEach var="vo" items="${listFile}">
                                          <div class='file-list-item'><a href="${blogUrl}/download?fileNum=${vo.fileNum}">${vo.originalFilename}</a></div>
                                    </c:forEach>   --%>
-                                    
-                                    
-                              
-                              <c:if test="${listFile.size()>0}">
-                                    <div class="post-bottom overflow" style="margin-top: 0px; font-size:9pt;">
-                                    <c:forEach var="vo" items="${listFile}">
-                                  			<a href="<%=cp%>/club/${clubSeq}/review/download?num=${vo.clubReviewIdx}&clubFileIdx=${vo.clubFileIdx}"><span class="fa fa-download"></span>${vo.originalFilename}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                    </c:forEach>
-                                    </div>
-                               </c:if>
-                               
-                               <c:if test="${not empty preReadDto }">
-                                    <div class="post-bottom overflow" style="margin-top: 0px">
-                               
-                                  			<a href="<%=cp%>/club/${clubSeq}/review/article?${params}&num=${preReadDto.clubReviewIdx}">이전글 : ${preReadDto.subject}</a>
-                              
-                                    </div>
-                                </c:if>
-                                <c:if test="${not empty nextReadDto }">    
-                                    <div class="post-bottom overflow" style="margin-top: 0px">
-                              
-                                  			<a href="<%=cp%>/club/${clubSeq}/review/article?${params}&num=${nextReadDto.clubReviewIdx}">다음글 : ${nextReadDto.subject}</a>
-                                
-                                    </div>
-                               </c:if>
-                               <div>
-                              
-                                  	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px; ">
-                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/review/list?${params}';"> 목록보기 <span class="fa fa-list"></span></button>
-                  					</div>
-                                      
-                  					
-                                    <div style="float:right; padding-top: 10px;padding-bottom: 10px;">
-                      					<button type="button" class="btn btn-warning" style="padding:10px 15px ; background:#3897f0; color:white; border:none;" onclick="updateReview();"> 수정 <span class="fa fa-pencil"></span></button>
-                  					</div>
-                  					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
-                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="deleteReview();"> 삭제 <span class="fa fa-times"></span></button>
-                  					</div>
-                  				</div>
+                          
+                            
                   					
                   					
          <div class="response-area" style="clear: both">
@@ -446,8 +423,51 @@ function updateReview() {
           </div>
                          
           </div>
-                                </div><!--/Response-area-->
-                                </div>
-                            </div>
-                        </div>   
+                               </div><!--/Response-area-->
+                    </div>
+               
+               <div class="table-responsive" style="clear: both; margin-top:-20px; ">
+           <div >
+               <table class="table">
+            <c:if test="${not empty preReadDto }">
+						 	<tr height="45">
+						 	   <td colspan="1"bgcolor="#EEEEEE" align="center">이전글</td>
+						    
+							    <td colspan="6" align="left" style="border-bottom:1px solid #ddd; padding-left:10px;" colspan="3">
+									
+                                  			<a href="<%=cp%>/club/${clubSeq}/review/article?${params}&num=${preReadDto.clubReviewIdx}">  ${preReadDto.subject}</a>
+									
+									
+								</td>
+							</tr>
+					 	</c:if>
+					 <c:if test="${not empty nextReadDto }">    
+                      <tr height="45" style="border-bottom:1px solid #ddd; ">
+					    <td colspan="1"bgcolor="#EEEEEE" align="center">다음글</td>
+					    <td colspan="6" align="left" style="padding-left:10px;" colspan="3">
+															
+                              <a href="<%=cp%>/club/${clubSeq}/review/article?${params}&num=${nextReadDto.clubReviewIdx}"> ${nextReadDto.subject}</a>
+                                
+					   	 	</td>
+						</tr>
+						</c:if>
+                   </tbody>
+                  
+              </table>
+                    	<div style="float:left; padding-top: 10px;padding-bottom: 10px; padding-right: 5px; ">
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/review/list?${params}';"> 목록 <span class="fa fa-list"></span></button>
+                  					</div>
+                                      
+                  					
+                                    <div style="float:right; padding-top: 10px;padding-bottom: 10px;">
+                      					<button type="button" class="btn btn-warning" style="padding:10px 15px ; background:#3897f0; color:white; border:none;" onclick="updateReview();"> 수정 <span class="fa fa-pencil"></span></button>
+                  					</div>
+                  					<div style="float:right; padding-top: 10px;padding-bottom: 10px; padding-right: 5px">
+                      					<button type="button" class="btn btn-default" style="padding:10px 15px ;" onclick="deleteReview();"> 삭제 <span class="fa fa-times"></span></button>
+                  					</div>
+                  				</div>
+          </div></div>
+               </div>
+               
+           </div>   
     </section>

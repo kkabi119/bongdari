@@ -181,7 +181,7 @@ hr:LAST-CHILD {
 	                                	 	&nbsp; ${dto.hitCount}
 	      </h5> 
      
-         <div style="block; margin-top:28px; width:93%;  height:70px;overflow:hidden;color:gray; ">
+         <div style="block; margin-top:28px; width:93%;  height:83px;overflow:hidden;color:gray; ">
 	      	<div style="font-size:15px; line-height: 17px ; font-weight: 400 ;
 	      				 font-family: 'NanumGothic', '나눔고딕',' Malgun Gothic', 'sans-serif' ">
 	  	 	 ${dto.content}

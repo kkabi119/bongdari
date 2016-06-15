@@ -27,6 +27,8 @@
 	.sidebar h3{
 		border-bottom:3px solid #ccc;
 		margin-bottom: 10px ;
+		font-weight:bold;
+		color:#777
 	}
 	
 	.btn .btn-default:hover{
@@ -127,7 +129,7 @@
                         </div> --%>
                         <div class="sidebar-item tag-cloud" style="margin-bottom:20px;">
                         <!-- 개설일, 회원수, 관리자이름  -->
-                            <h3 >Info </h3>
+                            <h3 >INFO </h3>
                             <ul class="nav nav-pills" style="margin-top:10px;">
                                 <li><a href="level">황금다리</a></li>
                                 <li><a href="point">297점</a></li>
@@ -141,7 +143,7 @@
 	                             				display:none;"
 	                      			 >가입하기</button>
                         </div>
-                        <div class="sidebar-item categories">
+                        <div class="sidebar-item categories" style="font-weight:bold;">
                             <ul class="nav navbar-stacked" >
                             <li><h3 class="nav navbar-stacked lefthead">Categories</h3></li>
                                 <li  class="navbar-stacked-item3"><a href="<%=cp%>/club/${clubSeq}/notice/list">공지사항</a></li>
