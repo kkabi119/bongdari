@@ -33,7 +33,7 @@ function updateInfo() {
    }
    
    str = f.userPwd.value;
-  /*  if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
+   if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
       $("#userPwd + .help-block").html("<span style='color:red;'>비밀번호 형식을 확인해주세요! <span>");
       f.userPwd.focus();
       return false;
@@ -48,9 +48,9 @@ function updateInfo() {
    } else {
       $("#userPwdCheck + .help-block").html("비밀번호를 한번 더 입력해주세요");
    }
-    */
+    
     str = f.userName.value;
- /*    str = $.trim(str);
+     str = $.trim(str);
 
     if(!/^[\uac00-\ud7a3]{2,4}$/g.test(str)) {
        $("#userName + .help-block").html("<span style='color:red;'>이름을 확인해주세요! <span>");
@@ -59,8 +59,7 @@ function updateInfo() {
     } 
     else {
       $("#userName + .help-block").html("이름은 한글로 2자이상 4자 이하입니다.");
-   }    */
-
+   }    
    
    str=f.uploads.value;
    
@@ -356,16 +355,17 @@ function selectZip(zip){
             </label>
         </div>
     </div>
-    <button type="submit" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;" >
+    <div style="clear: both; width: 700px; align:center; margin: auto;">
+    <button type="submit" class="btn btn-info btn-sm btn-search" style=" height:40px; width:130px;" >
                   정보수정 <span class="glyphicon glyphicon-ok"></span></button>
-    <button type="reset" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;" >
+    <button type="reset" class="btn btn-info btn-sm btn-search" style=" height:40px; width:130px;" >
                   다시입력 <span class="glyphicon glyphicon-ok"></span></button>
-            <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/';" style="margin-right:20px; height:40px; width:130px;">
+            <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/';" style=" height:40px; width:130px;">
                   수정취소 <span class="glyphicon glyphicon-remove"></span></button>
 		
 		<input type="hidden" name="memImgname" value="${dto.memImgname}">	
 		<input type="hidden" name="memImg" value="${dto.memImg}">	
-		
+    </div>
 	
 			
   <div class="form-group">
@@ -400,7 +400,7 @@ function selectZip(zip){
 					</div>
 					<div id="resultZip"></div>
 					<div class="form-group">
-						<button class="btn btn-lg btn-primary btn-block" type="button"
+						<button class="btn btn-sm btn-primary btn-block" type="button"
 							name="search" onclick="modalSearchAddr();">
 							검색<span class="glyphicon glyphicon-ok"></span>
 						</button>

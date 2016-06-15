@@ -98,16 +98,16 @@ DESC
     <!-- 글개수 -->
 	<select id="dataCount" parameterType="map"  resultType="Integer">
 	SELECT COUNT(*) FROM (
-		SELECT vb.volunIdx FROM volun_bbs vb
+<!-- 		SELECT vb.volunIdx FROM volun_bbs vb
 	    LEFT OUTER JOIN volun_bbs_memlist vbm ON vb.volunIdx=vbm.volunIdx 
 	    where userIdx=#{userIdx}	  
          <if test="searchValue != null and searchValue != ''">
            AND 
 	     <include refid="where-list"/>
 		 </if>
-	    UNION ALL
-	    SELECT vb.volunIdx FROM club_apply ca
-	    LEFT OUTER JOIN club_apply_memlist cam ON ca.clubApplyIdx=cam.clubApplyIdx
+	    UNION ALL -->
+	    SELECT vb.volunIdx FROM club_apply_52 ca
+	    LEFT OUTER JOIN club_apply_memlist_52 cam ON ca.clubApplyIdx=cam.clubApplyIdx
 	    LEFT OUTER JOIN volun_bbs vb ON vb.volunIdx=ca.volunIdx 
 	    where userIdx=#{userIdx}	   
          <if test="searchValue != null and searchValue != ''">
@@ -122,8 +122,8 @@ DESC
      SELECT * FROM (
 		    SELECT ROWNUM rNum, tb.* FROM (
     SELECT vb.volunIdx, cam.userIdx, clubIdx, vb.subject, vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_type, vb.volunDays, cam.hopeDate ,vb.themenum
-    FROM club_apply ca
-     LEFT OUTER JOIN club_apply_memlist cam ON ca.clubApplyIdx=cam.clubApplyIdx
+    FROM club_apply_52 ca
+     LEFT OUTER JOIN club_apply_memlist_52 cam ON ca.clubApplyIdx=cam.clubApplyIdx
      LEFT OUTER JOIN volun_bbs vb ON vb.volunIdx=ca.volunIdx where userIdx=#{userIdx}
          <if test="searchValue != null and searchValue != ''">
          AND
@@ -138,8 +138,8 @@ DESC
     <!-- 클럽 글 개수 -->
      <select id="clubDataCount" parameterType="map"  resultType="Integer">
        SELECT COUNT(*) FROM (
-         SELECT vb.volunIdx FROM club_apply ca
-	      LEFT OUTER JOIN club_apply_memlist cam ON ca.clubApplyIdx=cam.clubApplyIdx
+         SELECT vb.volunIdx FROM club_apply_52 ca
+	      LEFT OUTER JOIN club_apply_memlist_52 cam ON ca.clubApplyIdx=cam.clubApplyIdx
 	      LEFT OUTER JOIN volun_bbs vb ON vb.volunIdx=ca.volunIdx 
 	      where userIdx=#{userIdx}	   
          <if test="searchValue != null and searchValue != ''">

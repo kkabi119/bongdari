@@ -36,7 +36,7 @@ li,ul,body,input{margin:0; padding:0; list-style:none}
 .input:focus:valid{border-color:green}
 .input:focus:valid+.icon{border-color:green}
 #check,#check1{top:1px; position:relative}
-.btn{border:none; outline:none; background:#0099CC; border-bottom:solid 4px #006699; font-family: 'Ropa Sans', sans-serif; margin:0 auto;  height:40px; width:30%; padding:5 10px; border-radius:3px; font-size:16px; color:#FFF}
+.btn{border:none; outline:none; background:#00AEEF; font-family: 'Ropa Sans', sans-serif; margin:0 auto;  height:40px; width:100%; padding:5 10px; border-radius:3px; font-size:16px; color:#FFF}
 
 .social-login{padding:15px 20px; background:#f1f1f1; border-top:solid 2px #e8e8e8; text-align:right}
 .social-login a{display:inline-block; height:35px; text-align:center; line-height:35px; width:35px; margin:0 3px; text-decoration:none; color:#FFFFFF}
@@ -72,6 +72,7 @@ function memberLogin() {
 	}
 	str = f.userPwd.value;
 	if(!str){
+		alert("아이디나 패스워드가 일치하지 않습니다.");
 		f.userPwd.focus();
 		return false;
 	}
@@ -131,8 +132,9 @@ function demanderJoin(){
 <ul class="ul-list">
 <li><input type="text" required class="input" placeholder="아이디" name="userId" id="userId" onkeydown="enter(userPwd)"/><span class="icon"><i class="fa fa-user"></i></span></li>
 <li><input type="password" required class="input" placeholder="비밀번호" name="userPwd" id="userPwd"  onkeydown="enter(login)"/><span class="icon"><i class="fa fa-lock"></i></span></li>
-<li><input type="button" onclick="memberLogin()" name="login" value="로그인" class="btn">&nbsp;<input type="button" onclick="join()" value="일반가입" class="btn">&nbsp;<input type="button" onclick="demanderJoin()" value="수요처가입" class="btn"></li>
-
+ <li><input type="button" onclick="memberLogin()" name="login" value="로그인" class="btn" style="margin-bottom: 10px;">
+<a href="<%=cp%>/member/register">일반회원가입</a><span style="color:#4fcccd"> | </span><a href="<%=cp%>/demanderjoin/demanderRegister" >수요처회원가입</a>
+<span style="color:#4fcccd"> |</span> <a href="<%=cp%>/" style="align:center; margin: auto;">아이디 찾기</a> 
 </ul>
 </form>
 </div>
