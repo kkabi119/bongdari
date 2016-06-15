@@ -1,10 +1,61 @@
 package com.bong.admin;
 
 public class Member {
-    private int rNum, listNum;
+    private int rNum, listNum, enabled;
     private int userIdx;
     private String userName, userId, userTel, userGender, userLevel;
     private String userNoShow, userScore, created_date, last_Login;
+    private String userBirth, userAddr, userEmail, userJob, userVolNum, last_login, memImg;
+    
+    
+	public int getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
+	}
+	public String getUserBirth() {
+		return userBirth;
+	}
+	public void setUserBirth(String userBirth) {
+		this.userBirth = userBirth;
+	}
+	public String getUserAddr() {
+		return userAddr;
+	}
+	public void setUserAddr(String userAddr) {
+		this.userAddr = userAddr;
+	}
+	public String getUserEmail() {
+		return userEmail;
+	}
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+	public String getUserJob() {
+		return userJob;
+	}
+	public void setUserJob(String userJob) {
+		this.userJob = userJob;
+	}
+	public String getUserVolNum() {
+		return userVolNum;
+	}
+	public void setUserVolNum(String userVolNum) {
+		this.userVolNum = userVolNum;
+	}
+	public String getLast_login() {
+		return last_login;
+	}
+	public void setLast_login(String last_login) {
+		this.last_login = last_login;
+	}
+	public String getMemImg() {
+		return memImg;
+	}
+	public void setMemImg(String memImg) {
+		this.memImg = memImg;
+	}
 	public int getrNum() {
 		return rNum;
 	}

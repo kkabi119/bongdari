@@ -68,6 +68,10 @@
 	</form>
 
 	<div style="text-align: right;" id="schFooter">
+		<button type="button" class="btn btn-primary" id="btnModalOk"
+			onclick="approvalOk(${dto.clubIdx});">
+			활동 중단시키기 <span class="glyphicon glyphicon-ok"></span>
+		</button>
 		<button type="button" class="btn btn-default" data-dismiss="modal"
 			style="margin-left: 0px;">닫기</button>
 	</div>
