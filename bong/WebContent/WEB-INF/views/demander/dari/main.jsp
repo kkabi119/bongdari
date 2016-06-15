@@ -230,9 +230,9 @@ background-color: #4FCCCD;
                     <div class="panel-body">
                         <ul type="disc">
                            <c:forEach var="revList" items="${revList}">
-                        	<li style="padding-bottom: 2px;"><a href="${urlRevArticle}&num=${revList.serviceReviewIdx}" >${revList.subject}</a></li>
+                        	<li style="padding-bottom: 2px; font-size: 14px;"><a href="${urlRevArticle}&num=${revList.serviceReviewIdx}" >${revList.subject}</a></li>
                           </c:forEach> 
-                        	<li style="padding-top: 3px;"><a href="${urlRevList}" class="btn btn-default" style="text-align: right">더보기</a></li>
+                        	<li style="padding-top: 5px;"><a href="${urlRevList}" class="btn btn-default" style="text-align: right">더보기</a></li>
                         </ul>
                     </div>
                 </div>
@@ -247,9 +247,9 @@ background-color: #4FCCCD;
                         <ul type="disc">
                     
                            <c:forEach var="volList" items="${volunList}">
-                        	<li style="padding-bottom: 2px;"><a href="${urlVolList}" >${volList.subject}</a></li>
+                        	<li style="padding-bottom: 2px; font-size: 14px;"><a href="${urlVolList}" >${volList.subject}</a></li>
                           </c:forEach> 
-                        	<li style="padding-top: 3px;"><a href="${urlVolList}" class="btn btn-default" style="text-align: right">더보기</a></li>
+                        	<li style="padding-top: 5px;"><a href="${urlVolList}" class="btn btn-default" style="text-align: right">더보기</a></li>
                        
                         </ul>
                     </div>
