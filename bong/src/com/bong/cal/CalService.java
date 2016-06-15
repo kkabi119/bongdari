@@ -12,5 +12,9 @@ public interface CalService {
 	public int insertVolunbbs(Schedule dto);
 	public int insertVolunbbsEach(Schedule dto);
 	
+	public int takeVolun(Map<String, Object> map);
+	
+	public Schedule articleForm(Map<String, Object> map);
+	
 	
 }

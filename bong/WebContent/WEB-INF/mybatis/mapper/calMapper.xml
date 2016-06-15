@@ -24,4 +24,18 @@
 		INSERT INTO memNumPerDate(volDate, maxNum, volunIdx, volDateIdx)
 		VALUES(#{eachDay}, #{eachDayValue}, volun_bbs_seq.CURRVAL, MEMNUMPERDATE_SEQ.NEXTVAL)
 	</insert>
+	
+	<insert id="takeVolun" parameterType="map">
+		INSERT INTO club_apply_${clubIdx}(clubApplyIdx, clubIdx, volunIdx, enabled) VALUES(CLUB_APPLY_SEQ.NEXTVAL, #{clubIdx}, #{volunIdx}, 0)
+	</insert>
+	
+	<select id="articleForm" parameterType="map" resultType="com.bong.cal.Schedule">
+		SELECT tot.*, ct2.subject as lSubject, ct1.subject as sSubject FROM ( SELECT volunIdx, subject, serviceName, 
+		content, TO_CHAR(vb.created, 'yyyy-MM-dd') created, hitCount, vb.saveFileName, vb.serviceIdx, startDay, 
+		endDay, startTime, endTime, place, progress, volunteer_type, volunDays, vb.themeNum FROM volun_bbs vb
+		JOIN serviceInfo si ON vb.serviceIdx=si.serviceIdx) 
+		tot LEFT OUTER JOIN theme ct1 ON tot.themenum=ct1.themenum LEFT OUTER JOIN theme ct2 ON ct1.parent=ct2.themenum 
+		WHERE volunIdx=#{id}
+	</select>
+	
 </mapper>

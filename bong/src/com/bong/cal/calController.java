@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,8 +77,16 @@ public class calController {
 
 	// 대화상자에 출력 할 상세 일정 폼 // 아직 안함
 	@RequestMapping(value="/cal/articleForm")
-	public String articleForm() throws Exception {
-		return "admin/calendar/articleForm";
+	@ResponseBody
+	public ModelAndView articleForm(
+			@RequestParam(value="id") int id
+			) throws Exception {
+		ModelAndView mav = new ModelAndView("demander/dari/schedule/articleForm");
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", id);
+		Schedule dto = calService.articleForm(map);
+		mav.addObject("dto",dto);
+		return mav;
 	}
 	
 	// 날짜별로 선택하기 눌렀을 때
@@ -208,6 +215,20 @@ public class calController {
 	        list.add(checkDay);
 	        
 	        return list;
+		}
+		
+		// 내 동아리에 봉사 추가하기
+		@RequestMapping(value="/cal/takeVolun")
+		@ResponseBody
+		public void takeVolun(
+				HttpSession session,
+				@RequestParam(value="volunIdx") int volunIdx
+				) throws Exception{
+			SessionInfo info=(SessionInfo)session.getAttribute("member");
+			Map<String, Object> map = new HashMap<>();
+			map.put("volunIdx", volunIdx);
+			map.put("clubIdx", info.getClubIdx());
+			calService.takeVolun(map);
 		}
 	
 }

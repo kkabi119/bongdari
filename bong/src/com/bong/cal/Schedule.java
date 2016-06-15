@@ -3,7 +3,7 @@ package com.bong.cal;
 public class Schedule {
 	private int num;
 
-	private int userIdx, serviceIdx;
+	private int userIdx, serviceIdx, volunIdx;
 	private String userId, userName;
 	private String title;
 	private String content;
@@ -19,9 +19,73 @@ public class Schedule {
 	
 	private int themeNum;
 	private String volunteer_type, saveFilename, originalFilename, place, eachDayArray, eachDayValueArray, maxAll;
-	private String eachDay, eachDayValue, dow, id;
+	private String eachDay, eachDayValue, dow, id, subject, sSubject, lSubject, volunDays, serviceName, hitCount, progress;
 
 	
+	
+	public int getVolunIdx() {
+		return volunIdx;
+	}
+
+	public void setVolunIdx(int volunIdx) {
+		this.volunIdx = volunIdx;
+	}
+
+	public String getVolunDays() {
+		return volunDays;
+	}
+
+	public void setVolunDays(String volunDays) {
+		this.volunDays = volunDays;
+	}
+
+	public String getServiceName() {
+		return serviceName;
+	}
+
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
+	}
+
+	public String getHitCount() {
+		return hitCount;
+	}
+
+	public void setHitCount(String hitCount) {
+		this.hitCount = hitCount;
+	}
+
+	public String getProgress() {
+		return progress;
+	}
+
+	public void setProgress(String progress) {
+		this.progress = progress;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getsSubject() {
+		return sSubject;
+	}
+
+	public void setsSubject(String sSubject) {
+		this.sSubject = sSubject;
+	}
+
+	public String getlSubject() {
+		return lSubject;
+	}
+
+	public void setlSubject(String lSubject) {
+		this.lSubject = lSubject;
+	}
 
 	public String getId() {
 		return id;

@@ -30,14 +30,13 @@
 		$('#calendar').fullCalendar({
 			lang: 'ko',
 			selectable: true,
-			defaultDate: '2016-05-12',
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
 			select: function(start, end){
 				insertForm(start, end);
 				},
-			eventClick : function(){
-				articleForm();
+			eventClick : function(calEvent){
+				articleForm(calEvent);
 			},
 			events:
 			function(start, end, timezone, callback){
@@ -104,11 +103,23 @@
 	}
 
 	//-- 상세 일정 보기
-	function articleForm() {
-		$('#scheduleModal .modal-body').load("<%=cp%>/cal/articleForm", function() {
+	function articleForm(calEvent) {
+		var url = "<%=cp%>/cal/articleForm";
+		var id= calEvent.id;
+		$.post(url, {id:id}, function(data) {
+			$('#scheduleModal .modal-body').html(data);
 		    $('#scheduleModal .modal-title').html('상세 일정');
 			$('#scheduleModal').modal('show');
 		});	
+	}
+	
+	// 봉사활동 동아리로 가져오기
+	function take(volunIdx){
+		alert(volunIdx);
+		var url = "<%=cp%>/cal/takeVolun";
+		$.post(url, {volunIdx:volunIdx}, function(data){
+			$('#scheduleModal').modal('hide');
+		});
 	}
 	
 	
