@@ -56,24 +56,7 @@ function bgLabel(ob, id) {
 	    }
 }
 
-function sendOk() {
-        var f = document.confirmForm;
 
-    	var str = f.userId.value;
-        if(!str) {
-            f.userId.focus();
-            return false;
-        }
-
-        str = f.userPwd.value;
-        if(!str) {
-            f.userPwd.focus();
-            return false;
-        }
-
-        f.action = "<%=cp%>/mypage/deleteMember";
-        f.submit();
-}
 </script>
 <div class="bodyFrame">
 
@@ -89,7 +72,7 @@ function sendOk() {
             <input type="password" id="userPwd" name="userPwd" class="form-control loginTF" autofocus="autofocus"
                   onfocus="document.getElementById('lblUserPwd').style.display='none';"
 	              onblur="bgLabel(this, 'lblUserPwd');">
-            <button class="btn btn-lg btn-primary btn-block" type="button" onclick="sendOk();">확인 <span class="glyphicon glyphicon-ok"></span></button>
+            <button class="btn btn-info btn-lg btn-block" type="button" onclick="sendOk();">탈퇴하기<span class="glyphicon glyphicon-ok"></span></button>
         </div>
         <div style="margin-top:10px; text-align: center;">${message}</div>
         

@@ -169,7 +169,7 @@ public class DemanderjoinServiceImpl implements DemanderjoinService {
 			dao.insertInformation("demanderjoin.insertDemanderjoinInfo", dto);
 			dto.setAuthority("ROLE_SERVICE");
 			dao.insertInformation("demanderjoin.insertAuthority", dto);
-			
+			result=1;
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

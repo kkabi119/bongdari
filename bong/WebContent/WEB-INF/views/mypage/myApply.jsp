@@ -7,13 +7,19 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
-
+<script type="text/javascript">
+function enter(where){
+	if(event.keyCode == 13){
+		where.focus();
+	}
+}
+</script>
 	<div class="row" id="content">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">
 				<div class="post-content overflow">
  					<div class="bodyFrame2">
-          				<h1 style="color:#5bc0de"><i class="fa fa-bell"></i>나의 봉사신청 현황</h1>
+          				<h1 style="color:#5bc0de"></i>나의 봉사신청 현황</h1>
         		     			<form name="listForm" method="post" class="form-inline">
 						  			<select id="searchSelect" class="form-control input-sm" style="height:32px" onchange="searchList();">
 						      			<option value="myApplyList">전체보기</option>
@@ -45,7 +51,7 @@
                 				<c:forEach var="dto" items="${list}">
 									<tr>
                         				<td class="text-center">${dto.listNum}</td>
-                        				<td><a href="<%=cp%>/club/index/notice/article">${dto.subject}</a></td>
+                        				<td><a href="<%=cp%>/club/${club_seq}/apply/article">${dto.subject}</a></td>
                         				<td class="text-center">${dto.startDay}~${dto.endDay}</td>
                        				 	<td class="text-center">${dto.place}</td>
                        				 	<td class="text-center">${dto.themenum}</td>
@@ -74,7 +80,7 @@
         
         				<div style="clear: both;">
         					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/member/index/myApply';">새로고침</button>
+        		    			<button type="button" class="btn btn-default" onclick="tabPageView();">새로고침</button>
         					</div>
         					<div style="float: left; width: 60%; text-align: center;">
         		     			<form name="searchForm" method="post" class="form-inline">
@@ -83,8 +89,8 @@
 						      			<option value="place">지역</option>
 						      			<option value="hopeDate">봉사희망일</option>
 						  			</select>
-						  			<input type="text" class="form-control input-sm input-search" name="searchValue" placeholder="검색" style="width:50%; height:32px;">
-						  			<button type="button" class="btn btn-info" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
+						  			<input type="text" class="form-control input-sm input-search" name="searchValue" placeholder="검색" onkeydown="enter(search)" style="width:50%; height:32px;">
+						  			<button type="button" class="btn btn-info" name="search" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
         		     			</form>
         					</div>
         				</div>

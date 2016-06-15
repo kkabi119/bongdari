@@ -86,7 +86,7 @@ public class DemanderjoinController {
 			sb.append(dto.getServiceName()+ "님의 회원 가입이 정상적으로 처리되었습니다.<br>");
 			sb.append("메인화면으로 이동하여 로그인 하시기 바랍니다.<br>");
 			
-			mav.setViewName(".layout.demanderjoin.complete.회원가입성공");
+			mav.setViewName(".layout.demanderjoin.complete.회원가입");
 			mav.addObject("message", sb.toString());
 		} else {
             mav.setViewName("/demanderjoin/register");

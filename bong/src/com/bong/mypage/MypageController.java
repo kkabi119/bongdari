@@ -239,7 +239,7 @@ public class MypageController {
            }
            //탈퇴하기전에 비밀번호 확인 하게 해주기
            if(! dto.getUserPwd().equals(userPwd)){
-        	   ModelAndView mav=new ModelAndView("/mypage/deleteMember");
+        	   ModelAndView mav=new ModelAndView(".layout.mypage.deleteMember.회원탈퇴");
         	   mav.addObject("message", "패스워드가 일치하지않습니다");
         	   return mav;
            }

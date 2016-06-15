@@ -33,7 +33,7 @@ function demanderUpdate() {
    }
    
    str = f.userPwd.value;
-  /*  if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
+    if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
       $("#userPwd + .help-block").html("<span style='color:red;'>비밀번호 형식을 확인해주세요! <span>");
       f.userPwd.focus();
       return false;
@@ -48,9 +48,9 @@ function demanderUpdate() {
    } else {
       $("#userPwdCheck + .help-block").html("비밀번호를 한번 더 입력해주세요");
    }
-    */
+    
     str = f.userName.value;
-/*      str = $.trim(str);
+    str = $.trim(str);
 
     if(!/^[\uac00-\ud7a3]{2,4}$/g.test(str)) {
        $("#userName + .help-block").html("<span style='color:red;'>이름을 확인해주세요! <span>");
