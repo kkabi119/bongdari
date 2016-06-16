@@ -113,7 +113,7 @@ $(document).ready(function($) {
                             </ul> --%>
                         </li>
                         
-                        <li><a href="<%=cp%>/main/volunList">전체봉사게시판 </a>
+                        <li><a href="<%=cp%>/main/volunList">봉사검색 </a>
                            <%--  <ul role="menu" class="sub-menu">
                                 <li><a href="<%=cp%>/main/demander">수요처 전체 메인</a></li>
                                 <li><a href="<%=cp%>/main/searchDemander">수요처 검색</a></li>

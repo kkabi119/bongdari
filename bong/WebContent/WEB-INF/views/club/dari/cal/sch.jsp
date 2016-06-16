@@ -70,17 +70,17 @@
 #classifyGroup .btn, #classifyGroup .focus.btn, #classifyGroup .btn:focus, #classifyGroup .btn:hover {
     color: #fff; background-image:none;
 }
-.btn-red {
-    background-color:red; border-color:red;
+.btn-#00aeef {
+    background-color:#00aeef; border-color:#00aeef;
 }
-.btn-red:hover, .btn-red:focus {
-    background-color:red; border-color:red;
+.btn-#00aeef:hover, .btn-#00aeef:focus {
+    background-color:#00aeef; border-color:#00aeef;
 }
-.btn-black {
-    background-color:black; border-color:black;
+.btn-#f7b10d {
+    background-color:#f7b10d; border-color:#f7b10d;
 }
-.btn-black:hover, .btn-black:focus {
-    background-color:black; border-color:black;
+.btn-#f7b10d:hover, .btn-#f7b10d:focus {
+    background-color:#f7b10d; border-color:#f7b10d;
 }
 .btn-green {
     background-color:green; border-color:green;
@@ -88,11 +88,11 @@
 .btn-green:hover, .btn-green:focus {
     background-color:green; border-color:green;
 }
-.btn-red {
-    background-color:red; border-color:red;
+.btn-#00aeef {
+    background-color:#00aeef; border-color:#00aeef;
 }
-.btn-red:hover, .btn-red:focus {
-    background-color:red; border-color:red;
+.btn-#00aeef:hover, .btn-#00aeef:focus {
+    background-color:#00aeef; border-color:#00aeef;
 }
 </style>
 
@@ -192,10 +192,10 @@ function articleForm(calEvent) {
 	
 	var color=calEvent.color;
 	var classify="";
-	if(color=="red") classify="동아리일정";
-	else if(color=="black") classify="봉사일정";
+	if(color=="#00aeef") classify="동아리일정";
+	else if(color=="#f7b10d") classify="봉사일정";
 	else if(color=="green") classify="회사일정";
-	else if(color=="red") classify="부서일정";
+	else if(color=="#00aeef") classify="부서일정";
 	
 	var allDay=calEvent.allDay;
 	var startDay="", startTime="", sday="";
@@ -641,31 +641,31 @@ function deleteOk(num) {
 // -------------------------------------------------
 // 입력 및 수정 화면에서 일정 분류를 선택 한 경우
 function classifyChange(classify) {
-	$("#btnTitle").removeClass("btn-red")
-	                     .removeClass("btn-black")
+	$("#btnTitle").removeClass("btn-#00aeef")
+	                     .removeClass("btn-#f7b10d")
 	                     .removeClass("btn-green")
-	                     .removeClass("btn-red");
-	$("#btnDropdown").removeClass("btn-red")
-	                              .removeClass("btn-black")
+	                     .removeClass("btn-#00aeef");
+	$("#btnDropdown").removeClass("btn-#00aeef")
+	                              .removeClass("btn-#f7b10d")
 	                              .removeClass("btn-green")
-	                              .removeClass("btn-red");
+	                              .removeClass("btn-#00aeef");
 	
-	if(classify=="red") {
+	if(classify=="#00aeef") {
 		$("#btnTitle").html("동아리일정")
-		$("#btnTitle").addClass("btn-red");
-		$("#btnDropdown").addClass("btn-red");
-	} else if(classify=="black") {
+		$("#btnTitle").addClass("btn-#00aeef");
+		$("#btnDropdown").addClass("btn-#00aeef");
+	} else if(classify=="#f7b10d") {
 		$("#btnTitle").html("봉사일정")
-		$("#btnTitle").addClass("btn-black");
-		$("#btnDropdown").addClass("btn-black");
+		$("#btnTitle").addClass("btn-#f7b10d");
+		$("#btnDropdown").addClass("btn-#f7b10d");
 	} else if(classify=="green") {
 		$("#btnTitle").html("회사일정")
 		$("#btnTitle").addClass("btn-green");
 		$("#btnDropdown").addClass("btn-green");
-	} else if(classify=="red") {
+	} else if(classify=="#00aeef") {
 		$("#btnTitle").html("부서일정")
-		$("#btnTitle").addClass("btn-red");
-		$("#btnDropdown").addClass("btn-red");
+		$("#btnTitle").addClass("btn-#00aeef");
+		$("#btnDropdown").addClass("btn-#00aeef");
 	}
 	$("#scheduleModal input[name='color']").val(classify);
 }
@@ -687,7 +687,9 @@ $(function(){
 
 <div class="bodyFrame">
     <div class="body-title">
-          <h2 style="color: #337ab7; font-family: 나눔고딕; "><span class="fa fa-calendar-o"></span> 우리들의 여정 </h2>
+          	<h3  style="font-size:30px;"> <span class="fa fa-calendar-o"></span> 우리들의 여정 
+          	    <span style="margin-left:10px;color:gray; font-size:15px;">우리 동아리의 일정을 관리할 수 있는 달력게시판입니다 </span></h3>
+       
     </div>
     
     <div id="calendarHeader" style="height: 35px; line-height: 35px;">
@@ -695,14 +697,14 @@ $(function(){
              <div class="btn-group" role="group" aria-label="header">
                  <a class="hbtn hbtn-bottom" style="background: white; color:#2f3741;"
                        href="javascript:classification('all', 0);">전체일정</a>
-                 <a class="hbtn" style="background: red;"
-                       href="javascript:classification('red', 1);">동아리일정</a>
-                 <a class="hbtn" style="background: black;"
-                       href="javascript:classification('black', 2);">봉사일정</a>
+                 <a class="hbtn" style="background: #00aeef;"
+                       href="javascript:classification('#00aeef', 1);">동아리일정</a>
+                 <a class="hbtn" style="background: #f7b10d;"
+                       href="javascript:classification('#f7b10d', 2);">봉사일정</a>
                  <!-- <a class="hbtn" style="background: green;"
                        href="javascript:classification('green', 3);">회사일정</a>
-                 <a class="hbtn" style="background: red;"
-                       href="javascript:classification('red', 4);">부서일정</a> -->
+                 <a class="hbtn" style="background: #00aeef;"
+                       href="javascript:classification('#00aeef', 4);">부서일정</a> -->
              </div>      
         </div>
     </div>
