@@ -29,7 +29,7 @@
 	            resultType="com.bong.demander.admin.Dadmin">
 		  SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-			    SELECT volunIdx, subject FROM volun_bbs
+			    SELECT volunIdx, SUBSTR(subject, 1, 21) as subject FROM volun_bbs
 	         WHERE serviceIdx=${demander_seq}
                   ORDER BY volunIdx DESC
 	<![CDATA[
