@@ -272,11 +272,11 @@
 		        FROM
 		        (
 				      (
-					     SELECT CRRIDX, r.clubReviewIdx, c.userIdx, c.userid, c.userName, r.content, r.created, answer,m.memImg 
+					     SELECT CRRIDX, r.clubReviewIdx, r.userIdx, c.userid, c.userName, r.content, r.created, answer,m.memImg 
 					        FROM club_reviewR_${clubSeq} r 
 			                JOIN club_review_${clubSeq} s ON r.clubReviewIdx=s.clubReviewIdx
-			                JOIN checkId c ON s.useridx=c.useridx
-			                JOIN memberInfo m on s.userIdx=m.userIdx
+			                JOIN checkId c ON r.useridx=c.useridx
+			                JOIN memberInfo m on r.userIdx=m.userIdx
 			                WHERE r.clubReviewIdx=#{clubReviewIdx} AND answer=0
 			           ) tbreply
 			           LEFT OUTER JOIN
