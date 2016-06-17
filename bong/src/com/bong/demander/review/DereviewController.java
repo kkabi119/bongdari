@@ -95,7 +95,7 @@ public class DereviewController {
 	        int listNum, n = 0;
 	        Iterator<DeReview> it=list.iterator();
 	     
-String content=null; //글 미리보기 를 담을 변수
+	        String content=null; //글 미리보기 를 담을 변수
 	        
 	        while(it.hasNext()) {
 	        	DeReview data = it.next();
@@ -110,7 +110,6 @@ String content=null; //글 미리보기 를 담을 변수
 	           content=content.replaceAll("<p>&nbsp;</p>", ""); //태그가 너무 많아서 미리보기할때 글이 안떳다 그래서 가장 많은 p태그를 없애줌
 	           content=content.replaceAll("<br>", " ");
 	           data.setContent(content); //content 변수로 미리보기 하는게 아니라 그냥 dto안의 content로 찍는당
-	           System.out.println("content:"+content);
 		       n++;
 	            
 	        }
