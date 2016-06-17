@@ -263,9 +263,9 @@ function selectZip(zip){
         <label class="col-sm-2 control-label" for="memImgname">사진</label>
         <div class="col-sm-7">
             <div class="fileinput fileinput-new" data-provides="fileinput" style="float: left;">
-                <div class="fileinput-preview thumbnail" style="width: 130px; height: 150px;"></div>
+                <div class="fileinput-preview thumbnail" style="width: 130px; height: 150px;"><img src="<%=cp%>/res/images/demander/user128.png"></div>
                 <div>
-                     <span class="btn btn-default wbtn btn-file"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="uploads" id="memImgname" accept="image/png, image/jpeg, image/gif"></span>
+                     <span class="btn btn-default wbtn btn-file" style="width: 130px;"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="uploads" id="memImgname" accept="image/png, image/jpeg, image/gif"></span>
                      <a href="#" class="btn btn-default wbtn fileinput-exists" data-dismiss="fileinput">삭제</a>
                 </div>
             </div>
@@ -363,26 +363,27 @@ function selectZip(zip){
     <div class="form-group" >
         <label class="col-sm-2 control-label" for="userAddr">주소</label>
         <div class="col-sm-7">
-            <input class="form-control" id="addr1" name="addr1" type="text" placeholder="기본주소" value="${dto.addr1}" readonly="readonly">
-            <input class="form-control" id="addr2" name="addr2" type="text" placeholder="상세주소" value="${dto.addr2}">
-           <button type="button" onclick="searchAddr()" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;">
-                  주소검색<span class="glyphicon glyphicon-ok"></span></button>
+            <input class="form-control" id="addr1" name="addr1" type="text" placeholder="기본주소" value="${dto.addr1}" readonly="readonly" style="background-color:white; margin-bottom:5px;">
+            <input class="form-control" id="addr2" name="addr2" type="text" placeholder="상세주소" value="${dto.addr2}" style="margin-bottom:5px;">
+           <button type="button" onclick="searchAddr()" class="btn btn-info btn-sm btn-search" style="margin-right:20px;margin-bottom:10px; height:40px; width:130px;">
+                  주소검색<span class="glyphicon glyphicon-ok"></span>
+            </button>
         </div>
     </div>
     <div class="form-group" >
         <label class="col-sm-2 control-label" for="userJob">직업</label>
-        <div class="col-sm-2">
+        <div class="col-sm-2" style="padding-bottom: 10px">
             <input class="form-control" id="userJob" name="userJob" type="text" placeholder="직업" value="${dto.userJob}">
         </div>
     </div>
-    <div class="form-group" >
+    <div class="form-group" style="border-bottom: 5px solid gray">
        <label class="col-sm-2 control-label" for="userGender">성별</label>
-       <div class="col-sm-2">
+       <div class="col-sm-2" style="padding-bottom: 10px">
         <input type="radio" name="userGender" value="남자" id="male" checked>남자
         <input type="radio" name="userGender" value="여자" id="female" >여자 			
        </div>		
     </div>
-    <div class="form-group" >
+    <div class="form-group" style="border-bottom: none">
         <label class="col-sm-2 control-label" for="agree">약관 동의</label>
         <div class="col-sm-7 checkbox">
             <label>
@@ -393,7 +394,7 @@ function selectZip(zip){
     </div>
 
     
-<div class="form-group" >
+<div class="form-group" style="border-bottom: none; padding-top: 100px">
   <div class="col-sm-offset-2 col-sm-10">
       <c:if test="${mode=='created'}">
             <button type="submit" name="sendButton" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;">
@@ -410,7 +411,7 @@ function selectZip(zip){
     </div>
 </div>
 
-  <div class="form-group" >
+  <div class="form-group" style="border-bottom: none">
         <div class="col-sm-offset-2 col-sm-10">
                 <p style=" text-align:center; color:tomato; font-weight:bold; font-size:13px; "class="form-control-static">${message}</p>
         </div>
