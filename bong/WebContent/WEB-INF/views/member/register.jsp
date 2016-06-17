@@ -298,10 +298,10 @@ function selectZip(zip){
 
 	<div class="form-group" >
         <label class="col-sm-2 control-label" for="userEmail">이메일</label>
-        <div class="col-sm-10" style="margin-top:0px;">
+        <div class="col-sm-10" style="padding-bottom: 10px">
         <table>
         <tr>
-        <td>
+        <td style="padding-right: 10px">
            <select name="selectEmail" onchange="changeEmail();" class="form-control" style="width:130px; float: left; margin-right:10px; margin:0px; padding:0px;" >
                                  <option value="">선 택</option>
                                  <option value="naver.com" ${dto.email2=="naver.com" ? "selected='selected'" : ""}>네이버 메일</option>
@@ -313,10 +313,12 @@ function selectZip(zip){
       </td>
       <td>
        <input style="width:150px; float:left; margin-right:10px;" type="text" name="email1" size="13" 
-             maxlength="30" id="email1"  class="form-control" value="${dto.email1}">@&nbsp;&nbsp;
+             maxlength="30" id="email1"  class="form-control" value="${dto.email1}"><div class="col-sm-1" style="width: 1%; padding-left: 5px; padding-right: 10px;">
+                         <p class="form-control-static">@</p>
+                  </div>
        </td>
        <td>      
-       <input style="width:150px;  float:left; margin-right:10px; " type="text" name="email2" size="13"
+       <input style="width:150px;  float:left; margin-right:10px; background-color: #FFFFFF" type="text" name="email2" size="13"
              maxlength="30" id="email2"  class="form-control" value="${dto.email2}" readonly="readonly">
          </td>
          </tr>
@@ -328,8 +330,8 @@ function selectZip(zip){
         <label class="col-sm-2 control-label" for="tel1">전화번호</label>
         <div class="col-sm-7">
              <div class="row" >
-                  <div class="col-sm-2" style="padding-left: 13px;">
-                    <select class="form-control" id="tel1" name="tel1" style="width:100px;">
+                  <div class="col-sm-2" style="padding-left: 5px; padding-right: 5px;">
+                    <select class="form-control" id="tel1" name="tel1">
                         <option value="">선 택</option>
                         <option value="010" ${dto.tel1=="010" ? "selected='selected'" : ""}>010</option>
                         <option value="011" ${dto.tel1=="011" ? "selected='selected'" : ""}>011</option>
