@@ -6,7 +6,15 @@
    String cp = request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/res/css/fileinput.css" type="text/css">
-
+<style>
+.control-label{
+	font-size: 15pt;
+	color: #6f6a6a;
+}
+.form-group{
+border-bottom: 1px solid #ece8e8;
+}
+</style>
 <script type="text/javascript" src="<%=cp%>/res/js/util.js"></script>
 <script type="text/javascript" src="<%=cp%>/res/js/fileinput.js"></script>
 
@@ -212,21 +220,21 @@ function selectZip(zip){
 }
 </script>
 
-<div class="container" role="main" style="margin-top:50px;">
+<div class="container" role="main" style="width:80%; margin-top:50px; border-top: 5px solid gray">
 
-  <div class="bodyFrame">
+  <div class="bodyFrame" >
   <form class="form-horizontal" name="memberForm" method="post" onsubmit="return register();" enctype="multipart/form-data">
-    <div class="form-group" style="margin-bottom:0px;">
+    <div class="form-group" style="padding-top: 30px">
         <label class="col-sm-2 control-label" for="userId">아이디</label>
         <div class="col-sm-7">
             <input style="width:200px;"class="form-control" id="userId" name="userId" type="text" 
-                  placeholder="아이디" onchange="userIdCheck();" value="${dto.userId}" 
+                  placeholder="아이디" onchange="userIdCheck();" value="${dto.userId}"  
               ${mode=="update" ? "readonly='readonly' style='border:none;'":""}>
             <p class="help-block"> 아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.</p>
         </div>
     </div>
  
-    <div class="form-group" style="margin-bottom:0px;">
+    <div class="form-group">
         <label class="col-sm-2 control-label" for="userPwd">패스워드</label>
         <div class="col-sm-7">
             <input style="width:200px;  " class="form-control" id="userPwd" name="userPwd" type="password" placeholder="비밀번호">
@@ -242,7 +250,7 @@ function selectZip(zip){
         </div>
     </div>
  
-    <div class="form-group">
+    <div class="form-group" >
         <label class="col-sm-2 control-label" for="userName">이름</label>
         <div class="col-sm-7">
             <input style="width:200px; " class="form-control" id="userName" name="userName" 
@@ -251,7 +259,7 @@ function selectZip(zip){
         <p class="help-block">이름은 한글로 2자이상 4자 이하입니다.</p>
      </div>
     </div>
-  <div class="form-group">
+  <div class="form-group" >
         <label class="col-sm-2 control-label" for="memImgname">사진</label>
         <div class="col-sm-7">
             <div class="fileinput fileinput-new" data-provides="fileinput" style="float: left;">
@@ -280,7 +288,7 @@ function selectZip(zip){
 </c:if>
         </div>
     </div>
-    <div style=""class="form-group">
+    <div class="form-group" >
         <label class="col-sm-2 control-label" for="userBirth">생년월일</label>
         <div class="col-sm-7">
             <input style="width:200px; " class="form-control" id="userBirth" name="userBirth" type="text" placeholder="생년월일" value="${dto.userBirth}">
@@ -288,7 +296,7 @@ function selectZip(zip){
         </div>
     </div>
 
-<div class="form-group">
+	<div class="form-group" >
         <label class="col-sm-2 control-label" for="userEmail">이메일</label>
         <div class="col-sm-10" style="margin-top:0px;">
         <table>
@@ -350,7 +358,7 @@ function selectZip(zip){
              </div>
         </div>
     </div>   
-    <div class="form-group">
+    <div class="form-group" >
         <label class="col-sm-2 control-label" for="userAddr">주소</label>
         <div class="col-sm-7">
             <input class="form-control" id="addr1" name="addr1" type="text" placeholder="기본주소" value="${dto.addr1}" readonly="readonly">
@@ -359,20 +367,20 @@ function selectZip(zip){
                   주소검색<span class="glyphicon glyphicon-ok"></span></button>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" >
         <label class="col-sm-2 control-label" for="userJob">직업</label>
         <div class="col-sm-2">
             <input class="form-control" id="userJob" name="userJob" type="text" placeholder="직업" value="${dto.userJob}">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" >
        <label class="col-sm-2 control-label" for="userGender">성별</label>
        <div class="col-sm-2">
         <input type="radio" name="userGender" value="남자" id="male" checked>남자
         <input type="radio" name="userGender" value="여자" id="female" >여자 			
        </div>		
     </div>
-    <div class="form-group">
+    <div class="form-group" >
         <label class="col-sm-2 control-label" for="agree">약관 동의</label>
         <div class="col-sm-7 checkbox">
             <label>
@@ -383,7 +391,7 @@ function selectZip(zip){
     </div>
 
     
-<div class="form-group">
+<div class="form-group" >
   <div class="col-sm-offset-2 col-sm-10">
       <c:if test="${mode=='created'}">
             <button type="submit" name="sendButton" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;">
@@ -400,7 +408,7 @@ function selectZip(zip){
     </div>
 </div>
 
-  <div class="form-group">
+  <div class="form-group" >
         <div class="col-sm-offset-2 col-sm-10">
                 <p style=" text-align:center; color:tomato; font-weight:bold; font-size:13px; "class="form-control-static">${message}</p>
         </div>
