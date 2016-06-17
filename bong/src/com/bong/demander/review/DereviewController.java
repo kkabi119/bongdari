@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bong.club.review.ClReview;
 import com.bong.common.FileManager;
 import com.bong.common.MyUtil;
 import com.bong.member.SessionInfo;
@@ -85,28 +86,34 @@ public class DereviewController {
 	        List<DeReview> list = service.listDeReview(map);
 
 	        // 리스트의 번호 , 첫번째 사진 썸네일로 지정 
-	      
+	        //첫번째 사진 썸네일로 지정하기
 	        Pattern pattern=Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
 	       
 	        Matcher match;
+	        
+	        //리스트의 번호
 	        int listNum, n = 0;
 	        Iterator<DeReview> it=list.iterator();
 	     
+String content=null; //글 미리보기 를 담을 변수
+	        
 	        while(it.hasNext()) {
 	        	DeReview data = it.next();
 	            listNum = dataCount - (start + n - 1);
-	          
 	            data.setListNum(listNum);
 	            
 	            match=pattern.matcher(data.getContent());
-	            
-	            //match2=pattern2.matcher(match);
-	            
 	            if(match.find())
 	            	data.setListImageName(match.group(1));
-	            n++;
 	            
-	            }
+	           content=data.getContent().replaceAll("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>","");
+	           content=content.replaceAll("<p>&nbsp;</p>", ""); //태그가 너무 많아서 미리보기할때 글이 안떳다 그래서 가장 많은 p태그를 없애줌
+	           content=content.replaceAll("<br>", " ");
+	           data.setContent(content); //content 변수로 미리보기 하는게 아니라 그냥 dto안의 content로 찍는당
+	           System.out.println("content:"+content);
+		       n++;
+	            
+	        }
 	     
 	        String params = "";
 	        String urlList = cp+"/demander/"+demander_seq+"/review/list";

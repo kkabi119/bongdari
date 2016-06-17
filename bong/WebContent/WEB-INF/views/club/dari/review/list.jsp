@@ -108,32 +108,18 @@ hr:LAST-CHILD {
    <!-- Page Heading/Breadcrumbs -->
    <div class="row3"  style="margin-left:15px;">
       <div class="col-lg-12">
-            <h3  style="font-size:30px;"> 봉사 후기<span style="margin-left:10px;color:gray; font-size:15px;">  우리의 봉사후기를 나누어 보아요~</span> </h3>
-
-     <%--     <ol class="breadcrumb">
-            <li><a href="<%=cp%>/demander/${clubSeq}/main" style="color:gray; font-weight: bold;">우리 동아리</a></li>
-            <li class="active">후기 게시판 </li>
-         </ol> --%>
+            <h3 style="font-size:30px;">봉사 후기<span style="margin-left:10px;color:gray; font-size:15px;">  우리의 봉사후기를 나누어 보아요~</span> </h3>
       </div>
    </div>
    <!-- /.row -->
  <c:if test="${dataCount!=0 }"> 
 			<div style="clear: both;  line-height: 30px; margin-left:35px; margin-top:20px ; ">
-            				<div style="float: left; color:#00aeef;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
-            					전체 ${dataCount}개 <span style="color:#777;">(${page}/${total_page}  페이지)</span> 
-            				 
-            				</div>
-            			<%-- 	<button type="button" class="btn btn-warning" style="background-color: #00aeef; border:none; float:right; margin-bottom:10px; height:55px; width:55px;  border-radius:100%;"
-					            onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/review/create';">
-					            <span class="glyphicon glyphicon glyphicon-pencil"></span>
-        					 </button>	 --%>
+            	<div style="float: left; color:#00aeef;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
+            		전체 ${dataCount}개 <span style="color:#777;">(${page}/${total_page}  페이지)</span> 
+            	</div>	
         	  <hr style="margin:0px; width:100%; border-top:3px solid #00aeef;">
-        	  
-        	  
-        	</div> 
-  
+        	</div>  
    <!-- Project One -->
-    
    
  <c:forEach var="dto" items="${list}"> 
    <div class="row2" >
@@ -190,12 +176,9 @@ hr:LAST-CHILD {
 		 
         </div>
       </div>
-      
         
    </div>
-
     <hr style="margin-left:35px; margin-top:0px; margin-bottom:-1px; width:98%; border-top:2px solid #cecece">
-  
    </c:forEach>
     </c:if> 
       <hr style="margin-left:35px; margin-top:0px; margin-bottom:-1px; width:98%; border-top:3px solid #00aeef;">
@@ -213,29 +196,24 @@ hr:LAST-CHILD {
 <!-- 검색 -->
    <div style="clear: both; border-radius:0px;">
       <div style="float: left; width: 20%; min-width: 85px;">
-         <button type="button" class="btn btn-default " style=" color: gray; border:1px solid gray; margin-left:30px;" 
-            onclick="javascript:location.href='<%=cp%>/demander/${clubSeq}/review/list';">
-               <img Id="listBtn"style="width:18px; height:18px; background-size:cover; "src="<%=cp%>/res/images/myclub/refresh.png" alt="">&nbsp;새로고침</button>
+         <button type="button" class="btn btn-default " style=" color: grey; border:1px solid gray; margin-left:30px;" onclick="javascript:location.href='<%=cp%>/demander/${clubSeq}/review/list';"><img Id="listBtn"style="width:18px; height:18px; background-size:cover; "src="<%=cp%>/res/images/myclub/refresh.png" alt="">&nbsp;새로고침</button>
       </div>
-      <div style="float: left; width: 60%; height:41px; text-align: center; margin-top:0px; padding-top:0px;">
-         <form name="searchForm" method="post" class="form-inline" style=" ">
-            <select class="form-control input-sm" name="searchKey" style="height:40px; margin-top:-2px; border:1px solid #00aeef; border-radius:0px;">
+      <div style="float: left; width: 60%; height:41.11px; text-align: center; margin-top:0px; padding-top:0px;">
+         <form name="searchForm" method="post" class="form-inline">
+            <select class="form-control input-sm" name="searchKey" style="height:41.11px; margin-top:0 px; border:1px solid #00aeef;">
                <option value="subject">제목</option>
                <option value="userName">작성자</option>
                <option value="content">내용</option>
                <option value="created">등록일</option>
-            </select> 
-            <input type="text" class="search-form" style="margin-top:0px; margin-left:-5px; border-radius:0px; "
-               name="searchValue">
-            <button type="button" class="btn btn-warning btn-sm wbtn" style="background-color: #00aeef; border:2px solid #00aeef; margin-top:-2px; "
-               onclick="searchList();">
-               <span class="glyphicon glyphicon-search"></span> 
+            </select>
+            <input type="text" class="form-control input-sm input-search"name="searchValue" style="width:50%; height:41.11px; margin-top:0px; border:2px solid #00aeef;">
+            <button type="button" class="btn btn-default btn-sm wbtn" style="color:#FFFFFF ;background-color: #00aeef; border:2px solid #00aeef; margin-top:-2px;" onclick="searchList();">
+               <span class="glyphicon glyphicon-search"></span>
             </button>
          </form>
       </div>
       <div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-         <button type="button" class="btn btn-warning" style="background-color: #00aeef; border:none;"
-            onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/review/create';">
+         <button type="button" class="btn btn-warning" style="background-color: #00aeef; border:none;" onclick="javascript:location.href='<%=cp%>/club/${clubSeq}/review/create';">
             <span class="glyphicon glyphicon glyphicon-pencil"></span>
          </button>
       </div>
