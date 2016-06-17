@@ -19,49 +19,54 @@ function enter(where){
 			<div class="single-blog two-column">
 				<div class="post-content overflow">
  					<div class="bodyFrame2">
-          				<h1 style="color:#5bc0de"></i>나의 봉사신청 현황</h1>
+          				
         		     			<form name="listForm" method="post" class="form-inline">
-						  			<select id="searchSelect" class="form-control input-sm" style="height:32px" onchange="searchList();">
+						  			<select id="searchSelect" class="form-control input-sm" style="height:36px; float:right;" onchange="searchList();">
 						      			<option value="myApplyList">전체보기</option>
 						      			<option value="myClubList">동아리만보기</option>
 						      			<option value="myIndividualList">개인만 보기</option>
 						  			</select>
         		     			</form> 
           				<c:if test="${dataCount!=0}">
-    					<div style="clear: both; height: 30px; line-height: 30px;">
-            				<div style="float: left;">전체 ${dataCount}개   (${page}/${total_page} 페이지)</div>
+          				
+          				
+            					
+    					<div style="clear: both; height: 30px; line-height: 30px; margin-bottom: 10px;">
+            				<div style="float: left; color:#68cabb; font-size: 13pt;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
+            					전체 ${dataCount}개 <span style="color:#777;">(${page}/${total_page}  페이지)</span> 
+            					</div> 
             				<div style="float: right;">&nbsp;</div>
         				</div>
         
         				<div class="table-responsive" style="clear: both;"> <!-- 테이블 반응형 -->
-            				<table class="table table-hover">
+            				<table class="table table-hover" style="border-bottom:3px solid #d0cccc; ">
                 				<thead>
-                    				<tr>
+                    				<tr style="background:#eaf7f5; height:45px; color: #545252; border-top:3px solid #d0cccc; ">
                         				<th class="text-center" style="width: 70px;">번호</th>
-                        				<th class="text-left" style="width: 50px;">봉사명</th>
+                        				<th class="text-center" style="width: 50px;">봉사명</th>
                        				 	<th class="text-center" style="width: 70px;">봉사기간</th>
                         				<th class="text-center" style="width: 50px;">봉사장소</th>
                         				<th class="text-center" style="width: 50px;">봉사분야</th>
-                        				<th class="text-center" style="width: 50px;">봉사자유형</th>
-                        				<th class="text-center" style="width: 50px;">봉사 희망일</th>
+                        				<th class="text-center" style="width: 60px;">봉사자유형</th>
+                        				<th class="text-center" style="width: 40px;">봉사 희망일</th>
                         				<th class="text-center" style="width: 50px;">신청현황</th>
                     				</tr>
                 				</thead>
                 				<tbody>
                 				<c:forEach var="dto" items="${list}">
-									<tr>
-                        				<td class="text-center">${dto.listNum}</td>
-                        				<td><a href="<%=cp%>/club/${club_seq}/apply/article">${dto.subject}</a></td>
-                        				<td class="text-center">${dto.startDay}~${dto.endDay}</td>
-                       				 	<td class="text-center">${dto.place}</td>
-                       				 	<td class="text-center">${dto.themenum}</td>
-                       				 	<td class="text-center">${dto.volunteer_Type}</td>
-                       				 	<td class="text-center">${dto.hopeDate}</td>                       
+									<tr style="height:40px;  ">
+                        				<td class="text-center" style="vertical-align: inherit;">${dto.listNum}</td>
+                        				<td  style="vertical-align: inherit;"><a href="<%=cp%>/club/${club_seq}/apply/article">${dto.subject}</a></td>
+                        				<td class="text-center" style="vertical-align: inherit;">${dto.startDay}~${dto.endDay}</td>
+                       				 	<td class="text-center" style="vertical-align: inherit;">${dto.place}</td>
+                       				 	<td class="text-center" style="vertical-align: inherit;">${dto.themenum}</td>
+                       				 	<td class="text-center" style="vertical-align: inherit;">${dto.volunteer_Type}</td>
+                       				 	<td class="text-center" style="vertical-align: inherit;">${dto.hopeDate}</td>                       
                        				    <c:if test="${dto.progress.equals('모집마감')}">
-                       				 	<td class="text-center" style="font-weight:bold; color:white; font-size:16px;"> <span class="label label-default" style="padding:5px;">${dto.progress}</span></td>
+                       				 	<td class="text-center" style="font-weight:bold; color:white; font-size:16px; vertical-align: inherit;"> <span class="label label-default" style="padding:5px;">${dto.progress}</span></td>
                        				 	</c:if>
                        				 	<c:if test="${dto.progress.equals('모집중')}">
-                       				 	<td class="text-center" style="font-weight:bold; color:white; font-size:16px;"><span class="label label-warning" style="padding:5px;">${dto.progress}</span></td>
+                       				 	<td class="text-center" style="font-weight:bold; color:white; font-size:16px; vertical-align: inherit;"><span class="label label-warning" style="padding:5px;">${dto.progress}</span></td>
                        				 	</c:if>
                     				</tr>
                     				</c:forEach>

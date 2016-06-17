@@ -66,14 +66,16 @@ tr:first-of-type{
 				<table class="table">
 					<tbody>
 						<tr>
-							<td colspan="3" bgcolor="#DFE6E8" 
-								style="text-align: center; font-size: 15px; background-color: #FBF7EB; color: #555;">
-								내정보		
+							<td colspan="3" 
+								style="text-align: center; font-size: 15px; background-color: #68cabb; color: white;
+								font-weight: 550; font-size: 17px;">
+								내 정보		
 							</td>
 						</tr>
 						<tr>
 							<td bgcolor="#DFE6E8" 
-								style="width:20%; font-size:15px; background-color:#FBF7EB; color:#555;">
+								style="width:20%; font-size:15px; background-color:#edf7f5; color:#555; 
+								">
 								<span class="glyphicon glyphicon-menu-right" aria-hidden="true" ></span>&nbsp;
 								아이디
 							</td>                 
@@ -85,7 +87,7 @@ tr:first-of-type{
 						</tr>
 						<tr>
 							<td bgcolor="#DFE6E8"
-								style="width:20%; font-size:15px; background-color:#FBF7EB; color:#555;">
+								style="width:20%; font-size:15px; background-color:#edf7f5; color:#555;">
 								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;이름
 							</td>
 							<td style="text-align: left; width: 5%; height: 45px;">${dto.userName}</td>
@@ -93,7 +95,7 @@ tr:first-of-type{
 
 						<tr>
 							<td bgcolor="#DFE6E8"
-								style="width:20%; font-size:15px; background-color:#FBF7EB; color:#555;">
+								style="width:20%; font-size:15px; background-color:#edf7f5; color:#555;">
 								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;생년월일
 							</td>
 							<td style="text-align: left; width: 5%; height: 45px;">${dto.userBirth}</td>
@@ -101,14 +103,14 @@ tr:first-of-type{
 						</tr>
 						<tr>
 							<td bgcolor="#DFE6E8"
-								style="width:20%; font-size:15px; background-color:#FBF7EB; color:#555;">
+								style="width:20%; font-size:15px; background-color:#edf7f5; color:#555;">
 								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;성별
 							</td>
 							<td style="text-align: left; width: 5%; height: 45px;">${dto.userGender}</td>
 						</tr>
                         <tr>
 						<td bgcolor="#DFE6E8"
-							style="width:20%; font-size:15px; background-color:#FBF7EB; color:#555;">
+							style="width:20%; font-size:15px; background-color:#edf7f5; color:#555;">
 							<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;직업
 						</td>
 						<td colspan="3"
@@ -117,14 +119,14 @@ tr:first-of-type{
 					    </tr>
 						<tr>
 							<td bgcolor="#DFE6E8"
-								style="width:20%; font-size:15px; background-color:#FBF7EB; color:#555;">
+								style="width:20%; font-size:15px; background-color:#edf7f5; color:#555;">
 								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;전화번호
 							</td>
 							<td style="text-align: left; width: 5%; height: 45px;">${dto.userTel}</td>
                         </tr>
                         <tr>
 							<td bgcolor="#DFE6E8"
-								style="width:20%; font-size:15px; background-color:#FBF7EB; color:#555;">
+								style="width:20%; font-size:15px; background-color:#edf7f5; color:#555;">
 								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;이메일
 							</td>
 							<td colspan="3"
@@ -133,7 +135,7 @@ tr:first-of-type{
 						</tr>
 						<tr>
 							<td bgcolor="#DFE6E8"
-								style="width:20%; font-size:15px; background-color:#FBF7EB; color:#555;">
+								style="width:20%; font-size:15px; background-color:#edf7f5; color:#555;">
 								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;주소
 							</td>
 							<td colspan="3"
@@ -141,7 +143,7 @@ tr:first-of-type{
 						</tr>
 						<tr>
 						    <td bgcolor="#DFE6E8"
-								style="width:20%; font-size:15px; background-color:#FBF7EB; color:#555;">
+								style="width:20%; font-size:15px; background-color:#edf7f5; color:#555;">
 								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;총
 								봉사시간
 							</td>
@@ -149,21 +151,21 @@ tr:first-of-type{
 						</tr>
 						<tr>
 						<td bgcolor="#DFE6E8"
-								style="width:20%; font-size:15px; background-color:#FBF7EB; color:#555;">
+								style="width:20%; font-size:15px; background-color:#edf7f5; color:#555;">
 								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;참석률
 							</td>
 							<td colspan="2" style="text-align: left; height: 45px;">90%</td>
 						</tr>
 						<tr>
 							<td bgcolor="#DFE6E8"
-								style="width:20%; font-size:15px; background-color:#FBF7EB; color:#555;">
+								style="width:20%; font-size:15px; background-color:#edf7f5; color:#555;">
 								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;참석률
 							</td>
 							<td colspan="2" style="text-align: left; height: 45px;">90%</td>
 						</tr>
 						<tr>
 							<td bgcolor="#DFE6E8"
-								style="width:20%; font-size:15px; background-color:#FBF7EB; color:#555;">
+								style="width:20%; font-size:15px; background-color:#edf7f5; color:#555;">
 								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;획득
 								점수
 							</td>
@@ -171,7 +173,7 @@ tr:first-of-type{
 						</tr>
 						<tr>
 							<td bgcolor="#DFE6E8"
-								style="width:20%; font-size:15px; background-color:#FBF7EB; color:#555;">
+								style="width:20%; font-size:15px; background-color:#edf7f5; color:#555;">
 								<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉다리
 								레벨
 							</td>
