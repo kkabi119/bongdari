@@ -224,7 +224,7 @@ function selectZip(zip){
 
   <div class="bodyFrame" >
   <form class="form-horizontal" name="memberForm" method="post" onsubmit="return register();" enctype="multipart/form-data">
-    <div class="form-group" style="padding-top: 30px">
+    <div class="form-group" style="margin-bottom:0px;">
         <label class="col-sm-2 control-label" for="userId">아이디</label>
         <div class="col-sm-7">
             <input style="width:200px;"class="form-control" id="userId" name="userId" type="text" 
