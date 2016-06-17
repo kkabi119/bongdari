@@ -98,11 +98,11 @@ text-overflow:ellipsis;
    </div>
    <!-- /.row -->
  <c:if test="${dataCount!=0 }"> 
-
-        <div style="clear: both; height: 30px; line-height: 30px;">
-            <div style="float: left;">${dataCount}개(${page}/${total_page} 페이지)</div>
-            <div style="float: right;">&nbsp;</div>
-        </div>
+ <div style="clear: both; height: 30px; line-height: 30px;">
+<div style="float: left; color:#F0AD4E;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
+            					전체 ${dataCount}개 <span style="color:#777;">(${page}/${total_page}  페이지)</span> 
+            					</div> </div> 
+       <hr style="margin:0px; width:100%; border-top:3px solid #fdbe7c;">
   
    <!-- Project One -->
  <c:forEach var="dto" items="${list}"> 
@@ -133,20 +133,36 @@ text-overflow:ellipsis;
 	         </span>
 	         </div><span style="color: black;line-height: 24px; font-size: 14pt; float: left;"> &nbsp;(${dto.replyCount})</span>
          </div> 
-         <hr style="margin-top:10px; border:1px solid #ddd; margin-bottom:5px;">
+        
          
-      	<%-- <h3 class="subStyle" style="font-weight:600; color:#908E8A; font-size: 16pt; line-height: 6px;" >
-         ${dto.subject}
-      	<small style="color: black; font-size: 13pt;"> &nbsp;(${dto.replyCount})</small></h3>  --%>
-      	 
-         <h5>작성자 : ${dto.userName} &nbsp;&nbsp;|&nbsp;&nbsp; 조회수 : ${dto.hitCount}</h5> 
+      
+      	 <hr style="margin-top:4px; border:1px solid #ddd; margin-bottom:5px;">
+         <h5 style="font-size:14px;margin-top:10px;line-height: 14px;"> 
+         		작성자 <span style="font-weight: 600; color:#757575;"> ${dto.userName}</span> 
+         		&nbsp;&nbsp; |&nbsp;&nbsp; 작성일 &nbsp; <span style="font-weight: 600; color:#757575;">${dto.created}</span> &nbsp;&nbsp;
+        </h5>
+        <h5 style="font-size:14px;margin-top:10px;line-height: 14px;"> No. ${dto.listNum}</h5>
+         
+         <h5 style="font-size:14px; font-weight:600; color:#757575; ">
+         		<img Id="listBtn"style=" width:17px; height:17px; background-size:cover; "src="<%=cp%>/res/images/myclub/heart.png" alt="">
+	                                	 	&nbsp; ${dto.likeCount}
+	      		<img Id="listBtn"style=" margin-left:30px; width:22px; height:20px; background-size:cover; "src="<%=cp%>/res/images/myclub/chat4.png" alt="">
+	                                	 	&nbsp; ${dto.replyCount}
+	            <img Id="listBtn"style=" margin-left:30px; width:22px; height:25px; background-size:cover; "src="<%=cp%>/res/images/myclub/eye.png" alt="">
+	                                	 	&nbsp; ${dto.hitCount}
+	      </h5> 
+	      
+	     <a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
+         href="${urlArticle}&num=${dto.serviceReviewIdx}">Review
+         </a>
+        <%--  <h5>작성자 : ${dto.userName} &nbsp;&nbsp;|&nbsp;&nbsp; 조회수 : ${dto.hitCount}</h5> 
          <h5>No. ${dto.serviceReviewIdx}</h5>
          <h5><img style="width:15px; height:15px; background-size:cover;" src="<%=cp%>/res/images/myclub/heart.png" >
           &nbsp;${dto.likeCount}</h5>
          <br>
          <a class="btn btn-lg btn-default" style="color:#F0AD4E;" 
          href="${urlArticle}&num=${dto.serviceReviewIdx}">Review
-         </a>
+         </a> --%>
         
       </div>
       
@@ -155,6 +171,8 @@ text-overflow:ellipsis;
    <hr>
    </c:forEach>
     </c:if> 
+    
+    
    <!-- /.row -->
 
 	<div class="paging"
@@ -165,6 +183,8 @@ text-overflow:ellipsis;
 		<c:if test="${dataCount!=0 }">
 	                ${paging}
 	</c:if>
+	
+	
 </div>
 
 
