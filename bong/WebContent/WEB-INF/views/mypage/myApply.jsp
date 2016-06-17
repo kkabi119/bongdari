@@ -59,7 +59,7 @@ function enter(where){
                         				<td  style="vertical-align: inherit;"><a href="<%=cp%>/club/${club_seq}/apply/article">${dto.subject}</a></td>
                         				<td class="text-center" style="vertical-align: inherit;">${dto.startDay}~${dto.endDay}</td>
                        				 	<td class="text-center" style="vertical-align: inherit;">${dto.place}</td>
-                       				 	<td class="text-center" style="vertical-align: inherit;">${dto.themenum}</td>
+                       				 	<td class="text-center" style="vertical-align: inherit;">${dto.lsubject} > ${dto.ssubject}</td>
                        				 	<td class="text-center" style="vertical-align: inherit;">${dto.volunteer_Type}</td>
                        				 	<td class="text-center" style="vertical-align: inherit;">${dto.hopeDate}</td>                       
                        				    <c:if test="${dto.progress.equals('모집마감')}">

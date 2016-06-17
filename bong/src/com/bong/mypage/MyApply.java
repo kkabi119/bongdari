@@ -4,21 +4,21 @@ public class MyApply {
 	private int userIdx, clubIdx, clubApplyIdx, volunIdx, listNum;
     private String startDay,endDay, subject,place, progress;
     private String volunteer_Type, volunDays, hopeDate, themenum;
-    private String lSubject,sSubject;
+    private String lsubject,ssubject;
     private String startTime, endTime;
     
     
-	public String getlSubject() {
-		return lSubject;
+	public String getLsubject() {
+		return lsubject;
 	}
-	public void setlSubject(String lSubject) {
-		this.lSubject = lSubject;
+	public void setLsubject(String lsubject) {
+		this.lsubject = lsubject;
 	}
-	public String getsSubject() {
-		return sSubject;
+	public String getSsubject() {
+		return ssubject;
 	}
-	public void setsSubject(String sSubject) {
-		this.sSubject = sSubject;
+	public void setSsubject(String ssubject) {
+		this.ssubject = ssubject;
 	}
 	public int getUserIdx() {
 		return userIdx;

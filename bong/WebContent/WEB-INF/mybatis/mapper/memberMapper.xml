@@ -89,7 +89,7 @@ LEFT OUTER JOIN club_apply_memlist_52 cam ON ca.clubapplyidx=cam.clubapplyidx
 LEFT OUTER JOIN volun_bbs vb ON vb.volunidx=ca.volunidx 
 LEFT OUTER JOIN theme t1 ON vb.themenum=t1.themenum            
 LEFT OUTER JOIN theme t2 ON t1.PARENT=t2.themenum 
-where userIdx='44' ;
+where userIdx='44'
 <if test="searchValue != null and searchValue != ''">
          AND
 	     <include refid="where-list"/>

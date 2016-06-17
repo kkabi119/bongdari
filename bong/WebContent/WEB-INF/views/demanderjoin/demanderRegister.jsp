@@ -9,7 +9,15 @@
 
 <script type="text/javascript" src="<%=cp%>/res/js/util.js"></script>
 <script type="text/javascript" src="<%=cp%>/res/js/fileinput.js"></script>
-
+<style>
+.control-label{
+	font-size: 15pt;
+	color: #6f6a6a;
+}
+.form-group{
+border-bottom: 1px solid #ece8e8;
+}
+</style>
 <script type="text/javascript">
 $(function(){
 	$('.fileinput').fileinput();
@@ -251,11 +259,11 @@ function selectDemanderZip(zip){
 </script>
 
 
-<div class="container" role="main" style="margin-top:50px;">
+<div class="container" role="main" style="width:85%; margin-top:50px; border-top: 5px solid gray">
 
   <div class="bodyFrame">
   <form class="form-horizontal" name="demanderjoinForm" method="post" onsubmit="return demanderRegister();" enctype="multipart/form-data">
-    <div class="form-group" style="margin-bottom:0px;">
+    <div class="form-group" style="margin-bottom:0px;  padding-top:20px; padding-bottom:20px;">
         <label class="col-sm-2 control-label" for="userId">아이디</label>
         <div class="col-sm-7">
             <input style="width:200px;"class="form-control" id="userId" name="userId" type="text" 
@@ -265,7 +273,7 @@ function selectDemanderZip(zip){
         </div>
     </div>
  
-    <div class="form-group" style="margin-bottom:0px;">
+    <div class="form-group" style="margin-bottom:0px; padding-top:20px;">
         <label class="col-sm-2 control-label" for="userPwd">패스워드</label>
         <div class="col-sm-7">
             <input style="width:200px;  " class="form-control" id="userPwd" name="userPwd" type="password" placeholder="비밀번호">
@@ -273,7 +281,7 @@ function selectDemanderZip(zip){
         </div>
     </div>
     
-    <div class="form-group">
+    <div class="form-group" style="padding-top:20px;">
         <label class="col-sm-2 control-label" for="servicePwdCheck">패스워드 확인</label>
         <div class="col-sm-7">
             <input style="width:200px; "class="form-control" id="servicePwdCheck" name="servicePwdCheck" type="password" placeholder="비밀번호 확인">
@@ -295,7 +303,7 @@ function selectDemanderZip(zip){
         <label class="col-sm-2 control-label" for="serviceImgname">사진</label>
         <div class="col-sm-7">
             <div class="fileinput fileinput-new" data-provides="fileinput" style="float: left;">
-                <div class="fileinput-preview thumbnail" style="width: 130px; height: 150px;"></div>
+                <div class="fileinput-preview thumbnail" style="width: 130px; height: 150px;"><img src="<%=cp%>/res/images/demander/user128.png"></div>
                 <div>
                      <span class="btn btn-default wbtn btn-file"><span class="fileinput-new">이미지 선택</span><span class="fileinput-exists">변경</span><input type="file" name="uploads" id="serviceImgname" accept="image/png, image/jpeg, image/gif"></span>
                      <a href="#" class="btn btn-default wbtn fileinput-exists" data-dismiss="fileinput">삭제</a>
@@ -330,7 +338,7 @@ function selectDemanderZip(zip){
 
 <div class="form-group">
         <label class="col-sm-2 control-label" for="userEmail">이메일</label>
-        <div class="col-sm-10" style="margin-top:0px;">
+        <div class="col-sm-10" style="padding-bottom: 10px;">
         <table>
         <tr>
         <td>
@@ -345,8 +353,9 @@ function selectDemanderZip(zip){
       </td>
       <td>
        <input style="width:150px; float:left; margin-right:10px;" type="text" name="email1" size="13" 
-             maxlength="30" id="email1"  class="form-control" value="${dto.email1}">@&nbsp;&nbsp;
-       </td>
+             maxlength="30" id="email1"  class="form-control" value="${dto.email1}"><div class="col-sm-1" style="width: 1%; padding-left: 5px; padding-right: 10px;">
+                         <p class="form-control-static">@</p>
+                         </div>
        <td>      
        <input style="width:150px;  float:left; margin-right:10px; " type="text" name="email2" size="13"
              maxlength="30" id="email2"  class="form-control" value="${dto.email2}" readonly="readonly">
@@ -374,12 +383,12 @@ function selectDemanderZip(zip){
 			  <p style="clear:both" class="help-block"> 주요활동분야 혹은 관심분야를 지정해주세요</p>
         </div>
     </div> --%>
-    <div class="form-group" >
+    <div class="form-group" style="padding-bottom:15px;">
         <label class="col-sm-2 control-label" for="tel1">기관번호</label>
         <div class="col-sm-7">
              <div class="row" >
-                  <div class="col-sm-3" style="padding-right: 5px;">
-                    <select class="form-control" style="width:130px; float: left; margin:0px; padding:0px;"id="tel1" name="tel1" >
+                  <div class="col-sm-3" style="padding-left: 5px; padding-right: 5px;">
+                    <select class="form-control" id="tel1" name="tel1">
                         <option value="">선 택</option>
                         <option value="02" ${dto.tel1=="02" ? "selected='selected'" : ""}>02</option>
                         <option value="031" ${dto.tel1=="031" ? "selected='selected'" : ""}>031</option>
@@ -410,22 +419,22 @@ function selectDemanderZip(zip){
     </div>  
     <div class="form-group">
         <label class="col-sm-2 control-label" for="serviceAddr">주소</label>
-        <div class="col-sm-7">
-             <input class="form-control" id="addr1" name="addr1" type="text" placeholder="기본주소" value="${dto.addr1}" readonly="readonly">
-            <input class="form-control" id="addr2" name="addr2" type="text" placeholder="상세주소" value="${dto.addr2}">
-         <button type="button" onclick="searchDemanderAddr()" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;">
+        <div class="col-sm-7" style="padding-bottom:15px;">
+             <input style="padding-bottom:1px;" class="form-control" id="addr1" name="addr1" type="text" placeholder="기본주소" value="${dto.addr1}" readonly="readonly">
+            <input style="margin-top:5px;" class="form-control" id="addr2" name="addr2" type="text" placeholder="상세주소" value="${dto.addr2}">
+         <button type="button" onclick="searchDemanderAddr()" class="btn btn-info btn-sm btn-search" style="margin-top:5px; margin-right:20px; height:40px; width:130px;">
                   주소검색<span class="glyphicon glyphicon-ok"></span></button>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="padding-bottom:15px;">
         <label class="col-sm-2 control-label" for="serviceIntro">수요처 소개</label>
         <div class="col-sm-7">
         <textarea class="form-control" rows="5" cols="80" id="serviceIntro" name="serviceIntro" placeholder="수요처소개">${dto.serviceIntro}</textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="padding-bottom:15px; border-bottom: 5px solid gray">
         <label class="col-sm-2 control-label" for="agree">약관 동의</label>
-        <div class="col-sm-7 checkbox">
+        <div class="col-sm-7 checkbox" >
             <label>
                 <input id="agree" name="agree" type="checkbox" checked="checked"
                          onchange="form.sendButton.disabled = !checked"> <a href="#">이용약관</a>에 동의합니다.
@@ -434,7 +443,7 @@ function selectDemanderZip(zip){
     </div>
 
     
-<div class="form-group">
+<div class="form-group" style="padding-bottom:15px; ">
   <div class="col-sm-offset-2 col-sm-10">
       <c:if test="${mode=='created'}">
             <button type="submit" name="sendButton" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;">
@@ -451,7 +460,7 @@ function selectDemanderZip(zip){
     </div>
 </div>
 
-  <div class="form-group">
+  <div class="form-group" style="border: none;">
         <div class="col-sm-offset-2 col-sm-10">
                 <p style=" text-align:center; color:tomato; font-weight:bold; font-size:13px; "class="form-control-static">${message}</p>
         </div>

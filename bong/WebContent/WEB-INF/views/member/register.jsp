@@ -224,7 +224,7 @@ function selectZip(zip){
 
   <div class="bodyFrame" >
   <form class="form-horizontal" name="memberForm" method="post" onsubmit="return register();" enctype="multipart/form-data">
-    <div class="form-group" style="margin-bottom:0px;">
+    <div class="form-group" style="margin-bottom:0px; padding-top:20px; padding-bottom:20px;">
         <label class="col-sm-2 control-label" for="userId">아이디</label>
         <div class="col-sm-7">
             <input style="width:200px;"class="form-control" id="userId" name="userId" type="text" 
@@ -234,7 +234,7 @@ function selectZip(zip){
         </div>
     </div>
  
-    <div class="form-group">
+    <div class="form-group" style="margin-bottom:0px; padding-top:20px;">
         <label class="col-sm-2 control-label" for="userPwd">패스워드</label>
         <div class="col-sm-7">
             <input style="width:200px;  " class="form-control" id="userPwd" name="userPwd" type="password" placeholder="비밀번호">
@@ -242,7 +242,7 @@ function selectZip(zip){
         </div>
     </div>
     
-    <div class="form-group">
+    <div class="form-group" style="padding-top:20px;">
         <label class="col-sm-2 control-label" for="userPwdCheck">패스워드 확인</label>
         <div class="col-sm-7">
             <input style="width:200px; "class="form-control" id="userPwdCheck" name="userPwdCheck" type="password" placeholder="비밀번호 확인">
@@ -370,13 +370,13 @@ function selectZip(zip){
             </button>
         </div>
     </div>
-    <div class="form-group" >
+    <div class="form-group" style="padding-bottom:15px;">
         <label class="col-sm-2 control-label" for="userJob">직업</label>
         <div class="col-sm-2" style="padding-bottom: 10px">
             <input class="form-control" id="userJob" name="userJob" type="text" placeholder="직업" value="${dto.userJob}">
         </div>
     </div>
-    <div class="form-group" style="border-bottom: 5px solid gray">
+    <div class="form-group" style="padding-bottom:15px; border-bottom: 5px solid gray">
        <label class="col-sm-2 control-label" for="userGender">성별</label>
        <div class="col-sm-2" style="padding-bottom: 10px">
         <input type="radio" name="userGender" value="남자" id="male" checked>남자
