@@ -194,7 +194,7 @@ hr:LAST-CHILD {
         
    </div>
 
-    <hr style="margin-left:35px; margin-top:0px; margin-bottom:-1px; width:98%; border-top:1px solid #DADADA;">
+    <hr style="margin-left:35px; margin-top:0px; margin-bottom:-1px; width:98%; border-top:2px solid #cecece">
   
    </c:forEach>
     </c:if> 

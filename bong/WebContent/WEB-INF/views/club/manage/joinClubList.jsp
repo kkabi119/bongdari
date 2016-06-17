@@ -107,10 +107,13 @@ function joinClubOk(){
         data:  $("#joinClubForm").serialize() , 
 		// 파라메터 정보 전달  form에 있는 name들을 한번에 보낼 수 있음 우왕귿귿
         success:function(data){
+        	confirm("가입승인이 완료되었습니다!");
         	var url="<%=cp%>/club/${clubSeq}/manage/joinClubList";
+        	
         	$.get(url, {}, function(data){
         		var id="#tabContent2";
         		$(id).html(data);
+        		
         	});
         },
         error:function(e) {
