@@ -27,10 +27,10 @@ function searchList() {
 }
 /* 후기게시판 리스트row */
  .row2 {
-   margin-top: 0px;
+   margin-top: 5px;
    margin-bottom: 0px;
    margin-left: 20px;
-   height: 225px;
+   height: 255px;
    width: 100%;
 } 
 /* 후기게시판 타이틀 */
