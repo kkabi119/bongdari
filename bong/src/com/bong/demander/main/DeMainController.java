@@ -118,6 +118,22 @@ public class DeMainController {
 		return mav;
 	}
 	
+	/*
+	@RequestMapping(value="/demander/{demander_seq}/map")
+	@ResponseBody
+	public Map<String, Object> mapsLayout(
+			HttpSession session,
+			@PathVariable int demander_seq
+			) throws Exception {
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("demander_seq", demander_seq);
+		
+		
+		return map;
+	}
+	*/
+	
 	@RequestMapping(value="/demander/{demander_seq}/left")
 	@ResponseBody
 	public Map<String, Object> clubLeft(

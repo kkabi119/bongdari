@@ -7,83 +7,132 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
+ <head>
 
-<style type="text/css">
-.modal-body{
-}
-.col-md-9{
-			margin-top:-25px;
+        
+<script type="text/javascript">
+
+/* $(function() {
+	$("#map").hide();
+});  */
+
+function initMap() {
+	  var cairo = {lat: 37.605859, lng: 126.907279};
+	  var map = new google.maps.Map(document.getElementById('map'), {
+	    scaleControl: true,
+	    center: cairo,
+	    zoom: 15
+	  });
+	 
+	  var infowindow = new google.maps.InfoWindow;
+	  infowindow.setContent('<b>지도</b>');
+
+	  var marker = new google.maps.Marker({map: map, position: cairo});
+	  marker.addListener('click', function() {
+	    infowindow.open(map, marker);
+	  });
+	}
+
+$(function mainResult() {
+	$("#mapBtn").click(function() {
+		if($("#map").is(':visible')) {
+			$("#map").hide("fast");
+			$("#listClosed").val("1");
+		} else {
+			$("#map").show("fast");
+			$("#listClosed").val("0");
 		}
-/* 수정삭제는 관리자만 보이도록한다 
- */
+	});
+}); 
+
+</script>
+<style type="text/css">
+.modal-body {
+	
+}
+
+.col-md-9 {
+	margin-top: -25px;
+}
+
 .bbs-reply {
-    border-top: #3897f0 solid 2px; 
-    border-bottom: #3897f0 solid 2px; padding:15px;
-    margin-bottom:70px;
+	border-top: #3897f0 solid 2px;
+	border-bottom: #3897f0 solid 2px;
+	padding: 15px;
+	margin-bottom: 70px;
 }
 
-.bbs-reply-write {   
-   border-bottom: #ddd solid 2px; 
-    padding: 10px;
-    min-height: 50px;
+.bbs-reply-write {
+	border-bottom: #ddd solid 2px;
+	padding: 10px;
+	min-height: 50px;
 }
 
-.table{
-	 margin-top: 10px;
-	 border-top: 3px solid #FFBB00;
-	 border-bottom: 3px solid #FFBB00;
+.table {
+	margin-top: 10px;
+	border-top: 3px solid #FFBB00;
+	border-bottom: 3px solid #FFBB00;
 }
 
-
-.table>tbody>tr>td{
- padding-top: 13px;
- border-bottom: 1px solid #969494;
+.table>tbody>tr>td {
+	padding-top: 13px;
+	border-bottom: 1px solid #969494;
 }
 
-.table>tr{
-	font-size:20px; text-align: center;
-	 padding:14px; 
+.table>tr {
+	font-size: 20px;
+	text-align: center;
+	padding: 14px;
 }
 
-#td1{
-border-right: 1px solid #969494;
-}
-.icon-wrapper{
-box-shadow:none;
-background-color: #4FCCCD;
-}
-.icon-wrapper:hover{
-	background-color:#4FCCCD;
+#td1 {
+	border-right: 1px solid #969494;
 }
 
+.icon-wrapper {
+	box-shadow: none;
+	background-color: #4FCCCD;
+}
 
-.form-control{
-	border-radius:0px;
-	height:120px;
-	font-weight:lighter;
-	font-size:15px;
-	border:none;
+.icon-wrapper:hover {
+	background-color: #4FCCCD;
+}
+
+.form-control {
+	border-radius: 0px;
+	height: 120px;
+	font-weight: lighter;
+	font-size: 15px;
+	border: none;
 	border-bottom: 1px solid #ddd;
-	resize:none;
+	resize: none;
 }
-.form-control:hover, .form-control:focus{
 
-	border-bottom: 1px solid #999;'
+.form-control:hover, .form-control:focus {
+	border-bottom: 1px solid #999;
+	'
 }
 
 .btn {
-	border-radius:2px;
+	border-radius: 2px;
 }
 
-.icon-wrapper:hover{
+.icon-wrapper:hover {
 	background-color: gray;
 }
-.modal-body{
- background-color: #F5F5F5;
+
+.modal-body {
+	background-color: #F5F5F5;
+}
+
+
+#map {
+	height: 100%;
 }
 </style>
-
-
+</head>
+  
+  
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
 			<div class="single-blog two-column">
@@ -154,7 +203,11 @@ background-color: #4FCCCD;
                         	 	<span style="color:#969494; font-weight: bold;">주소</span>	
                         	</td>
                         	<td bgcolor="#FFFFFF" style="color:black; border-top:none;text-align: left; height:45px;  ">
-                   			 ${mainProfile.serviceAddr}
+                   			 ${mainProfile.serviceAddr} <br>
+                   			 <a href="#" id="mapBtn" class="btn btn-default" style="background:#e8e8e8; color:#191780; font-weight: bold; float: right;">
+                   			 <span class="glyphicon glyphicon-globe"></span>&nbsp;지도</a>
+                   			
+                   			 
                         	</td>
                         </tr>
                </table>
@@ -163,6 +216,8 @@ background-color: #4FCCCD;
           </header>
           <!-- 프로필 끝-->             
     </div>
+    
+    <div id="map"  style="width: 100%; height: 400px"></div>
     
     
     </div>
@@ -257,25 +312,13 @@ background-color: #4FCCCD;
             </div>
 
             </div>
-            
-        <!--     <div class="blog-pagination">
-                        <ul class="pagination">
-                          <li><a href="#">left</a></li>
-                          <li><a href="#">1</a></li>
-                          <li><a href="#">2</a></li>
-                          <li class="active"><a href="#">3</a></li>
-                          <li><a href="#">4</a></li>
-                          <li><a href="#">5</a></li>
-                          <li><a href="#">6</a></li>
-                          <li><a href="#">7</a></li>
-                          <li><a href="#">8</a></li>
-                          <li><a href="#">9</a></li>
-                          <li><a href="#">right</a></li>
-                        </ul>
-                    </div> -->
-                 </div>
+                 
      <script>
     $('.carousel').carousel({
         interval: 5000 //changes the speed
     })
-    </script>
+    
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvgmWAe4kSDGxv3uC05WwSuJa5M2Jpuug&callback=initMap"
+        async defer></script>
+    
