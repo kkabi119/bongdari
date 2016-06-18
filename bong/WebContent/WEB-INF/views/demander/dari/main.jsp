@@ -285,7 +285,7 @@ $(function mainResult() {
                     <div class="panel-body">
                         <ul type="disc">
                            <c:forEach var="revList" items="${revList}">
-                        	<li style="padding-bottom: 2px; font-size: 14px;"><a href="${urlRevArticle}&num=${revList.serviceReviewIdx}" >${revList.subject}</a></li>
+                        	<li style="padding-bottom: 2px; font-size: 14px; "><a href="${urlRevArticle}&num=${revList.serviceReviewIdx}" style="color:#0e0d44; font-weight: 700;" >${revList.subject}</a></li>
                           </c:forEach> 
                         	<li style="padding-top: 5px;"><a href="${urlRevList}" class="btn btn-default" style="text-align: right">더보기</a></li>
                         </ul>
@@ -302,7 +302,7 @@ $(function mainResult() {
                         <ul type="disc">
                     
                            <c:forEach var="volList" items="${volunList}">
-                        	<li style="padding-bottom: 2px; font-size: 14px;"><a href="${urlVolList}" >${volList.subject}</a></li>
+                        	<li style="padding-bottom: 2px; font-size: 14px;"><a href="${urlVolList}" style="color:#0e0d44; font-weight: 700;">${volList.subject}</a></li>
                           </c:forEach> 
                         	<li style="padding-top: 5px;"><a href="${urlVolList}" class="btn btn-default" style="text-align: right">더보기</a></li>
                        
