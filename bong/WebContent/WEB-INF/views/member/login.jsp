@@ -110,7 +110,7 @@ function demanderJoin(){
 <style>
 .padding-top{
 	padding-top:0px;
-	min-height:450px;
+	min-height:630px;
 }
 </style>
 </head>

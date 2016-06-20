@@ -401,11 +401,14 @@ ul.sub-menu {
 **************************/
 
 #footer {
-  padding-bottom: 10px;
-  background-image: url(../images/home/footer.png);
+  padding-bottom: 0px;/* 
+  background-image: url(../images/home/footer.png); */
   background-repeat: repeat-x;
   background-position: bottom;
   background-size: contain;
+  margin:0px;
+  padding:0px;
+  
 }
 
 #footer h1{

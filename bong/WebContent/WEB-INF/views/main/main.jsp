@@ -63,7 +63,7 @@
                 <div class="col-sm-3 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
                     <div class="single-service" style="color:#555; ">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
-                          <a href="#">  <img style="border-radius:100%; width:120px; height:120px;"src="<%=cp%>/res/images/happy.png" alt=""></a>
+                          <a href="#">  <img style="border-radius:100%; width:95px; height:95px;"src="<%=cp%>/res/images/happy.png" alt=""></a>
                         </div>
                         <h2 style="font-size:22px;font-size:22px; font-weight:600;">봉다리 메인</h2>
                        <!--  <p style="font-weight:400">이번 달의 포토와 후기를 칭찬해주세요 </p> -->
@@ -72,7 +72,7 @@
                 <div class="col-sm-3 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
                     <div class="single-service">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
-                              <a href="#">  <img style="border-radius:100%; width:130px; height:120px;"src="<%=cp%>/res/images/search1.png" alt=""></a>
+                              <a href="#">  <img style="border-radius:100%; width:105px; height:95px;"src="<%=cp%>/res/images/search1.png" alt=""></a>
                         </div>
                         <h2 style="font-size:22px;font-weight:600;">동아리 찾기</h2>
                       <!--   <p> 우리 지역 봉다리에 참여하세요 </p> -->
@@ -81,7 +81,7 @@
                 <div class="col-sm-3 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
                     <div class="single-service">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
-                             <a href="#">  <img style="border-radius:100%; width:130px; height:120px;"src="<%=cp%>/res/images/search2.png" alt=""></a>
+                             <a href="#">  <img style="border-radius:100%; width:105px; height:95px;"src="<%=cp%>/res/images/search2.png" alt=""></a>
                         </div>
                           <h2 style="font-size:22px;font-weight:600;">수요처 찾기</h2>
           <!--               <p> 지금 관심있는 수요처를 찾아보세요</p> -->
@@ -91,7 +91,7 @@
                 <div class="col-sm-3 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
                     <div class="single-service">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
-                              <a href="#">  <img style=" width:130px; height:120px;"src="<%=cp%>/res/images/calendar1.png" alt=""></a>
+                              <a href="#">  <img style=" width:105px; height:95px;"src="<%=cp%>/res/images/calendar1.png" alt=""></a>
                         </div>
                           <h2 style="font-size:22px;font-weight:600; "> 봉사 달력</h2>
                       <!--   <p> 나에게 맞는 봉사활동을 찾을 수 있어요 </p> -->
@@ -102,7 +102,7 @@
         </div>
     </section>
     <!--/#services-->
-
+<%-- 
     <section id="action" class="responsive">
         <div class="vertical-center">
              <div class="container">
@@ -191,5 +191,5 @@
                 </div>
             </div>
         </div>
-     </section>
+     </section> --%>
     <!--/#clients-->

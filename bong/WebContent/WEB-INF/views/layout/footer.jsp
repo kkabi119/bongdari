@@ -7,11 +7,12 @@
 %>
 
 
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 text-center bottom-separator">
-                    <img src="<%=cp%>/res/images/home/under.png" class="img-responsive inline" alt="">
-                </div>
+        <div class="container" style="width:100%; margin:0px; padding:0px; ">
+           <img src="<%=cp%>/res/images/footerImg.png" style="width:100%; height:130px;"alt="">
+           <%-- <div class="row">
+                <div class="col-sm-12 text-center bottom-separator"> 
+                 
+                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="testimonial bottom">
                         <h2>Testimonial</h2>
@@ -77,6 +78,6 @@
                         <p>&copy; Your Company 2014. All Rights Reserved.</p>
                         <p>Designed by <a target="_blank" href="http://www.themeum.com">Themeum</a></p>
                     </div>
-                </div>
+                </div> --%>
             </div>
         </div>
