@@ -27,6 +27,7 @@ function enter(where){
 		where.focus();
 	}
 }
+
 function demanderUpdate() {
    var f = document.demanderUpdateForm;
    var str;
@@ -60,14 +61,14 @@ function demanderUpdate() {
     str = f.userName.value;
     str = $.trim(str);
 
-    if(!/^[\uac00-\ud7a3]{2,4}$/g.test(str)) {
+    if(!/^[\uac00-\ud7a3]{2,5}$/g.test(str)) {
        $("#userName + .help-block").html("<span style='color:red;'>이름을 확인해주세요! <span>");
         f.userName.focus();
         return false;
     }  
     else {
-      $("#userName + .help-block").html("이름은 한글로 2자이상 4자 이하입니다.");
-   }    */
+      $("#userName + .help-block").html("이름은 한글로 2자이상 5자 이하입니다.");
+   }  
     str=f.uploads.value;
     if(str){
     	if(! isImageFile(f.uploads.value)){
@@ -128,9 +129,7 @@ function demanderUpdate() {
           f.action = "<%=cp%>/member/register";
     } else if(mode=="update") {
        f.action = "<%=cp%>/demander/${demander_seq}/admin/tab3";
-       
     }
-
     return true;
 }
 function changeEmail() {

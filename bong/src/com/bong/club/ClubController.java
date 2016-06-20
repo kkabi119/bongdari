@@ -165,7 +165,9 @@ public class ClubController {
 		map.put("end", 5);
 		map.put("clubSeq", clubSeq);
 		List<Notice> listN=noticeService.listNoticeSmall(map);
+		int dataCountN=noticeService.dataCount(map);
 		List<ClReview> listR=reviewService.listReviewSmall(map);
+		int dataCountR=reviewService.dataCount(map);
 		
 		ClubInfo clubInfo=clubService.readClubInfoSmall(map);
 		
@@ -252,6 +254,8 @@ public class ClubController {
 		mav.addObject("listN", listN);
 		mav.addObject("listR", listR);
 		mav.addObject("urlListN", urlListN);
+		mav.addObject("dataCountN",dataCountN);
+		mav.addObject("dataCountR",dataCountR);
 		mav.addObject("urlListR", urlListR);
 		mav.addObject("urlArticleN", urlArticleN);
 		mav.addObject("urlArticleR", urlArticleR);
