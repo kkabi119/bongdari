@@ -154,8 +154,11 @@ function applyCheckOk(){
 
 
 
-<table class="table table-bordered table-striped table-hover" style="background-color:white; border-radius:3px;">
-<tr><td colspan="7" style="text-align:left;"> &nbsp; &nbsp;&nbsp;&nbsp;우리동아리는 현재 총 <span style="color:orange; font-weight:bold;">${n}명</span>이 신청하였습니다</td></tr>
+<table class="table table-bordered table-striped table-hover" style="background-color:white; border-radius:3px; margin-bottom:30px; ">
+<tr>
+	<td colspan="7" style="font-weight:600; text-align:center; font-size:16px;">
+		<img style=" width:35px; height:35px; background-size:cover; "src="<%=cp%>/res/images/myclub/team.png" alt="">
+		우리동아리는 현재 총 <span style="color:orange; font-weight:bold;">${n}명</span>이 신청하였습니다</td></tr>
   <tr style="" >
  <!--      <th width="5%;" data-toggle="buttons">
 				<label class="btn btn-default" style="width:20px;; height:20px; padding:0px;">
@@ -193,28 +196,36 @@ function applyCheckOk(){
 	
 </table>
 <c:if test="${enabled==0}">
-<div class="col-md-12">
+<div class="col-md-12" style="margin-bottom:35px; padding:8px;  border-bottom:3px solid #ccc;">
 
-	<label class="col-md-12" style="margin-bottom:10px;">내가 신청한 날짜</label> 
-	<c:forEach var="mdto" items="${myList}">
-		<c:if test="${sessionScope.member.userIdx==mdto.userIdx}">
-			<div id="checked_${mdto.hopeDate}" class="col-md-3" style="font-size:15pt; margin-bottom:10px;">${mdto.hopeDate}<a onclick='deleteDate("${mdto.hopeDate}");'>X</a></div>
-		</c:if>
-	</c:forEach>
+	<span style=" border-radius:2px; font-size:20px; color:#777; font-weight:bold;">
+			<img Id="listBtn"style=" width:22px; height:22px; background-size:cover; "src="<%=cp%>/res/images/myclub/calendar.png" alt="">
+		           내가 신청한 봉사일
+	<span style="margin-left:10px;color:gray; font-size:15px; font-weight:500">취소를 원한다면 x를 눌러주세요 </span></span>
+	
+		<!-- <label class="col-md-12" style="margin-bottom:10px;">내가 신청한 날짜</label>  -->
+		<c:forEach var="mdto" items="${myList}">
+			<c:if test="${sessionScope.member.userIdx==mdto.userIdx}">
+		
+				<div id="checked_${mdto.hopeDate}" class="col-md-3" 
+						style="font-size:14px; margin-top:15px; margin-bottom:10px; display:none; color:#3897f0; ">
+					${mdto.hopeDate}<a onclick='deleteDate("${mdto.hopeDate}");'>X</a>
+				</div>
+			</c:if>
+		</c:forEach>
 </div>
 </c:if>
 <div>
-	<button type="button" class="btn btn-success" data-dismiss="modal" style="padding: 10px 15px; background-color: #3897f0; border:none; float:right;">
-		 닫기
-	 </button>
+	
 	 <c:if test="${enabled==0}">
-	<button type="button" onclick="deleteCheckOk();" class="btn btn-success" style="margin-right:10px; padding: 10px 15px; background-color: #3897f0; border:none;float:right;">
-		 취소하기
+	<button type="button" onclick="deleteCheckOk();" class="btn btn-default"
+				 style="background-color:#777; color: white; margin-right:0px; padding: 14px 20px; border-color:#777777; ;float:right;">
+		 봉사 취소 
 	 </button>
 	 </c:if>
 	 <c:if test="${sessionScope.member.userId==clubUserId && enabled==0}">
-	 <button type="button" onclick="applyCheckOk();" class="btn btn-success" style="margin-right:10px; padding: 10px 15px; background-color: #3897f0; border:none;float:right;">
-		 수요처로 목록 넘기기(마감)
+	 <button type="button" onclick="applyCheckOk();" class="btn btn-success" style="margin-right:10px; padding: 14px 20px; background-color: #3897f0; border:none; float: right;">
+		 봉사신청 마감
 	 </button>
 	 </c:if>
 </div>

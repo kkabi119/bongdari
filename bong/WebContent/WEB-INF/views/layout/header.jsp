@@ -16,8 +16,10 @@
     }
 
 #header .navbar-nav.navbar-right >li a{
-	font-weight: 500;
-}
+	font-weight: 600;
+	color:#58585a;
+	
+	}
 .social-icons ul li a{
 	font-size:16px;
 }
@@ -70,9 +72,9 @@ $(document).ready(function($) {
                 </div>
              </div>
         </div>
-        <div class="navbar navbar-inverse" role="banner">
+        <div class="navbar navbar-inverse" role="banner" >
             <div class="container">
-                <div class="navbar-header">
+                <div class="navbar-header" style="margin-left:-10px;">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
@@ -80,8 +82,8 @@ $(document).ready(function($) {
                         <span class="icon-bar"></span>
                     </button>
 
-                    <a class="navbar-brand" href="<%=cp%>/"  style="margin-top:-12px;">
-                       <h1><img src="<%=cp%>/res/images/logo.png" alt="logo"></h1>
+                    <a class="navbar-brand" href="<%=cp%>/"  style="margin-top:-9px; ">
+                       <h1><img style="height:55px; width:185px;"src="<%=cp%>/res/images/logo4.png" alt="logo"></h1>
                     </a>
                     
                 </div>
