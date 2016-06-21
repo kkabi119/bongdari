@@ -7,8 +7,8 @@
 %>
 
 
-        <div class="container" style="width:100%; margin:0px; padding:0px; ">
-           <img src="<%=cp%>/res/images/footerImg.png" style="width:100%; height:130px;"alt="">
+        <div class="container" style="margin-top:50px; width:100%; margin:0px; padding:0px; ">
+           <img src="<%=cp%>/res/images/footerImg.png" style="width:100%; height:135px;"alt="">
            <%-- <div class="row">
                 <div class="col-sm-12 text-center bottom-separator"> 
                  
