@@ -10,7 +10,7 @@
 	<form class="form-horizontal">
 		<div class="col-md-12">
 				<div class="col-md-5" style="text-align: left;">
-					<img src="<%=cp%>/uploads/club/${dto.img}"
+					<img src="<%=cp%>/uploads/club/${dto.clubIdx}/${dto.img}"
 						style="width: 150px; height: 150px;">
 				</div>
 				<div class="col-md-7" style=" padding-bottom : 10px;">
