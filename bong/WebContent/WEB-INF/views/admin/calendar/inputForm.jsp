@@ -384,7 +384,7 @@
 		
 		<div class="form-group">
 			<label class="col-md-2 control-label">파일 업로드</label>
-			<div class="col-md-10" id="schUserName">
+			<div class="col-md-10" id="fileUpload">
 				<p class="form-control-static">파일 업로드 하는곳</p>
 			</div>
 		</div>

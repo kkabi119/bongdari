@@ -1,5 +1,6 @@
 package com.bong.cal;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,22 +46,22 @@ public class calController {
 	
 	// 일정 입력 (봉사일정 올리기)
 	@RequestMapping(value="/cal/insertSchedule", method=RequestMethod.POST)
-	@ResponseBody
 	public String insertSchedule(HttpSession session, Schedule dto) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		String root = session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"volunbbs";
 		dto.setServiceIdx(info.getDemander_seq());
-		calService.insertVolunbbs(dto);
+		calService.insertVolunbbs(dto, pathname);
 		
 		String[] eachDayArray = dto.getEachDayArray().split(",");
 		String[] eachDayValueArray = dto.getEachDayValueArray().split(",");
-		int a = eachDayValueArray.length;
 		for(int i=0;i<(eachDayValueArray.length-2);i++){
 			dto.setEachDay(eachDayArray[i]);
 			dto.setEachDayValue(eachDayValueArray[i]);
 			calService.insertVolunbbsEach(dto);
 		}
 		
-		return "";
+		return "redirect:/demander/"+dto.getServiceIdx()+"/schedule";
 	}
 	
 	@RequestMapping(value="/cal/eachDayInsert")
