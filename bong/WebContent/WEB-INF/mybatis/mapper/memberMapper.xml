@@ -83,7 +83,7 @@
 	    ) WHERE rnum >= #{start}
 	]]> -->    
 SELECT DISTINCT vb.volunidx, cam.useridx, clubidx, vb.subject, 
-vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_type, vb.volunDays ,vb.themenum ,t2.subject lsubject, t1.subject ssubject
+vb.startDay, vb.endDay, SUBSTR(vb.place, 1, 5) place, vb.progress, vb.volunteer_type, vb.volunDays ,vb.themenum ,t2.subject lsubject, t1.subject ssubject
 FROM club_apply_52 ca 
 LEFT OUTER JOIN club_apply_memlist_52 cam ON ca.clubapplyidx=cam.clubapplyidx 
 LEFT OUTER JOIN volun_bbs vb ON vb.volunidx=ca.volunidx 
