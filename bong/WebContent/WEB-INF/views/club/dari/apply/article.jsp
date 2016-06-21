@@ -105,6 +105,37 @@ $(function(){
 			});		
 	});
 });
+
+/////////////////////////////////////지도관련
+
+$(function mainResult() {
+	$("#mapBtn").click(function() {
+		if($("#map").is(':visible')) {
+			$("#map").hide("fast");
+		} else {
+			$("#map").show("fast");
+		}
+	});
+}); 
+
+function initMap() {
+	/* 서울특별시 서초구 효령로 238 서초신동교회 1층 로뎀홀: 37.483621, 127.010225 */
+	  var cairo = {lat: 37.483621, lng: 127.010225};
+	  var map = new google.maps.Map(document.getElementById('map'), {
+	    scaleControl: true,
+	    center: cairo,
+	    zoom: 15
+	  });
+	 
+	  var infowindow = new google.maps.InfoWindow;
+	  infowindow.setContent('<b>지도</b>');
+	  
+	  var marker = new google.maps.Marker({map: map, position: cairo});
+	  marker.addListener('click', function() {
+	    infowindow.open(map, marker);
+	  });
+	}
+
 </script>
 <script type="text/javascript">
 ///////////////////////////////////////////////////////////////		댓글관련
@@ -378,12 +409,13 @@ function deleteApply() {
                             		<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;봉사장소
                             </td>
                             <td colspan="6" style="text-align: left; width:200px; height:45px; ">
-                            	${dto.place } <a href="#" > [지도]</a>
+                            	${dto.place} <a href="#" id="mapBtn"> [지도]</a>
                             </td>
                         </tr>
                       <tr>
                             <td colspan="7" style="border-top:2px solid #6D6D6D;  padding:50px 20px 50px 20px; line-height:20pt;">
-                               ${dto.content }
+                            <div id="map"  style="width: 100%; height: 400px"></div>
+                               ${dto.content}
                             </td>
                         </tr>
                         <tr>
@@ -561,3 +593,7 @@ function deleteApply() {
 	    </div>
 	  </div>
 	</div>
+	
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvgmWAe4kSDGxv3uC05WwSuJa5M2Jpuug&callback=initMap"
+        async defer></script>
+    

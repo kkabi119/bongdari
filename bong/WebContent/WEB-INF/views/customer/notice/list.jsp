@@ -49,19 +49,25 @@ function searchList() {
 			<div class="single-blog two-column">
 				<div class="post-content overflow">
  					<div class="bodyFrame2">
-          				<h1 style="color:#F0AD4E;"><i class="fa fa-bell"></i>공지사항 </h1>
+          				
     		<c:if test="${dataCount!=0 }">
-    					<div style="clear: both; height: 30px; line-height: 30px; color:#807F7F;">
-            				<div style="float: left;">${dataCount}개(${page}/${total_page} 페이지)</div>
+    			<div style="clear: both; height: 30px; line-height: 30px; margin-bottom: 10px;">
+            				<div style="float: left; color:#68cabb; font-size: 13pt;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
+            					전체 ${dataCount}개 <span style="color:#777;">(${page}/${total_page}  페이지)</span> 
+            					</div> 
             				<div style="float: right;">&nbsp;</div>
         				</div>
+    					<%-- <div style="clear: both; height: 30px; line-height: 30px; color:#807F7F;">
+            				<div style="float: left;">${dataCount}개(${page}/${total_page} 페이지)</div>
+            				<div style="float: right;">&nbsp;</div>
+        				</div> --%>
         
         				<div class="table-responsive" style="clear: both;"> <!-- 테이블 반응형 -->
             				<table class="table table-hover">
-                				<thead style="min-width:100%; font-size:15px; background-color:#FBF7EB; color:#555;">
+                				<thead style="min-width:100%; font-size:15px; background-color:#eaf7f5; color:#555;">
                     				<tr>
                         				<th class="text-center" style="width: 70px;">번호</th>
-                        				<th >제목</th>
+                        				<th class="text-center">제목</th>
                         				<th class="text-center" style="width: 100px;">글쓴이</th>
                         				<th class="text-center" style="width: 100px;">날짜</th>
                        				 	<th class="text-center" style="width: 70px;">조회수</th>
@@ -72,7 +78,8 @@ function searchList() {
                 		<c:forEach var="dto" items="${list}">
 									<tr>
                         				<td class="text-center">${dto.listNum}</td>
-                        				<td><a href="${urlArticle}&num=${dto.noticeIdx}">${dto.subject}</a></td>
+                        				<td><a href="${urlArticle}&num=${dto.noticeIdx}">
+                        				<span class="glyphicon glyphicon-bell" style="padding:5px; color: #ef5b12;"></span>&nbsp;&nbsp;${dto.subject}</a></td>
                         				<td class="text-center" style="font-weight: bold; color:#807F7F;">${dto.userName }</td>
                        				 	<td class="text-center">${dto.created }</td>
                        				 	<td class="text-center">${dto.hitCount }</td>
@@ -98,7 +105,7 @@ function searchList() {
         
         				<div style="clear: both;">
         					<div style="float: left; width: 20%; min-width: 85px;">
-        		    			<button type="button" class="btn btn-warning" onclick="javascript:location.href='<%=cp%>/notice/list';">새로고침</button>
+        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/notice/list';">새로고침</button>
         					</div>
         					<div style="float: left; width: 60%; text-align: center;">
         		     			<form name="searchForm" method="post" class="form-inline">
@@ -109,12 +116,12 @@ function searchList() {
 						      			<option value="created">등록일</option>
 						  			</select>
 						  			<input type="text" class="form-control input-sm input-search" name="searchValue" placeholder="검색" style="width:50%; height:32px;">
-						  			<button type="button" class="btn btn-default btn-sm wbtn" style="color:#F0AD4E;" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
+						  			<button type="button" class="btn btn-info" style="color:white;" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
         		     			</form>
         					</div>
         					<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
         					<c:if test="${sessionScope.member.userId=='admin'}">        				
-        		    			<button type="button" class="btn btn-warning" onclick="javascript:location.href='<%=cp%>/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+        		    			<button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
         		    		</c:if>
         					</div>
         				</div>

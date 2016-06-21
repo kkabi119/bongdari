@@ -12,12 +12,25 @@
         
 <script type="text/javascript">
 
-/* $(function() {
+/*  $(function() {
 	$("#map").hide();
 });  */
 
+$(function mainResult() {
+	$("#mapBtn").click(function() {
+		if($("#map").is(':visible')) {
+			$("#map").hide("fast");
+			
+		} else {
+			$("#map").show("fast");
+			
+		}
+	});
+}); 
+
 function initMap() {
-	  var cairo = {lat: 37.605859, lng: 126.907279};
+	/* 서울특별시 영등포구 여의도동 국회대로74길 19 동우국제빌딩: 37.529873, 126.921955 */
+	  var cairo = {lat: 37.529873, lng: 126.921955};
 	  var map = new google.maps.Map(document.getElementById('map'), {
 	    scaleControl: true,
 	    center: cairo,
@@ -26,24 +39,16 @@ function initMap() {
 	 
 	  var infowindow = new google.maps.InfoWindow;
 	  infowindow.setContent('<b>지도</b>');
-
+	  
 	  var marker = new google.maps.Marker({map: map, position: cairo});
 	  marker.addListener('click', function() {
 	    infowindow.open(map, marker);
 	  });
 	}
 
-$(function mainResult() {
-	$("#mapBtn").click(function() {
-		if($("#map").is(':visible')) {
-			$("#map").hide("fast");
-			$("#listClosed").val("1");
-		} else {
-			$("#map").show("fast");
-			$("#listClosed").val("0");
-		}
-	});
-}); 
+
+
+
 
 </script>
 <style type="text/css">
@@ -317,6 +322,8 @@ $(function mainResult() {
     $('.carousel').carousel({
         interval: 5000 //changes the speed
     })
+    
+    
     
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvgmWAe4kSDGxv3uC05WwSuJa5M2Jpuug&callback=initMap"
