@@ -392,9 +392,8 @@ function selectZip(zip){
             </label>
         </div>
     </div>
-
     
-<div class="form-group" style="border-bottom: none; padding-top: 100px">
+<div class="form-group" style="border-bottom: none; padding-top: 20px">
   <div class="col-sm-offset-2 col-sm-10">
       <c:if test="${mode=='created'}">
             <button type="submit" name="sendButton" class="btn btn-info btn-sm btn-search" style="margin-right:20px; height:40px; width:130px;">
