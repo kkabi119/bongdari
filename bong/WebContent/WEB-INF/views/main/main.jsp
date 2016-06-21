@@ -40,7 +40,6 @@
                         <p  style="font-size:20px;margin-top:20px; margin-bottom:-10px ;font-weight:600; line-height:25px;">
                         작은 실천과 만남으로 따뜻한 일상을 만들어 보세요<br>
                         </p>
-                        <div><a href="#" style="margin-top:30px; "class="btn btn-common">가입하기</a></div>
                     </div>
                     <div>
           	          
