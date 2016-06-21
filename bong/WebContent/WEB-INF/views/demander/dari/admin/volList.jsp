@@ -147,7 +147,7 @@ function approvalButton(volunIdx){
 				<div class="carousel-inner">
 					<div class="item active">
 						<div class="fill"
-							style="background-image:url('<%=cp%>/res/images/demander/20160513194133.png');"></div>
+							style="background-image:url('<%=cp%>/uploads/volunbbs/${dto.saveFilename}');"></div>
 					</div>
 				</div>
 			</div>

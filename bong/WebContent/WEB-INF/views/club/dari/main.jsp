@@ -98,10 +98,10 @@ li:hover{
                     </div>
                     <div class="panel-body" style="border-bottom:2px solid #999; ">
                         <ul type="disc" style="padding-left:0px; ">
+                        	 <c:if test="${dataCountR==0}">
+		                  		등록된 게시물이 없습니다.
+							</c:if>
                          <c:forEach var="dtoR" items="${listR}">
-                        	<%-- <li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li> --%>
-                         
-                        
                        		 <li style="line-height:30px; font-weight:600; font-size:14px; overflow:hidden; width:90%; ">
                        		 		<a style="color:#464646;" href="${urlArticleR}+&num=${dtoR.clubReviewIdx}" >${dtoR.subject}</a>
                        		 </li>
@@ -112,13 +112,16 @@ li:hover{
                 </div>
             </div>
             
-            <div class="col-md-6" style="width:45%; " >
+            <div class="col-md-6" style="width:45%; ">
                 <div class="panel panel-default">
                     <div class="panel-heading"  style="background-color:#3897f0; border-radius:0px;">
                         <h5 style="font-size:18px;"><i class="fa fa-lightbulb-o"></i> &nbsp;&nbsp;공지사항 <a href="${urlListN}"><span style="float:right; color:white;" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> </h5>
                     </div>
                     <div class="panel-body" style="border-bottom:2px solid #999; ">
                         <ul type="disc" style="padding-left:0px; ">
+                         <c:if test="${dataCountN==0}">
+		                 	 등록된 게시물이 없습니다.
+						</c:if>
                          <c:forEach var="dtoN" items="${listN}">
                         	<%-- <li><a href="<%=cp%>/docu/article.sst?page=1&docuNum=${dtoDocu.docuNum}" >${dtoDocu.docuSubject}</a></li> --%>
                        		 <li style="line-height:30px; font-weight:600; font-size:14px;overflow:hidden; width:90%; ">

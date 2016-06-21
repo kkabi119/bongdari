@@ -182,7 +182,7 @@ public class DadminController {
 	         ){
 	      String root=session.getServletContext().getRealPath("/");
 	      String pathname=root+File.separator+"uploads"+File.separator+"serviceImg";
-	      
+	      System.out.println("controller");
 	      SessionInfo info=(SessionInfo)session.getAttribute("member");
 	      dto.setUserIdx(info.getUserIdx());
 	      service.updateDemander2(dto, pathname);

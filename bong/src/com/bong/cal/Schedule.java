@@ -1,5 +1,7 @@
 package com.bong.cal;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Schedule {
 	private int num;
 
@@ -21,8 +23,17 @@ public class Schedule {
 	private String volunteer_type, saveFilename, originalFilename, place, eachDayArray, eachDayValueArray, maxAll;
 	private String eachDay, eachDayValue, dow, id, subject, sSubject, lSubject, volunDays, serviceName, hitCount, progress;
 
+	private MultipartFile upload;
 	
 	
+	public MultipartFile getUpload() {
+		return upload;
+	}
+
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
+	}
+
 	public int getVolunIdx() {
 		return volunIdx;
 	}

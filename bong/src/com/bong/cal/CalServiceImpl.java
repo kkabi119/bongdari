@@ -6,12 +6,16 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bong.common.FileManager;
 import com.bong.common.dao.bongDAO;
 
 @Service("cal.CalService")
 public class CalServiceImpl implements CalService{
 	@Autowired
 	private bongDAO  dao;
+	
+	@Autowired
+	private FileManager fileManager;
 	
 	@Override
 	public List<Schedule> listVolun(Map<String, Object> map) {
@@ -39,11 +43,17 @@ public class CalServiceImpl implements CalService{
 	}
 
 	@Override
-	public int insertVolunbbs(Schedule dto) {
+	public int insertVolunbbs(Schedule dto, String pathname) {
 		int result=0;
 		
 		try {
-			result=dao.insertInformation("cal.volunInsert", dto);
+			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()){
+				//업로드한 파일이 존재하는 경우
+				String saveFilename=fileManager.doFileUpload(dto.getUpload(), pathname);
+				dto.setSaveFilename(saveFilename);
+				dto.setOriginalFilename(dto.getUpload().getOriginalFilename());
+			}
+				result=dao.insertInformation("cal.volunInsert", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

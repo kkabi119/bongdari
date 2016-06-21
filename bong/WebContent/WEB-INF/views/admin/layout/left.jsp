@@ -9,9 +9,6 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="<%=cp%>/admin"><i class="fa fa-gear fa-fw"></i> 관리자 메인페이지</a>
-                        </li>
-                        <li>
                             <a href="<%=cp%>/admin/member"><i class="fa fa-user fa-fw"></i> 회원 목록 보기</a>
                         </li>
                         <li>

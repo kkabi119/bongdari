@@ -96,6 +96,7 @@
 		 		$("#eachMember_"+data[i]).val($("#maxMember").val());
 		 	}
 		 });
+		 eachOkk();
 		 rowid="";
 	 });
 	 
@@ -184,6 +185,7 @@
 				f.btnEachOk.disabled=true;
 				f.eachDayBtn.disabled=true;
 			});
+			eachOkk();
 			rowid="";
 		}
 
@@ -206,7 +208,7 @@
 			rowid="";
 		}
 		
-		function insertOk(){
+		function eachOkk(){
 			checkDay();
 			oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 			var title=$.trim($("input[name='title']").val());
@@ -220,54 +222,38 @@
 			var themeNum=$.trim($("select[name='themeNum']").val());
 			var volunteer_type=$.trim($("select[name='volunteer_type']").val());
 			var place=$.trim($("input[name='place']").val());
+			var upload=$.trim($("input[name='upload']").val());
 			var urlE = "<%=cp%>/cal/eachDayInsert";
 			var eachDayArray="";
 			var eachDayValueArray="";
-			$.post(urlE ,{startDay:startDay, endDay:endDay, checkDay:rowid}, function(data){
+			$.get(urlE ,{startDay:startDay, endDay:endDay, checkDay:rowid}, function(data){
 				var i=0;
 				for (var dto in data) {
 					eachDayArray = eachDayArray + data[i]+", ";
 					eachDayValueArray = eachDayValueArray + parseInt($('#eachMember_'+data[i]).val())+", ";
 					i++;
 					}
-				
-				var params="title="+title
-			       +"&startDay="+startDay
-			       +"&endDay="+endDay
-			       +"&startTime="+startTime
-			       +"&endTime="+endTime
-			       +"&content="+content
-			       +"&themeNum="+themeNum
-			       +"&volunteer_type="+volunteer_type
-			       +"&place="+place
-			       +"&eachDayArray="+eachDayArray
-			       +"&eachDayValueArray="+eachDayValueArray;
-				
-				var url="<%=cp%>/cal/insertSchedule";
-		    	 
-		    	 $.ajax({      
-			         type:"POST",  
-			         url:url,      
-			         data:params,      
-			         success:function(){
-					        //  calendarReset();
-					        location.reload();
-			         },   
-			         error:function(e){  
-			             alert(e.responseText);  
-			         }  
-			     }); 
-			     	$('#scheduleModal').modal('hide');
+				$('input[name="eachDayArray"]').val(eachDayArray);
+				$('input[name="eachDayValueArray"]').val(eachDayValueArray);
 				});
-			rowid="";
+			
 		 }
+		
+		function insertOk(){
+			var f = document.myForm;
+			f.action="<%=cp%>/cal/insertSchedule";
+			rowid="";
+			$('#scheduleModal').modal('hide');
+			return true;
+		}
+		
 	 
 </script>
 
 <script type="text/javascript" src="<%=cp%>/res/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 
 <div class="container-fluid">
-	<form class="form-horizontal" name="myForm">
+	<form class="form-horizontal" method="post" name="myForm" onsubmit="return insertOk();"  enctype="multipart/form-data">
 		<div class="form-group">
 			<label class="col-md-2 control-label">제목</label>
 			<div class="col-md-10" id="schTitle">
@@ -377,27 +363,27 @@
 		<div class="form-group">
 			<label class="col-md-2 control-label">수요처 장소</label>
 			<div class="col-md-10" id="schServiceAddr">
-				<p class="form-control-static">서울특별시 노원구 삼양동 종합복지센터 장암역 1번출구</p>
+				<input class="form-control" name="place" value="서울특별시 노원구 삼양동 종합복지센터 장암역 1번출구">
 			</div>
 		</div>
 		
 		<div class="form-group">
-			<label class="col-md-2 control-label">파일 업로드</label>
-			<div class="col-md-10" id="schUserName">
+			<label class="col-md-2 control-label">사진 업로드</label>
+			<div class="col-md-10" id="uploadPhoto">
 				<p class="form-control-static"><input type="file" name="upload" class="form-control input-sm"></p>
 			</div>
 		</div>
-		
+		<div style="text-align: right;" id="schFooter">
+			<button type="submit" class="btn btn-primary" id="btnModalOk">
+				확인 <span class="glyphicon glyphicon-ok"></span>
+			</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal"
+				style="margin-left: 0px;">닫기</button>
+		</div>
+		<input type="text" value="" name="eachDayValueArray" hidden="hidden">
+		<input type="text" value="" name="eachDayArray" hidden="hidden">
 	</form>
 
-	<div style="text-align: right;" id="schFooter">
-		<button type="button" class="btn btn-primary" id="btnModalOk"
-			onclick="insertOk();">
-			확인 <span class="glyphicon glyphicon-ok"></span>
-		</button>
-		<button type="button" class="btn btn-default" data-dismiss="modal"
-			style="margin-left: 0px;">닫기</button>
-	</div>
 </div>
 
 <script type="text/javascript">

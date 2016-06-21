@@ -46,21 +46,23 @@ function QnasearchList() {
 }
 </script>
 
-	   <div class="col-lg-12">
-			<h1 class="page-header" style="color:#F0AD4E;">QnA</h1>
-			<ol class="breadcrumb">
-				<li class="active">질문과 답변 </li>
-			</ol>
-		</div>
-	    <div>
-	        <div style="clear: both; height: 30px; line-height: 30px; color:#807F7F;">
-	            <div style="float: left;">${dataCount}개(${page}/${total_page} 페이지)</div>
-	            <div style="float: right;">&nbsp;</div>
-	        </div>
+	   <div class="row">
+		<div class="col-md-12 col-sm-12">
+			<div class="single-blog two-column">
+				<div class="post-content overflow">
+ 					<div class="bodyFrame2">
+          				
+    		<c:if test="${dataCount!=0 }">
+	        	<div style="clear: both; height: 30px; line-height: 30px; margin-bottom: 10px;">
+            				<div style="float: left; color:#68cabb; font-size: 13pt;"> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
+            					전체 ${dataCount}개 <span style="color:#777;">(${page}/${total_page}  페이지)</span> 
+            					</div> 
+            				<div style="float: right;">&nbsp;</div>
+        				</div>
 	        
 	        <div class="table-responsive" style="clear: both;"> <!-- 테이블 반응형 -->
 	            <table class="table table-hover">
-	                <thead style="min-width:100%; font-size:15px; background-color:#FBF7EB; color:#555;">
+	                <thead style="min-width:100%; font-size:15px; background-color:#eaf7f5; color:#555;">
 	                <!-- style="border-top: 2px solid black; height: 40px; font-size: 12pt;font-weight: normal;" -->
 	                    <tr >
 	                        <th class="text-center" style="width: 100px;">번호</th>
@@ -77,7 +79,7 @@ function QnasearchList() {
 	                        <td style="text-align:left;">
 	                   			<c:choose>
 	                   				 <c:when test="${dto.userId!=sessionScope.member.userId&&sessionScope.member.userId!='admin'&&dto.quserIdx!=sessionScope.member.userIdx}">
-	                   					<i class="glyphicon glyphicon-lock" style="color:#F0AD4E;"></i>&nbsp;&nbsp;<span style="color: #807F7F;">비밀글 입니다.</span>
+	                   					<i class="glyphicon glyphicon-lock" style="color:#63c3b4;"></i>&nbsp;&nbsp;<span style="color: #807F7F;">비밀글 입니다.</span>
 	                   				</c:when>
 	                   				<c:otherwise>
 	                   					<c:if test="${dto.answer!=0}">
@@ -96,7 +98,7 @@ function QnasearchList() {
 	                </tbody>
 	            </table>
 	        </div>
-	        
+	        </c:if>
 
 	</div>
 		<div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
@@ -113,7 +115,7 @@ function QnasearchList() {
 	
 		<div style="clear: both;">
 		<div style="float: left; width: 20%; min-width: 85px;">
-			<button type="button" class="btn btn-warning"  
+			<button type="button" class="btn btn-default"  
 				onclick="javascript:location.href='<%=cp%>/qna/list';">새로고침</button>
 		</div>
 		<div style="float: left; width: 60%; text-align: center;">
@@ -125,7 +127,7 @@ function QnasearchList() {
 					<option value="created">등록일</option>
 				</select> 
 				<input type="text" class="form-control input-sm input-search" name="searchValue">
-				<button type="button" class="btn btn-default btn-sm wbtn" style="color:#F0AD4E;" 
+				<button type="button" class="btn btn-info" style="color:white;" 
 					onclick="QnasearchList();">
 					<span class="glyphicon glyphicon-search"></span> 검색
 				</button>
@@ -133,11 +135,16 @@ function QnasearchList() {
 		</div>
 		<div
 			style="float: left; width: 20%; min-width: 85px; text-align: right;">
-			<button type="button" class="btn btn-warning" 
+			<button type="button" class="btn btn-default" 
 				onclick="javascript:location.href='<%=cp%>/qna/create';">
 				<span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기
 			</button>
 		</div>
 	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
 
     

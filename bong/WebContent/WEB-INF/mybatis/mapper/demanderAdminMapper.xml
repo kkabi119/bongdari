@@ -21,7 +21,7 @@
 
 <select id="volunList" parameterType="map" resultType="com.bong.demander.admin.Dadmin">
 		SELECT volunIdx, subject, content, startDay, endDay, startTime, endTime,
-		place, progress, volunteer_type, volunDays, themeNum FROM volun_bbs WHERE serviceIdx=#{demander_seq}
+		place, progress, volunteer_type, volunDays, themeNum, saveFilename FROM volun_bbs WHERE serviceIdx=#{demander_seq}
 </select>
 
 <!-- 메인에 띄울 봉사일정 small리스트 -->

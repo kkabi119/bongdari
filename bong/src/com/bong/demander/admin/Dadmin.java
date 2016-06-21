@@ -14,10 +14,16 @@ public class Dadmin {
 	private String subject, content, startDay, endDay, startTime, endTime,
 	place, progress, volunteer_type, volunDays, clubApplyTable, clubName, memImg, memimgname;
 	
-	private String userName, userBirth, userAddr, userGender, userTel, userEmail, userJob, clubBirth, clubAddr, userId, introduce, themeNum, created_date;
+	private String userName, userBirth, userAddr, userGender, userTel, userEmail, userJob, clubBirth, clubAddr, userId, introduce, themeNum, created_date, saveFilename;
 	
 	
 	
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
 	public int getClubIdx() {
 		return clubIdx;
 	}
