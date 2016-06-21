@@ -82,8 +82,8 @@
 	        ) tb WHERE ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start}
 	]]> -->    
-SELECT vb.volunidx, cam.useridx, clubidx, vb.subject, 
-vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_type, vb.volunDays, cam.hopeDate ,vb.themenum ,t2.subject lsubject, t1.subject ssubject
+SELECT DISTINCT vb.volunidx, cam.useridx, clubidx, vb.subject, 
+vb.startDay, vb.endDay, vb.place, vb.progress, vb.volunteer_type, vb.volunDays ,vb.themenum ,t2.subject lsubject, t1.subject ssubject
 FROM club_apply_52 ca 
 LEFT OUTER JOIN club_apply_memlist_52 cam ON ca.clubapplyidx=cam.clubapplyidx 
 LEFT OUTER JOIN volun_bbs vb ON vb.volunidx=ca.volunidx 

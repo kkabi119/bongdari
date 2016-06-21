@@ -43,12 +43,11 @@ function enter(where){
                 				<thead>
                     				<tr style="background:#eaf7f5; height:45px; color: #545252; border-top:3px solid #d0cccc; ">
                         				<th class="text-center" style="width: 70px;">번호</th>
-                        				<th class="text-center" style="width: 50px;">봉사명</th>
-                       				 	<th class="text-center" style="width: 70px;">봉사기간</th>
+                        				<th class="text-center" style="width: 60px;">봉사명</th>
+                       				 	<th class="text-center" style="width: 100px;">봉사기간</th>
                         				<th class="text-center" style="width: 50px;">봉사장소</th>
                         				<th class="text-center" style="width: 50px;">봉사분야</th>
                         				<th class="text-center" style="width: 60px;">봉사자유형</th>
-                        				<th class="text-center" style="width: 40px;">봉사 희망일</th>
                         				<th class="text-center" style="width: 50px;">신청현황</th>
                     				</tr>
                 				</thead>
@@ -61,7 +60,6 @@ function enter(where){
                        				 	<td class="text-center" style="vertical-align: inherit;">${dto.place}</td>
                        				 	<td class="text-center" style="vertical-align: inherit;">${dto.lsubject} > ${dto.ssubject}</td>
                        				 	<td class="text-center" style="vertical-align: inherit;">${dto.volunteer_Type}</td>
-                       				 	<td class="text-center" style="vertical-align: inherit;">${dto.hopeDate}</td>                       
                        				    <c:if test="${dto.progress.equals('모집마감')}">
                        				 	<td class="text-center" style="font-weight:bold; color:white; font-size:16px; vertical-align: inherit;"> <span class="label label-default" style="padding:5px;">${dto.progress}</span></td>
                        				 	</c:if>
