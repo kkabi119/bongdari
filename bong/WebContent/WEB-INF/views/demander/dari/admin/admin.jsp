@@ -66,7 +66,6 @@ function tab3(){
  <div id="tab-container">
                         <ul id="tab1" class="nav nav-tabs">
                             <li class="active"><a href="#tab1-item1" data-toggle="tab">나의 활동</a></li>
-                            <li><a href="#tab1-item2" data-toggle="tab">나를 등록한 동아리</a></li>
                             <li><a href="#tab1-item3" data-toggle="tab">내 정보 수정</a></li>
                         </ul>
                         <div class="tab-content">
