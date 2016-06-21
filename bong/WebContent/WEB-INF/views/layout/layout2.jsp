@@ -41,7 +41,7 @@
     <link rel="apple-touch-icon-precomposed" href="<%=cp%>/res/images/ico/apple-touch-icon-57-precomposed.png">
 <style>
 .col-md-9{
-	width:76%; margin-left:15px;
+	width:76%; margin-left:15px;margin-bottom: 50px; 
 }
 </style>
 </head><!--/head-->

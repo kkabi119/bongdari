@@ -30,7 +30,7 @@ li,ul,body,input{margin:0; padding:0; list-style:none}
 .ul-list li{ margin:0 auto; margin-bottom:12px}
 .input{background:#fff; transition:all 800ms; width:247px; border-radius:3px 0 0 3px; font-family: 'Ropa Sans', sans-serif; border:solid 1px #ccc; border-right:none; outline:none; color:#999; height:40px; line-height:40px; display:inline-block; padding-left:10px; font-size:16px}
 .input,.login span.icon{vertical-align:top}
-.login span.icon{width:50px; transition:all 800ms; text-align:center; color:#999; height:40px; border-radius:0 3px 3px 0; background:#e8e8e8; height:40px; line-height:40px; display:inline-block; border:solid 1px #ccc; border-left:none; font-size:16px}
+.login span.icon{width:60px; transition:all 800ms; text-align:center; color:#999; height:40px; border-radius:0 3px 3px 0; background:#e8e8e8; height:40px; line-height:40px; display:inline-block; border:solid 1px #ccc; border-left:none; font-size:16px}
 .input:focus:invalid{border-color:red}
 .input:focus:invalid+.icon{border-color:red}
 .input:focus:valid{border-color:green}
@@ -132,8 +132,8 @@ function demanderJoin(){
 <ul class="ul-list">
 <li><input type="text" required class="input" placeholder="아이디" name="userId" id="userId" onkeydown="enter(userPwd)"/><span class="icon"><i class="fa fa-user"></i></span></li>
 <li><input type="password" required class="input" placeholder="비밀번호" name="userPwd" id="userPwd"  onkeydown="enter(login)"/><span class="icon"><i class="fa fa-lock"></i></span></li>
- <li><input type="button" onclick="memberLogin()" name="login" value="로그인" class="btn" style="margin-bottom: 10px;">
-<a href="<%=cp%>/member/register">일반회원가입</a><span style="color:#4fcccd"> | </span><a href="<%=cp%>/demanderjoin/demanderRegister" >수요처회원가입</a>
+ <li style="text-aling:center;"><input type="button" onclick="memberLogin()" name="login" value="로그인" class="btn" style="font-weight:bold; margin-bottom: 10px; height:50px; ">
+<a href="<%=cp%>/member/register" style="margin-left:10px; ">일반회원가입</a><span style="color:#4fcccd"> | </span><a href="<%=cp%>/demanderjoin/demanderRegister" >수요처회원가입</a>
 <span style="color:#4fcccd"> |</span> <a href="<%=cp%>/" style="align:center; margin: auto;">아이디 찾기</a> 
 </ul>
 </form>
