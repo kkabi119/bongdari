@@ -65,7 +65,7 @@ $(document).ready(function($) {
                             <li  style="padding-right: 5px ;"><a href="<%=cp%>/demander/${sessionScope.member.demander_seq}/main"><i class="glyphicon glyphicon-user"> 수요처페이지</i></a></li>
                             </c:if>
                              <c:if test="${sessionScope.member.userId=='admin'}">
-                            <li><a href="<%=cp%>/admin"><i class="glyphicon glyphicon-cog">Admin</i></a></li>
+                            <li><a href="<%=cp%>/admin/member"><i class="glyphicon glyphicon-cog">Admin</i></a></li>
                             </c:if>
                         </ul>
                     </div> 
