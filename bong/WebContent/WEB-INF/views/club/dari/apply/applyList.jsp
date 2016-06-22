@@ -95,13 +95,13 @@ var deleteCheckList=[];
 function deleteDate(theDate){
 	if($("#checked_"+theDate).val()==0){
 		$("#checked_"+theDate).each(function(){
-			$("#checked_"+theDate).attr("style", "text-decoration: line-through; font-size:15pt; margin-bottom:10px;");
+			$("#checked_"+theDate).attr("style", "text-decoration: line-through; font-size:16px; margin-bottom:10px; color:#3897f0");
 			deleteCheckList.push(theDate);
 			$("#checked_"+theDate).val(1);
 		});
 	} else {
 		$("#checked_"+theDate).each(function(){
-			$("#checked_"+theDate).attr("style", "font-size:15pt; margin-bottom:10px;");
+			$("#checked_"+theDate).attr("style", "font-size:16px; margin-bottom:10px; color:#3897f0");
 			deleteCheckList.splice(theDate, 1);
 			$("#checked_"+theDate).val(0);
 		});
@@ -196,19 +196,20 @@ function applyCheckOk(){
 	
 </table>
 <c:if test="${enabled==0}">
-<div class="col-md-12" style="margin-bottom:35px; padding:8px;  border-bottom:3px solid #ccc;">
+<div class="col-md-12" style="margin-bottom:0px; padding:8px;  border-bottom:3px solid #ccc;">
 
 	<span style=" border-radius:2px; font-size:20px; color:#777; font-weight:bold;">
 			<img Id="listBtn"style=" width:22px; height:22px; background-size:cover; "src="<%=cp%>/res/images/myclub/calendar.png" alt="">
 		           내가 신청한 봉사일
-	<span style="margin-left:10px;color:gray; font-size:15px; font-weight:500">취소를 원한다면 x를 눌러주세요 </span></span>
-	
+	<span style="margin-left:10px; color:gray; font-size:15px; font-weight:500">취소를 원한다면 x를 눌러주세요 </span></span>
+	</div>
+	<div class="col-md-12" style="margin-bottom:0px; padding:8px;">
 		<!-- <label class="col-md-12" style="margin-bottom:10px;">내가 신청한 날짜</label>  -->
 		<c:forEach var="mdto" items="${myList}">
 			<c:if test="${sessionScope.member.userIdx==mdto.userIdx}">
 		
 				<div id="checked_${mdto.hopeDate}" class="col-md-3" 
-						style="font-size:14px; margin-top:15px; margin-bottom:10px; display:none; color:#3897f0; ">
+						style="font-size:16px; margin-bottom:10px; color:#3897f0;">
 					${mdto.hopeDate}<a onclick='deleteDate("${mdto.hopeDate}");'>X</a>
 				</div>
 			</c:if>
