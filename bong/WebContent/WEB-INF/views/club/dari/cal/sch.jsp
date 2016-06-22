@@ -139,9 +139,12 @@ $(function() {
 				// 캘린더가 처음 실행되거나 월이 변경되면
 				var startDay=start.format("YYYY-MM-DD");
 				var endDay=end.format("YYYY-MM-DD");
-		        
+				if(group=="#00aeef"){
+					group='red';
+				}
+				else if(group=="#f7b10d")
+					group='black';
 				var url="<%=cp%>/club/${clubSeq}/calendar/month?start="+startDay+"&end="+endDay+"&group="+group+"&dumi="+new Date().getTime();
-
 				$.ajax({
 				    url: url,
 				    dataType: 'json',

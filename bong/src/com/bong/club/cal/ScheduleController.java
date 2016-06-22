@@ -88,13 +88,18 @@ public class ScheduleController {
 			@RequestParam(value="group", defaultValue="all") String group,
 			@PathVariable int clubSeq
 			) throws Exception {
+
+		if(group.equals("red"))
+			group="#00aeef";
+		else if(group.equals("black"))
+			group="#f7b10d";
+		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		if(info==null) {
 			Map<String, Object> model = new HashMap<>(); 
 			model.put("isLogin", "false");
 			return model;
 		}
-
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("group", group);
 		map.put("start", start);

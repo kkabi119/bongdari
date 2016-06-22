@@ -115,7 +115,7 @@
 	
 	// 봉사활동 동아리로 가져오기
 	function take(volunIdx){
-		alert(volunIdx);
+		alert("내 동아리에 등록 되었습니다.");
 		var url = "<%=cp%>/cal/takeVolun";
 		$.post(url, {volunIdx:volunIdx}, function(data){
 			$('#scheduleModal').modal('hide');
